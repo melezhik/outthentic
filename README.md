@@ -15,7 +15,7 @@ This is five minutes tutorial on outhentic workflow.
 # story.pl
 
 print "I am OK\n";
-print "I am outhentic";
+print "I am outhentic\n";
 
 ```
 

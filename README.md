@@ -5,7 +5,7 @@ print something into stdout and test
 # Synopsis
 Othentic is a text oriented test framework. Istead of hack into objects and methods it deals with text appeared in STDOUT. It's a blackbox testing framework.
 
-# A short story
+# Short story
 
 This is five minutes tutorial on othentic workflow.
 
@@ -44,7 +44,7 @@ Othentic provides test runner called `story_check', it finds a story files, runs
 ( TODO: ) Add output of story_check here.
 
 
-# A long story
+# Long story
 
 Here is a step by step description of outhentic project layout.
 

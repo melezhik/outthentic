@@ -2,9 +2,8 @@
 
 print something into stdout and test
 
-# description
-Othentic is text oriented test framework. Istead of hack into objects and methods it deals with text appeared in STDOUT.
-It's a blackbox testing framework
+# synopsis
+Othentic is a text oriented test framework. Istead of hack into objects and methods it deals with text appeared in STDOUT. It's a blackbox testing framework.
 
 # tutorial
 
@@ -18,8 +17,7 @@ print "I am outhentic";
 
 ```
 
-Story file is just a any perl script print out to a STDIN.
-
+Story file is just an any perl script print something into STDOUT.
 
 - Create a story check:
 
@@ -34,11 +32,14 @@ Story check is a bunch of lines STDOUT should match. Here we require to have `I 
 
 - Run a story:
 
+Othentic provides test runner called `story_check', it finds a story files, runs stories and validates STDOUT against story checks.
+
 ```
   story_check
   
 ```
-Story_check script finds a story files, runs stories and validates STDOUT against story checks.
+
+( TODO: ) Add output of story_check here.
 
 
 # Write your stories

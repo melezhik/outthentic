@@ -156,7 +156,7 @@ This is a time diagram for story runner workflow:
     - For every perl test file gets executed:
         - Require story.pm if exists
         - Iterate over Test::More asserts
-            - Execute swat story file and save STDOUT in a STDOUT file
+            - Execute story file and save STDOUT in a STDOUT file
             - Execute Test::More assert against a content of STDOUT file
         - The end of Test::More asserts iterator
     - The end of execution phase

@@ -206,7 +206,7 @@ The code above declares that stdout should have lines matches to 'I am ok' and '
 Similarly to plain strings, you may ask story runner to check if stdout has a lines matching to a regular expressions:
 
         regexp: \d\d\d\d-\d\d-\d\d # date in format of YYYY-MM-DD
-        regexp: 20\d # successful http status 200, 201 etc
+        regexp: Name: \w+ # name 
         regexp: App Version Number: \d+\.\d+\.\d+ # version number
 
 Regular expression should start with \`regexp:' marker.
@@ -260,7 +260,7 @@ But you **can't ignore** blank lines in a \`text block matching' context ( see \
 
 - **text blocks**
 
-Sometimes it is very helpful to match a response against a \`block of strings' goes consequentially, like here:
+Sometimes it is very helpful to match a stdout against a \`block of strings' goes consequentially, like here:
 
         # this text block
         # consists of 5 strings
@@ -316,7 +316,7 @@ Perl expressions are just a pieces of perl code to _get evaled_ inside your stor
 
 First story runner converts story check into perl code with eval "{code}" chunk added into it, this is called compilation phase:
 
-        ok($status,"stdout matches 200 OK");
+        ok($status,"stdout matches Once upon a time");
         eval 'print "Lived a boy called Othentic"';
         ok($status,"stdout matches Lived a boy called Othentic");
 
@@ -408,7 +408,7 @@ Story runner adds \`project_root_directory/lib' path to PERL5LIB path, so you ma
 
 - **multiline expressions**
 
-As long as outhentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,  that means that check expressions are single line strings and response is checked in line by line way:
+As long as outhentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,  that means that check expressions are single line strings and stdout response is checked in line by line way:
 
            # check list
            Multiline
@@ -416,7 +416,7 @@ As long as outhentic deals with check expressions ( both plain strings or regula
            here
            regexp: Multiline \n string \n here
 
-           # http response
+           # stdout
            Multiline \n string \n here
        
      
@@ -432,7 +432,7 @@ Use text blocks instead if you want to achieve multiline checks.
 However when writing perl expressions or generators one could use multilines there.  \`\' delimiters breaks a single line text on a multi lines:
 
 
-        # What about to validate response
+        # What about to validate stdout response
         # With sqlite database entries?
 
         generator:                                                          \
@@ -481,7 +481,7 @@ Then captured data might be accessed for example by code generator to define som
 
 Here some more examples:
 
-    # check if response contains numbers,
+    # check if stdout response contains numbers,
     # then calculate total amount
     # and check if it is greater then 10
 
@@ -494,7 +494,7 @@ Here some more examples:
     cmp_ok( $total,'>',10,"total amount is greater than 10" );
 
 
-    # check if response contains lines
+    # check if stdout response contains lines
     # with date formatted as date: YYYY-MM-DD
     # and then check if first date found is yesterday
 
@@ -508,7 +508,7 @@ Here some more examples:
 
 You also may use \`capture()' function to get a _first element_ of captures array:
 
-    # check if response contains numbers
+    # check if stdout response contains numbers
     # a first number should be greater then ten
 
     regexp: (\d+)
@@ -549,7 +549,7 @@ Using set_stdout means that you never call a real story to get a tested data, bu
 This is simple an example :
 
     # story.pm
-    set_response("THIS IS I FAKE RESPONSE\n HELLO WORLD");
+    set_stdout("THIS IS I FAKE RESPONSE\n HELLO WORLD");
 
     # story.check
     THIS IS FAKE RESPONSE

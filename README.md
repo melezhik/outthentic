@@ -101,7 +101,7 @@ Story checks files similiraly should be placed at distinct directories and be na
 ```
 
 
-# Story runner workflow
+# Story runner
 
 This is detailed explanation of how story runner compiles and then executes stories.
 

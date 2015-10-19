@@ -3,7 +3,7 @@
 print something into stdout and test
 
 # description
-Othentic is text oriented test framework. Istead of hack into objects and methods it deals with text apeared in STDOUT.
+Othentic is text oriented test framework. Istead of hack into objects and methods it deals with text appeared in STDOUT.
 It's blackbox testing framework
 
 # tutorial
@@ -30,6 +30,7 @@ Story file is just a any perl script print out to a STDIN.
   I am outhentic
 
 ```
+Story check is a bunch of lines STDOUT should match. Here we require to have `I am OK' and `I am outhentic' lines in STDOUT. 
 
 - Run a story:
 
@@ -37,3 +38,4 @@ Story file is just a any perl script print out to a STDIN.
   story_check
   
 ```
+Story_check script finds a story files, runs stories and validates STDOUT against story checks.

@@ -43,11 +43,11 @@ Story_check script finds a story files, runs stories and validates STDOUT agains
 
 # Write your stories
 
-Here is a formal escription of outhentic project layout.
+Here is a step by step description of outhentic project layout.
 
 ## Project
 
-Ouhtentic project is bunch of related stroies. Every outhentic project needs a directory where all the stuff is placed. Let's create it project to test a simple calculator application:
+Ouhtentic project is bunch of related stroies. Every outhentic project needs a directory where all the stuff is placed. Let's create a project to test a simple calculator application:
 
 ```
 
@@ -56,7 +56,7 @@ Ouhtentic project is bunch of related stroies. Every outhentic project needs a d
   
 ```
 
-## Stories and story checks
+## Stories
 
 Inside a project root directory one may create outhentic stroies. Every stories should be kept under a distinct directory:
 
@@ -78,4 +78,19 @@ Now lets create a stories , this should be files named story.pl:
   print $calc(2*3), "\n";
 
 ```
+
+## Story checks
+
+Story checks files similiraly should be placed at distinct directories and be named as story.check:
+
+
+```
+  # addition/story.check
+  4
+  
+  # multiplication/check
+  6
+  
+```
+
 

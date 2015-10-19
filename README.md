@@ -7,7 +7,7 @@ Outhentic is a text oriented test framework. Instead of hack into objects and me
 
 # Short story
 
-This is five minutes tutorial on othentic workflow.
+This is five minutes tutorial on outhentic workflow.
 
 - Create a story file:
 
@@ -128,25 +128,25 @@ Every story check is converted into the list of the Test::More asserts:
 
 ```
     # addition/story.t
-   
+ 
     run_story('multiplication/story.pl');
-   
+ 
     SKIP {
         ok($status,'story stdout matches 4');
         ok($status,'story stdout matches 6');
     }
 
     # multiplication/story.t
-   
+ 
     run_story('multiplication/story.pl');
-   
+ 
     SKIP {
         ok($status,'story stdout matches 6');
         ok($status,'story stdout matches 12');
     }
 
-```  
-   
+```
+ 
 This is a time diagram for story runner workflow:
 
     - Hits compilation phase
@@ -162,7 +162,7 @@ This is a time diagram for story runner workflow:
             - Execute Test::More assert against a content of STDOUT file
         - The end of Test::More asserts iterator
     - The end of execution phase
-   
+ 
 
 # Story checks syntax
 
@@ -197,7 +197,7 @@ There are two type of check expressions - plain strings and regular expressions.
 
         I am ok
         HELLO Outhentic
-       
+     
 
 The code above declares that stdout should have lines matches to 'I am ok' and 'HELLO Othentic'.
 
@@ -367,7 +367,7 @@ New check list items are passed back to story runner and will be appended to a c
 
         Say
         HELLO
-       
+     
         # this generator generates plain string check expressions:
         # new items will be appended into check list
 
@@ -413,13 +413,13 @@ As long as outhentic deals with check expressions ( both plain strings or regula
            # check list
            Multiline
            string
-           here  
-           regexp: Multiline \n string \n here  
+           here
+           regexp: Multiline \n string \n here
 
            # http response
            Multiline \n string \n here
-         
        
+     
            # test output
            "Multiline" matched
            "string" matched
@@ -516,13 +516,13 @@ You also may use \`capture()' function to get a _first element_ of captures arra
 
 # Hooks
 
-Story Hooks are extension points to hack into story runtime phase. It's just files with perl code gets executed in the beginning of a story. You should named your hook file as \`story.pm' and place it into \`story' directory:
+Story Hooks are extension points to hack into story run time phase. It's just files with perl code gets executed in the beginning of a story. You should named your hook file as \`story.pm' and place it into \`story' directory:
 
 
     # addition/hook.pm
     diag "hello, I am addition story hook";
     sub is_number { [ 'regexp: ^\\d+$' ] }
-    
+   
 
     # addition/story.check
     generator: is_number
@@ -530,17 +530,17 @@ Story Hooks are extension points to hack into story runtime phase. It's just fil
 
 There are lot of reasons why you might need a hooks. To say a few:
 
-- redefine stdout 
+- redefine stdout
 - define generators
 - call downstream stories
-- other custom code 
+- other custom code
 
 
 # Hooks API
 
-Story hooks API provides several functions to change story behaviour at runtime
+Story hooks API provides several functions to change story behavior at run time
 
-## Redefine stdout 
+## Redefine stdout
 
 *set_stdout(STRING)*
 
@@ -560,29 +560,29 @@ This is simple an example :
 
 Story runner allow you to call one story from another, using notion of downstream stories.
 
-Downstream strories are reusable stories. Runner never executes downstream stroies directly, instead you have to call downstream story from _upstream_ one:
+Downstream stories are reusable stories. Runner never executes downstream stories directly, instead you have to call downstream story from _upstream_ one:
 
 ```
-  
+ 
     # addition/story.pl
     $calc->addition(2,2);
-    
+   
     # addition/story.pm
-    run_story( 'create_calc_object' );    
-    
-  
+    run_story( 'create_calc_object' );  
+   
+ 
     # multiplication/story.pl
     $calc->multiplication(2,2);
-  
+ 
     # multiplication/story.pm
     run_story( 'create_calc_object' );
-  
+ 
     # create_calc_object/story.pl
     use MyCalc;
     my $calc = MyCalc->new();
     print ref($calc), "\n"
 
-     
+   
     # create_calc_object/story.pl
     MyCalc
 
@@ -598,9 +598,9 @@ Here are the brief comments to the example above:
 
 - call \'run_story(method,resource,variables)' function inside upstream story hook to run downstream story.
 
-- you can call as many downstearm stories as you wish.
+- you can call as many downstream stories as you wish.
 
-- you can call the same downstream story more than once. 
+- you can call the same downstream story more than once.
 
 Here is an example code snippet:
 
@@ -608,14 +608,14 @@ Here is an example code snippet:
     # story.pm
     run_story( 'before_story' )
     run_story( 'yet_another_before_story' )
-    run_stor( 'before_story' )
+    run_story( 'before_story' )
 
 ```
 
 - downstream stories have variables you may pass to when invoke one:
 
 ```
-    run_story( 'reate_calc_object', { use_floats => 1, use_complex_numbers => 1, ...    }  ) 
+    run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, ...    }  )
 ```
 
 One may access story variables using \`module_variable' function:
@@ -625,14 +625,14 @@ One may access story variables using \`module_variable' function:
     story_var('use_float');
     story_var('use_complex_numbers');
 
-``` 
+```
 
 - downstream stories may invoke other downstream strories
 
 - you can't use storie variables in a none downstream story
 
 
-One word about sharing state between upstream/downstream stories. As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories. 
+One word about sharing state between upstream/downstream stories. As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories.
 The straitforward way to share state is to use global variables :
 
     # upstream story hook:
@@ -640,7 +640,7 @@ The straitforward way to share state is to use global variables :
 
     # downstream story hook:
     push our @$state, 'I was here'
-    
+   
 Of course more proper approaches for state sharing could be used as singeltones or something else.
 
 ## Outhentic variables accessors

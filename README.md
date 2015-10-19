@@ -19,7 +19,7 @@ print "I am outhentic\n";
 
 ```
 
-Story file is just an any perl script print something into STDOUT.
+Story file is just an any perl script that print something into STDOUT.
 
 - Create a story check:
 
@@ -34,7 +34,7 @@ Story check is a bunch of lines STDOUT should match. Here we require to have `I 
 
 - Run a story:
 
-Othentic provides test runner called `story_check', it finds a story files, runs story files and validates STDOUT against story checks.
+Othentic provides test runner called `story_check', it finds story files, runs them and then validates STDOUT against story checks.
 
 ```
   story_check
@@ -46,11 +46,11 @@ Othentic provides test runner called `story_check', it finds a story files, runs
 
 # Long story
 
-Here is a step by step description of outhentic project layout.
+Here is a step by step explanation of outhentic project layout.
 
 ## Project
 
-Outhentic project is bunch of related stories. Every outhentic project needs a directory where all the stuff is placed. Let's create a project to test a simple calculator application:
+Outhentic project is bunch of related stories. Every outhentic project needs a directory where all the stuff is placed at. Let's create a project to test a simple calculator application:
 
 ```
 
@@ -61,13 +61,13 @@ Outhentic project is bunch of related stories. Every outhentic project needs a d
 
 ## Stories
 
-Inside a project root directory one may create outhentic stories. Every stories should be kept under a distinct directory:
+Inside a project root directory one create an outhentic stories. Every story should be kept under a distinct directory:
 
 ```
-  mkdir addition
-  mkdir multiplication
+  mkdir addition # a+b 
+  mkdir multiplication # a*b
 ```
-Now lets create a stories , this should be files named story.pl:
+Now inside stories directories we create a story files, this should be files named story.pl:
 
 ```
   # addition/story.pl
@@ -86,7 +86,7 @@ Now lets create a stories , this should be files named story.pl:
 
 ## Story checks
 
-Story checks files similarly should be placed at distinct directories and be named as story.check:
+Story checks files similarly should be placed at stories directories and be named as story.check:
 
 
 ```
@@ -99,13 +99,20 @@ Story checks files similarly should be placed at distinct directories and be nam
   12
  
 ```
+Now we ready to invoke story runner:
 
+```
+
+   story_check
+
+
+```
 
 # Story runner
 
-This is detailed explanation of how story runner compiles and then executes stories.
+This is detailed explanation of story runner workflow.
 
-Story_check script consequentially hits two phases when execute stories:
+Story_check script consequentially hits two phases when run stories:
 
 - **Compilation phase** where stories are converted into Test::Harness format.
 - **Execution phase** where perl test files are recursively executed by prove.
@@ -124,7 +131,7 @@ Story_check parse every story and the creates a perl test file for it:
     addition/story.t
     multiplication/story.t
 
-Every story check is converted into the list of the Test::More asserts:
+Every story check is thus converted into the list of the Test::More asserts:
 
 ```
     # addition/story.t
@@ -158,15 +165,15 @@ This is a time diagram for story runner workflow:
     - For every perl test file gets executed:
         - Require story.pm if exists
         - Iterate over Test::More asserts
-            - Execute story file and save STDOUT in a STDOUT file
-            - Execute Test::More assert against a content of STDOUT file
+            - Execute story file and save STDOUT in temporary file
+            - Execute Test::More asserts against a content of temporary file
         - The end of Test::More asserts iterator
     - The end of execution phase
  
 
 # Story checks syntax
 
-Story check is a bunch of lines STDOUT should match. In other words this the list of check expressions, indeed not only check expressions, there are some - comments, blank lines, text blocks , perl expressions and generators we will talk about all of them later.
+Story check is a bunch of lines STDOUT should match. In other words this is the list of check expressions, not only check expressions, there are some more - comments, blank lines, text blocks, perl expressions and generators we will talk about all of them later.
 
 Let's start with check expressions.
 
@@ -211,7 +218,7 @@ Similarly to plain strings, you may ask story runner to check if stdout has a li
 
 Regular expression should start with \`regexp:' marker.
  
-You may use \`(,)' symbols to capture sub-parts of matching strings, the captured chunks will be saved and could be used further,
+You may use \`(,)' symbols to capture sub-parts of matching strings, the captured chunks will be saved and could be used further.
 
 - **captures**
 
@@ -324,7 +331,7 @@ Then prove execute the code above.
 
 Follow ["Story runner"](#story-runner) to know how outhentic compile stories into a perl code.
 
-Anyway, the example with 'print "Lived a boy called Othentic"' is quite useless, there are of course more effective ways how you code use perl expressions in your stories.
+Anyway, the example with 'print "Lived a boy called Othentic"' is quite useless, there are of course more effective ways how you coould use perl expressions in your stories.
 
 One of useful thing you could with perl expressions is to call some Test::More functions to modify test workflow:
 
@@ -698,4 +705,3 @@ https://github.com/melezhik/outhentic
 (Proverbs 2:6)
 ```
 - to the Authors of : perl, TAP, Test::More, Test::Harness
-

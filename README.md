@@ -1,11 +1,13 @@
-# outhentic
+# Outhentic
 
 print something into stdout and test
 
-# synopsis
+# Synopsis
 Othentic is a text oriented test framework. Istead of hack into objects and methods it deals with text appeared in STDOUT. It's a blackbox testing framework.
 
-# tutorial
+# A short story
+
+This is five minutes tutorial on othentic workflow.
 
 - Create a story file:
 
@@ -32,7 +34,7 @@ Story check is a bunch of lines STDOUT should match. Here we require to have `I 
 
 - Run a story:
 
-Othentic provides test runner called `story_check', it finds a story files, runs stories and validates STDOUT against story checks.
+Othentic provides test runner called `story_check', it finds a story files, runs story files and validates STDOUT against story checks.
 
 ```
   story_check
@@ -42,7 +44,7 @@ Othentic provides test runner called `story_check', it finds a story files, runs
 ( TODO: ) Add output of story_check here.
 
 
-# Write your stories
+# A long story
 
 Here is a step by step description of outhentic project layout.
 
@@ -114,8 +116,8 @@ One important thing about story checksis that internally they are represented as
 
 Recalling call-app project with 2 stroies:
 
-    addition/story.pl,story.check
-    multiplication/story.pl,story.check
+    addition/(story.pl,story.check)
+    multiplication/(story.pl,story.check)
 
 Story_check parse every story and the creates a perl test file for it:
 

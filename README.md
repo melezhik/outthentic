@@ -560,24 +560,29 @@ This is simple an example :
 
 Story runner allow you to call one story from another, using notion of downstream stories.
 
-Downstream strories are reusable swat stories. Runner never executes downstream stroies directly, instead you have to call downstream story from _upstream_ one:
+Downstream strories are reusable stories. Runner never executes downstream stroies directly, instead you have to call downstream story from _upstream_ one:
 
 ```
   
     # addition/story.pl
-    run_story( 'create_calc_object' );    
     $calc->addition(2,2);
+    
+    # addition/story.pm
+    run_story( 'create_calc_object' );    
+    
   
     # multiplication/story.pl
-    run_story( 'create_calc_object' );    
     $calc->multiplication(2,2);
+  
+    # multiplication/story.pm
+    run_story( 'create_calc_object' );
   
     # create_calc_object/story.pl
     use MyCalc;
     my $calc = MyCalc->new();
     print ref($calc), "\n"
 
-    # 
+     
     # create_calc_object/story.pl
     MyCalc
 
@@ -589,9 +594,9 @@ Downstream strories are reusable swat stories. Runner never executes downstream 
 
 Here are the brief comments to the example above:
 
-- \`set_module=1' declare swat story as swat module; now swat will never execute this story directly, upstream story should call it.
+- \`downstream=1' declare story as downstream; now runner will never execute this story directly, upstream story should call it.
 
-- call \'run_swat_module(method,resource,variables)' function inside upstream story hook to run downstream story.
+- call \'run_story(method,resource,variables)' function inside upstream story hook to run downstream story.
 
 - you can call as many downstearm stories as you wish.
 
@@ -600,50 +605,34 @@ Here are the brief comments to the example above:
 Here is an example code snippet:
 
 ```
-    # hook.pm
-    run_swat_module( GET => '/foo/' )
-    run_swat_module( POST => '/foo/bar' )
-    run_swat_module( GET => '/foo/' )
+    # story.pm
+    run_story( 'before_story' )
+    run_story( 'yet_another_before_story' )
+    run_stor( 'before_story' )
 
 ```
 
-- swat modules have a variables hash passed into a module as third parameter of run_swat_module function:
+- downstream stories have variables you may pass to when invoke one:
 
 ```
-    run_swat_module( GET => '/foo', { var1 => 'value1', var2 => 'value2', var3=>'value3'   }  ) 
+    run_story( 'reate_calc_object', { use_floats => 1, use_complex_numbers => 1, ...    }  ) 
 ```
 
-- swat _interpolate_ module variables into \`curl_params' variable in swat module story:
+One may access story variables using \`module_variable' function:
 
 ```
-    # swat module 
-    # swat.ini
-    swat_module=1
-    # initial value of curl_params variable:
-    curl_params='-d var1=%var1% -d var2=%var2% -d var3=%var3%'
-
-    # real value of curl_params variable
-    # during execution of swat module:
-    curl_param='-d var1=value1 -d var2=value2 -d var3=value3'
-```
-
-Use `%[\w\d_]+%` placeholders in a curl_params variable to insert module variables here
-
-- you may access swat module variables inside your swat module using \`module_variable' function:
-
-```
-    # hook.pm
-    module_variable('var1');
-    module_variable('var2');
+    # create_calc_object/story.pm
+    story_var('use_float');
+    story_var('use_complex_numbers');
 
 ``` 
-- swat modules could call other swat modules
 
-- you can't use module variables in a story which is not a swat_module
+- downstream stories may invoke other downstream strories
+
+- you can't use storie variables in a none downstream story
 
 
-One word about sharing state between upstream story and swat modules. As swat modules get executed in the same process
-as upstream story there is no magic about sharing data between upstream and downstream stories. 
+One word about sharing state between upstream/downstream stories. As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories. 
 The straitforward way to share state is to use global variables :
 
     # upstream story hook:
@@ -654,20 +643,13 @@ The straitforward way to share state is to use global variables :
     
 Of course more proper approaches for state sharing could be used as singeltones or something else.
 
-## Swat variables accessors
+## Outhentic variables accessors
 
-There are some accessors to a common swat variables:
+There are some accessors to a common variables:
 
     project_root_dir()
     test_root_dir()
-
-    resource()
-    resource_dir()
-
-    http_method()
-    hostname()
-
-    ignore_http_err()
+    ignore_story_err()
 
 Be aware of that these are readers not setters.
 

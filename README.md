@@ -103,7 +103,7 @@ Story checks files similiraly should be placed at distinct directories and be na
 
 This is detailed explanation of how story runner compiles and then executes stories.
 
-Story_check script consequentially hits two phases when execute swat stories:
+Story_check script consequentially hits two phases when execute stories:
 
 - **Compilation phase** where stories are converted into Test::Harness format.
 - **Execution phase** where perl test files are recursively executed by prove.
@@ -160,14 +160,13 @@ This is a time diagram for story runner workflow:
 Othentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parsers to bring result to
 another test / reporting systems, follow TAP documentation to get more on this. 
 
-Here is example for converting swat tests into JUNIT format:
+Here is example for having output in JUNIT format:
 
     story_check --formatter TAP::Formatter::JUnit
 
 # Prove settings
 
-Othentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to run tests, all prove related parameters are passed as is to prove.
-Here are some examples:
+Othentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to run tests, all prove related parameters are passed as is to prove. Here are some examples:
 
     story_check -Q # don't show anythings unless test summary
     story_check -q -s # run prove tests in random and quite mode
@@ -199,5 +198,5 @@ https://github.com/melezhik/outhentic
 - For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding.
 (Proverbs 2:6)
 ```
-- Authors of - perl, TAP, Test::More, Test::Harness
+- to the Authors of : perl, TAP, Test::More, Test::Harness
 

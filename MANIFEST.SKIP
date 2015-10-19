@@ -1,0 +1,14 @@
+.git
+blib
+\.old
+\.tar
+\.bak
+\.SKIP
+\.html
+\.pod
+\.tmp
+swat-.*\.gz
+swat\.my
+^MYMETA\.
+^Makefile$
+swat-

@@ -112,7 +112,7 @@ Story_check script consequentially hits two phases when execute swat stories:
 
 One important thing about story checksis that internally they are represented as Test::More asserts. This is how it work: 
 
-Let's have 3 stories:
+Recalling call-app project with 2 stroies:
 
     addition/story.pl,story.check
     multiplication/story.pl,story.check
@@ -127,9 +127,16 @@ Every story check is converted into the list of the Test::More asserts:
 ```
     # addition/story.t
     SKIP {
+        ok($status,'response matches 4'); 
+        ok($status,'response matches 6');
+    }
+
+    # multiplication/story.t
+    SKIP {
         ok($status,'response matches 6'); 
         ok($status,'response matches 12');
     }
+
 ```    
      
 This is a time diagram for story runner workflow:

@@ -571,22 +571,28 @@ Downstream stories are reusable stories. Runner never executes downstream storie
 
 ```
  
-    # addition/story.pl
-    $calc->addition(2,2);
+    # addition/story.pl 
+    # this is a upstream story
+    our $calc->addition(2,2);
    
     # addition/story.pm
+    # to run downstream story
+    # call run_story function inside 
+    # upstream story hook
     run_story( 'create_calc_object' );  
    
  
     # multiplication/story.pl
-    $calc->multiplication(2,2);
+    # this is a upstream story too
+    our $calc->multiplication(2,2);
  
     # multiplication/story.pm
     run_story( 'create_calc_object' );
  
     # create_calc_object/story.pl
+    # this is a downstream story
     use MyCalc;
-    my $calc = MyCalc->new();
+    our $calc = MyCalc->new();
     print ref($calc), "\n"
 
    
@@ -594,6 +600,8 @@ Downstream stories are reusable stories. Runner never executes downstream storie
     MyCalc
 
     # create_calc_object/story.ini
+    # to define downstream story
+    # use downstream variable
     downstream=1 # this story is downstream
 
 
@@ -601,7 +609,7 @@ Downstream stories are reusable stories. Runner never executes downstream storie
 
 Here are the brief comments to the example above:
 
-- \`downstream=1' declare story as downstream; now runner will never execute this story directly, upstream story should call it.
+- \`downstream=1' declare story as downstream; now runner never executes this story directly, upstream story should call it.
 
 - call \'run_story(method,resource,variables)' function inside upstream story hook to run downstream story.
 
@@ -613,30 +621,31 @@ Here is an example code snippet:
 
 ```
     # story.pm
-    run_story( 'before_story' )
-    run_story( 'yet_another_before_story' )
-    run_story( 'before_story' )
+    run_story( 'some_story' )
+    run_story( 'yet_another_story' )
+    run_story( 'some_story' )
 
 ```
 
 - downstream stories have variables you may pass to when invoke one:
 
 ```
-    run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, ...    }  )
+    run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
 ```
 
-One may access story variables using \`module_variable' function:
+One may access story variables using \`story_var' function:
 
 ```
     # create_calc_object/story.pm
     story_var('use_float');
     story_var('use_complex_numbers');
+    story_var('foo');
 
 ```
 
-- downstream stories may invoke other downstream strories
+- downstream stories may invoke other downstream stories
 
-- you can't use storie variables in a none downstream story
+- you can't use story variables in a none downstream story
 
 
 One word about sharing state between upstream/downstream stories. As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories.

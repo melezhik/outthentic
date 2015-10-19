@@ -126,15 +126,21 @@ Every story check is converted into the list of the Test::More asserts:
 
 ```
     # addition/story.t
+    
+    run_story('multiplication/story.pl');
+    
     SKIP {
-        ok($status,'response matches 4'); 
-        ok($status,'response matches 6');
+        ok($status,'story stdout matches 4'); 
+        ok($status,'story stdout matches 6');
     }
 
     # multiplication/story.t
+    
+    run_story('multiplication/story.pl');
+    
     SKIP {
-        ok($status,'response matches 6'); 
-        ok($status,'response matches 12');
+        ok($status,'story stdout matches 6'); 
+        ok($status,'story stdout matches 12');
     }
 
 ```    
@@ -150,7 +156,8 @@ This is a time diagram for story runner workflow:
     - For every perl test file gets executed:
         - Require story.pm if exists
         - Iterate over Test::More asserts
-            - Execute Test::More assert
+            - Execute swat story file and save STDOUT in a STDOUT file
+            - Execute Test::More assert against a content of STDOUT file
         - The end of Test::More asserts iterator
     - The end of execution phase
     

@@ -519,7 +519,7 @@ You also may use \`capture()' function to get a _first element_ of captures arra
 Story Hooks are extension points to hack into story run time phase. It's just files with perl code gets executed in the beginning of a story. You should named your hook file as \`story.pm' and place it into \`story' directory:
 
 
-    # addition/hook.pm
+    # addition/story.pm
     diag "hello, I am addition story hook";
     sub is_number { [ 'regexp: ^\\d+$' ] }
    
@@ -548,10 +548,10 @@ Using set_stdout means that you never call a real story to get a tested data, bu
 
 This is simple an example :
 
-    # hook.pm
+    # story.pm
     set_response("THIS IS I FAKE RESPONSE\n HELLO WORLD");
 
-    # get.txt
+    # story.check
     THIS IS FAKE RESPONSE
     HELLO WORLD
 

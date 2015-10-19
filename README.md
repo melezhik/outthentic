@@ -71,13 +71,15 @@ Now lets create a stories , this should be files named story.pl:
   # addition/story.pl
   use MyCalc;
   my $calc = MyCalc->new();
-  print $calc(2+2), "\n";
+  print $calc->add(2,2), "\n";
+  print $calc->add(3,3), "\n";
 
   # multiplication/story.pl
   use MyCalc;
   my $calc = MyCalc->new();
-  print $calc(2*3), "\n";
-
+  print $calc->mult(2,3), "\n";
+  print $calc->mult(3,4), "\n";
+  
 ```
 
 ## Story checks
@@ -88,9 +90,11 @@ Story checks files similiraly should be placed at distinct directories and be na
 ```
   # addition/story.check
   4
+  6
   
   # multiplication/check
   6
+  12  
   
 ```
 

@@ -569,16 +569,31 @@ Story runner allow you to call one story from another, using notion of downstrea
 
 Downstream stories are reusable stories. Runner never executes downstream stories directly, instead you have to call downstream story from _upstream_ one:
 
-```
+``
  
+    # modules/create_calc_object/story.pl
+    # this is a downstream story
+    # to make story downstream
+    # simply create story file
+    # in modules/ directory
+    use MyCalc;
+    our $calc = MyCalc->new();
+    print ref($calc), "\n"
+   
+    # modules/create_calc_object/story.check
+    MyCalc
+
     # addition/story.pl 
     # this is a upstream story
     our $calc->addition(2,2);
    
     # addition/story.pm
     # to run downstream story
-    # call run_story function inside 
-    # upstream story hook
+    # call run_story function
+    # inside upstream story hook
+    # with a single parameter - story path,
+    # note that you don't have to 
+    # leave modules/ directory in the path
     run_story( 'create_calc_object' );  
    
  
@@ -588,30 +603,14 @@ Downstream stories are reusable stories. Runner never executes downstream storie
  
     # multiplication/story.pm
     run_story( 'create_calc_object' );
- 
-    # create_calc_object/story.pl
-    # this is a downstream story
-    use MyCalc;
-    our $calc = MyCalc->new();
-    print ref($calc), "\n"
-
-   
-    # create_calc_object/story.pl
-    MyCalc
-
-    # create_calc_object/story.ini
-    # to define downstream story
-    # use downstream variable
-    downstream=1 # this story is downstream
-
 
 ```
 
 Here are the brief comments to the example above:
 
-- \`downstream=1' declare story as downstream; now runner never executes this story directly, upstream story should call it.
+- to make story as downstream simply create story file at modules/ directory
 
-- call \`run_story(method,resource,variables)' function inside upstream story hook to run downstream story.
+- call \`run_story(story_path)' function inside upstream story hook to run downstream story.
 
 - you can call as many downstream stories as you wish.
 
@@ -659,7 +658,7 @@ The straitforward way to share state is to use global variables :
    
 Of course more proper approaches for state sharing could be used as singeltones or something else.
 
-## Outhentic variables accessors
+## Story variables accessors
 
 There are some variables exposed to hooks API, they could be useful:
 
@@ -667,8 +666,13 @@ There are some variables exposed to hooks API, they could be useful:
 
 - test_root_dir() - root directory of prove tests , see [story runner](#story-runner) section
 
-- ignore_story_err() - value of ignore_story_err variable, see [story settings](#story-settings) section
+## Ignore unsuccessful codes when run stories
 
+As every story is a perl script gets run via system call, it returns an exit code. None zero exit codes result in test failures, this default behavior , to disable this say:
+
+```
+ignore_story_err(1);
+```
 
 # TAP
 

@@ -611,7 +611,7 @@ Here are the brief comments to the example above:
 
 - \`downstream=1' declare story as downstream; now runner never executes this story directly, upstream story should call it.
 
-- call \'run_story(method,resource,variables)' function inside upstream story hook to run downstream story.
+- call \`run_story(method,resource,variables)' function inside upstream story hook to run downstream story.
 
 - you can call as many downstream stories as you wish.
 
@@ -661,13 +661,13 @@ Of course more proper approaches for state sharing could be used as singeltones 
 
 ## Outhentic variables accessors
 
-There are some accessors to a common variables:
+There are some variables exposed to hooks API, they could be useful:
 
-    project_root_dir()
-    test_root_dir()
-    ignore_story_err()
+- project_root_dir() - root directory of outhentic project
 
-Be aware of that these are readers not setters.
+- test_root_dir() - root directory of prove tests , see [story runner](#story-runner) section
+
+- ignore_story_err() - value of ignore_story_err variable, see [story settings](#story-settings) section
 
 
 # TAP

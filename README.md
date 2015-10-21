@@ -702,7 +702,7 @@ There are some variables exposed to hooks API, they could be useful:
 
 - project_root_dir() - root directory of outhentic project
 
-- test_root_dir() - root directory of prove tests , see [story runner](#story-runner) section
+- test_root_dir() - root directory of generated perl tests , see [story runner](#story-runner) section
 
 ## Ignore unsuccessful codes when run stories
 
@@ -716,8 +716,26 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
 Once outhentic is installed you get story_check client at the \`PATH':
 
-    story_check <project_root_dir> <options>
-    
+    story_check <options>
+  
+## Options
+
+- `--project` - root directory of outhentic project, if not set story runner starts with current working directory
+- `--story` -  run only single story, this should be file path without extentions:
+```
+  foo/story.pl
+  foo/bar/story.pl 
+  bar/story.pl
+  
+  --story 'foo' # runs foo/* stories
+  --story foo/story # runs foo/story.pl
+  --story foo/bar/ # runs foo/bar/* stories
+
+```
+
+- `--prove-opts` - prove parameters, see [prove settings](#prove-settings) section
+ 
+
 # TAP
 
 Othentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parser to bring result to another test / reporting systems, follow TAP documentation to get more on this.

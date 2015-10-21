@@ -34,7 +34,7 @@ Story check is a bunch of lines stdout should match. Here we require to have `I 
 
 - Run a story:
 
-Othentic provides test runner script named `story_check'. Story runner:
+Outhentic provides test runner script named `story_check'. Story runner:
 
 - finds and execute story files.
 - remember stdout.
@@ -53,7 +53,7 @@ Follow [story runner](#story-runner) section for details on story runner "guts".
 
 # Long story
 
-Here is a step by step explanation of outhentic project layout. We explain here basic othentic entities:
+Here is a step by step explanation of outhentic project layout. We explain here basic outhentic entities:
 
 - project
 - stories
@@ -237,7 +237,7 @@ There are two type of check expressions - plain strings and regular expressions.
         HELLO Outhentic
    
 
-The code above declares that stdout should have lines 'I am ok' and 'HELLO Othentic'.
+The code above declares that stdout should have lines 'I am ok' and 'HELLO Outhentic'.
 
 - **regular expression**
 
@@ -350,20 +350,20 @@ Perl expressions are just a pieces of perl code to _get evaled_ inside your stor
         # this is my story
         Once upon a time
         code: print "hello I am Outhentic"
-        Lived a boy called Othentic
+        Lived a boy called Outhentic
 
 
 First story runner converts story check into perl code with eval "{code}" chunk added into it, this is called compilation phase:
 
         ok($status,"stdout matches Once upon a time");
-        eval 'print "Lived a boy called Othentic"';
-        ok($status,"stdout matches Lived a boy called Othentic");
+        eval 'print "Lived a boy called Outhentic"';
+        ok($status,"stdout matches Lived a boy called Outhentic");
 
 Then prove execute the code above.
 
 Follow ["Story runner"](#story-runner) to know how outhentic compile stories into a perl code.
 
-Anyway, the example with 'print "Lived a boy called Othentic"' is quite useless, there are of course more effective ways how you could use perl expressions in your stories.
+Anyway, the example with 'print "Lived a boy called Outhentic"' is quite useless, there are of course more effective ways how you could use perl expressions in your stories.
 
 One of useful thing you could with perl expressions is to call some Test::More functions to modify test workflow:
 
@@ -745,7 +745,7 @@ Once outhentic is installed you get story_check client at the \`PATH':
 
 # TAP
 
-Othentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parser to bring result to another test / reporting systems, follow TAP documentation to get more on this.
+Outhentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parser to bring result to another test / reporting systems, follow TAP documentation to get more on this.
 
 Here is example for having output in JUNIT format:
 
@@ -753,7 +753,7 @@ Here is example for having output in JUNIT format:
 
 # Prove settings
 
-Othentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execute tests, one my pass prove related parameters using \`--prove-opts'. Here are some examples:
+Outhentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execute tests, one my pass prove related parameters using \`--prove-opts'. Here are some examples:
 
     story_check --prove_opts "-Q" # don't show anythings unless test summary
     story_check --prove_opts "-q -s" # run prove tests in random and quite mode
@@ -762,7 +762,11 @@ Othentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execut
 
 # Examples
 
-There is plenty of examples at ./examples directory
+An example outhentic project lives at examples/ directory, to run it say this:
+
+```
+    story_check --project examples/
+```
 
 # AUTHOR
 

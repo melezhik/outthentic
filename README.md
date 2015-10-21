@@ -3,11 +3,11 @@
 print something into stdout and test
 
 # Synopsis
-Outhentic is a text oriented test framework. Instead of hack into objects and methods it deals with text appeared in STDOUT. It's a black box testing framework.
+Outhentic is a text oriented test framework. Instead of hack into objects and methods it deals with text appeared in stdout. It's a black box testing framework.
 
 # Short story
 
-This is five minutes tutorial on outhentic workflow.
+This is a five minutes tutorial on outhentic framework workflow.
 
 - Create a story file:
 
@@ -19,7 +19,7 @@ print "I am outhentic\n";
 
 ```
 
-Story file is just an any perl script that print something into STDOUT.
+Outhentic story is just an any perl script that print something into stdout.
 
 - Create a story check:
 
@@ -30,11 +30,18 @@ Story file is just an any perl script that print something into STDOUT.
   I am outhentic
 
 ```
-Story check is a bunch of lines STDOUT should match. Here we require to have `I am OK' and `I am outhentic' lines in STDOUT.
+Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outhentic' lines in stdout.
 
 - Run a story:
 
-Othentic provides test runner called `story_check', it finds story files, runs them and then validates STDOUT against story checks.
+Othentic provides test runner script named `story_check'. Story runner:
+
+- finds and execute story files.
+- remember stdout.
+- validates stdout against a story checks.
+
+Follow [story runner](#story-runner) section for details on story runner "guts".
+
 
 ```
   story_check
@@ -46,14 +53,19 @@ Othentic provides test runner called `story_check', it finds story files, runs t
 
 # Long story
 
-Here is a step by step explanation of outhentic project layout.
+Here is a step by step explanation of outhentic project layout. We explain here basic othentic entities:
+
+- project
+- stories
+- story checks
 
 ## Project
 
-Outhentic project is bunch of related stories. Every outhentic project needs a directory where all the stuff is placed at. Let's create a project to test a simple calculator application:
+Outhentic project is bunch of related stories. Every project is _represented_ by a directory where all the stuff is placed at. 
+
+Let's create a project to test a simple calculator application:
 
 ```
-
   mkdir calc-app
   cd calc-app
  
@@ -61,15 +73,20 @@ Outhentic project is bunch of related stories. Every outhentic project needs a d
 
 ## Stories
 
-Inside a project root directory one create an outhentic stories. Every story should be kept under a distinct directory:
+Stories are just perl scripts placed at project directory and named story.pl. In a testing context, stories are pieces of logic to be testsed.
+Think about them like \`*.t' files in a Test::Harness.
+
+Every story needs a distinct directory, this is how different stories are separated. 
+
+Let's create two srories, one for addition operation and one for addition operation:
+
 
 ```
+
   mkdir addition # a+b 
   mkdir multiplication # a*b
-```
-Now inside stories directories we create a story files, this should be files named story.pl:
 
-```
+
   # addition/story.pl
   use MyCalc;
   my $calc = MyCalc->new();
@@ -82,11 +99,15 @@ Now inside stories directories we create a story files, this should be files nam
   print $calc->mult(2,3), "\n";
   print $calc->mult(3,4), "\n";
  
+
 ```
 
 ## Story checks
 
-Story checks files similarly should be placed at stories directories and be named as story.check:
+Story checks files contain lines for validation of stdout comes out when stories are executed.
+
+Story check  files should be placed at the same directory as story files. Following are story checks for a two stories above.
+They validate output from our calculator's addition and multiplication methods:
 
 
 ```
@@ -99,27 +120,27 @@ Story checks files similarly should be placed at stories directories and be name
   12
  
 ```
-Now we ready to invoke story runner:
+
+Now we ready to invoke a story runner:
 
 ```
-
    story_check
-
 
 ```
 
 # Story runner
 
-This is detailed explanation of story runner workflow.
+This is detailed explanation of story runner life cycle.
 
-Story_check script consequentially hits two phases when run stories:
+After gets run story_check script consequentially hits two phases:
 
-- **Compilation phase** where stories are converted into Test::Harness format.
+- **Compilation phase** where stories are converted into perl test files.
 - **Execution phase** where perl test files are recursively executed by prove.
 
-## Story to Test::Harness compilation
+## Compilation phase
 
-One important thing about story checks is  that internally they are represented as Test::More asserts. This is how it work:
+When story runner iterate through story files and story check it convert both of them into single perl test file.
+Perl test file _looks like_ list of Test::More asserts.
 
 Recalling call-app project with 2 stories:
 
@@ -131,7 +152,7 @@ Story_check parse every story and the creates a perl test file for it:
     addition/story.t
     multiplication/story.t
 
-Every story check is thus converted into the list of the Test::More asserts:
+Every perl test file holds a list of the Test::More asserts:
 
 ```
     # addition/story.t
@@ -153,19 +174,26 @@ Every story check is thus converted into the list of the Test::More asserts:
     }
 
 ```
+
+## Execution phase
  
-This is a time diagram for story runner workflow:
+Once perl test files are generated and placed at tmeporary directory story runner calls prove which recursively execute all test files.
+That's it.
+
+
+## Time diagram
+
+This is a time diagram for story runner life cycle:
 
     - Hits compilation phase
-    - For every story found:
-        - Calculates story settings comes from various ini files
-        - Creates a perl test file at Test::Harness format
+    - For every story and story check file found:
+        - Creates a perl test file
     - The end of compilation phase
     - Hits execution phase - runs \`prove' recursively on a directory with a perl test files
     - For every perl test file gets executed:
-        - Require story.pm if exists
+        - Require hook ( story.pm ) if exists
         - Iterate over Test::More asserts
-            - Execute story file and save STDOUT in temporary file
+            - Execute story file and save stdout in temporary file
             - Execute Test::More asserts against a content of temporary file
         - The end of Test::More asserts iterator
     - The end of execution phase
@@ -173,9 +201,12 @@ This is a time diagram for story runner workflow:
 
 # Story checks syntax
 
-Story check is a bunch of lines STDOUT should match. In other words this is the list of check expressions, not only check expressions, there are some more - comments, blank lines, text blocks, perl expressions and generators we will talk about all of them later.
+Story check is a bunch of lines stdout should match. 
 
-Let's start with check expressions.
+In other words this is the list of _check expressions_, not only check expressions, there are some more things like  
+comments, blank lines, text blocks, perl expressions and generators we will talk about all of them later.
+
+But let's start with check expressions.
 
 ## Check expressions
 
@@ -206,25 +237,26 @@ There are two type of check expressions - plain strings and regular expressions.
         HELLO Outhentic
      
 
-The code above declares that stdout should have lines matches to 'I am ok' and 'HELLO Othentic'.
+The code above declares that stdout should have lines 'I am ok' and 'HELLO Othentic'.
 
 - **regular expression**
 
-Similarly to plain strings, you may ask story runner to check if stdout has a lines matching to a regular expressions:
+Similarly to plain strings matching, you may ask story runner to check if stdout has a lines matching a regular expressions:
 
         regexp: \d\d\d\d-\d\d-\d\d # date in format of YYYY-MM-DD
         regexp: Name: \w+ # name 
         regexp: App Version Number: \d+\.\d+\.\d+ # version number
 
-Regular expression should start with \`regexp:' marker.
+Regular expressions should start with \`regexp:' marker.
  
-You may use \`(,)' symbols to capture sub-parts of matching strings, the captured chunks will be saved and could be used further.
 
 - **captures**
 
-Note, that story runner does not care about how many times a given check expression is matched by stdout,
-outhentic "assumes" it at least should be matched once. However it's possible to accumulate
-all matching lines and save them for further processing, just use \`(,)' symbols to capture sub-parts of matching strings:
+Note, that story runner does not care about _how many times_ a given check expression is passed in stdout.
+It's only required that check expression is passed at least once.
+
+However it's possible to accumulate all stdout matching lines and save them for further processing.
+Use \`(,)' symbols to capture sub-parts of matching lines:
 
         regexp: Hello, my name is (\w+)
 
@@ -438,25 +470,26 @@ Use text blocks instead if you want to achieve multiline checks.
 
 However when writing perl expressions or generators one could use multilines there.  \`\' delimiters breaks a single line text on a multi lines:
 
+```
+    # What about to validate stdout response
+    # With sqlite database entries?
 
-        # What about to validate stdout response
-        # With sqlite database entries?
+    generator:                                                          \
 
-        generator:                                                          \
+    use DBI;                                                            \
+    my $dbh = DBI->connect("dbi:SQLite:dbname=t/data/test.db","","");   \
+    my $sth = $dbh->prepare("SELECT name from users");                  \
+    $sth->execute();                                                    \
+    my $results = $sth->fetchall_arrayref;                              \
 
-        use DBI;                                                            \
-        my $dbh = DBI->connect("dbi:SQLite:dbname=t/data/test.db","","");   \
-        my $sth = $dbh->prepare("SELECT name from users");                  \
-        $sth->execute();                                                    \
-        my $results = $sth->fetchall_arrayref;                              \
-
-        [ map { $_->[0] } @${results} ]
-
+    [ map { $_->[0] } @${results} ]
+```
 
 # Captures
 
 Captures are pieces of data get captured when story runner checks stdout with regular expressions:
 
+```
     # stdout
     # it's my family ages.
     alex    38
@@ -466,6 +499,7 @@ Captures are pieces of data get captured when story runner checks stdout with re
 
     # let's capture name and age chunks
     regexp: /(\w+)\s+(\d+)/
+```
 
 _After_ this regular expression check gets executed captured data will stored into a array:
 
@@ -477,6 +511,7 @@ _After_ this regular expression check gets executed captured data will stored in
 
 Then captured data might be accessed for example by code generator to define some extra checks:
 
+```
     code:                               \
     my $total=0;                        \
     for my $c (@{captures()}) {         \
@@ -484,7 +519,10 @@ Then captured data might be accessed for example by code generator to define som
     }                                   \
     cmp_ok( $total,'==',72,"total age of my family" );
 
+```
+
 \`captures()' function is used to access captured data array, it returns an array reference holding all chunks captured during _latest regular expression check_.
+
 
 Here some more examples:
 
@@ -549,7 +587,7 @@ Story hooks API provides several functions to change story behavior at run time
 
 ## Redefine stdout
 
-*set_stdout(STRING)*
+*set_stdout(string)*
 
 Using set_stdout means that you never call a real story to get a tested data, but instead set stdout on your own side. It might be helpful when you still have no a certain knowledge of tested code to produce a stdout:
 
@@ -671,7 +709,7 @@ There are some variables exposed to hooks API, they could be useful:
 As every story is a perl script gets run via system call, it returns an exit code. None zero exit codes result in test failures, this default behavior , to disable this say:
 
 ```
-ignore_story_err(1);
+    ignore_story_err(1);
 ```
 
 # TAP

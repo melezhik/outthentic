@@ -101,5 +101,10 @@ sub wanted {
 
 }
 
-exec("prove -r $prove_opts   $test_root_dir");
+if ($story_path){
+    exec("prove -r $prove_opts   $test_root_dir$project_root_dir/$story_path");
+}else{
+    exec("prove -r $prove_opts   $test_root_dir$project_root_dir");
+}
+
 

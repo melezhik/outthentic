@@ -31,7 +31,7 @@ sub run_story_file {
         open F, ">", $content_file or die $!;
         print F get_prop('my_stdout');
         close F;
-        diag "stdout saved to $content_file" if debug_mod12();
+        ok(1, "stdout saved to $content_file");
 
     }else{
 
@@ -51,7 +51,7 @@ sub run_story_file {
             diag("perl $story_file \n===>\n$rdata");
         }
 
-        diag "stdout saved to $content_file" if debug_mod12();
+        ok(1,"stdout saved to $content_file");
 
     }
 

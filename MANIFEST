@@ -1,9 +1,16 @@
 bin/story_check
 CHANGELOG.md
 examples/.exists
+examples/00/02/hook.pm
+examples/00/02/story.check
+examples/00/02/story.pl
+examples/00/hook.pm
 examples/00/story.check
 examples/00/story.pl
 examples/01/story.check
+examples/01/story.pl
+examples/modules/00/story.check
+examples/modules/00/story.pl
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm

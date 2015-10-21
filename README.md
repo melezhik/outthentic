@@ -61,7 +61,7 @@ Here is a step by step explanation of outhentic project layout. We explain here 
 
 ## Project
 
-Outhentic project is bunch of related stories. Every project is _represented_ by a directory where all the stuff is placed at. 
+Outhentic project is bunch of related stories. Every project is _represented_ by a directory where all the stuff is placed at.
 
 Let's create a project to test a simple calculator application:
 
@@ -76,14 +76,14 @@ Let's create a project to test a simple calculator application:
 Stories are just perl scripts placed at project directory and named story.pl. In a testing context, stories are pieces of logic to be testsed.
 Think about them like \`*.t' files in a Test::Harness.
 
-Every story needs a distinct directory, this is how different stories are separated. 
+Every story needs a distinct directory, this is how different stories are separated.
 
-Let's create two srories, one for addition operation and one for addition operation:
+Let's create two stories, one for addition operation and one for addition operation:
 
 
 ```
 
-  mkdir addition # a+b 
+  mkdir addition # a+b
   mkdir multiplication # a*b
 
 
@@ -177,7 +177,7 @@ Every perl test file holds a list of the Test::More asserts:
 
 ## Execution phase
  
-Once perl test files are generated and placed at tmeporary directory story runner calls prove which recursively execute all test files.
+Once perl test files are generated and placed at temporary directory story runner calls prove which recursively execute all test files.
 That's it.
 
 
@@ -201,9 +201,9 @@ This is a time diagram for story runner life cycle:
 
 # Story checks syntax
 
-Story check is a bunch of lines stdout should match. 
+Story check is a bunch of lines stdout should match.
 
-In other words this is the list of _check expressions_, not only check expressions, there are some more things like  
+In other words this is the list of _check expressions_, not only check expressions, there are some more things like
 comments, blank lines, text blocks, perl expressions and generators we will talk about all of them later.
 
 But let's start with check expressions.
@@ -235,7 +235,7 @@ There are two type of check expressions - plain strings and regular expressions.
 
         I am ok
         HELLO Outhentic
-     
+   
 
 The code above declares that stdout should have lines 'I am ok' and 'HELLO Othentic'.
 
@@ -244,7 +244,7 @@ The code above declares that stdout should have lines 'I am ok' and 'HELLO Othen
 Similarly to plain strings matching, you may ask story runner to check if stdout has a lines matching a regular expressions:
 
         regexp: \d\d\d\d-\d\d-\d\d # date in format of YYYY-MM-DD
-        regexp: Name: \w+ # name 
+        regexp: Name: \w+ # name
         regexp: App Version Number: \d+\.\d+\.\d+ # version number
 
 Regular expressions should start with \`regexp:' marker.
@@ -363,7 +363,7 @@ Then prove execute the code above.
 
 Follow ["Story runner"](#story-runner) to know how outhentic compile stories into a perl code.
 
-Anyway, the example with 'print "Lived a boy called Othentic"' is quite useless, there are of course more effective ways how you coould use perl expressions in your stories.
+Anyway, the example with 'print "Lived a boy called Othentic"' is quite useless, there are of course more effective ways how you could use perl expressions in your stories.
 
 One of useful thing you could with perl expressions is to call some Test::More functions to modify test workflow:
 
@@ -406,7 +406,7 @@ New check list items are passed back to story runner and will be appended to a c
 
         Say
         HELLO
-     
+   
         # this generator generates plain string check expressions:
         # new items will be appended into check list
 
@@ -457,8 +457,8 @@ As long as outhentic deals with check expressions ( both plain strings or regula
 
            # stdout
            Multiline \n string \n here
-       
      
+   
            # test output
            "Multiline" matched
            "string" matched
@@ -548,7 +548,7 @@ Here some more examples:
     use DateTime;                       \
     my $c = captures()->[0];            \
     my $dt = DateTime->new( year => $c->[0], month => $c->[1], day => $c->[2]  ); \
-    my $yesterday = DateTime->now->subtract( days =>  1 );     \
+    my $yesterday = DateTime->now->subtract( days =>  1 );                        \
     cmp_ok( DateTime->compare($dt, $yesterday),'==',0,"first day found is - $dt and this is a yesterday" );
 
 You also may use \`capture()' function to get a _first element_ of captures array:
@@ -567,7 +567,7 @@ Story Hooks are extension points to hack into story run time phase. It's just fi
     # addition/story.pm
     diag "hello, I am addition story hook";
     sub is_number { [ 'regexp: ^\\d+$' ] }
-   
+ 
 
     # addition/story.check
     generator: is_number
@@ -617,23 +617,23 @@ Downstream stories are reusable stories. Runner never executes downstream storie
     use MyCalc;
     our $calc = MyCalc->new();
     print ref($calc), "\n"
-   
+ 
     # modules/create_calc_object/story.check
     MyCalc
 
-    # addition/story.pl 
+    # addition/story.pl
     # this is a upstream story
     our $calc->addition(2,2);
-   
+ 
     # addition/story.pm
     # to run downstream story
     # call run_story function
     # inside upstream story hook
     # with a single parameter - story path,
-    # note that you don't have to 
+    # note that you don't have to
     # leave modules/ directory in the path
-    run_story( 'create_calc_object' );  
-   
+    run_story( 'create_calc_object' );
+ 
  
     # multiplication/story.pl
     # this is a upstream story too
@@ -686,14 +686,14 @@ One may access story variables using \`story_var' function:
 
 
 One word about sharing state between upstream/downstream stories. As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories.
-The straitforward way to share state is to use global variables :
+The straightforward way to share state is to use global variables :
 
     # upstream story hook:
     our $state = [ 'this is upstream story' ]
 
     # downstream story hook:
     push our @$state, 'I was here'
-   
+ 
 Of course more proper approaches for state sharing could be used as singeltones or something else.
 
 ## Story variables accessors
@@ -712,28 +712,28 @@ As every story is a perl script gets run via system call, it returns an exit cod
     ignore_story_err(1);
 ```
 
-# TAP
-
-Othentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parser to bring result to
-another test / reporting systems, follow TAP documentation to get more on this.
-
-Here is example for having output in JUNIT format:
-
-    story_check --formatter TAP::Formatter::JUnit
-
-# Prove settings
-
-Othentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to run tests, all prove related parameters are passed as is to prove. Here are some examples:
-
-    story_check -Q # don't show anythings unless test summary
-    story_check -q -s # run prove tests in random and quite mode
-
-
-# Story client
+# Story runner client
 
 Once outhentic is installed you get story_check client at the \`PATH':
 
-    story_check <project_root_dir> <prove settings>
+    story_check <project_root_dir> <options>
+    
+# TAP
+
+Othentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parser to bring result to another test / reporting systems, follow TAP documentation to get more on this.
+
+Here is example for having output in JUNIT format:
+
+    story_check --prove_opts "--formatter TAP::Formatter::JUnit"
+
+# Prove settings
+
+Othentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execute tests, one my pass prove related parameters using \`--prove-opts'. Here are some examples:
+
+    story_check --prove_opts "-Q" # don't show anythings unless test summary
+    story_check --prove_opts "-q -s" # run prove tests in random and quite mode
+
+
 
 # Examples
 

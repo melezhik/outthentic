@@ -721,7 +721,14 @@ Once outhentic is installed you get story_check client at the \`PATH':
 ## Options
 
 - `--project` - root directory of outhentic project, if not set story runner starts with current working directory
+
+- `--debug` - add debug info to test output, one of possible values : \`0,1,2'. default value is \`0'
+
+- `--runner_debug` - add low level debug info to test output, mostly useful by me :) when debugging story runner 
+
 - `--story` -  run only single story, this should be file path without extentions:
+
+
 ```
   foo/story.pl
   foo/bar/story.pl 

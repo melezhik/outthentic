@@ -41,9 +41,9 @@ sub wanted {
     
     if ($file eq 'story.check') {
 
-        my $story_type = $File::Find::dir=~/modules\// ? "downstream" : "upstream";
-
         my $story_dir = $File::Find::dir;
+
+        my $story_type = ( $File::Find::dir =~ /\/modules/ ) ?  "downstream" : "upstream";
 
         my $tfile = $story_type eq 'upstream' ? "$test_root_dir/$story_dir/story.t" : "$test_root_dir/$story_dir/story.d";
 
@@ -73,6 +73,7 @@ sub wanted {
         print F "set_prop( story => q{$File::Find::dir} );\n";
         print F "set_prop( story_file => q{$File::Find::dir/story.pl} );\n";
         print F "set_prop( story_check_file => q{$File::Find::dir/story.check} );\n";
+        print F "set_prop( story_type => q{$story_type} );\n";
     
         print F "set_prop( debug => $debug_mod );\n";
         print F "set_prop( debug_bytes => 700 );\n";
@@ -82,8 +83,8 @@ sub wanted {
             print F "apply_story_vars();\n";
         }
 
-        if ( -e "$File::Find::dir/hook.pm" ){
-            print F "do_perl_file('$File::Find::dir/hook.pm');\n\n";
+        if ( -e "$File::Find::dir/story.pm" ){
+            print F "do_perl_file('$File::Find::dir/story.pm');\n\n";
         }
 
         print F "\n\nSKIP: {\n\n";

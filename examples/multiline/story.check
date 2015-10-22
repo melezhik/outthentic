@@ -1,0 +1,10 @@
+# this one generator is multiline
+generator:              \
+    [ qw(               \
+        id              \
+        title           \
+        body            \
+        userId          \
+     )                  \
+    ];
+

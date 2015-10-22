@@ -13,7 +13,7 @@ requires    'File::Temp';
 license     'perl';
 repository  'https://github.com/melezhik/outhentic';
 
-install_script 'bin/story_check';
+install_script 'bin/strun';
 
 no_index    directory => 'examples';
 

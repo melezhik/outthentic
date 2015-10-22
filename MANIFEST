@@ -1,4 +1,4 @@
-bin/story_check
+bin/strun
 CHANGELOG.md
 examples/.exists
 examples/00/02/hook.pm

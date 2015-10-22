@@ -3,6 +3,7 @@
 print something into stdout and test
 
 # Synopsis
+
 Outhentic is a text oriented test framework. Instead of hack into objects and methods it deals with text appeared in stdout. It's a black box testing framework.
 
 # Short story
@@ -19,7 +20,7 @@ print "I am outhentic\n";
 
 ```
 
-Outhentic story is just an any perl script that print something into stdout.
+Story is just an any perl script that yields something into stdout.
 
 - Create a story check:
 
@@ -34,21 +35,21 @@ Story check is a bunch of lines stdout should match. Here we require to have `I 
 
 - Run a story:
 
-Outhentic provides test runner script named `story_check'. Story runner:
+Story runner is script that parse and then execute stories, it:
 
 - finds and execute story files.
 - remember stdout.
-- validates stdout against a story checks.
+- validates stdout against a story checks content.
 
 Follow [story runner](#story-runner) section for details on story runner "guts".
 
 
 ```
-  story_check
+  strun
  
 ```
 
-( TODO: ) Add output of story_check here.
+( TODO: ) Add output of story runner here.
 
 
 # Long story
@@ -73,20 +74,23 @@ Let's create a project to test a simple calculator application:
 
 ## Stories
 
-Stories are just perl scripts placed at project directory and named story.pl. In a testing context, stories are pieces of logic to be testsed.
-Think about them like \`*.t' files in a Test::Harness.
+Stories are just perl scripts placed at project directory and named \`story.pl'. In a testing context, stories are pieces of logic to be testsed.
 
-Every story needs a distinct directory, this is how different stories are separated.
+Think about them like \`*.t' files in a perl unit test system.
 
-Let's create two stories, one for addition operation and one for addition operation:
+To tell one story file from another one should keep them in different directories. 
+
+Let's create two stories for our calc project. One story to represent addition operation and other for addition operation:
 
 
 ```
 
+  # let's create story directories  
   mkdir addition # a+b
   mkdir multiplication # a*b
 
 
+  # then create story files  
   # addition/story.pl
   use MyCalc;
   my $calc = MyCalc->new();
@@ -104,10 +108,11 @@ Let's create two stories, one for addition operation and one for addition operat
 
 ## Story checks
 
-Story checks files contain lines for validation of stdout comes out when stories are executed.
+Story checks are files that contain lines for validation of stdout from story scripts.
 
-Story check  files should be placed at the same directory as story files. Following are story checks for a two stories above.
-They validate output from our calculator's addition and multiplication methods:
+Story check file should be placed at the same directory as story file and named \`story.check'. 
+
+Following are story checks for a multiplication and addition stories:
 
 
 ```
@@ -124,15 +129,21 @@ They validate output from our calculator's addition and multiplication methods:
 Now we ready to invoke a story runner:
 
 ```
-   story_check
+   strun
 
 ```
+
+# Story term ambiguity
+
+Sometimes term \`story' refers to a couple of files representing story unit - story.pl and story.check, 
+in other cases this term refers to a single story file - story.pl.
+
 
 # Story runner
 
 This is detailed explanation of story runner life cycle.
 
-After gets run story_check script consequentially hits two phases:
+Story runner script consequentially hits two phases:
 
 - **Compilation phase** where stories are converted into perl test files.
 - **Execution phase** where perl test files are recursively executed by prove.
@@ -147,7 +158,7 @@ Recalling call-app project with 2 stories:
     addition/(story.pl,story.check)
     multiplication/(story.pl,story.check)
 
-Story_check parse every story and the creates a perl test file for it:
+Story runner parses every story and the creates a perl test file for it:
 
     addition/story.t
     multiplication/story.t
@@ -201,16 +212,23 @@ This is a time diagram for story runner life cycle:
 
 # Story checks syntax
 
-Story check is a bunch of lines stdout should match.
+Story check is a bunch of lines stdout should match. 
 
-In other words this is the list of _check expressions_, not only check expressions, there are some more things like
-comments, blank lines, text blocks, perl expressions and generators we will talk about all of them later.
+It's convenient to talk about a _check list_ - is list of none empty lines in a story check file. 
 
-But let's start with check expressions.
+Basically every item of check list is so called  _check expression_.
+
+There are other expressions could be in a check file, but we will talk about them later:
+
+- comments
+- blank lines
+- text blocks
+- perl expressions 
+- generators 
 
 ## Check expressions
 
-Story check expressions declares _what should be_ in a stdout:
+Check expressions defines _what lines stdout should have_
 
     # stdout
     HELLO
@@ -241,7 +259,7 @@ The code above declares that stdout should have lines 'I am ok' and 'HELLO Outhe
 
 - **regular expression**
 
-Similarly to plain strings matching, you may ask story runner to check if stdout has a lines matching a regular expressions:
+Similarly to plain strings matching, you may require that stdout has lines matching the regular expressions:
 
         regexp: \d\d\d\d-\d\d-\d\d # date in format of YYYY-MM-DD
         regexp: Name: \w+ # name
@@ -252,22 +270,25 @@ Regular expressions should start with \`regexp:' marker.
 
 - **captures**
 
-Note, that story runner does not care about _how many times_ a given check expression is passed in stdout.
-It's only required that check expression is passed at least once.
+Story runner does not care about _how many times_ a given check expression is found in stdout.
 
-However it's possible to accumulate all stdout matching lines and save them for further processing.
-Use \`(,)' symbols to capture sub-parts of matching lines:
+It's only required that at least one line in stdout match the check expression ( this is not the case with text blocks, see later )
 
-        regexp: Hello, my name is (\w+)
+However it's possible to _accumulate_ all matching lines and save them for further processing:
 
-See ["captures"](#captures) section for full explanation of a captures:
+        regexp: (Hello, my name is (\w+))
+
+See ["captures"](#captures) section for full explanation of a captures mechanism:
 
 
 ## Comments, blank lines and text blocks
 
+Comments and blank lines don't get added to check list. See further.
+
+
 - **comments**
 
-    Comment lines start with \`#' symbol, story runner ignores comments chunks when parse story checks:
+    Comment lines start with \`#' symbol, story runner ignores comments chunks when parse story check files:
 
         # comments could be represented at a distinct line, like here
         The beginning of story
@@ -317,7 +338,7 @@ Sometimes it is very helpful to match a stdout against a \`block of strings' goe
             at the very end
         end:
 
-This check list will succeed when gets executed against this chunk:
+This test will succeed when gets executed against this chunk:
 
         this string followed by
         that string followed by
@@ -336,7 +357,7 @@ But **will not** for this chunk:
 \`begin:' \`end:' markers decorate \`text blocks' content. \`:being|:end' markers should not be followed by any text at the same line.
 
 Also be aware if you leave "dangling" \`begin:' marker without closing \`end': somewhere else
-story runner will remain in a \`text block' mode till the end of your story check, which is probably not you want:
+story runner will remain in a \`text block' mode till the end of your story check file, which is probably not you want:
 
         begin:
             here we begin
@@ -353,19 +374,17 @@ Perl expressions are just a pieces of perl code to _get evaled_ inside your stor
         Lived a boy called Outhentic
 
 
-First story runner converts story check into perl code with eval "{code}" chunk added into it, this is called compilation phase:
+Story check files get turned into a perl test file. All \`code' lines are turned into \`eval {code}' chunks:
 
         ok($status,"stdout matches Once upon a time");
         eval 'print "Lived a boy called Outhentic"';
         ok($status,"stdout matches Lived a boy called Outhentic");
 
-Then prove execute the code above.
+Then prove execute generated perl test file.
 
-Follow ["Story runner"](#story-runner) to know how outhentic compile stories into a perl code.
+Example with 'print "Lived a boy called Outhentic"' is quite useless, there are of course more effective ways how you could use perl expressions in your stories.
 
-Anyway, the example with 'print "Lived a boy called Outhentic"' is quite useless, there are of course more effective ways how you could use perl expressions in your stories.
-
-One of useful thing you could with perl expressions is to call some Test::More functions to modify test workflow:
+One of useful thing you could with perl expressions is to call some Test::More functions to modify Test::More workflow:
 
         # skip tests
 
@@ -391,16 +410,30 @@ One of useful thing you could with perl expressions is to call some Test::More f
         number:three
 
 
-Perl expressions are executed by perl eval function, please take this into account.
+Perl expressions are executed by perl eval function, please be aware of that.
+
 Follow [http://perldoc.perl.org/functions/eval.html](http://perldoc.perl.org/functions/eval.html) to get know more about perl eval.
 
 ## Generators
 
 
-Story generators is the way to _create story check lists  on the fly_. Generators like perl expressions are just a piece of perl code with the only difference that generator code should always return _an array reference_.
+Generators is the way to _populate story check lists on the fly_. 
 
-An array returned by generator code should contain check list items, _serialized_ as perl strings.
-New check list items are passed back to story runner and will be appended to a current check list. Here is a simple example:
+Generators like perl expressions are just a piece of perl code.
+
+The only requirement for generator code - it should return _reference to array of strings_.
+
+An array returned by generator code could contain:
+
+- check expressions items
+- comments
+- blank lines
+- text blocks
+- perl expressions
+- generators
+
+
+An array items are passed back to story runner and gets appended to a current check list. Here is a simple example:
 
         # original check list
 
@@ -421,7 +454,7 @@ New check list items are passed back to story runner and will be appended to a c
         hello
         again
 
-Generators expressions start with \`:generator' marker. Here is more example:
+Generators expressions start with \`:generator' marker. Here is more complicated example:
 
         # this generator generates comment lines
         # and plain string check expressions:
@@ -436,18 +469,21 @@ Generators expressions start with \`:generator' marker. Here is more example:
             # bar
             bar value
 
+
 Note about **PERL5LIB**.
 
-Story runner adds \`project_root_directory/lib' path to PERL5LIB path, so you may perl modules here and then \`use' them:
+Story runner adds \`project_root_directory/lib' path to PERL5LIB path, so you may define some modules here and then \`use' them inside your story check:
 
         my-app/lib/Foo/Bar/Baz.pm
 
+        # story.check
         # now it is possible to use Foo::Bar::Baz
         code: use Foo::Bar::Baz; # etc ...
 
 - **multiline expressions**
 
-As long as outhentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,  that means that check expressions are single line strings and stdout response is checked in line by line way:
+As long as outhentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,  
+that means that check expressions are single line strings and stdout is validated in line by line way:
 
            # check list
            Multiline
@@ -714,9 +750,7 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
 # Story runner client
 
-Once outhentic is installed you get story_check client at the \`PATH':
-
-    story_check <options>
+    strun <options>
   
 ## Options
 
@@ -749,14 +783,14 @@ Outhentic produces output in [TAP](https://testanything.org/) format, that means
 
 Here is example for having output in JUNIT format:
 
-    story_check --prove_opts "--formatter TAP::Formatter::JUnit"
+    strun --prove_opts "--formatter TAP::Formatter::JUnit"
 
 # Prove settings
 
 Outhentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execute tests, one my pass prove related parameters using \`--prove-opts'. Here are some examples:
 
-    story_check --prove_opts "-Q" # don't show anythings unless test summary
-    story_check --prove_opts "-q -s" # run prove tests in random and quite mode
+    strun --prove_opts "-Q" # don't show anythings unless test summary
+    strun --prove_opts "-q -s" # run prove tests in random and quite mode
 
 
 
@@ -765,7 +799,7 @@ Outhentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execu
 An example outhentic project lives at examples/ directory, to run it say this:
 
 ```
-    story_check --project examples/
+    strun --project examples/
 ```
 
 # AUTHOR

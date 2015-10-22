@@ -1,3 +1,3 @@
-# 0.00001
-- no real code yet. just a cpan placeholder
+# 0.0.1
+- first release to play with
 

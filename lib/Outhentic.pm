@@ -1,6 +1,6 @@
 package Outhentic;
 
-our $VERSION = '0.00001';
+our $VERSION = '0.0.1';
 
 package main;
 

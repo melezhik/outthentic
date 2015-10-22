@@ -766,7 +766,7 @@ As every story is a perl script gets run via system call, it returns an exit cod
  
 ## Options
 
-- `--project` - root directory of outhentic project, if not set story runner starts with current working directory
+- `--root`  - root directory of outhentic project, if not set story runner starts with current working directory
 
 - `--debug` - add debug info to test output, one of possible values : \`0,1,2'. default value is \`0'
 
@@ -811,7 +811,7 @@ Outhentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execu
 An example outhentic project lives at examples/ directory, to run it say this:
 
 ```
-    strun --project examples/
+    strun --root examples/
 ```
 
 # AUTHOR

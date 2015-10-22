@@ -17,7 +17,7 @@ my $runner_debug = '';
 
 GetOptions (
         "debug=i"       => \$debug_mod,         # numeric
-        "project=s"     => \$project_root_dir,  # string
+        "root=s"        => \$project_root_dir,  # string
         "story=s"       => \$story_path,        # string
         "prove_opts=s"  => \$prove_opts,        # string
         "runner_debug"  => \$runner_debug
@@ -79,7 +79,7 @@ sub wanted {
         print F "set_prop( debug_bytes => 700 );\n";
         print F "set_prop( runner_debug => '$runner_debug' );\n";
     
-        if ($story_type eq 'downtream') {
+        if ($story_type eq 'downstream') {
             print F "apply_story_vars();\n";
         }
 

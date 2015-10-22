@@ -165,10 +165,13 @@ sub run_story {
 
     $main::story_vars = $story_vars;
 
+
     my $test_root_dir = get_prop('test_root_dir');
     my $project_root_dir = get_prop('project_root_dir');
 
     my $test_file = "$test_root_dir/$project_root_dir/modules/$path/story.d";
+
+    die "test file: $test_file does not exist" unless -e $test_file;
 
     if (debug_mod12()){
         Test::More::ok(1,"run downstream story: $path"); 

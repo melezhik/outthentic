@@ -1,3 +1,0 @@
-print "bar done\n";
-
-

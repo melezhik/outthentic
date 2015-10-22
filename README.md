@@ -43,13 +43,25 @@ Story runner is script that parse and then execute stories, it:
 
 Follow [story runner](#story-runner) section for details on story runner "guts".
 
+To execute story runner say \`strun':
 
 ```
-  strun
+
+$ strun
+/tmp/.outhentic/13952/home/vagrant/projects/outhentic/examples/hello-world/story.t ..
+ok 1 - perl /home/vagrant/projects/outhentic/examples/hello-world/story.pl succeeded
+ok 2 - stdout saved to /tmp/.outhentic/13952/ZgAZGUcduG
+ok 3 - /home/vagrant/projects/outhentic/examples/hello-world stdout has I am OK
+ok 4 - /home/vagrant/projects/outhentic/examples/hello-world stdout has I am outhentic
+1..4
+ok
+All tests successful.
+Files=1, Tests=4,  1 wallclock secs ( 0.07 usr  0.01 sys +  0.14 cusr  0.00 csys =  0.22 CPU)
+Result: PASS
  
 ```
 
-( TODO: ) Add output of story runner here.
+
 
 
 # Long story
@@ -78,19 +90,19 @@ Stories are just perl scripts placed at project directory and named \`story.pl'.
 
 Think about them like \`*.t' files in a perl unit test system.
 
-To tell one story file from another one should keep them in different directories. 
+To tell one story file from another one should keep them in different directories.
 
 Let's create two stories for our calc project. One story to represent addition operation and other for addition operation:
 
 
 ```
 
-  # let's create story directories  
+  # let's create story directories
   mkdir addition # a+b
   mkdir multiplication # a*b
 
 
-  # then create story files  
+  # then create story files
   # addition/story.pl
   use MyCalc;
   my $calc = MyCalc->new();
@@ -110,7 +122,7 @@ Let's create two stories for our calc project. One story to represent addition o
 
 Story checks are files that contain lines for validation of stdout from story scripts.
 
-Story check file should be placed at the same directory as story file and named \`story.check'. 
+Story check file should be placed at the same directory as story file and named \`story.check'.
 
 Following are story checks for a multiplication and addition stories:
 
@@ -135,7 +147,7 @@ Now we ready to invoke a story runner:
 
 # Story term ambiguity
 
-Sometimes term \`story' refers to a couple of files representing story unit - story.pl and story.check, 
+Sometimes term \`story' refers to a couple of files representing story unit - story.pl and story.check,
 in other cases this term refers to a single story file - story.pl.
 
 
@@ -212,9 +224,9 @@ This is a time diagram for story runner life cycle:
 
 # Story checks syntax
 
-Story check is a bunch of lines stdout should match. 
+Story check is a bunch of lines stdout should match.
 
-It's convenient to talk about a _check list_ - is list of none empty lines in a story check file. 
+It's convenient to talk about a _check list_ - is list of none empty lines in a story check file.
 
 Basically every item of check list is so called  _check expression_.
 
@@ -223,8 +235,8 @@ There are other expressions could be in a check file, but we will talk about the
 - comments
 - blank lines
 - text blocks
-- perl expressions 
-- generators 
+- perl expressions
+- generators
 
 ## Check expressions
 
@@ -253,7 +265,7 @@ There are two type of check expressions - plain strings and regular expressions.
 
         I am ok
         HELLO Outhentic
-   
+ 
 
 The code above declares that stdout should have lines 'I am ok' and 'HELLO Outhentic'.
 
@@ -417,7 +429,7 @@ Follow [http://perldoc.perl.org/functions/eval.html](http://perldoc.perl.org/fun
 ## Generators
 
 
-Generators is the way to _populate story check lists on the fly_. 
+Generators is the way to _populate story check lists on the fly_.
 
 Generators like perl expressions are just a piece of perl code.
 
@@ -439,7 +451,7 @@ An array items are passed back to story runner and gets appended to a current ch
 
         Say
         HELLO
-   
+ 
         # this generator generates plain string check expressions:
         # new items will be appended into check list
 
@@ -482,7 +494,7 @@ Story runner adds \`project_root_directory/lib' path to PERL5LIB path, so you ma
 
 - **multiline expressions**
 
-As long as outhentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,  
+As long as outhentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,
 that means that check expressions are single line strings and stdout is validated in line by line way:
 
            # check list
@@ -493,8 +505,8 @@ that means that check expressions are single line strings and stdout is validate
 
            # stdout
            Multiline \n string \n here
-     
    
+ 
            # test output
            "Multiline" matched
            "string" matched
@@ -751,23 +763,23 @@ As every story is a perl script gets run via system call, it returns an exit cod
 # Story runner client
 
     strun <options>
-  
+ 
 ## Options
 
 - `--project` - root directory of outhentic project, if not set story runner starts with current working directory
 
 - `--debug` - add debug info to test output, one of possible values : \`0,1,2'. default value is \`0'
 
-- `--runner_debug` - add low level debug info to test output, mostly useful by me :) when debugging story runner 
+- `--runner_debug` - add low level debug info to test output, mostly useful by me :) when debugging story runner
 
-- `--story` -  run only single story, this should be file path without extentions:
+- `--story` -  run only single story, this should be file path without extensions (.pl,.check):
 
 
 ```
   foo/story.pl
-  foo/bar/story.pl 
+  foo/bar/story.pl
   bar/story.pl
-  
+ 
   --story 'foo' # runs foo/* stories
   --story foo/story # runs foo/story.pl
   --story foo/bar/ # runs foo/bar/* stories

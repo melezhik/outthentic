@@ -7,8 +7,8 @@ blib
 \.html
 \.pod
 \.tmp
-swat-.*\.gz
-swat\.my
+outthentic-.*\.gz
+outthentic\.my
 ^MYMETA\.
 ^Makefile$
-swat-
+outthentic-

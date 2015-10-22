@@ -1,14 +1,14 @@
-# Outhentic
+# Outthentic
 
 print something into stdout and test
 
 # Synopsis
 
-Outhentic is a text oriented test framework. Instead of hack into objects and methods it deals with text appeared in stdout. It's a black box testing framework.
+Outthentic is a text oriented test framework. Instead of hack into objects and methods it deals with text appeared in stdout. It's a black box testing framework.
 
 # Short story
 
-This is a five minutes tutorial on outhentic framework workflow.
+This is a five minutes tutorial on outthentic framework workflow.
 
 - Create a story file:
 
@@ -16,7 +16,7 @@ This is a five minutes tutorial on outhentic framework workflow.
 # story.pl
 
 print "I am OK\n";
-print "I am outhentic\n";
+print "I am outthentic\n";
 
 ```
 
@@ -28,10 +28,10 @@ Story is just an any perl script that yields something into stdout.
 # story.check
 
   I am OK
-  I am outhentic
+  I am outthentic
 
 ```
-Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outhentic' lines in stdout.
+Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outthentic' lines in stdout.
 
 - Run a story:
 
@@ -48,11 +48,11 @@ To execute story runner say \`strun':
 ```
 
 $ strun
-/tmp/.outhentic/13952/home/vagrant/projects/outhentic/examples/hello-world/story.t ..
-ok 1 - perl /home/vagrant/projects/outhentic/examples/hello-world/story.pl succeeded
-ok 2 - stdout saved to /tmp/.outhentic/13952/ZgAZGUcduG
-ok 3 - /home/vagrant/projects/outhentic/examples/hello-world stdout has I am OK
-ok 4 - /home/vagrant/projects/outhentic/examples/hello-world stdout has I am outhentic
+/tmp/.outthentic/13952/home/vagrant/projects/outthentic/examples/hello-world/story.t ..
+ok 1 - perl /home/vagrant/projects/outthentic/examples/hello-world/story.pl succeeded
+ok 2 - stdout saved to /tmp/.outthentic/13952/ZgAZGUcduG
+ok 3 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am OK
+ok 4 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am outthentic
 1..4
 ok
 All tests successful.
@@ -66,7 +66,7 @@ Result: PASS
 
 # Long story
 
-Here is a step by step explanation of outhentic project layout. We explain here basic outhentic entities:
+Here is a step by step explanation of outthentic project layout. We explain here basic outthentic entities:
 
 - project
 - stories
@@ -74,7 +74,7 @@ Here is a step by step explanation of outhentic project layout. We explain here 
 
 ## Project
 
-Outhentic project is bunch of related stories. Every project is _represented_ by a directory where all the stuff is placed at.
+Outthentic project is bunch of related stories. Every project is _represented_ by a directory where all the stuff is placed at.
 
 Let's create a project to test a simple calculator application:
 
@@ -264,10 +264,10 @@ There are two type of check expressions - plain strings and regular expressions.
 - **plain string**
 
         I am ok
-        HELLO Outhentic
+        HELLO Outthentic
  
 
-The code above declares that stdout should have lines 'I am ok' and 'HELLO Outhentic'.
+The code above declares that stdout should have lines 'I am ok' and 'HELLO Outthentic'.
 
 - **regular expression**
 
@@ -382,19 +382,19 @@ Perl expressions are just a pieces of perl code to _get evaled_ inside your stor
 
         # this is my story
         Once upon a time
-        code: print "hello I am Outhentic"
-        Lived a boy called Outhentic
+        code: print "hello I am Outthentic"
+        Lived a boy called Outthentic
 
 
 Story check files get turned into a perl test file. All \`code' lines are turned into \`eval {code}' chunks:
 
         ok($status,"stdout matches Once upon a time");
-        eval 'print "Lived a boy called Outhentic"';
-        ok($status,"stdout matches Lived a boy called Outhentic");
+        eval 'print "Lived a boy called Outthentic"';
+        ok($status,"stdout matches Lived a boy called Outthentic");
 
 Then prove execute generated perl test file.
 
-Example with 'print "Lived a boy called Outhentic"' is quite useless, there are of course more effective ways how you could use perl expressions in your stories.
+Example with 'print "Lived a boy called Outthentic"' is quite useless, there are of course more effective ways how you could use perl expressions in your stories.
 
 One of useful thing you could with perl expressions is to call some Test::More functions to modify Test::More workflow:
 
@@ -494,7 +494,7 @@ Story runner adds \`project_root_directory/lib' path to PERL5LIB path, so you ma
 
 - **multiline expressions**
 
-As long as outhentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,
+As long as outthentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,
 that means that check expressions are single line strings and stdout is validated in line by line way:
 
            # check list
@@ -748,7 +748,7 @@ Of course more proper approaches for state sharing could be used as singeltones 
 
 There are some variables exposed to hooks API, they could be useful:
 
-- project_root_dir() - root directory of outhentic project
+- project_root_dir() - root directory of outthentic project
 
 - test_root_dir() - root directory of generated perl tests , see [story runner](#story-runner) section
 
@@ -766,7 +766,7 @@ As every story is a perl script gets run via system call, it returns an exit cod
  
 ## Options
 
-- `--root`  - root directory of outhentic project, if not set story runner starts with current working directory
+- `--root`  - root directory of outthentic project, if not set story runner starts with current working directory
 
 - `--debug` - add debug info to test output, one of possible values : \`0,1,2'. default value is \`0'
 
@@ -791,7 +791,7 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
 # TAP
 
-Outhentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parser to bring result to another test / reporting systems, follow TAP documentation to get more on this.
+Outthentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parser to bring result to another test / reporting systems, follow TAP documentation to get more on this.
 
 Here is example for having output in JUNIT format:
 
@@ -799,7 +799,7 @@ Here is example for having output in JUNIT format:
 
 # Prove settings
 
-Outhentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execute tests, one my pass prove related parameters using \`--prove-opts'. Here are some examples:
+Outthentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execute tests, one my pass prove related parameters using \`--prove-opts'. Here are some examples:
 
     strun --prove_opts "-Q" # don't show anythings unless test summary
     strun --prove_opts "-q -s" # run prove tests in random and quite mode
@@ -808,7 +808,7 @@ Outhentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execu
 
 # Examples
 
-An example outhentic project lives at examples/ directory, to run it say this:
+An example outthentic project lives at examples/ directory, to run it say this:
 
 ```
     strun --root examples/
@@ -820,7 +820,7 @@ An example outhentic project lives at examples/ directory, to run it say this:
 
 # Home Page
 
-https://github.com/melezhik/outhentic
+https://github.com/melezhik/outthentic
 
 
 # Thanks

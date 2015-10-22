@@ -1,2 +1,2 @@
-print "Outhentic\n";
+print "Outthentic\n";
 

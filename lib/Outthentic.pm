@@ -1,6 +1,8 @@
-package Outhentic;
+package Outthentic;
 
 our $VERSION = '0.0.1';
+
+1;
 
 package main;
 
@@ -8,7 +10,7 @@ use strict;
 use Test::More;
 use Data::Dumper;
 use File::Temp qw/ tempfile /;
-use Outhentic::Story;
+use Outthentic::Story;
 
 $| = 1;
 
@@ -354,7 +356,7 @@ Print something into stdout and test
 
 =head1 Documentation
 
-Please follow github pages  - https://github.com/melezhik/outhentic
+Please follow github pages  - https://github.com/melezhik/outthentic
 
 =head1 AUTHOR
 

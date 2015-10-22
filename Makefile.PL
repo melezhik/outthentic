@@ -1,17 +1,17 @@
 use inc::Module::Install;
 
 # Define metadata
-name           'outhentic';
+name           'outthentic';
 abstract       'print something into stdout and test';
 
-all_from       'lib/Outhentic.pm';
+all_from       'lib/Outthentic.pm';
 
 # Specific dependencies
 requires    'Test::More';
 requires    'Test::Harness';
 requires    'File::Temp';
 license     'perl';
-repository  'https://github.com/melezhik/outhentic';
+repository  'https://github.com/melezhik/outthentic';
 
 install_script 'bin/strun';
 

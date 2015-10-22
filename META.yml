@@ -13,7 +13,7 @@ license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
-name: outhentic
+name: outthentic
 no_index:
   directory:
     - examples
@@ -25,5 +25,5 @@ requires:
   Test::More: 0
 resources:
   license: http://dev.perl.org/licenses/
-  repository: https://github.com/melezhik/outhentic
+  repository: https://github.com/melezhik/outthentic
 version: 0.0.1

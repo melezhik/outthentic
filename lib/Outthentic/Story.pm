@@ -1,5 +1,5 @@
 
-package Outhentic::Story;
+package Outthentic::Story;
 
 use strict;
 use base 'Exporter';

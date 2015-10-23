@@ -25,7 +25,7 @@ GetOptions (
 ) or die("Error in command line arguments\n");
 
 
-my $test_root_dir = '/tmp/.outhentic/'.$$;
+my $test_root_dir = '/tmp/.outthentic/'.$$;
 
 remove_tree($test_root_dir);
 make_path($test_root_dir);

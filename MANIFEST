@@ -41,4 +41,4 @@ MANIFEST			This list of files
 META.yml
 README.md
 README.pod
-t/outhentic.t
+t/outthentic.t

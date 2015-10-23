@@ -974,6 +974,12 @@ C<--debug> - add debug info to test output, one of possible values : `0,1,2'. de
 
 =item *
 
+C<--match_l> - in TAP output truncate matching strings to {match_l} bytes;  default value is `30'
+
+
+
+=item *
+
 C<--runner_debug> - add low level debug info to test output, mostly useful by me :) when debugging story runner
 
 

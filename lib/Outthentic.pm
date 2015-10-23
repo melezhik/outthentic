@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.4';
+our $VERSION = '0.0.5';
 
 1;
 
@@ -339,7 +339,7 @@ sub handle_plain {
 
     my $story = get_prop('story');
 
-    my $shortened = substr( $l, 0, 10 );
+    my $shortened = substr( $l, 0, get_prop('match_l') );
 
     my $message = in_block_mode() ? "stdout has | $shortened ... " : "stdout has $shortened ... ";
     check_line($l, 'default', $message);

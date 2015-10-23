@@ -748,6 +748,8 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
 * `--debug` - add debug info to test output, one of possible values : \`0,1,2'. default value is \`0'
 
+* `--match_l` - in TAP output truncate matching strings to {match_l} bytes;  default value is \`30'
+
 * `--runner_debug` - add low level debug info to test output, mostly useful by me :) when debugging story runner
 
 * `--story` -  run only single story, this should be file path without extensions (.pl,.check):

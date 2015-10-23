@@ -288,7 +288,7 @@ Comment lines start with \`#' symbol, story runner ignores comments chunks when 
 
 * **blank lines**
 
-    Blank lines are ignored. You may use blank lines to improve code readability:
+Blank lines are ignored. You may use blank lines to improve code readability:
 
     # check output
     The beginning of story

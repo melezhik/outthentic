@@ -38,17 +38,17 @@ B<Run a story>. Story runner is script that parses and then executes stories, it
 
 =over
 
-=item -
+=item *
 
 finds and execute story files.
 
 
-=item -
+=item *
 
 remembers stdout.
 
 
-=item -
+=item *
 
 validates stdout against a story checks content.
 

@@ -247,7 +247,7 @@ Check expressions defines _what lines stdout should have_
 
 There are two type of check expressions - plain strings and regular expressions.
 
-- **plain string**
+* **plain string**
 
         I am ok
         HELLO Outthentic
@@ -255,7 +255,7 @@ There are two type of check expressions - plain strings and regular expressions.
 
 The code above declares that stdout should have lines 'I am ok' and 'HELLO Outthentic'.
 
-- **regular expression**
+* **regular expression**
 
 Similarly to plain strings matching, you may require that stdout has lines matching the regular expressions:
 
@@ -266,7 +266,7 @@ Similarly to plain strings matching, you may require that stdout has lines match
 Regular expressions should start with \`regexp:' marker.
  
 
-- **captures**
+* **captures**
 
 Story runner does not care about _how many times_ a given check expression is found in stdout.
 
@@ -477,7 +477,7 @@ Story runner adds \`project_root_directory/lib' path to PERL5LIB path, so you ma
     # now it is possible to use Foo::Bar::Baz
     code: use Foo::Bar::Baz; # etc ...
 
-- **multiline expressions**
+* **multiline expressions**
 
 As long as outthentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,
 that means that check expressions are single line strings and stdout is validated in line by line way:

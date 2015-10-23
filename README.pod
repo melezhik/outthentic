@@ -78,17 +78,17 @@ Here is a step by step explanation of outthentic project layout. We explain here
 
 =over
 
-=item -
+=item *
 
 project
 
 
-=item -
+=item *
 
 stories
 
 
-=item -
+=item *
 
 story checks
 
@@ -270,27 +270,27 @@ There are other expressions could be in a check file, but we will talk about the
 
 =over
 
-=item -
+=item *
 
 comments
 
 
-=item -
+=item *
 
 blank lines
 
 
-=item -
+=item *
 
 text blocks
 
 
-=item -
+=item *
 
 perl expressions
 
 
-=item -
+=item *
 
 generators
 
@@ -377,7 +377,7 @@ Comments and blank lines don't get added to check list. See further.
 
 =over
 
-=item -
+=item *
 
 B<comments>
 
@@ -389,7 +389,7 @@ Comment lines start with `#' symbol, story runner ignores comments chunks when p
 
 
 
-=item -
+=item *
 
 B<blank lines>
 
@@ -421,7 +421,7 @@ But you B<can't ignore> blank lines in a `text block matching' context ( see `te
 
 =over
 
-=item -
+=item *
 
 B<text blocks>
 
@@ -534,32 +534,32 @@ An array returned by generator code could contain:
 
 =over
 
-=item -
+=item *
 
 check expressions items
 
 
-=item -
+=item *
 
 comments
 
 
-=item -
+=item *
 
 blank lines
 
 
-=item -
+=item *
 
 text blocks
 
 
-=item -
+=item *
 
 perl expressions
 
 
-=item -
+=item *
 
 generators
 
@@ -751,22 +751,22 @@ There are lot of reasons why you might need a hooks. To say a few:
 
 =over
 
-=item -
+=item *
 
-redefine stdout
+redefine story stdout
 
 
-=item -
+=item *
 
 define generators
 
 
-=item -
+=item *
 
 call downstream stories
 
 
-=item -
+=item *
 
 other custom code
 
@@ -842,25 +842,25 @@ Here are the brief comments to the example above:
 
 =over
 
-=item -
+=item *
 
 to make story as downstream simply create story file at modules/ directory
 
 
 
-=item -
+=item *
 
 call `runI<story(story>path)' function inside upstream story hook to run downstream story.
 
 
 
-=item -
+=item *
 
 you can call as many downstream stories as you wish.
 
 
 
-=item -
+=item *
 
 you can call the same downstream story more than once.
 
@@ -880,7 +880,7 @@ Here is an example code snippet:
 
 =over
 
-=item -
+=item *
 
 downstream stories have variables you may pass to when invoke one:
 
@@ -891,7 +891,14 @@ downstream stories have variables you may pass to when invoke one:
      run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
 
 
-One may access story variables using `story_var' function:
+=over
+
+=item *
+
+one may access story variables using `story_var' function:
+
+
+=back
 
 ```
     # create_calc_object/story.pm
@@ -903,13 +910,13 @@ One may access story variables using `story_var' function:
 
 =over
 
-=item -
+=item *
 
 downstream stories may invoke other downstream stories
 
 
 
-=item -
+=item *
 
 you can't use story variables in a none downstream story
 
@@ -935,13 +942,13 @@ There are some variables exposed to hooks API, they could be useful:
 
 =over
 
-=item -
+=item *
 
 projectI<root>dir() - root directory of outthentic project
 
 
 
-=item -
+=item *
 
 testI<root>dir() - root directory of generated perl tests , see L<story runner|#story-runner> section
 
@@ -968,25 +975,25 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
 =over
 
-=item -
+=item *
 
 C<--root>  - root directory of outthentic project, if not set story runner starts with current working directory
 
 
 
-=item -
+=item *
 
 C<--debug> - add debug info to test output, one of possible values : `0,1,2'. default value is `0'
 
 
 
-=item -
+=item *
 
 C<--runner_debug> - add low level debug info to test output, mostly useful by me :) when debugging story runner
 
 
 
-=item -
+=item *
 
 C<--story> -  run only single story, this should be file path without extensions (.pl,.check):
 
@@ -1007,7 +1014,7 @@ C<--story> -  run only single story, this should be file path without extensions
 
 =over
 
-=item -
+=item *
 
 C<--prove-opts> - prove parameters, see L<prove settings|#prove-settings> section
 
@@ -1056,7 +1063,7 @@ https://github.com/melezhik/outthentic
 
 =over
 
-=item -
+=item *
 
 to God as:
 ```
@@ -1069,7 +1076,7 @@ For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding.
 ```
 
 
-=item -
+=item *
 
 to the Authors of : perl, TAP, Test::More, Test::Harness
 

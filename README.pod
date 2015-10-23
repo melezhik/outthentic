@@ -13,66 +13,28 @@ Outthentic is a text oriented test framework. Instead of hack into objects and m
 
 =head1 Install
 
- 
-     cpanm Outthentic
-
+    cpanm Outthentic
 
 
 =head1 Short story
 
 This is a five minutes tutorial on outthentic framework workflow.
 
-=over
+B<Create a story file>. Story is just an any perl script that yields something into stdout:
 
-=item -
+    # story.pl
+    
+    print "I am OK\n";
+    print "I am outthentic\n";
 
-Create a story file:
+B<Create a story check file>. Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outthentic' lines in stdout:
 
+    # story.check
+    
+    I am OK
+    I am outthentic
 
-=back
-
-```
-
-
-=head1 story.pl
-
-print "I am OK\n";
-print "I am outthentic\n";
-
-```
-
-Story is just an any perl script that yields something into stdout.
-
-=over
-
-=item -
-
-Create a story check:
-
-
-=back
-
-```
-
-
-=head1 story.check
-
-  I am OK
-  I am outthentic
-
-```
-Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outthentic' lines in stdout.
-
-=over
-
-=item -
-
-Run a story:
-
-
-=back
-
-Story runner is script that parse and then execute stories, it:
+B<Run a story>. Story runner is script that parses and then executes stories, it:
 
 =over
 
@@ -83,7 +45,7 @@ finds and execute story files.
 
 =item -
 
-remember stdout.
+remembers stdout.
 
 
 =item -
@@ -97,21 +59,17 @@ Follow L<story runner|#story-runner> section for details on story runner "guts".
 
 To execute story runner say `strun':
 
-```
-
-$ strun
-/tmp/.outthentic/13952/home/vagrant/projects/outthentic/examples/hello-world/story.t ..
-ok 1 - perl /home/vagrant/projects/outthentic/examples/hello-world/story.pl succeeded
-ok 2 - stdout saved to /tmp/.outthentic/13952/ZgAZGUcduG
-ok 3 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am OK
-ok 4 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am outthentic
-1..4
-ok
-All tests successful.
-Files=1, Tests=4,  1 wallclock secs ( 0.07 usr  0.01 sys +  0.14 cusr  0.00 csys =  0.22 CPU)
-Result: PASS
-
-```
+    $ strun
+    /tmp/.outthentic/13952/home/vagrant/projects/outthentic/examples/hello-world/story.t ..
+    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello-world/story.pl succeeded
+    ok 2 - stdout saved to /tmp/.outthentic/13952/ZgAZGUcduG
+    ok 3 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am OK
+    ok 4 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am outthentic
+    1..4
+    ok
+    All tests successful.
+    Files=1, Tests=4,  1 wallclock secs ( 0.07 usr  0.01 sys +  0.14 cusr  0.00 csys =  0.22 CPU)
+    Result: PASS
 
 
 =head1 Long story

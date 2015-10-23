@@ -694,13 +694,10 @@ Here is an example code snippet:
 
 * one may access story variables using \`story_var' function:
 
-
     # create_calc_object/story.pm
     story_var('use_float');
     story_var('use_complex_numbers');
     story_var('foo');
-
-
 
 * downstream stories may invoke other downstream stories
 

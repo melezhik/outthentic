@@ -64,9 +64,9 @@ To execute story runner say \`strun':
 
 Here is a step by step explanation of outthentic project layout. We explain here basic outthentic entities:
 
-- project
-- stories
-- story checks
+* project
+* stories
+* story checks
 
 ## Project
 
@@ -77,7 +77,7 @@ Let's create a project to test a simple calculator application:
 ```
   mkdir calc-app
   cd calc-app
- 
+
 ```
 
 ## Stories
@@ -228,11 +228,11 @@ Basically every item of check list is so called  _check expression_.
 
 There are other expressions could be in a check file, but we will talk about them later:
 
-- comments
-- blank lines
-- text blocks
-- perl expressions
-- generators
+* comments
+* blank lines
+* text blocks
+* perl expressions
+* generators
 
 ## Check expressions
 
@@ -294,7 +294,7 @@ See ["captures"](#captures) section for full explanation of a captures mechanism
 Comments and blank lines don't get added to check list. See further.
 
 
-- **comments**
+* **comments**
 
     Comment lines start with \`#' symbol, story runner ignores comments chunks when parse story check files:
 
@@ -302,7 +302,7 @@ Comments and blank lines don't get added to check list. See further.
         The beginning of story
         Hello World # or could be added to existed expression to the right, like here
 
-- **blank lines**
+* **blank lines**
 
     Blank lines are ignored. You may use blank lines to improve code readability:
 
@@ -326,7 +326,7 @@ But you **can't ignore** blank lines in a \`text block matching' context ( see \
             :blank_line
         end:
 
-- **text blocks**
+* **text blocks**
 
 Sometimes it is very helpful to match a stdout against a \`block of strings' goes consequentially, like here:
 
@@ -433,12 +433,12 @@ The only requirement for generator code - it should return _reference to array o
 
 An array returned by generator code could contain:
 
-- check expressions items
-- comments
-- blank lines
-- text blocks
-- perl expressions
-- generators
+* check expressions items
+* comments
+* blank lines
+* text blocks
+* perl expressions
+* generators
 
 
 An array items are passed back to story runner and gets appended to a current check list. Here is a simple example:
@@ -619,10 +619,10 @@ Story Hooks are extension points to hack into story run time phase. It's just fi
 
 There are lot of reasons why you might need a hooks. To say a few:
 
-- redefine stdout
-- define generators
-- call downstream stories
-- other custom code
+* redefine story stdout
+* define generators
+* call downstream stories
+* other custom code
 
 
 # Hooks API
@@ -690,13 +690,13 @@ Downstream stories are reusable stories. Runner never executes downstream storie
 
 Here are the brief comments to the example above:
 
-- to make story as downstream simply create story file at modules/ directory
+* to make story as downstream simply create story file at modules/ directory
 
-- call \`run_story(story_path)' function inside upstream story hook to run downstream story.
+* call \`run_story(story_path)' function inside upstream story hook to run downstream story.
 
-- you can call as many downstream stories as you wish.
+* you can call as many downstream stories as you wish.
 
-- you can call the same downstream story more than once.
+* you can call the same downstream story more than once.
 
 Here is an example code snippet:
 
@@ -708,13 +708,13 @@ Here is an example code snippet:
 
 ```
 
-- downstream stories have variables you may pass to when invoke one:
+* downstream stories have variables you may pass to when invoke one:
 
 ```
     run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
 ```
 
-One may access story variables using \`story_var' function:
+* one may access story variables using \`story_var' function:
 
 ```
     # create_calc_object/story.pm
@@ -724,9 +724,9 @@ One may access story variables using \`story_var' function:
 
 ```
 
-- downstream stories may invoke other downstream stories
+* downstream stories may invoke other downstream stories
 
-- you can't use story variables in a none downstream story
+* you can't use story variables in a none downstream story
 
 
 One word about sharing state between upstream/downstream stories. As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories.
@@ -744,9 +744,9 @@ Of course more proper approaches for state sharing could be used as singeltones 
 
 There are some variables exposed to hooks API, they could be useful:
 
-- project_root_dir() - root directory of outthentic project
+* project_root_dir() - root directory of outthentic project
 
-- test_root_dir() - root directory of generated perl tests , see [story runner](#story-runner) section
+* test_root_dir() - root directory of generated perl tests , see [story runner](#story-runner) section
 
 ## Ignore unsuccessful codes when run stories
 
@@ -762,13 +762,13 @@ As every story is a perl script gets run via system call, it returns an exit cod
  
 ## Options
 
-- `--root`  - root directory of outthentic project, if not set story runner starts with current working directory
+* `--root`  - root directory of outthentic project, if not set story runner starts with current working directory
 
-- `--debug` - add debug info to test output, one of possible values : \`0,1,2'. default value is \`0'
+* `--debug` - add debug info to test output, one of possible values : \`0,1,2'. default value is \`0'
 
-- `--runner_debug` - add low level debug info to test output, mostly useful by me :) when debugging story runner
+* `--runner_debug` - add low level debug info to test output, mostly useful by me :) when debugging story runner
 
-- `--story` -  run only single story, this should be file path without extensions (.pl,.check):
+* `--story` -  run only single story, this should be file path without extensions (.pl,.check):
 
 
 ```
@@ -782,7 +782,7 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
 ```
 
-- `--prove-opts` - prove parameters, see [prove settings](#prove-settings) section
+* `--prove-opts` - prove parameters, see [prove settings](#prove-settings) section
  
 
 # TAP
@@ -821,9 +821,9 @@ https://github.com/melezhik/outthentic
 
 # Thanks
 
-- to God as:
+* to God as:
 ```
 - For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding.
 (Proverbs 2:6)
 ```
-- to the Authors of : perl, TAP, Test::More, Test::Harness
+* to the Authors of : perl, TAP, Test::More, Test::Harness

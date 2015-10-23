@@ -20,27 +20,54 @@ Outthentic is a text oriented test framework. Instead of hack into objects and m
 
 This is a five minutes tutorial on outthentic framework workflow.
 
-B<Create a story file>. Story is just an any perl script that yields something into stdout:
+=over
+
+=item *
+
+Create a story file 
+
+
+=back
+
+Story is just an any perl script that yields something into stdout:
 
     # story.pl
     
     print "I am OK\n";
     print "I am outthentic\n";
 
-B<Create a story check file>. Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outthentic' lines in stdout:
+=over
+
+=item *
+
+Create a story check file
+
+
+=back
+
+Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outthentic' lines in stdout:
 
     # story.check
     
     I am OK
     I am outthentic
 
-B<Run a story>. Story runner is script that parses and then executes stories, it:
+=over
+
+=item *
+
+Run a story
+
+
+=back
+
+Story runner is script that parses and then executes stories, it:
 
 =over
 
 =item *
 
-finds and execute story files.
+finds and executes story files.
 
 
 =item *
@@ -102,11 +129,8 @@ Outthentic project is bunch of related stories. Every project is I<represented> 
 
 Let's create a project to test a simple calculator application:
 
-```
-  mkdir calc-app
-  cd calc-app
-
-```
+    mkdir calc-app
+    cd calc-app
 
 
 =head2 Stories
@@ -119,26 +143,23 @@ To tell one story file from another one should keep them in different directorie
 
 Let's create two stories for our calc project. One story to represent addition operation and other for addition operation:
 
-```
-
-  # let's create story directories
-  mkdir addition # a+b
-  mkdir multiplication # a*b
-
-  # then create story files
-  # addition/story.pl
-  use MyCalc;
-  my $calc = MyCalc->new();
-  print $calc->add(2,2), "\n";
-  print $calc->add(3,3), "\n";
-
-  # multiplication/story.pl
-  use MyCalc;
-  my $calc = MyCalc->new();
-  print $calc->mult(2,3), "\n";
-  print $calc->mult(3,4), "\n";
-
-```
+    # let's create story directories
+    mkdir addition # a+b
+    mkdir multiplication # a*b
+    
+    
+    # then create story files
+    # addition/story.pl
+    use MyCalc;
+    my $calc = MyCalc->new();
+    print $calc->add(2,2), "\n";
+    print $calc->add(3,3), "\n";
+    
+    # multiplication/story.pl
+    use MyCalc;
+    my $calc = MyCalc->new();
+    print $calc->mult(2,3), "\n";
+    print $calc->mult(3,4), "\n";
 
 
 =head2 Story checks
@@ -149,23 +170,17 @@ Story check file should be placed at the same directory as story file and named 
 
 Following are story checks for a multiplication and addition stories:
 
-```
-  # addition/story.check
-  4
-  6
-
-  # multiplication/story.check
-  6
-  12
-
-```
+    # addition/story.check
+    4
+    6
+     
+    # multiplication/story.check
+    6
+    12
 
 Now we ready to invoke a story runner:
 
-```
-   strun
-
-```
+    $ strun
 
 
 =head1 Story term ambiguity
@@ -212,9 +227,7 @@ Story runner parses every story and the creates a perl test file for it:
 
 Every perl test file holds a list of the Test::More asserts:
 
-```
     # addition/story.t
-
     run_story('multiplication/story.pl');
      
     SKIP {
@@ -230,8 +243,6 @@ Every perl test file holds a list of the Test::More asserts:
         ok($status,'story stdout matches 6');
         ok($status,'story stdout matches 12');
     }
-
-```
 
 
 =head2 Execution phase
@@ -345,9 +356,9 @@ B<regular expression>
 
 Similarly to plain strings matching, you may require that stdout has lines matching the regular expressions:
 
-        regexp: \d\d\d\d-\d\d-\d\d # date in format of YYYY-MM-DD
-        regexp: Name: \w+ # name
-        regexp: App Version Number: \d+\.\d+\.\d+ # version number
+    regexp: \d\d\d\d-\d\d-\d\d # date in format of YYYY-MM-DD
+    regexp: Name: \w+ # name
+    regexp: App Version Number: \d+\.\d+\.\d+ # version number
 
 Regular expressions should start with `regexp:' marker.
 
@@ -366,7 +377,7 @@ It's only required that at least one line in stdout match the check expression (
 
 However it's possible to I<accumulate> all matching lines and save them for further processing:
 
-        regexp: (Hello, my name is (\w+))
+    regexp: (Hello, my name is (\w+))
 
 See L<"captures"|#captures> section for full explanation of a captures mechanism:
 
@@ -381,17 +392,23 @@ Comments and blank lines don't get added to check list. See further.
 
 B<comments>
 
+
+=back
+
 Comment lines start with `#' symbol, story runner ignores comments chunks when parse story check files:
 
     # comments could be represented at a distinct line, like here
     The beginning of story
     Hello World # or could be added to existed expression to the right, like here
 
-
+=over
 
 =item *
 
 B<blank lines>
+
+
+=back
 
 Blank lines are ignored. You may use blank lines to improve code readability:
 
@@ -403,21 +420,17 @@ Blank lines are ignored. You may use blank lines to improve code readability:
     # then another check
     HELLO WORLD
 
-
-
-=back
-
 But you B<can't ignore> blank lines in a `text block matching' context ( see `text blocks' subsection ), use `:blank_line' marker to match blank lines:
 
-        # :blank_line marker matches blank lines
-        # this is especially useful
-        # when match in text blocks context:
+    # :blank_line marker matches blank lines
+    # this is especially useful
+    # when match in text blocks context:
     
-        begin:
-            this line followed by 2 blank lines
-            :blank_line
-            :blank_line
-        end:
+    begin:
+        this line followed by 2 blank lines
+        :blank_line
+        :blank_line
+    end:
 
 =over
 
@@ -430,37 +443,37 @@ B<text blocks>
 
 Sometimes it is very helpful to match a stdout against a `block of strings' goes consequentially, like here:
 
-        # this text block
-        # consists of 5 strings
-        # goes consequentially
-        # line by line:
+    # this text block
+    # consists of 5 strings
+    # goes consequentially
+    # line by line:
     
-        begin:
-            # plain strings
-            this string followed by
-            that string followed by
-            another one
-            # regexps patterns:
+    begin:
+        # plain strings
+        this string followed by
+        that string followed by
+        another one
+        # regexps patterns:
         regexp: with (this|that)
-            # and the last one in a block
-            at the very end
-        end:
+        # and the last one in a block
+        at the very end
+    end:
 
 This test will succeed when gets executed against this chunk:
 
-        this string followed by
-        that string followed by
-        another one string
-        with that string
-        at the very end.
+    this string followed by
+    that string followed by
+    another one string
+    with that string
+    at the very end.
 
 But B<will not> for this chunk:
 
-        that string followed by
-        this string followed by
-        another one string
-        with that string
-        at the very end.
+    that string followed by
+    this string followed by
+    another one string
+    with that string
+    at the very end.
 
 `begin:' `end:' markers decorate `text blocks' content. `:being|:end' markers should not be followed by any text at the same line.
 
@@ -477,16 +490,16 @@ story runner will remain in a `text block' mode till the end of your story check
 
 Perl expressions are just a pieces of perl code to I<get evaled> inside your story. This is how it works:
 
-        # this is my story
-        Once upon a time
-        code: print "hello I am Outthentic"
-        Lived a boy called Outthentic
+    # this is my story
+    Once upon a time
+    code: print "hello I am Outthentic"
+    Lived a boy called Outthentic
 
 Story check files get turned into a perl test file. All `code' lines are turned into `eval {code}' chunks:
 
-        ok($status,"stdout matches Once upon a time");
-        eval 'print "Lived a boy called Outthentic"';
-        ok($status,"stdout matches Lived a boy called Outthentic");
+    ok($status,"stdout matches Once upon a time");
+    eval 'print "Lived a boy called Outthentic"';
+    ok($status,"stdout matches Lived a boy called Outthentic");
 
 Then prove execute generated perl test file.
 
@@ -494,28 +507,28 @@ Example with 'print "Lived a boy called Outthentic"' is quite useless, there are
 
 One of useful thing you could with perl expressions is to call some Test::More functions to modify Test::More workflow:
 
-        # skip tests
+    # skip tests
     
-        code: skip('next 3 checks are skipped',3) # skip three next checks forever
-        color: red
-        color: blue
-        color: green
+    code: skip('next 3 checks are skipped',3) # skip three next checks forever
+    color: red
+    color: blue
+    color: green
     
-        number:one
-        number:two
-        number:three
+    number:one
+    number:two
+    number:three
     
-        # skip tests conditionally
+    # skip tests conditionally
     
-        color: red
-        color: blue
-        color: green
+    color: red
+    color: blue
+    color: green
     
-        code: skip('numbers checks are skipped',3)  if $ENV{'skip_numbers'} # skip three next checks if skip_numbers set
+    code: skip('numbers checks are skipped',3)  if $ENV{'skip_numbers'} # skip three next checks if skip_numbers set
     
-        number:one
-        number:two
-        number:three
+    number:one
+    number:two
+    number:three
 
 Perl expressions are executed by perl eval function, please be aware of that.
 
@@ -568,49 +581,48 @@ generators
 
 An array items are passed back to story runner and gets appended to a current check list. Here is a simple example:
 
-        # original check list
+    # original check list
     
-        Say
-        HELLO
+    Say
+    HELLO
      
-        # this generator generates plain string check expressions:
-        # new items will be appended into check list
+    # this generator generates plain string check expressions:
+    # new items will be appended into check list
     
-        generator: [ qw{ say hello again } ]
+    generator: [ qw{ say hello again } ]
     
     
-        # final check list:
+    # final check list:
     
-        Say
-        HELLO
-        say
-        hello
-        again
+    Say
+    HELLO
+    say
+    hello
+    again
 
 Generators expressions start with `:generator' marker. Here is more complicated example:
 
-        # this generator generates comment lines
-        # and plain string check expressions:
+    # this generator generates comment lines
+    # and plain string check expressions:
     
-        generator: my %d = { 'foo' => 'foo value', 'bar' => 'bar value' }; [ map  { ( "# $_", "$data{$_}" )  } keys %d ]
+    generator: my %d = { 'foo' => 'foo value', 'bar' => 'bar value' }; [ map  { ( "# $_", "$data{$_}" )  } keys %d ]
     
+    # final check list:
     
-        # final check list:
-    
-            # foo
-            foo value
-            # bar
-            bar value
+    # foo
+    foo value
+    # bar
+    bar value
 
 Note about B<PERL5LIB>.
 
 Story runner adds `projectI<root>directory/lib' path to PERL5LIB path, so you may define some modules here and then `use' them inside your story check:
 
-        my-app/lib/Foo/Bar/Baz.pm
+    my-app/lib/Foo/Bar/Baz.pm
     
-        # story.check
-        # now it is possible to use Foo::Bar::Baz
-        code: use Foo::Bar::Baz; # etc ...
+    # story.check
+    # now it is possible to use Foo::Bar::Baz
+    code: use Foo::Bar::Baz; # etc ...
 
 =over
 
@@ -624,30 +636,29 @@ B<multiline expressions>
 As long as outthentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,
 that means that check expressions are single line strings and stdout is validated in line by line way:
 
-           # check list
-           Multiline
-           string
-           here
-           regexp: Multiline \n string \n here
+    # check list
+    Multiline
+    string
+    here
+    regexp: Multiline \n string \n here
     
-           # stdout
-           Multiline \n string \n here
+    # stdout
+    Multiline \n string \n here
        
      
-           # test output
-           "Multiline" matched
-           "string" matched
-           "here" matched
-           "Multiline \n string \n here" not matched
+    # test output
+    "Multiline" matched
+    "string" matched
+    "here" matched
+    "Multiline \n string \n here" not matched
 
 Use text blocks instead if you want to achieve multiline checks.
 
 However when writing perl expressions or generators one could use multilines there.  `\' delimiters breaks a single line text on a multi lines:
 
-```
     # What about to validate stdout response
     # With sqlite database entries?
-
+    
     generator:                                                          \
     
     use DBI;                                                            \
@@ -658,24 +669,20 @@ However when writing perl expressions or generators one could use multilines the
     
     [ map { $_->[0] } @${results} ]
 
-```
-
 
 =head1 Captures
 
 Captures are pieces of data get captured when story runner checks stdout with regular expressions:
 
-```
     # stdout
     # it's my family ages.
     alex    38
     julia   25
     jan     2
-
+    
+    
     # let's capture name and age chunks
     regexp: /(\w+)\s+(\d+)/
-
-```
 
 I<After> this regular expression check gets executed captured data will stored into a array:
 
@@ -687,15 +694,12 @@ I<After> this regular expression check gets executed captured data will stored i
 
 Then captured data might be accessed for example by code generator to define some extra checks:
 
-```
     code:                               \
     my $total=0;                        \
     for my $c (@{captures()}) {         \
         $total+=$c->[0];                \
     }                                   \
     cmp_ok( $total,'==',72,"total age of my family" );
-
-```
 
 `captures()' function is used to access captured data array, it returns an array reference holding all chunks captured during I<latest regular expression check>.
 
@@ -801,8 +805,6 @@ Story runner allow you to call one story from another, using notion of downstrea
 
 Downstream stories are reusable stories. Runner never executes downstream stories directly, instead you have to call downstream story from I<upstream> one:
 
-```
-
     # modules/create_calc_object/story.pl
     # this is a downstream story
     # to make story downstream
@@ -836,8 +838,6 @@ Downstream stories are reusable stories. Runner never executes downstream storie
     # multiplication/story.pm
     run_story( 'create_calc_object' );
 
-```
-
 Here are the brief comments to the example above:
 
 =over
@@ -870,43 +870,30 @@ you can call the same downstream story more than once.
 
 Here is an example code snippet:
 
-```
     # story.pm
     run_story( 'some_story' )
     run_story( 'yet_another_story' )
     run_story( 'some_story' )
 
-```
-
 =over
 
 =item *
 
-downstream stories have variables you may pass to when invoke one:
+stories variables 
 
 
 =back
 
- 
-     run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
+You may pass variables to downstream story with the second argument of `run_story'  function:
 
+    run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
 
-=over
+Story variables get accessed by  `story_var' function:
 
-=item *
-
-one may access story variables using `story_var' function:
-
-
-=back
-
-```
     # create_calc_object/story.pm
     story_var('use_float');
     story_var('use_complex_numbers');
     story_var('foo');
-
-```
 
 =over
 
@@ -961,9 +948,7 @@ testI<root>dir() - root directory of generated perl tests , see L<story runner|#
 
 As every story is a perl script gets run via system call, it returns an exit code. None zero exit codes result in test failures, this default behavior , to disable this say:
 
- 
-     ignore_story_err(1);
-
+    ignore_story_err(1);
 
 
 =head1 Story runner client
@@ -997,11 +982,6 @@ C<--runner_debug> - add low level debug info to test output, mostly useful by me
 
 C<--story> -  run only single story, this should be file path without extensions (.pl,.check):
 
-
-
-=back
-
-```
   foo/story.pl
   foo/bar/story.pl
   bar/story.pl
@@ -1010,9 +990,7 @@ C<--story> -  run only single story, this should be file path without extensions
   --story foo/story # runs foo/story.pl
   --story foo/bar/ # runs foo/bar/> stories
 
-```
 
-=over
 
 =item *
 
@@ -1044,9 +1022,7 @@ Outthentic utilize L<prove utility|http://search.cpan.org/perldoc?prove> to exec
 
 An example outthentic project lives at examples/ directory, to run it say this:
 
- 
-     strun --root examples/
-
+    $ strun --root examples/
 
 
 =head1 AUTHOR
@@ -1065,20 +1041,14 @@ https://github.com/melezhik/outthentic
 
 =item *
 
-to God as:
-```
+to God as - I<For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)>
 
-
-=item -
-
-For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding.
-(Proverbs 2:6)
-```
 
 
 =item *
 
 to the Authors of : perl, TAP, Test::More, Test::Harness
+
 
 
 =back

@@ -15,7 +15,7 @@ Outthentic is a text oriented test framework. Instead of hack into objects and m
 
 This is a five minutes tutorial on outthentic framework workflow.
 
-*Create a story file*. Story is just an any perl script that yields something into stdout:
+**Create a story file**. Story is just an any perl script that yields something into stdout:
 
     # story.pl
 
@@ -25,15 +25,14 @@ This is a five minutes tutorial on outthentic framework workflow.
 
 
 
-*Create a story check file*. Story check is a bunch of lines stdout should match. Here we require to have \`I am OK' and \`I am outthentic' lines in stdout:
+**Create a story check file**. Story check is a bunch of lines stdout should match. Here we require to have \`I am OK' and \`I am outthentic' lines in stdout:
 
+    # story.check
 
-  # story.check
+    I am OK
+    I am outthentic
 
-  I am OK
-  I am outthentic
-
-*Run a story*. Story runner is script that parses and then executes stories, it:
+**Run a story**. Story runner is script that parses and then executes stories, it:
 
 - finds and execute story files.
 - remembers stdout.

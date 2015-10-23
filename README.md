@@ -685,14 +685,14 @@ Here is an example code snippet:
     run_story( 'yet_another_story' )
     run_story( 'some_story' )
 
-* downstream stories have variables you may pass to when invoke one:
+* stories variables 
 
+You may pass variables to downstream story with the second argument of \`run_story'  function:
 
     run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
 
 
-* one may access story variables using \`story_var' function:
-
+Story variables get accessed by  \`story_var' function:
 
     # create_calc_object/story.pm
     story_var('use_float');

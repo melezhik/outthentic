@@ -8,64 +8,55 @@ Outthentic is a text oriented test framework. Instead of hack into objects and m
 
 # Install
 
-```
     cpanm Outthentic
-```
+
 
 # Short story
 
 This is a five minutes tutorial on outthentic framework workflow.
 
-- Create a story file:
+*Create a story file*. Story is just an any perl script that yields something into stdout:
 
-```
-# story.pl
+    # story.pl
 
-print "I am OK\n";
-print "I am outthentic\n";
+    print "I am OK\n";
+    print "I am outthentic\n";
 
-```
 
-Story is just an any perl script that yields something into stdout.
 
-- Create a story check:
 
-```
-# story.check
+*Create a story check file*. Story check is a bunch of lines stdout should match. Here we require to have \`I am OK' and \`I am outthentic' lines in stdout:
+
+
+  # story.check
 
   I am OK
   I am outthentic
 
-```
-Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outthentic' lines in stdout.
-
-- Run a story:
-
-Story runner is script that parse and then execute stories, it:
+*Run a story*. Story runner is script that parses and then executes stories, it:
 
 - finds and execute story files.
-- remember stdout.
+- remembers stdout.
 - validates stdout against a story checks content.
 
 Follow [story runner](#story-runner) section for details on story runner "guts".
 
 To execute story runner say \`strun':
 
-```
 
-$ strun
-/tmp/.outthentic/13952/home/vagrant/projects/outthentic/examples/hello-world/story.t ..
-ok 1 - perl /home/vagrant/projects/outthentic/examples/hello-world/story.pl succeeded
-ok 2 - stdout saved to /tmp/.outthentic/13952/ZgAZGUcduG
-ok 3 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am OK
-ok 4 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am outthentic
-1..4
-ok
-All tests successful.
-Files=1, Tests=4,  1 wallclock secs ( 0.07 usr  0.01 sys +  0.14 cusr  0.00 csys =  0.22 CPU)
-Result: PASS
+    $ strun
+    /tmp/.outthentic/13952/home/vagrant/projects/outthentic/examples/hello-world/story.t ..
+    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello-world/story.pl succeeded
+    ok 2 - stdout saved to /tmp/.outthentic/13952/ZgAZGUcduG
+    ok 3 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am OK
+    ok 4 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am outthentic
+    1..4
+    ok
+    All tests successful.
+    Files=1, Tests=4,  1 wallclock secs ( 0.07 usr  0.01 sys +  0.14 cusr  0.00 csys =  0.22 CPU)
+    Result: PASS
  
-```
+
 
 
 

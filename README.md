@@ -280,7 +280,7 @@ Comments and blank lines don't get added to check list. See further.
 
 * **comments**
 
-    Comment lines start with \`#' symbol, story runner ignores comments chunks when parse story check files:
+Comment lines start with \`#' symbol, story runner ignores comments chunks when parse story check files:
 
     # comments could be represented at a distinct line, like here
     The beginning of story
@@ -799,9 +799,6 @@ https://github.com/melezhik/outthentic
 
 # Thanks
 
-* to God as:
-
-    - For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding.
-    (Proverbs 2:6)
+* to God **For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)**
 
 * to the Authors of : perl, TAP, Test::More, Test::Harness

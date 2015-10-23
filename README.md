@@ -803,6 +803,6 @@ https://github.com/melezhik/outthentic
 
 # Thanks
 
-* to God **For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)**
+* to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
 
 * to the Authors of : perl, TAP, Test::More, Test::Harness

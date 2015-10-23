@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.3';
+our $VERSION = '0.0.4';
 
 1;
 
@@ -327,7 +327,7 @@ sub handle_regexp {
 
     my $story = get_prop('story');
 
-    my $message = in_block_mode() ? "$story stdout matches the | $re" : "$story stdout matches the $re";
+    my $message = in_block_mode() ? "stdout matches the | $re" : "stdout matches the $re";
     check_line($re, 'regexp', $message);
     diag "handle_regexp OK. $re" if runner_debug();
 
@@ -339,11 +339,12 @@ sub handle_plain {
 
     my $story = get_prop('story');
 
-    my $message = in_block_mode() ? "$story stdout has | $l" : "$story stdout has $l";
+    my $shortened = substr( $l, 0, 10 );
+
+    my $message = in_block_mode() ? "stdout has | $shortened ... " : "stdout has $shortened ... ";
     check_line($l, 'default', $message);
     diag "handle_plain OK. $l" if runner_debug();
 }
-
 
 1;
 

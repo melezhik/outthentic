@@ -77,7 +77,7 @@ sub wanted {
             print F "use Test::More q{no_plan};\n";
         }
     
-        print F "use Outhentic;\n\n\n";
+        print F "use Outthentic;\n\n\n";
     
         print F "new_story();\n\n";
     

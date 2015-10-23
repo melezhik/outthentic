@@ -34,9 +34,9 @@ This is a five minutes tutorial on outthentic framework workflow.
 
 **Run a story**. Story runner is script that parses and then executes stories, it:
 
-- finds and execute story files.
-- remembers stdout.
-- validates stdout against a story checks content.
+* finds and execute story files.
+* remembers stdout.
+* validates stdout against a story checks content.
 
 Follow [story runner](#story-runner) section for details on story runner "guts".
 

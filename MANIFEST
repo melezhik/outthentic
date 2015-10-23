@@ -1,16 +1,13 @@
 bin/strun
 Changes
 examples/.exists
-examples/00/02/story.check
-examples/00/02/story.pl
-examples/00/02/story.pm
-examples/00/story.check
-examples/00/story.pl
-examples/00/story.pm
-examples/01/story.check
-examples/01/story.pl
-examples/hello-world/story.check
-examples/hello-world/story.pl
+examples/hello/story.check
+examples/hello/story.pl
+examples/hello/world/story.check
+examples/hello/world/story.pl
+examples/ignore-story-err/story.check
+examples/ignore-story-err/story.pl
+examples/ignore-story-err/story.pm
 examples/modules/00/story.check
 examples/modules/00/story.pl
 examples/modules/bar/story.check
@@ -20,6 +17,9 @@ examples/modules/foo/story.pl
 examples/modules/foo/story.pm
 examples/multiline/story.check
 examples/multiline/story.pl
+examples/run-story/story.check
+examples/run-story/story.pl
+examples/run-story/story.pm
 examples/story-data-share/story.check
 examples/story-data-share/story.pl
 examples/story-data-share/story.pm
@@ -38,6 +38,6 @@ lib/Outthentic.pm
 lib/Outthentic/Story.pm
 Makefile.PL
 MANIFEST			This list of files
-META.yml
 README.md
+README.pod
 t/outhentic.t

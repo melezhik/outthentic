@@ -5,7 +5,6 @@ blib
 \.bak
 \.SKIP
 \.html
-\.pod
 \.tmp
 outthentic-.*\.gz
 outthentic\.my

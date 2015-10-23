@@ -1,5 +1,7 @@
 0.0.2 2015-10-23
 
+    - Internal changes for bin/strun - impoved downstories/upstories recognize method 
+    - Reorganized examples 
     - Cleaned markdown documentation
     - Pod generated from markdown doc
 

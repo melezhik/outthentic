@@ -32,18 +32,33 @@ make_path($test_root_dir);
 
 $project_root_dir =  File::Spec->rel2abs($project_root_dir);
 
-finddepth(\&wanted, $project_root_dir );
+my %seen = ();
+
+finddepth(\&wanted_downstreams, $project_root_dir."/modules" );
+
+finddepth(\&wanted_upstreams, $project_root_dir );
+
+
+sub wanted_upstreams {
+    wanted($_,'upstream');
+}
+
+sub wanted_downstreams {
+    wanted($_,'downstream');
+}
+
 
 sub wanted { 
 
-    my $file = $_;
+    my $file = shift;
 
-    
+    my $story_type = shift;
+
     if ($file eq 'story.check') {
 
-        my $story_dir = $File::Find::dir;
+        return if $seen{$File::Find::name};
 
-        my $story_type = ( $File::Find::dir =~ /\/modules/ ) ?  "downstream" : "upstream";
+        my $story_dir = $File::Find::dir;
 
         my $tfile = $story_type eq 'upstream' ? "$test_root_dir/$story_dir/story.t" : "$test_root_dir/$story_dir/story.d";
 
@@ -97,6 +112,8 @@ sub wanted {
         print F "1;\n\n";    
 
         close F;
+
+        $seen{$File::Find::name}=1;
 
    }
 

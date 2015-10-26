@@ -1,3 +1,7 @@
+0.0.6 2015-10-23
+
+    - fix unit test issue ( use_ok("Outthentic") ) - https://rt.cpan.org/Public/Bug/Display.html?id=107961
+
 0.0.5 2015-10-23
 
     - --match_l options - in TAP output truncate matching strings to {match_l} bytes

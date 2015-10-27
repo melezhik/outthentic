@@ -104,7 +104,7 @@ sub wanted {
         }
 
         print F "\n\nSKIP: {\n\n";
-        print F "\t eval { generate_asserts(q{$File::Find::dir/story.check},1) }; die \$@ if \$@;\n\n";
+        print F "\t eval { generate_asserts(q{$File::Find::dir/story.check}) }; die \$@ if \$@;\n\n";
         print F "}\n\n";
 
 

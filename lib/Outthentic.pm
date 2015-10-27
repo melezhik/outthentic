@@ -12,8 +12,6 @@ use Data::Dumper;
 use File::Temp qw/ tempfile /;
 use Outthentic::Story;
 
-$| = 1;
-
 sub execute_cmd {
     my $cmd = shift;
     diag("execute cmd: $cmd") if debug_mod2();
@@ -93,11 +91,11 @@ sub header {
 sub generate_asserts {
 
     my $story_check_file = shift;
-    my $show_header = shift;
 
-    header() if $show_header;
+    header() if debug_mod12();
 
     dsl->{debug_mod} = get_prop('debug');
+
     dsl()->{output} = run_story_file();
     dsl()->generate_asserts($story_check_file);
 

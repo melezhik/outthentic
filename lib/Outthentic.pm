@@ -71,21 +71,19 @@ sub run_story_file {
 
 sub header {
 
-    if (debug_mod12()) {
+    my $project = get_prop('project_root_dir');
+    my $story = get_prop('story');
+    my $story_type = get_prop('story_type');
+    my $story_file = get_prop('story_file');
+    my $debug = get_prop('debug');
+    my $ignore_story_err = ignore_story_err();
+    
+    ok(1, "project: $project");
+    ok(1, "story: $story");
+    ok(1, "story_type: $story_type");
+    ok(1, "debug: $debug");
+    ok(1, "ignore story errors: $ignore_story_err");
 
-        my $project = get_prop('project_root_dir');
-        my $story = get_prop('story');
-        my $story_type = get_prop('story_type');
-        my $story_file = get_prop('story_file');
-        my $debug = get_prop('debug');
-        my $ignore_story_err = ignore_story_err();
-
-        ok(1, "project: $project");
-        ok(1, "story: $story");
-        ok(1, "story_type: $story_type");
-        ok(1, "debug: $debug");
-        ok(1, "ignore story errors: $ignore_story_err");
-    }
 }
 
 sub generate_asserts {

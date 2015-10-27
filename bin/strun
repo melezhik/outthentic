@@ -13,7 +13,6 @@ my $debug_mod = 0;
 my $verbose;
 my $story_path;
 my $prove_opts = '-v';
-my $runner_debug = '';
 my $match_l = 30;
 
 
@@ -23,7 +22,6 @@ GetOptions (
         "root=s"        => \$project_root_dir,  # string
         "story=s"       => \$story_path,        # string
         "prove_opts=s"  => \$prove_opts,        # string
-        "runner_debug"  => \$runner_debug
 
 ) or die("Error in command line arguments\n");
 
@@ -95,7 +93,6 @@ sub wanted {
     
         print F "set_prop( debug => $debug_mod );\n";
         print F "set_prop( debug_bytes => 700 );\n";
-        print F "set_prop( runner_debug => '$runner_debug' );\n";
         print F "set_prop( match_l => $match_l );\n";
     
         if ($story_type eq 'downstream') {

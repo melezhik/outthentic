@@ -10,6 +10,9 @@ all_from       'lib/Outthentic.pm';
 requires    'Test::More';
 requires    'Test::Harness';
 requires    'File::Temp';
+
+requires    'Outthentic::DSL';
+
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';
 

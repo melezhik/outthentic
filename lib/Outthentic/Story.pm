@@ -3,6 +3,7 @@ package Outthentic::Story;
 
 use strict;
 use base 'Exporter';
+use Outthentic::DSL;
 
 our @EXPORT = qw{ 
 
@@ -14,11 +15,7 @@ our @EXPORT = qw{
 
     set_stdout
 
-    context_populated
-
-    captures capture reset_captures
-
-    set_block_mode unset_block_mode in_block_mode
+    dsl captures capture
 
     run_story apply_story_vars story_var
 
@@ -30,8 +27,6 @@ our @EXPORT = qw{
 
     test_root_dir
 
-    runner_debug
-
 };
 
 our @stories = ();
@@ -39,11 +34,8 @@ our @stories = ();
 sub new_story {
     
     push @stories, {
-        context_populated => 0,
-        captures => [],
-        block_mode => 0,
         story_vars => {},
-        props => { ignore_story_err => 0 },
+        props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new() },
     };
 
 }
@@ -100,10 +92,6 @@ sub ignore_story_err {
 }
 
 
-sub context_populated {
-    get_prop('context_populated')
-}
-
 sub debug_mod1 {
 
     get_prop('debug') == 1
@@ -119,42 +107,22 @@ sub debug_mod12 {
     debug_mod1() or debug_mod2()
 }
 
-sub runner_debug {
-
-    get_prop('runner_debug');
-
-}
 
 sub set_stdout {
     set_prop('my_stdout', shift());
 }
 
+sub dsl {
+    get_prop('dsl')
+}
+
 sub captures {
 
-    get_prop('captures');
+    dsl()->{captures}
 }
 
 sub capture {
-    captures()->[0]
-}
-
-
-sub reset_captures {
-    set_prop(captures => []);
-}
-
-sub set_block_mode {
-    set_prop(block_mode => 1);
-    
-}
-
-sub unset_block_mode {
-    set_prop(block_mode => 0);
-    
-}
-
-sub in_block_mode {
-    get_prop('block_mode');
+    dsl()->{captures}->[0]
 }
 
 

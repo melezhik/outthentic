@@ -96,6 +96,7 @@ sub generate_asserts {
 
     dsl->{debug_mod} = get_prop('debug');
 
+    dsl()->{match_l} = get_prop('match_l');
     dsl()->{output} = run_story_file();
     dsl()->generate_asserts($story_check_file);
 

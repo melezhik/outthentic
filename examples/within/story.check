@@ -1,0 +1,8 @@
+within: Colors:
+red
+within: Digits:
+within: one-
+within: \d\d
+regexp: 1*
+
+

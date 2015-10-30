@@ -516,6 +516,10 @@ An example outthentic project lives at examples/ directory, to run it say this:
 
 https://github.com/melezhik/outthentic
 
+# See also
+
+* [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl)
+* [swat](https://github.com/melezhik/swat)
 
 # Thanks
 

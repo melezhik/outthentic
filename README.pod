@@ -780,6 +780,23 @@ L<Aleksei Melezhik|mailto:melezhik@gmail.com>
 https://github.com/melezhik/outthentic
 
 
+=head1 See also
+
+=over
+
+=item *
+
+L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl>
+
+
+=item *
+
+L<swat|https://github.com/melezhik/swat>
+
+
+=back
+
+
 =head1 Thanks
 
 =over

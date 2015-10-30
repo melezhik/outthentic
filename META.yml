@@ -1,7 +1,7 @@
 ---
 abstract: 'text oriented blackbox testing framework'
 author:
-  - 'Aleksei Melezhik'
+  - 'L<Aleksei Melezhik|mailto:melezhik@gmail.com>'
 build_requires:
   ExtUtils::MakeMaker: 6.36
 configure_requires:

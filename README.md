@@ -146,7 +146,7 @@ Story runner script consequentially hits two phases:
 * stories are converted into perl test files ( compilation phase )
 * perl test files are recursively executed by prove ( execution phase )
 
-Generating Test::More asserts stream
+Generating Test::More asserts sequence
 
 * for every story found:
 
@@ -160,14 +160,21 @@ Generating Test::More asserts stream
 
 This is a time diagram for story runner life cycle:
 
-    - Hits compilation phase
-    - For every story and story check file found:
-        - Creates a perl test file
-    - The end of compilation phase
-    - Hits execution phase - runs \`prove' recursively on a directory with a perl test files
-    - For every perl test file gets executed:
-        - Generate Test::More asserts stream
-    - The end of execution phase
+* Hits compilation phase
+
+* For every story and story check file found:
+
+ * Creates a perl test file
+
+* The end of compilation phase
+
+* Hits execution phase - runs \`prove' recursively on a directory with a perl test files
+
+* For every perl test file gets executed:
+
+ * Test::More asserts sequence is generated
+
+* The end of execution phase
  
 # Story checks syntax
 

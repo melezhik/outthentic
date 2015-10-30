@@ -462,14 +462,12 @@ which make it easy to place some custom modules under \`project\_root\_directory
 
 * `--root`  - root directory of outthentic project, if not set story runner starts with current working directory
 
-* `--debug` - add debug info to test output, one of possible values : \`0,1,2'. default value is \`0'
+* `--debug` - set to \`1,2,3' if you want to see debug information in output, default value is \`0'.
+Increasing debug value means more low level information appeared in console.
 
 * `--match_l` - in TAP output truncate matching strings to {match_l} bytes;  default value is \`30'
 
-* `--runner_debug` - add low level debug info to test output, mostly useful by me :) when debugging story runner
-
 * `--story` -  run only single story, this should be file path without extensions (.pl,.check):
-
 
 
   foo/story.pl

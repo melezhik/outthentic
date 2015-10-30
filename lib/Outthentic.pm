@@ -687,7 +687,7 @@ to make story as downstream simply create story file at modules/ directory
 
 =item *
 
-call `runI<story(story>path)' function inside upstream story hook to run downstream story.
+call `run_story(story_path)' function inside upstream story hook to run downstream story.
 
 
 

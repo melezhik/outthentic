@@ -379,7 +379,7 @@ Here are the brief comments to the example above:
 
 * to make story as downstream simply create story file at modules/ directory
 
-* call \`run_story(story_path)' function inside upstream story hook to run downstream story.
+* call \`run\_story(story\_path)' function inside upstream story hook to run downstream story.
 
 * you can call as many downstream stories as you wish.
 

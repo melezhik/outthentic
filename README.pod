@@ -272,11 +272,14 @@ Hits compilation phase
 
 For every story and story check file found:
 
-
+=over
 
 =item *
 
 Creates a perl test file
+
+
+=back
 
 
 
@@ -296,11 +299,14 @@ Hits execution phase - runs `prove' recursively on a directory with a perl test 
 
 For every perl test file gets executed:
 
-
+=over
 
 =item *
 
 Test::More asserts sequence is generated
+
+
+=back
 
 
 
@@ -673,6 +679,20 @@ testI<root>dir() - root directory of generated perl tests , see L<story runner|#
 As every story is a perl script gets run via system call, it returns an exit code. None zero exit codes result in test failures, this default behavior , to disable this say:
 
     ignore_story_err(1);
+
+
+=head2 PERL5LIB
+
+`project_root_directory'/lib is added to PERL5LIB path, 
+which make it easy to place some custom modules under `project_root_directory'/lib directory:
+
+    # my-app/lib/Foo/Bar/Baz.pm
+    package Foo::Bar::Baz;
+    ...
+    
+    # hook.pm
+    use Foo::Bar::Baz;
+    ...
 
 
 =head1 Story runner client

@@ -164,7 +164,7 @@ This is a time diagram for story runner life cycle:
 
 * For every story and story check file found:
 
- * Creates a perl test file
+    * Creates a perl test file
 
 * The end of compilation phase
 
@@ -172,7 +172,7 @@ This is a time diagram for story runner life cycle:
 
 * For every perl test file gets executed:
 
- * Test::More asserts sequence is generated
+    * Test::More asserts sequence is generated
 
 * The end of execution phase
  
@@ -438,6 +438,20 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
 
     ignore_story_err(1);
+
+
+## PERL5LIB
+
+\`project\_root\_directory'/lib is added to PERL5LIB path, 
+which make it easy to place some custom modules under \`project\_root\_directory'/lib directory:
+
+    # my-app/lib/Foo/Bar/Baz.pm
+    package Foo::Bar::Baz;
+    ...
+
+    # hook.pm
+    use Foo::Bar::Baz;
+    ...
 
 
 # Story runner client

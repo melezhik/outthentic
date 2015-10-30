@@ -25,8 +25,6 @@ Story is just an any perl script that yields something into stdout:
     print "I am outthentic\n";
 
 
-
-
 * Create a story check file
 
 Story check is a bunch of lines stdout should match. Here we require to have \`I am OK' and \`I am outthentic' lines in stdout:
@@ -50,22 +48,22 @@ To execute story runner say \`strun':
 
 
     $ strun
-    /tmp/.outthentic/13952/home/vagrant/projects/outthentic/examples/hello-world/story.t ..
-    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello-world/story.pl succeeded
-    ok 2 - stdout saved to /tmp/.outthentic/13952/ZgAZGUcduG
-    ok 3 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am OK
-    ok 4 - /home/vagrant/projects/outthentic/examples/hello-world stdout has I am outthentic
+    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/story.pl succeeded
+    ok 2 - stdout saved to /tmp/.outthentic/29566/QKDi3p573L
+    ok 3 - output match 'hello'
+    1..3
+    ok
+    /tmp/.outthentic/29566/home/vagrant/projects/outthentic/examples/hello/world/story.t ..
+    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/world/story.pl succeeded
+    ok 2 - stdout saved to /tmp/.outthentic/29566/xC3wrsS195
+    ok 3 - output match 'I am OK'
+    ok 4 - output match 'I am outthentic'
     1..4
     ok
     All tests successful.
-    Files=1, Tests=4,  1 wallclock secs ( 0.07 usr  0.01 sys +  0.14 cusr  0.00 csys =  0.22 CPU)
+    Files=2, Tests=7,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.01 csys =  0.13 CPU)
     Result: PASS
- 
-
-
-
-
-
+         
 # Long story
 
 Here is a step by step explanation of outthentic project layout. We explain here basic outthentic entities:
@@ -167,7 +165,10 @@ Every perl test file holds a list of the Test::More asserts:
 
 
     # addition/story.t
-    run_story('multiplication/story.pl');
+
+    use Test::More qw{no_plan};
+
+    ... some initialization code ...
  
     SKIP {
         ok($status,'story stdout matches 4');
@@ -175,8 +176,10 @@ Every perl test file holds a list of the Test::More asserts:
     }
 
     # multiplication/story.t
- 
-    run_story('multiplication/story.pl');
+
+    use Test::More qw{no_plan};
+
+    ... some initialization code ...
  
     SKIP {
         ok($status,'story stdout matches 6');
@@ -210,386 +213,120 @@ This is a time diagram for story runner life cycle:
 
 # Story checks syntax
 
-Story check is a bunch of lines stdout should match.
+Story checks syntax complies [Outthentic DSL](https://github.com/melezhik/outthentic-dsl) format.
 
-It's convenient to talk about a _check list_ - is list of none empty lines in a story check file.
+There are lot of possibilities here!
 
-Basically every item of check list is so called  _check expression_.
+( For full explanation of outthentic DSL please follow [documentation](https://github.com/melezhik/outthentic-dsl). )
 
-There are other expressions could be in a check file, but we will talk about them later:
+A few examples:
 
-* comments
-* blank lines
-* text blocks
-* perl expressions
-* generators
+* plain strings checks
 
-## Check expressions
+Often all you need is to ensure that http response has some strings in:
 
-Check expressions defines _what lines stdout should have_
 
-    # stdout
+    # http response
+    200 OK
     HELLO
     HELLO WORLD
+
+
+    # check list
+    200 OK
+    HELLO
+
+    # swat output
+    OK - output matches '200 OK'
+    OK - output matches 'HELLO'
+
+* regular expressions
+
+You may use regular expressions as well:
+
+
+    # http response
     My birth day is: 1977-04-16
 
 
     # check list
-    HELLO
     regexp: \d\d\d\d-\d\d-\d\d
 
 
-    # check output
-    HELLO matches
-    regexp: \d\d\d\d-\d\d-\d\d matches
+    # swat output
+    OK - output matches /\d\d\d\d-\d\d-\d\d/
 
+Follow [https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks)
+to know more.
 
-
-There are two type of check expressions - plain strings and regular expressions.
-
-* **plain string**
-
-        I am ok
-        HELLO Outthentic
- 
-
-The code above declares that stdout should have lines 'I am ok' and 'HELLO Outthentic'.
-
-* **regular expression**
-
-Similarly to plain strings matching, you may require that stdout has lines matching the regular expressions:
-
-    regexp: \d\d\d\d-\d\d-\d\d # date in format of YYYY-MM-DD
-    regexp: Name: \w+ # name
-    regexp: App Version Number: \d+\.\d+\.\d+ # version number
-
-Regular expressions should start with \`regexp:' marker.
- 
-
-* **captures**
-
-Story runner does not care about _how many times_ a given check expression is found in stdout.
-
-It's only required that at least one line in stdout match the check expression ( this is not the case with text blocks, see later )
-
-However it's possible to _accumulate_ all matching lines and save them for further processing:
-
-    regexp: (Hello, my name is (\w+))
-
-See ["captures"](#captures) section for full explanation of a captures mechanism:
-
-
-## Comments, blank lines and text blocks
-
-Comments and blank lines don't get added to check list. See further.
-
-
-* **comments**
-
-Comment lines start with \`#' symbol, story runner ignores comments chunks when parse story check files:
-
-    # comments could be represented at a distinct line, like here
-    The beginning of story
-    Hello World # or could be added to existed expression to the right, like here
-
-* **blank lines**
-
-Blank lines are ignored. You may use blank lines to improve code readability:
-
-    # check output
-    The beginning of story
-    # then 2 blank lines
-
-
-    # then another check
-    HELLO WORLD
-
-But you **can't ignore** blank lines in a \`text block matching' context ( see \`text blocks' subsection ), use \`:blank_line' marker to match blank lines:
-
-    # :blank_line marker matches blank lines
-    # this is especially useful
-    # when match in text blocks context:
-
-    begin:
-        this line followed by 2 blank lines
-        :blank_line
-        :blank_line
-    end:
-
-* **text blocks**
-
-Sometimes it is very helpful to match a stdout against a \`block of strings' goes consequentially, like here:
-
-    # this text block
-    # consists of 5 strings
-    # goes consequentially
-    # line by line:
-
-    begin:
-        # plain strings
-        this string followed by
-        that string followed by
-        another one
-        # regexps patterns:
-        regexp: with (this|that)
-        # and the last one in a block
-        at the very end
-    end:
-
-This test will succeed when gets executed against this chunk:
-
-    this string followed by
-    that string followed by
-    another one string
-    with that string
-    at the very end.
-
-But **will not** for this chunk:
-
-    that string followed by
-    this string followed by
-    another one string
-    with that string
-    at the very end.
-
-\`begin:' \`end:' markers decorate \`text blocks' content. \`:being|:end' markers should not be followed by any text at the same line.
-
-Also be aware if you leave "dangling" \`begin:' marker without closing \`end': somewhere else
-story runner will remain in a \`text block' mode till the end of your story check file, which is probably not you want:
-
-        begin:
-            here we begin
-            and till the very end of test
-            we are in `text block` mode
-
-## Perl expressions
-
-Perl expressions are just a pieces of perl code to _get evaled_ inside your story. This is how it works:
-
-    # this is my story
-    Once upon a time
-    code: print "hello I am Outthentic"
-    Lived a boy called Outthentic
-
-
-Story check files get turned into a perl test file. All \`code' lines are turned into \`eval {code}' chunks:
-
-    ok($status,"stdout matches Once upon a time");
-    eval 'print "Lived a boy called Outthentic"';
-    ok($status,"stdout matches Lived a boy called Outthentic");
-
-Then prove execute generated perl test file.
-
-Example with 'print "Lived a boy called Outthentic"' is quite useless, there are of course more effective ways how you could use perl expressions in your stories.
-
-One of useful thing you could with perl expressions is to call some Test::More functions to modify Test::More workflow:
-
-    # skip tests
-
-    code: skip('next 3 checks are skipped',3) # skip three next checks forever
-    color: red
-    color: blue
-    color: green
-
-    number:one
-    number:two
-    number:three
-
-    # skip tests conditionally
-
-    color: red
-    color: blue
-    color: green
-
-    code: skip('numbers checks are skipped',3)  if $ENV{'skip_numbers'} # skip three next checks if skip_numbers set
-
-    number:one
-    number:two
-    number:three
-
-
-Perl expressions are executed by perl eval function, please be aware of that.
-
-Follow [http://perldoc.perl.org/functions/eval.html](http://perldoc.perl.org/functions/eval.html) to get know more about perl eval.
-
-## Generators
-
-
-Generators is the way to _populate story check lists on the fly_.
-
-Generators like perl expressions are just a piece of perl code.
-
-The only requirement for generator code - it should return _reference to array of strings_.
-
-An array returned by generator code could contain:
-
-* check expressions items
-* comments
-* blank lines
-* text blocks
-* perl expressions
 * generators
 
-
-An array items are passed back to story runner and gets appended to a current check list. Here is a simple example:
+Yes you may generate new check list on run time:
 
     # original check list
-
+   
     Say
     HELLO
- 
-    # this generator generates plain string check expressions:
-    # new items will be appended into check list
-
+   
+    # this generator creates 3 new check expressions:
+   
     generator: [ qw{ say hello again } ]
-
-
+   
     # final check list:
-
+   
     Say
     HELLO
     say
     hello
     again
 
-Generators expressions start with \`:generator' marker. Here is more complicated example:
+Follow [https://github.com/melezhik/outthentic-dsl#generators](https://github.com/melezhik/outthentic-dsl#generators)
+to know more.
+   
+* inline perl code
 
-    # this generator generates comment lines
-    # and plain string check expressions:
+What about inline arbitrary perl code? Well, it's easy!
 
-    generator: my %d = { 'foo' => 'foo value', 'bar' => 'bar value' }; [ map  { ( "# $_", "$data{$_}" )  } keys %d ]
-
-    # final check list:
-
-    # foo
-    foo value
-    # bar
-    bar value
-
-
-Note about **PERL5LIB**.
-
-Story runner adds \`project_root_directory/lib' path to PERL5LIB path, so you may define some modules here and then \`use' them inside your story check:
-
-    my-app/lib/Foo/Bar/Baz.pm
-
-    # story.check
-    # now it is possible to use Foo::Bar::Baz
-    code: use Foo::Bar::Baz; # etc ...
-
-* **multiline expressions**
-
-As long as outthentic deals with check expressions ( both plain strings or regular expressions ) it works in a single line mode,
-that means that check expressions are single line strings and stdout is validated in line by line way:
 
     # check list
-    Multiline
-    string
-    here
-    regexp: Multiline \n string \n here
+    regexp: number: (\d+)
+    code: cmp_ok( capture()->[0], '>=', 0, 'got none zero number');
 
-    # stdout
-    Multiline \n string \n here
-   
- 
-    # test output
-    "Multiline" matched
-    "string" matched
-    "here" matched
-    "Multiline \n string \n here" not matched
+Follow [https://github.com/melezhik/outthentic-dsl#perl-expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions)
+to know more.
 
+* text blocks
 
-Use text blocks instead if you want to achieve multiline checks.
+Need to valiade that some lines goes in response successively ?
 
-However when writing perl expressions or generators one could use multilines there.  \`\' delimiters breaks a single line text on a multi lines:
+        # http response
+
+        this string followed by
+        that string followed by
+        another one string
+        with that string
+        at the very end.
 
 
-    # What about to validate stdout response
-    # With sqlite database entries?
+        # check list
+        # this text block
+        # consists of 5 strings
+        # goes consequentially
+        # line by line:
 
-    generator:                                                          \
+        begin:
+            # plain strings
+            this string followed by
+            that string followed by
+            another one
+            # regexps patterns:
+        regexp: with (this|that)
+            # and the last one in a block
+            at the very end
+        end:
 
-    use DBI;                                                            \
-    my $dbh = DBI->connect("dbi:SQLite:dbname=t/data/test.db","","");   \
-    my $sth = $dbh->prepare("SELECT name from users");                  \
-    $sth->execute();                                                    \
-    my $results = $sth->fetchall_arrayref;                              \
-
-    [ map { $_->[0] } @${results} ]
-
-
-# Captures
-
-Captures are pieces of data get captured when story runner checks stdout with regular expressions:
-
-    # stdout
-    # it's my family ages.
-    alex    38
-    julia   25
-    jan     2
-
-
-    # let's capture name and age chunks
-    regexp: /(\w+)\s+(\d+)/
-
-
-_After_ this regular expression check gets executed captured data will stored into a array:
-
-    [
-        ['alex',    38 ]
-        ['julia',   32 ]
-        ['jan',     2  ]
-    ]
-
-Then captured data might be accessed for example by code generator to define some extra checks:
-
-
-    code:                               \
-    my $total=0;                        \
-    for my $c (@{captures()}) {         \
-        $total+=$c->[0];                \
-    }                                   \
-    cmp_ok( $total,'==',72,"total age of my family" );
-
-
-
-\`captures()' function is used to access captured data array, it returns an array reference holding all chunks captured during _latest regular expression check_.
-
-
-Here some more examples:
-
-    # check if stdout response contains numbers,
-    # then calculate total amount
-    # and check if it is greater then 10
-
-    regexp: (\d+)
-    code:                               \
-    my $total=0;                        \
-    for my $c (@{captures()}) {         \
-        $total+=$c->[0];                \
-    }                                   \
-    cmp_ok( $total,'>',10,"total amount is greater than 10" );
-
-
-    # check if stdout response contains lines
-    # with date formatted as date: YYYY-MM-DD
-    # and then check if first date found is yesterday
-
-    regexp: date: (\d\d\d\d)-(\d\d)-(\d\d)
-    code:                               \
-    use DateTime;                       \
-    my $c = captures()->[0];            \
-    my $dt = DateTime->new( year => $c->[0], month => $c->[1], day => $c->[2]  ); \
-    my $yesterday = DateTime->now->subtract( days =>  1 );                        \
-    cmp_ok( DateTime->compare($dt, $yesterday),'==',0,"first day found is - $dt and this is a yesterday" );
-
-You also may use \`capture()' function to get a _first element_ of captures array:
-
-    # check if stdout response contains numbers
-    # a first number should be greater then ten
-
-    regexp: (\d+)
-    code: cmp_ok( capture()->[0],'>',10,"first number is greater than 10" );
+Follow [https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks)
+to know more.
 
 # Hooks
 

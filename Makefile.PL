@@ -11,7 +11,7 @@ requires    'Test::More';
 requires    'Test::Harness';
 requires    'File::Temp';
 
-requires    'Outthentic::DSL';
+requires    'Outthentic::DSL', "0.0.2";
 
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';

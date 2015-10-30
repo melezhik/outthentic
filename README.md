@@ -143,55 +143,18 @@ This is detailed explanation of story runner life cycle.
 
 Story runner script consequentially hits two phases:
 
-- **Compilation phase** where stories are converted into perl test files.
-- **Execution phase** where perl test files are recursively executed by prove.
+* stories are converted into perl test files ( compilation phase )
+* perl test files are recursively executed by prove ( execution phase )
 
-## Compilation phase
+Generating Test::More asserts stream
 
-When story runner iterate through story files and story check it convert both of them into single perl test file.
-Perl test file _looks like_ list of Test::More asserts.
+* for every story found:
 
-Recalling call-app project with 2 stories:
-
-    addition/(story.pl,story.check)
-    multiplication/(story.pl,story.check)
-
-Story runner parses every story and the creates a perl test file for it:
-
-    addition/story.t
-    multiplication/story.t
-
-Every perl test file holds a list of the Test::More asserts:
-
-
-    # addition/story.t
-
-    use Test::More qw{no_plan};
-
-    ... some initialization code ...
- 
-    SKIP {
-        ok($status,'story stdout matches 4');
-        ok($status,'story stdout matches 6');
-    }
-
-    # multiplication/story.t
-
-    use Test::More qw{no_plan};
-
-    ... some initialization code ...
- 
-    SKIP {
-        ok($status,'story stdout matches 6');
-        ok($status,'story stdout matches 12');
-    }
-
-
-## Execution phase
- 
-Once perl test files are generated and placed at temporary directory story runner calls prove which recursively execute all test files.
-That's it.
-
+    * new instance of Outthentic::DSL object (ODO) is created 
+    * story check file passed to ODO
+    * story file is executed and it's stdout passed to ODO
+    * ODO makes validation of given stdout against given story check file
+    * validation results in a _sequence_ of Test::More ok() asserts
 
 ## Time diagram
 
@@ -203,14 +166,9 @@ This is a time diagram for story runner life cycle:
     - The end of compilation phase
     - Hits execution phase - runs \`prove' recursively on a directory with a perl test files
     - For every perl test file gets executed:
-        - Require hook ( story.pm ) if exists
-        - Iterate over Test::More asserts
-            - Execute story file and save stdout in temporary file
-            - Execute Test::More asserts against a content of temporary file
-        - The end of Test::More asserts iterator
+        - Generate Test::More asserts stream
     - The end of execution phase
  
-
 # Story checks syntax
 
 Story checks syntax complies [Outthentic DSL](https://github.com/melezhik/outthentic-dsl) format.

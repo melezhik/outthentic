@@ -10,7 +10,6 @@ Outthentic is a text oriented test framework. Instead of hack into objects and m
 
     cpanm Outthentic
 
-
 # Short story
 
 This is a five minutes tutorial on outthentic framework workflow.
@@ -154,7 +153,7 @@ Generating Test::More asserts sequence
     * story check file passed to ODO
     * story file is executed and it's stdout passed to ODO
     * ODO makes validation of given stdout against given story check file
-    * validation results in a _sequence_ of Test::More ok() asserts
+    * validation results are turned into a _sequence_ of Test::More ok() asserts
 
 ## Time diagram
 

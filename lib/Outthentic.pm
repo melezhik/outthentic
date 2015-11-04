@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.7';
+our $VERSION = '0.0.8';
 
 1;
 
@@ -98,6 +98,9 @@ sub generate_asserts {
     dsl()->{output} = run_story_file();
     dsl()->generate_asserts($story_check_file);
 
+    for my $chk_item ( @{dsl()->check_list}){
+        ok($chk_item->{status}, $chk_item->{message})
+    }
 }
 
 1;
@@ -353,7 +356,7 @@ ODO makes validation of given stdout against given story check file
 
 =item *
 
-validation results in a I<sequence> of Test::More ok() asserts
+validation results are turned into a I<sequence> of Test::More ok() asserts
 
 
 =back

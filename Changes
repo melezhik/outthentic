@@ -1,3 +1,7 @@
+0.0.8
+
+* this version is compatible with the latest version of Outthentic::DSL
+
 0.0.7 2015-10-30
 
 * Outthentic::DSL - now is a distinct module

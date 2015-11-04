@@ -246,7 +246,7 @@ ODO makes validation of given stdout against given story check file
 
 =item *
 
-validation results in a I<sequence> of Test::More ok() asserts
+validation results are turned into a I<sequence> of Test::More ok() asserts
 
 
 =back

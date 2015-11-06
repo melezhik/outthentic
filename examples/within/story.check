@@ -3,6 +3,6 @@ red
 within: Digits:
 within: one-
 within: \d\d
-regexp: 1*
+regexp: 1+
 
 

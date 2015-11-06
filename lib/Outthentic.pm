@@ -2,9 +2,12 @@ package Outthentic;
 
 our $VERSION = '0.0.8';
 
+
 1;
 
 package main;
+
+use Carp;
 
 use strict;
 use Test::More;
@@ -103,21 +106,13 @@ sub generate_asserts {
 
     my $err = $@;
 
-    for my $chk_item ( @{dsl()->check_list}){
-        ok($chk_item->{status}, $chk_item->{message})
+    for my $r ( @{dsl()->results}){
+        ok($r->{status}, $r->{message}) if $r->{type} eq 'check_expression';
+        diag($r->{message}) if $r->{type} eq 'debug';
+
     }
 
-
-    if (@{dsl()->journal}){
-        open JOURNAL, ">>", cwd()."/outthentic.log" or die $!;
-        print JOURNAL "\n[@{[get_prop('story')]}]\n";
-        for my $r ( @{dsl()->journal}){
-            print JOURNAL $r->{message}, "\n"
-        }
-        close JOURNAL;
-    }
-
-    die "parser error: $err" if $err;
+    confess "parser error: $err" if $err;
 
 }
 
@@ -295,13 +290,13 @@ Let's create two stories for our calc project. One story to represent addition o
     print $calc->mult(3,4), "\n";
 
 
-=head2 Story checks
+=head2 Story check files
 
-Story checks are files that contain lines for validation of stdout from story scripts.
+Story check files (or short form story checks)  are files that contain lines for validation of stdout from story scripts.
 
-Story check file should be placed at the same directory as story file and named `story.check'.
+Story checks should be placed at the same directory as story file and named `story.check'.
 
-Following are story checks for a multiplication and addition stories:
+Following are story check for a multiplication and addition stories:
 
     # addition/story.check
     4
@@ -840,8 +835,29 @@ C<--root>  - root directory of outthentic project, if not set story runner start
 
 =item *
 
-C<--debug> - set to `1,2,3' if you want to see debug information in output, default value is `0'.
-Increasing debug value means more low level information appeared in console.
+C<--debug> - enable outthentic debugging
+
+=over
+
+=item *
+
+Increasing debug value results in more low level information appeared at output
+
+
+
+=item *
+
+Default value is 0, which means no debugging 
+
+
+
+=item *
+
+Possible values: 0,1,2,3
+
+
+
+=back
 
 
 

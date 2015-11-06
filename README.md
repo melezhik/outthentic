@@ -462,9 +462,7 @@ which make it easy to place some custom modules under \`project\_root\_directory
 
 * `--debug` - enable outthentic debugging
 
-    * Debugging information is stored at outthentic.log file at current working directory
-
-    * Increasing debug value results in more low level information appeared at log file
+    * Increasing debug value results in more low level information appeared at output
 
     * Default value is 0, which means no debugging 
 

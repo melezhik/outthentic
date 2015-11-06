@@ -11,6 +11,7 @@ use Test::More;
 use Data::Dumper;
 use File::Temp qw/ tempfile /;
 use Outthentic::Story;
+use Cwd;
 
 sub execute_cmd {
     my $cmd = shift;
@@ -71,7 +72,7 @@ sub run_story_file {
 
 sub header {
 
-    my $project = get_prop('project_root_dir');
+    my $project = project_root_dir();
     my $story = get_prop('story');
     my $story_type = get_prop('story_type');
     my $story_file = get_prop('story_file');
@@ -95,11 +96,23 @@ sub generate_asserts {
     dsl->{debug_mod} = get_prop('debug');
 
     dsl()->{match_l} = get_prop('match_l');
+
     dsl()->{output} = run_story_file();
-    dsl()->generate_asserts($story_check_file);
+
+    dsl()->validate($story_check_file);
 
     for my $chk_item ( @{dsl()->check_list}){
         ok($chk_item->{status}, $chk_item->{message})
+    }
+
+
+    if (@{dsl()->journal}){
+        open JOURNAL, ">>", cwd()."/outthentic.log" or die $!;
+        print JOURNAL "\n[@{[get_prop('story')]}]\n";
+        for my $r ( @{dsl()->journal}){
+            print JOURNAL $r->{message}, "\n"
+        }
+        close JOURNAL;
     }
 }
 

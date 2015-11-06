@@ -45,7 +45,6 @@ Follow [story runner](#story-runner) section for details on story runner "guts".
 
 To execute story runner say \`strun':
 
-
     $ strun
     ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/story.pl succeeded
     ok 2 - stdout saved to /tmp/.outthentic/29566/QKDi3p573L
@@ -109,13 +108,13 @@ Let's create two stories for our calc project. One story to represent addition o
     print $calc->mult(3,4), "\n";
  
 
-## Story checks
+## Story check files
 
-Story checks are files that contain lines for validation of stdout from story scripts.
+Story check files (or short form story checks)  are files that contain lines for validation of stdout from story scripts.
 
-Story check file should be placed at the same directory as story file and named \`story.check'.
+Story checks should be placed at the same directory as story file and named \`story.check'.
 
-Following are story checks for a multiplication and addition stories:
+Following are story check for a multiplication and addition stories:
 
     # addition/story.check
     4
@@ -461,8 +460,15 @@ which make it easy to place some custom modules under \`project\_root\_directory
 
 * `--root`  - root directory of outthentic project, if not set story runner starts with current working directory
 
-* `--debug` - set to \`1,2,3' if you want to see debug information in output, default value is \`0'.
-Increasing debug value means more low level information appeared in console.
+* `--debug` - enable outthentic debugging
+
+    * Debugging information is stored at outthentic.log file at current working directory
+
+    * Increasing debug value results in more low level information appeared at log file
+
+    * Default value is 0, which means no debugging 
+
+    * Possible values: 0,1,2,3
 
 * `--match_l` - in TAP output truncate matching strings to {match_l} bytes;  default value is \`30'
 

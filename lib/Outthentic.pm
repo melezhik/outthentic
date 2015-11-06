@@ -93,13 +93,15 @@ sub generate_asserts {
 
     header() if debug_mod12();
 
-    dsl->{debug_mod} = get_prop('debug');
+    dsl()->{debug_mod} = get_prop('debug');
 
     dsl()->{match_l} = get_prop('match_l');
 
     dsl()->{output} = run_story_file();
 
-    dsl()->validate($story_check_file);
+    eval { dsl()->validate($story_check_file) };
+
+    my $err = $@;
 
     for my $chk_item ( @{dsl()->check_list}){
         ok($chk_item->{status}, $chk_item->{message})
@@ -114,6 +116,9 @@ sub generate_asserts {
         }
         close JOURNAL;
     }
+
+    die "parser error: $err" if $err;
+
 }
 
 1;

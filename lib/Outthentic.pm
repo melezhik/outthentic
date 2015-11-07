@@ -14,7 +14,6 @@ use Test::More;
 use Data::Dumper;
 use File::Temp qw/ tempfile /;
 use Outthentic::Story;
-use Cwd;
 
 sub execute_cmd {
     my $cmd = shift;

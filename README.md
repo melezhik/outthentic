@@ -186,41 +186,39 @@ A few examples:
 
 * plain strings checks
 
-Often all you need is to ensure that http response has some strings in:
+Often all you need is to ensure that stdout has some strings in:
 
 
-    # http response
-    200 OK
+    # stdout
     HELLO
     HELLO WORLD
+    123456
 
 
     # check list
-    200 OK
     HELLO
+    123
 
     # swat output
-    OK - output matches '200 OK'
     OK - output matches 'HELLO'
+    OK - output matches 'HELLO WORLD'
+    OK - output matches '123'
 
 * regular expressions
 
 You may use regular expressions as well:
 
 
-    # http response
-    My birth day is: 1977-04-16
-
-
     # check list
-    regexp: \d\d\d\d-\d\d-\d\d
+    regexp: L+
+    regexp: \d
 
 
     # swat output
-    OK - output matches /\d\d\d\d-\d\d-\d\d/
+    OK - output matches /L+/
+    OK - output matches /\d/
 
-Follow [https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks)
-to know more.
+Follow [https://github.com/melezhik/outthentic-dsl#check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) to know more.
 
 * generators
 
@@ -243,8 +241,7 @@ Yes you may generate new check list on run time:
     hello
     again
 
-Follow [https://github.com/melezhik/outthentic-dsl#generators](https://github.com/melezhik/outthentic-dsl#generators)
-to know more.
+Follow [https://github.com/melezhik/outthentic-dsl#generators](https://github.com/melezhik/outthentic-dsl#generators) to know more.
    
 * inline perl code
 
@@ -255,14 +252,13 @@ What about inline arbitrary perl code? Well, it's easy!
     regexp: number: (\d+)
     validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
 
-Follow [https://github.com/melezhik/outthentic-dsl#perl-expressions](https://github.com/melezhik/outthentic-dsl#validators)
-to know more.
+Follow [https://github.com/melezhik/outthentic-dsl#perl-expressions](https://github.com/melezhik/outthentic-dsl#validators) to know more.
 
 * text blocks
 
-Need to valiade that some lines goes in response successively ?
+Need to valiade that some lines goes successively?
 
-        # http response
+        # stdout
 
         this string followed by
         that string followed by
@@ -522,7 +518,7 @@ https://github.com/melezhik/outthentic
 # See also
 
 * [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl)
-* [swat](https://github.com/melezhik/swat)
+* [swat](https://github.com/melezhik/swat) 
 
 # Thanks
 

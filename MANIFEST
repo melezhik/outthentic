@@ -25,6 +25,8 @@ examples/story-data-share/story.pl
 examples/story-data-share/story.pm
 examples/text-blocks/story.check
 examples/text-blocks/story.pl
+examples/validators/captures/story.check
+examples/validators/captures/story.pl
 examples/within/story.check
 examples/within/story.pl
 inc/Module/Install.pm
@@ -41,6 +43,7 @@ lib/Outthentic/Story.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
+outthentic.log
 README.md
 README.pod
 t/outthentic.t

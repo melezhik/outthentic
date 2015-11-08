@@ -253,9 +253,9 @@ What about inline arbitrary perl code? Well, it's easy!
 
     # check list
     regexp: number: (\d+)
-    code: cmp_ok( capture()->[0], '>=', 0, 'got none zero number');
+    validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
 
-Follow [https://github.com/melezhik/outthentic-dsl#perl-expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions)
+Follow [https://github.com/melezhik/outthentic-dsl#perl-expressions](https://github.com/melezhik/outthentic-dsl#validators)
 to know more.
 
 * text blocks

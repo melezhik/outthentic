@@ -472,7 +472,7 @@ Often all you need is to ensure that stdout has some strings in:
     HELLO
     123
     
-    # swat output
+    # validation output
     OK - output matches 'HELLO'
     OK - output matches 'HELLO WORLD'
     OK - output matches '123'
@@ -493,7 +493,7 @@ You may use regular expressions as well:
     regexp: \d
     
     
-    # swat output
+    # validation output
     OK - output matches /L+/
     OK - output matches /\d/
 

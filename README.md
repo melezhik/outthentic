@@ -474,9 +474,9 @@ This should be file path without extensions ( .pl, .check ):
     foo/bar/story.pl
     bar/story.pl
 
-    --story 'foo' # runs foo/\* stories
+    --story 'foo' # runs foo/ stories
     --story foo/story # runs foo/story.pl
-    --story foo/bar/ # runs foo/bar/\* stories
+    --story foo/bar/ # runs foo/bar/ stories
 
 
 * `--prove-opts` - prove parameters, see [prove settings](#prove-settings) section

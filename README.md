@@ -473,9 +473,9 @@ which make it easy to place some custom modules under \`project\_root\_directory
   foo/bar/story.pl
   bar/story.pl
  
-  --story 'foo' # runs foo/* stories
+  --story 'foo' # runs foo/\* stories
   --story foo/story # runs foo/story.pl
-  --story foo/bar/ # runs foo/bar/* stories
+  --story foo/bar/ # runs foo/bar/\* stories
 
 
 

@@ -468,15 +468,13 @@ which make it easy to place some custom modules under \`project\_root\_directory
 
 * `--story` -  run only single story, this should be file path without extensions (.pl,.check):
 
+    foo/story.pl
+    foo/bar/story.pl
+    bar/story.pl
 
-  foo/story.pl
-  foo/bar/story.pl
-  bar/story.pl
- 
-  --story 'foo' # runs foo/\* stories
-  --story foo/story # runs foo/story.pl
-  --story foo/bar/ # runs foo/bar/\* stories
-
+    --story 'foo' # runs foo/\* stories
+    --story foo/story # runs foo/story.pl
+    --story foo/bar/ # runs foo/bar/\* stories
 
 
 * `--prove-opts` - prove parameters, see [prove settings](#prove-settings) section

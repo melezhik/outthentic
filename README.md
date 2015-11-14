@@ -466,7 +466,9 @@ which make it easy to place some custom modules under \`project\_root\_directory
 
 * `--match_l` - in TAP output truncate matching strings to {match_l} bytes;  default value is \`30'
 
-* `--story` -  run only single story, this should be file path without extensions (.pl,.check):
+* `--story` -  run only single story
+
+This should be file path without extensions ( .pl, .check ):
 
     foo/story.pl
     foo/bar/story.pl

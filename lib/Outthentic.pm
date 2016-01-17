@@ -8,6 +8,7 @@ our $VERSION = '0.0.10';
 package main;
 
 use Carp;
+use Config::Tiny;
 
 use strict;
 use Test::More;
@@ -42,7 +43,7 @@ sub run_story_file {
         ok(1,"stdout is already set");
 
         open F, ">", $content_file or die $!;
-        print F get_prop('my_stdout');
+        print F (join "\n", @{get_prop('my_stdout')});
         close F;
         ok(1, "stdout saved to $content_file");
 

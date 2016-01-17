@@ -328,6 +328,16 @@ This is simple an example :
     THIS IS FAKE RESPONSE
     HELLO WORLD
 
+You may call \`set_stdout' more then once:
+
+
+    set_stdout("HELLO WORLD");
+    set_stdout("HELLO WORLD2");
+
+A final stdout will be:
+
+    HELLO WORLD
+    HELLO WORLD2
 
 ## Upstream and downstream stories
 

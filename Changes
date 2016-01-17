@@ -2,13 +2,15 @@
 
 * new features:
 
-    * test suite ini files support
+    * Test suite ini files support
 
-    * strun client - new parameter \`--host'
+    * Strun client - new parameter \`--host'
+
+    * Hooks API -  \`set_stdout' could be called more than once
 
 * breaking changes:
 
-    * strun client - \`prove_opts' now is called as \`prove'
+    * Strun client - \`prove_opts' now is called as \`prove'
 
 
 0.0.9 2015-11-14 ... 

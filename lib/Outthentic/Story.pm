@@ -36,7 +36,7 @@ sub new_story {
     
     push @stories, {
         story_vars => {},
-        props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new() },
+        props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new(), my_stdout => [] },
     };
 
 }
@@ -115,7 +115,9 @@ sub debug_mod12 {
 
 
 sub set_stdout {
-    set_prop('my_stdout', shift());
+    my $cv = get_prop('my_stdout');
+    push @$cv, shift(); 
+    set_prop('my_stdout', $cv);
 }
 
 sub dsl {

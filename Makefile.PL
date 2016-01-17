@@ -10,6 +10,7 @@ all_from       'lib/Outthentic.pm';
 requires    'Test::More';
 requires    'Test::Harness';
 requires    'File::Temp';
+requires    'Config::Tiny';
 
 requires    'Outthentic::DSL', "0.0.3";
 

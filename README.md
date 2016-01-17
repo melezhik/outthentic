@@ -510,6 +510,12 @@ You my redefine this by using suite_ini_file environment variable:
 
     suite_ini_file=/path/to/your/ini/file
 
+Once suite ini file is read up one may use it in hook.pm files via config()
+
+    # cat hook.pm
+
+    my $foo = config()->{main}{foo};
+    my $bar = config()->{main}{bar};
 
 # TAP
 

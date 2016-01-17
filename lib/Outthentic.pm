@@ -15,10 +15,20 @@ use Data::Dumper;
 use File::Temp qw/ tempfile /;
 use Outthentic::Story;
 
+my $conifg; 
+
 sub execute_cmd {
     my $cmd = shift;
     diag("execute cmd: $cmd") if debug_mod2();
     (system($cmd) == 0);
+}
+
+sub config {
+
+    unless ($config){
+        $config = Config::Tiny->read( $ENV{'suite_ini_file'} || 'suite.ini' );
+    }
+    return $config;
 }
 
 sub run_story_file {

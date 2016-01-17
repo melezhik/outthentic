@@ -38,7 +38,7 @@ sub run_story_file {
 
     my ($fh, $content_file) = tempfile( DIR => get_prop('test_root_dir') );
 
-    if (get_prop('my_stdout')){
+    if (get_prop('my_stdout') and @{get_prop('my_stdout')} ){
 
         ok(1,"stdout is already set");
 

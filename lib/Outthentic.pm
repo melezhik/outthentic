@@ -27,7 +27,7 @@ sub execute_cmd {
 sub config {
 
     unless ($config){
-        $config = Config::Tiny->read( $ENV{'suite_ini_file'} || 'suite.ini' );
+        $config = Config::Tiny->read( $ENV{'suite_ini_file'} || 'suite.ini' ) or confess "can't read ini file: $!";
     }
     return $config;
 }

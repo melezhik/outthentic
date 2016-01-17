@@ -574,8 +574,18 @@ https://github.com/melezhik/outthentic
 
 # See also
 
+* [sparrow](https://github.com/melezhik/sparrow)
+
+Outthentic test suites manager.
+
 * [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl)
+
+Outthentic DSL specification.
+
 * [swat](https://github.com/melezhik/swat) 
+
+Yet another outthentic test suite runner ( designed specially for web application tests ).
+
 
 # Thanks
 

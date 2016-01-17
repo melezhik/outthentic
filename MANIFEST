@@ -5,6 +5,8 @@ examples/hello/story.check
 examples/hello/story.pl
 examples/hello/world/story.check
 examples/hello/world/story.pl
+examples/host-param/story.check
+examples/host-param/story.pm
 examples/ignore-story-err/story.check
 examples/ignore-story-err/story.pl
 examples/ignore-story-err/story.pm

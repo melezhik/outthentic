@@ -131,17 +131,20 @@ sub generate_asserts {
 
 __END__
 
+=pod
+
+
 =encoding utf8
 
 
-=head1 Outthentic
+=head1 Name
 
-print something into stdout and test
+Outthentic
 
 
 =head1 Synopsis
 
-Outthentic is a text oriented test framework. Instead of hack into objects and methods it deals with text appeared in stdout. It's a black box testing framework.
+Generic testing framework, based on L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl>
 
 
 =head1 Install
@@ -151,7 +154,7 @@ Outthentic is a text oriented test framework. Instead of hack into objects and m
 
 =head1 Short story
 
-This is a five minutes tutorial on outthentic framework workflow.
+This is a five minutes tutorial on framework workflow.
 
 =over
 
@@ -273,7 +276,7 @@ Let's create a project to test a simple calculator application:
 
 =head2 Stories
 
-Stories are just perl scripts placed at project directory and named `story.pl'. In a testing context, stories are pieces of logic to be testsed.
+Stories are just perl scripts placed at project directory and named `story.pl'. In a testing context, stories are pieces of logic to be tested.
 
 Think about them like `*.t' files in a perl unit test system.
 
@@ -566,7 +569,7 @@ text blocks
 
 =back
 
-Need to valiade that some lines goes successively?
+Need to validate that some lines goes successively?
 
         # stdout
     
@@ -656,6 +659,16 @@ This is simple an example :
     # story.check
     THIS IS FAKE RESPONSE
     HELLO WORLD
+
+You may call `set_stdout' more then once:
+
+    set_stdout("HELLO WORLD");
+    set_stdout("HELLO WORLD2");
+
+A final stdout will be:
+
+    HELLO WORLD
+    HELLO WORLD2
 
 
 =head2 Upstream and downstream stories
@@ -790,17 +803,45 @@ There are some variables exposed to hooks API, they could be useful:
 
 =item *
 
-projectI<root>dir() - root directory of outthentic project
-
-
-
-=item *
-
-testI<root>dir() - root directory of generated perl tests , see L<story runner|#story-runner> section
-
+projectI<root>dir()
 
 
 =back
+
+Root directory of outthentic project.
+
+=over
+
+=item *
+
+testI<root>dir() - test root directory
+
+
+=back
+
+Root directory of generated perl tests , see L<story runner|#story-runner> section for details.
+
+=over
+
+=item *
+
+config() - returns hash of test suite configuration
+
+
+=back
+
+SeeL<test suites ini file|#test-suite-ini-file> section for details.
+
+=over
+
+=item *
+
+host() 
+
+
+=back
+
+A value of `--host' parameter.
 
 
 =head2 Ignore unsuccessful codes when run stories
@@ -835,13 +876,18 @@ which make it easy to place some custom modules under `project_root_directory'/l
 
 =item *
 
-C<--root>  - root directory of outthentic project, if not set story runner starts with current working directory
+C<--root>  - root directory of outthentic project
 
 
+=back
+
+If root parameter is not set current working directory is assumed as project root directory.
+
+=over
 
 =item *
 
-C<--debug> - enable outthentic debugging
+C<--debug> - enable/disable debug mode
 
 =over
 
@@ -869,31 +915,81 @@ Possible values: 0,1,2,3
 
 =item *
 
-C<--match_l> - in TAP output truncate matching strings to {match_l} bytes;  default value is `30'
-
-
-
-=item *
-
-C<--story> -  run only single story, this should be file path without extensions (.pl,.check):
-
-  foo/story.pl
-  foo/bar/story.pl
-  bar/story.pl
-
-  --story 'foo' # runs foo/I< stories
-  --story foo/story # runs foo/story.pl
-  --story foo/bar/ # runs foo/bar/> stories
-
-
-
-=item *
-
-C<--prove-opts> - prove parameters, see L<prove settings|#prove-settings> section
+C<--match_l> - truncate matching strings 
 
 
 
 =back
+
+In a TAP output truncate matching strings to {match_l} bytes;  default value is `30'
+
+=over
+
+=item *
+
+C<--story> -  run only single story
+
+
+=back
+
+This should be file path without extensions ( .pl, .check ):
+
+    foo/story.pl
+    foo/bar/story.pl
+    bar/story.pl
+    
+    --story 'foo' # runs foo/ stories
+    --story foo/story # runs foo/story.pl
+    --story foo/bar/ # runs foo/bar/ stories
+
+=over
+
+=item *
+
+C<--prove> - prove parameters
+
+
+=back
+
+See L<prove settings|#prove-settings> section for details.
+
+=over
+
+=item *
+
+C<--host> - hostname 
+
+
+=back
+
+This optional parameter sets base url or hostname of a service or application being tested.
+
+
+=head1 Test suite ini file
+
+Test suite ini file is a configuration file where you may pass any additional data could be used in your tests:
+
+    cat suite.ini
+    
+    [main]
+    
+    foo = 1
+    bar = 2
+
+There is no special magic behind this ini file, except this should be L<Config Tiny|https://metacpan.org/pod/Config::Tiny> compliant configuration file.
+
+By default story runner script looks for file named suite.ini placed at current working directory.
+
+You my redefine this by using suiteI<ini>file environment variable:
+
+    suite_ini_file=/path/to/your/ini/file
+
+Once suite ini file is read up one may use it in hook.pm files via config()
+
+    # cat story.pm
+    
+    my $foo = config()->{main}{foo};
+    my $bar = config()->{main}{bar};
 
 
 =head1 TAP
@@ -902,15 +998,15 @@ Outthentic produces output in L<TAP|https://testanything.org/> format, that mean
 
 Here is example for having output in JUNIT format:
 
-    strun --prove_opts "--formatter TAP::Formatter::JUnit"
+    strun --prove "--formatter TAP::Formatter::JUnit"
 
 
 =head1 Prove settings
 
 Outthentic utilize L<prove utility|http://search.cpan.org/perldoc?prove> to execute tests, one my pass prove related parameters using `--prove-opts'. Here are some examples:
 
-    strun --prove_opts "-Q" # don't show anythings unless test summary
-    strun --prove_opts "-q -s" # run prove tests in random and quite mode
+    strun --prove "-Q" # don't show anythings unless test summary
+    strun --prove "-q -s" # run prove tests in random and quite mode
 
 
 =head1 Examples
@@ -936,8 +1032,25 @@ https://github.com/melezhik/outthentic
 
 =item *
 
+L<sparrow|https://github.com/melezhik/sparrow>
+
+
+=back
+
+Outthentic test suites manager.
+
+=over
+
+=item *
+
 L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl>
 
+
+=back
+
+Outthentic DSL specification.
+
+=over
 
 =item *
 
@@ -945,6 +1058,8 @@ L<swat|https://github.com/melezhik/swat>
 
 
 =back
+
+Yet another outthentic test suite runner ( designed specially for web application tests ).
 
 
 =head1 Thanks

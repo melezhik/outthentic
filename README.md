@@ -1,10 +1,10 @@
-# Outthentic
+# Name
 
-print something into stdout and test
+Outthentic
 
 # Synopsis
 
-Outthentic is a text oriented test framework. Instead of hack into objects and methods it deals with text appeared in stdout. It's a black box testing framework.
+Generic testing framework, based on [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl)
 
 # Install
 
@@ -12,7 +12,7 @@ Outthentic is a text oriented test framework. Instead of hack into objects and m
 
 # Short story
 
-This is a five minutes tutorial on outthentic framework workflow.
+This is a five minutes tutorial on framework workflow.
 
 * Create a story file 
 
@@ -81,7 +81,7 @@ Let's create a project to test a simple calculator application:
 
 ## Stories
 
-Stories are just perl scripts placed at project directory and named \`story.pl'. In a testing context, stories are pieces of logic to be testsed.
+Stories are just perl scripts placed at project directory and named \`story.pl'. In a testing context, stories are pieces of logic to be tested.
 
 Think about them like \`*.t' files in a perl unit test system.
 
@@ -256,7 +256,7 @@ Follow [https://github.com/melezhik/outthentic-dsl#perl-expressions](https://git
 
 * text blocks
 
-Need to valiade that some lines goes successively?
+Need to validate that some lines goes successively?
 
         # stdout
 
@@ -468,6 +468,7 @@ which make it easy to place some custom modules under \`project\_root\_directory
 
 * `--story` -  run only single story
 
+
 This should be file path without extensions ( .pl, .check ):
 
     foo/story.pl
@@ -481,6 +482,26 @@ This should be file path without extensions ( .pl, .check ):
 
 * `--prove-opts` - prove parameters, see [prove settings](#prove-settings) section
  
+
+# Test suite ini file
+
+Test suite ini file is a configuration file where you may pass any additional data used in your tests:
+
+    cat suite.ini
+
+    [main]
+
+    foo = 1
+    bar = 2
+
+There is no any behind this ini file, except is should be [Config Tiny](https://metacpan.org/pod/Config::Tiny) compliant configuration file.
+
+By default story runner script looks for file named suite.ini placed at current working directory.
+
+You my redefine this by using suite_ini_file environment variable:
+
+    suite_ini_file=/path/to/your/ini/file
+
 
 # TAP
 

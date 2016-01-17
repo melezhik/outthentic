@@ -454,9 +454,11 @@ which make it easy to place some custom modules under \`project\_root\_directory
  
 ## Options
 
-* `--root`  - root directory of outthentic project, if not set story runner starts with current working directory
+* `--root`  - root directory of outthentic project
 
-* `--debug` - enable outthentic debugging
+If root parameter is not set current working directory is assumed as project root directory.
+
+* `--debug` - enable/disable debug mode
 
     * Increasing debug value results in more low level information appeared at output
 
@@ -464,10 +466,11 @@ which make it easy to place some custom modules under \`project\_root\_directory
 
     * Possible values: 0,1,2,3
 
-* `--match_l` - in TAP output truncate matching strings to {match_l} bytes;  default value is \`30'
+* `--match_l` - truncate matching strings 
+
+In a TAP output truncate matching strings to {match_l} bytes;  default value is \`30'
 
 * `--story` -  run only single story
-
 
 This should be file path without extensions ( .pl, .check ):
 
@@ -480,12 +483,17 @@ This should be file path without extensions ( .pl, .check ):
     --story foo/bar/ # runs foo/bar/ stories
 
 
-* `--prove-opts` - prove parameters, see [prove settings](#prove-settings) section
- 
+* `--prove` - prove parameters
+
+See [prove settings](#prove-settings) section for details.
+
+* `--host` - hostname 
+
+This optional parameter sets base url or hostname of a service or application being tested.
 
 # Test suite ini file
 
-Test suite ini file is a configuration file where you may pass any additional data used in your tests:
+Test suite ini file is a configuration file where you may pass any additional data could be used in your tests:
 
     cat suite.ini
 
@@ -494,7 +502,7 @@ Test suite ini file is a configuration file where you may pass any additional da
     foo = 1
     bar = 2
 
-There is no any behind this ini file, except is should be [Config Tiny](https://metacpan.org/pod/Config::Tiny) compliant configuration file.
+There is no special magic behind this ini file, except this should be [Config Tiny](https://metacpan.org/pod/Config::Tiny) compliant configuration file.
 
 By default story runner script looks for file named suite.ini placed at current working directory.
 
@@ -509,14 +517,14 @@ Outthentic produces output in [TAP](https://testanything.org/) format, that mean
 
 Here is example for having output in JUNIT format:
 
-    strun --prove_opts "--formatter TAP::Formatter::JUnit"
+    strun --prove "--formatter TAP::Formatter::JUnit"
 
 # Prove settings
 
 Outthentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execute tests, one my pass prove related parameters using \`--prove-opts'. Here are some examples:
 
-    strun --prove_opts "-Q" # don't show anythings unless test summary
-    strun --prove_opts "-q -s" # run prove tests in random and quite mode
+    strun --prove "-Q" # don't show anythings unless test summary
+    strun --prove "-q -s" # run prove tests in random and quite mode
 
 
 

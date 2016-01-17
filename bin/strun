@@ -21,7 +21,7 @@ GetOptions (
         "match_l=i"     => \$match_l,           # numeric
         "root=s"        => \$project_root_dir,  # string
         "story=s"       => \$story_path,        # string
-        "prove_opts=s"  => \$prove_opts,        # string
+        "prove=s"       => \$prove_opts,        # string
 
 ) or die("Error in command line arguments\n");
 

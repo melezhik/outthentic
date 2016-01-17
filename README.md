@@ -422,9 +422,18 @@ Of course more proper approaches for state sharing could be used as singeltones 
 
 There are some variables exposed to hooks API, they could be useful:
 
-* project_root_dir() - root directory of outthentic project
+* project_root_dir()
 
-* test_root_dir() - root directory of generated perl tests , see [story runner](#story-runner) section
+Root directory of outthentic project.
+
+* test_root_dir() - test root directory
+
+Root directory of generated perl tests , see [story runner](#story-runner) section for details.
+
+* config() - returns hash of test suite configuration
+
+See[test suites ini file](#test-suite-ini-file) section for details.
+
 
 ## Ignore unsuccessful codes when run stories
 
@@ -512,7 +521,7 @@ You my redefine this by using suite_ini_file environment variable:
 
 Once suite ini file is read up one may use it in hook.pm files via config()
 
-    # cat hook.pm
+    # cat story.pm
 
     my $foo = config()->{main}{foo};
     my $bar = config()->{main}{bar};

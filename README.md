@@ -434,6 +434,9 @@ Root directory of generated perl tests , see [story runner](#story-runner) secti
 
 See[test suites ini file](#test-suite-ini-file) section for details.
 
+* host() 
+
+A value of \`--host' parameter.
 
 ## Ignore unsuccessful codes when run stories
 

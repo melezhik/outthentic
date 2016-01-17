@@ -27,6 +27,7 @@ our @EXPORT = qw{
 
     test_root_dir
 
+    host
 };
 
 our @stories = ();
@@ -77,6 +78,10 @@ sub project_root_dir {
 
 sub test_root_dir {
     get_prop('test_root_dir');
+}
+
+sub host {
+    get_prop('host');
 }
 
 sub ignore_story_err {

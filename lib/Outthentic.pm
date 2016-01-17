@@ -15,7 +15,7 @@ use Data::Dumper;
 use File::Temp qw/ tempfile /;
 use Outthentic::Story;
 
-my $conifg; 
+my $config; 
 
 sub execute_cmd {
     my $cmd = shift;

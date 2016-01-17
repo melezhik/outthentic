@@ -2,7 +2,7 @@ use inc::Module::Install;
 
 # Define metadata
 name           'Outthentic';
-abstract       'text oriented blackbox testing framework';
+abstract       'Generic testing framework based on Outthentic::DSL';
 
 all_from       'lib/Outthentic.pm';
 

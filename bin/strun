@@ -15,7 +15,7 @@ my $story_path;
 my $prove_opts = '-v';
 my $match_l = 30;
 my $host;
-
+my $ini_file_path;
 
 GetOptions (
         "debug=i"       => \$debug_mod,         # numeric
@@ -24,6 +24,7 @@ GetOptions (
         "story=s"       => \$story_path,        # string
         "prove=s"       => \$prove_opts,        # string
         "host=s"        => \$host,              # string
+        "ini=s"         => \$ini_file_path,     # string
 
 
 ) or die("Error in command line arguments\n");
@@ -88,6 +89,7 @@ sub wanted {
         print F "set_prop( project_root_dir => q{$project_root_dir} );\n";
         print F "set_prop( test_root_dir    => q{$test_root_dir} );\n";
         print F "set_prop( host             => q{$host} );\n";
+        print F "set_prop( ini_file_path    => q{$ini_file_path} );\n";
     
         print F "set_prop( story => q{$File::Find::dir} );\n";
         print F "set_prop( story_file => q{$File::Find::dir/story.pl} );\n";

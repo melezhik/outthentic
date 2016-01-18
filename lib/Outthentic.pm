@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.11';
+our $VERSION = '0.0.12';
 
 
 1;
@@ -27,7 +27,9 @@ sub execute_cmd {
 sub config {
 
     unless ($config){
-        $config = Config::Tiny->read( $ENV{'suite_ini_file'} || 'suite.ini' ) or confess "can't read ini file: $!";
+        $config = Config::Tiny->read( 
+            get_prop('ini_file_path') || $ENV{'suite_ini_file'} || 'suite.ini' 
+            ) or confess "can't read ini file: $!";
     }
     return $config;
 }

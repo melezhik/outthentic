@@ -536,7 +536,7 @@ You my redefine this by using suite_ini_file environment variable:
 
     suite_ini_file=/path/to/your/ini/file
 
-Or by \`-ini' parameter of story runner:
+Or by \`--ini' parameter of story runner:
 
     strun --ini /path/to/your/ini/file
 

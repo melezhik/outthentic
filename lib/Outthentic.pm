@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.12';
+our $VERSION = '0.0.13';
 
 
 1;
@@ -966,6 +966,17 @@ C<--host> - hostname
 
 This optional parameter sets base url or hostname of a service or application being tested.
 
+=over
+
+=item *
+
+`--ini' - test suite ini file path
+
+
+=back
+
+See L<test suite ini file|#test-suite-ini-file> section for details.
+
 
 =head1 Test suite ini file
 
@@ -985,6 +996,10 @@ By default story runner script looks for file named suite.ini placed at current 
 You my redefine this by using suiteI<ini>file environment variable:
 
     suite_ini_file=/path/to/your/ini/file
+
+Or by `-ini' parameter of story runner:
+
+    strun --ini /path/to/your/ini/file
 
 Once suite ini file is read up one may use it in hook.pm files via config()
 

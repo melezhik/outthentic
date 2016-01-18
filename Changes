@@ -1,4 +1,8 @@
-0.0.11 2016-01-18
+0.0.13 2016-01-18
+
+Forgot to update POD, not it's uptodate
+
+0.0.12 2016-01-18
 
 Test suite ini file path could be passed by \`-c' parameter
 

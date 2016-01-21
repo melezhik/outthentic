@@ -562,6 +562,11 @@ Outthentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to exec
     strun --prove "-Q" # don't show anythings unless test summary
     strun --prove "-q -s" # run prove tests in random and quite mode
 
+# Environment variables
+
+* `match_l` - in TAP output truncate matching strings to {match_l} bytes
+
+See also \`--match_l' in [options](#options) section
 
 
 # Examples

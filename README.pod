@@ -888,6 +888,20 @@ Outthentic utilize L<prove utility|http://search.cpan.org/perldoc?prove> to exec
     strun --prove "-q -s" # run prove tests in random and quite mode
 
 
+=head1 Environment variables
+
+=over
+
+=item *
+
+C<match_l> - in TAP output truncate matching strings to {match_l} bytes
+
+
+=back
+
+See also `--match_l' in L<options|#options> section
+
+
 =head1 Examples
 
 An example outthentic project lives at examples/ directory, to run it say this:

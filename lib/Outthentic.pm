@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.13';
+our $VERSION = '0.0.14';
 
 
 1;
@@ -1024,6 +1024,20 @@ Outthentic utilize L<prove utility|http://search.cpan.org/perldoc?prove> to exec
 
     strun --prove "-Q" # don't show anythings unless test summary
     strun --prove "-q -s" # run prove tests in random and quite mode
+
+
+=head1 Environment variables
+
+=over
+
+=item *
+
+C<match_l> - in TAP output truncate matching strings to {match_l} bytes
+
+
+=back
+
+See also `--match_l' in L<options|#options> section
 
 
 =head1 Examples

@@ -1,0 +1,12 @@
+set_context: start end
+regexp: \d+
+validator: [ ( captures[0]->[0] == 0 ), 'first is 0' ];
+validator: [ ( captures[0]->[1] == 3 ), 'second is 3' ];
+validator: [ ( captures[0]->[2] == 4 ), 'third is 4' ];
+validator: [ ( captures[0]->[3] == 5 ), 'forht is 5' ];
+
+reset_context:
+regexp: (\d+)
+validator: [ ( captures[0]->[0] == 1 ), 'first is 1' ];
+validator: [ ( captures[0]->[1] == 2 ), 'second is 2' ];
+validator: [ ( captures[0]->[2] == 3 ), 'third is 3' ];

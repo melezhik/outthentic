@@ -12,7 +12,7 @@ requires    'Test::Harness';
 requires    'File::Temp';
 requires    'Config::Tiny';
 
-requires    'Outthentic::DSL', "0.0.3";
+requires    'Outthentic::DSL', "0.0.6";
 
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';

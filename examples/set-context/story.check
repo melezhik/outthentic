@@ -1,12 +1,25 @@
-set_context: start end
-regexp: \d+
-validator: [ ( captures[0]->[0] == 0 ), 'first is 0' ];
-validator: [ ( captures[0]->[1] == 3 ), 'second is 3' ];
-validator: [ ( captures[0]->[2] == 4 ), 'third is 4' ];
-validator: [ ( captures[0]->[3] == 5 ), 'forht is 5' ];
+between: start end
+
+regexp: (\d+)
+
+validator: [ ( scalar @{captures()} == 8 ), '8 captures' ];
+
+validator: [ ( captures->[0]->[0] == 0 ), 'first capture is 0' ];
+validator: [ ( captures->[1]->[0] == 3 ), 'second capture is 3' ];
+validator: [ ( captures->[2]->[0] == 4 ), 'third capture is 4' ];
+validator: [ ( captures->[3]->[0] == 5 ), 'forth capture is 5' ];
+
+validator: [ ( captures->[4]->[0] == 6 ), 'fith capture is 6' ];
+validator: [ ( captures->[5]->[0] == 7 ), 'six capture is 7' ];
+validator: [ ( captures->[6]->[0] == 8 ), 'seven capture is 8' ];
+validator: [ ( captures->[7]->[0] == 9 ), 'eight capture is 9' ];
 
 reset_context:
 regexp: (\d+)
-validator: [ ( captures[0]->[0] == 1 ), 'first is 1' ];
-validator: [ ( captures[0]->[1] == 2 ), 'second is 2' ];
-validator: [ ( captures[0]->[2] == 3 ), 'third is 3' ];
+validator: [ ( scalar @{captures()} == 11 ), '11 captures' ];
+validator: [ ( captures->[0]->[0] == 0 ), 'first capture is 0' ];
+validator: [ ( captures->[1]->[0] == 3 ), 'second capture is 3' ];
+validator: [ ( captures->[2]->[0] == 4 ), 'third capture is 4' ];
+validator: [ ( captures->[3]->[0] == 5 ), 'forth capture is 5' ];
+validator: [ ( captures->[10]->[0] == 73 ), 'last (11) capture is 73' ];
+validator: [ ! defined captures->[11], '12 capture is not defined'];

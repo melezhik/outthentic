@@ -16,10 +16,11 @@ validator: [ ( captures->[7]->[0] == 9 ), 'eight capture is 9' ];
 
 reset_context:
 regexp: (\d+)
-validator: [ ( scalar @{captures()} == 11 ), '11 captures' ];
-validator: [ ( captures->[0]->[0] == 0 ), 'first capture is 0' ];
-validator: [ ( captures->[1]->[0] == 3 ), 'second capture is 3' ];
-validator: [ ( captures->[2]->[0] == 4 ), 'third capture is 4' ];
-validator: [ ( captures->[3]->[0] == 5 ), 'forth capture is 5' ];
-validator: [ ( captures->[10]->[0] == 73 ), 'last (11) capture is 73' ];
-validator: [ ! defined captures->[11], '12 capture is not defined'];
+validator: [ ( scalar @{captures()} == 12 ), '12 captures' ];
+validator: [ ( captures->[0]->[0] == 100 ), 'first capture is 100' ];
+validator: [ ( captures->[1]->[0] == 0 ), 'second capture is 0' ];
+validator: [ ( captures->[2]->[0] == 3 ), 'third capture is 3' ];
+validator: [ ( captures->[3]->[0] == 4 ), 'forth capture is 4' ];
+validator: [ ( captures->[4]->[0] == 5 ), 'fifth capture is 5' ];
+validator: [ ( captures->[11]->[0] == 73 ), 'last (12) capture is 73' ];
+validator: [ ! defined captures->[12], '13 capture is not defined'];

@@ -20,7 +20,7 @@ my $config;
 
 sub execute_cmd {
     my $cmd = shift;
-    diag("execute cmd: $cmd") if debug_mod2();
+    note("execute cmd: $cmd") if debug_mod2();
     (system($cmd) == 0);
 }
 
@@ -64,7 +64,7 @@ sub run_story_file {
             open CNT, $content_file or die $!;
             my $rdata = join "", <CNT>;
             close CNT;
-            diag("perl $story_file \n===>\n$rdata");
+            note("perl $story_file \n===>\n$rdata");
         }
 
         ok(1,"stdout saved to $content_file");
@@ -80,7 +80,7 @@ sub run_story_file {
 
     my $debug_bytes = get_prop('debug_bytes');
 
-    diag `head -c $debug_bytes $content_file` if debug_mod2();
+    note `head -c $debug_bytes $content_file` if debug_mod2();
 
     return get_prop('stdout');
 }

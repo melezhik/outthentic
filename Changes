@@ -1,3 +1,8 @@
+0.0.15 
+
+* examples on `between' feature
+* minor changes related debugging information presentation
+
 0.0.14 2016-01-21
 
 match_l environment variable is respected

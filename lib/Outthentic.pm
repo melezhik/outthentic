@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.14';
+our $VERSION = '0.0.15';
 
 
 1;
@@ -119,8 +119,8 @@ sub generate_asserts {
     my $err = $@;
 
     for my $r ( @{dsl()->results}){
+        note($r->{message}) if $r->{type} eq 'debug';
         ok($r->{status}, $r->{message}) if $r->{type} eq 'check_expression';
-        diag($r->{message}) if $r->{type} eq 'debug';
 
     }
 

@@ -1,11 +1,1 @@
-begin:
-hello
-world
-regexp: (\d+|jan)
-
-code: sub rg { \
-     capture()->[0] eq 'jan' ? [ 'end:' ] : [ 'regexp: (\d+|jan)', 'generator: rg()' ] \
-}
-
-
-generator: rg()
+generator: rg(0)

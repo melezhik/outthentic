@@ -1,0 +1,17 @@
+begin:
+foo
+regexp: \S+
+regexp: \S+
+regexp: \S+
+bar
+
+code:                                   \
+
+for my $s (@{stream()}){                \
+    for my $i (@{$s}){                  \
+        print "# $i\n";                 \
+    }                                   \
+    print "#---\n\n"                    \
+}
+
+end:

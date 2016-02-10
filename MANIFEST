@@ -1,6 +1,10 @@
 bin/strun
 Changes
 examples/.exists
+examples/between-nested/story.check
+examples/between-nested/story.pl
+examples/between/story.check
+examples/between/story.pl
 examples/hello/story.check
 examples/hello/story.pl
 examples/hello/world/story.check
@@ -27,8 +31,13 @@ examples/run-story/story.pm
 examples/story-data-share/story.check
 examples/story-data-share/story.pl
 examples/story-data-share/story.pm
+examples/text-blocks-dynamic-size/story.check
+examples/text-blocks-dynamic-size/story.pl
+examples/text-blocks-dynamic-size/story.pm
 examples/text-blocks/story.check
 examples/text-blocks/story.pl
+examples/text-blocks2/story.check
+examples/text-blocks2/story.pl
 examples/validators/captures/story.check
 examples/validators/captures/story.pl
 examples/within/story.check

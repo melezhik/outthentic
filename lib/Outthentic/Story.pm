@@ -15,7 +15,7 @@ our @EXPORT = qw{
 
     set_stdout
 
-    dsl captures capture
+    dsl captures capture stream
 
     run_story apply_story_vars story_var
 
@@ -122,6 +122,10 @@ sub set_stdout {
 
 sub dsl {
     get_prop('dsl')
+}
+
+sub stream {
+    dsl()->stream
 }
 
 sub captures {

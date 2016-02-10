@@ -1,5 +1,6 @@
 0.0.15 
 
+* support for stream feature
 * examples on `between' feature
 * minor changes related debugging information presentation
 

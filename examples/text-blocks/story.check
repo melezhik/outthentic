@@ -9,6 +9,7 @@ begin:
 hello
 world
 jan
+code: note explain stream
 julia
 alex
 end:

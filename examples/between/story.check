@@ -2,25 +2,35 @@ between: start end
 
 regexp: (\d+)
 
-validator: [ ( scalar @{captures()} == 8 ), '8 captures' ];
+validator: [ ( scalar @{captures()} == 11 ), '11 numbers between start ... end' ];
 
-validator: [ ( captures->[0]->[0] == 0 ), 'first capture is 0' ];
-validator: [ ( captures->[1]->[0] == 3 ), 'second capture is 3' ];
-validator: [ ( captures->[2]->[0] == 4 ), 'third capture is 4' ];
-validator: [ ( captures->[3]->[0] == 5 ), 'forth capture is 5' ];
+code:                                   \
 
-validator: [ ( captures->[4]->[0] == 6 ), 'fith capture is 6' ];
-validator: [ ( captures->[5]->[0] == 7 ), 'six capture is 7' ];
-validator: [ ( captures->[6]->[0] == 8 ), 'seven capture is 8' ];
-validator: [ ( captures->[7]->[0] == 9 ), 'eight capture is 9' ];
+for my $s (@{stream()}){                \
+    for my $i (@{$s}){                  \
+        print "# $i\n";                 \
+    }                                   \
+    print "#---\n\n"                    \
+}
+
+
+validator: [ ( captures->[0]->[0] == 0 ), 'first number is 0' ];
+validator: [ ( captures->[1]->[0] == 3 ), 'second number is 3' ];
+validator: [ ( captures->[2]->[0] == 4 ), 'third number is 4' ];
+validator: [ ( captures->[3]->[0] == 5 ), 'forth number is 5' ];
+
+validator: [ ( captures->[4]->[0] == 6 ), 'fith number is 6' ];
+validator: [ ( captures->[5]->[0] == 7 ), 'six number is 7' ];
+validator: [ ( captures->[6]->[0] == 8 ), 'seven number is 8' ];
+validator: [ ( captures->[7]->[0] == 9 ), 'eight number is 9' ];
 
 reset_context:
 regexp: (\d+)
-validator: [ ( scalar @{captures()} == 12 ), '12 captures' ];
-validator: [ ( captures->[0]->[0] == 100 ), 'first capture is 100' ];
-validator: [ ( captures->[1]->[0] == 0 ), 'second capture is 0' ];
-validator: [ ( captures->[2]->[0] == 3 ), 'third capture is 3' ];
-validator: [ ( captures->[3]->[0] == 4 ), 'forth capture is 4' ];
-validator: [ ( captures->[4]->[0] == 5 ), 'fifth capture is 5' ];
-validator: [ ( captures->[11]->[0] == 73 ), 'last (12) capture is 73' ];
-validator: [ ! defined captures->[12], '13 capture is not defined'];
+validator: [ ( scalar @{captures()} == 15 ), '15 numbers total' ];
+validator: [ ( captures->[0]->[0] == 100 ), 'first number is 100' ];
+validator: [ ( captures->[1]->[0] == 0 ), 'second number is 0' ];
+validator: [ ( captures->[2]->[0] == 3 ), 'third number is 3' ];
+validator: [ ( captures->[3]->[0] == 4 ), 'forth number is 4' ];
+validator: [ ( captures->[4]->[0] == 5 ), 'fifth number is 5' ];
+validator: [ ( captures->[14]->[0] == 73 ), 'last (15-th) number is 73' ];
+validator: [ ! defined captures->[15], '16-th number is not defined'];

@@ -8,10 +8,16 @@ alex
 begin:
 hello
 world
+validator: [ scalar(@{stream()}) == 2, "2 streams found so far: ".( scalar(@{stream()}) )]
+validator: [ stream()->[0]->[0] eq 'hello', 'stream[0,0]' ]
+validator: [ stream()->[1]->[0] eq 'hello', 'stream[1,0]' ]
 jan
-code: note explain stream
+validator: [ scalar(@{stream()}) == 1, "1 stream found so far: ".( scalar(@{stream()}) )]
 julia
 alex
+validator: [ scalar(@{stream()}) == 1, "1 stream found so far: ".( scalar(@{stream()}) )]
+validator: [ stream()->[0]->[0] eq 'hello', 'stream[0,0]' ]
+validator: [ stream()->[0]->[1] eq 'world', 'stream[0,1]' ]
 end:
 
 begin:

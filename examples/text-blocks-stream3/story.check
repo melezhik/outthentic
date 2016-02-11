@@ -1,0 +1,34 @@
+begin:
+    foo
+    regexp: \S+
+    regexp: \S+
+    regexp: \S+
+    bar
+    code:                                   \
+        for my $s (@{stream()}) {           \
+            print "# ";                     \
+            for my $i (@{$s}){              \
+                print $i;                   \
+            }                               \
+            print "\n";                     \
+        }
+end:
+
+begin:
+
+    foo
+
+        regexp: (\S+)
+        code: print '#', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
+
+        regexp: (\S+)
+        code: print '#', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
+
+        regexp: (\S+)
+        code: print '#', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
+
+
+    bar
+
+end:
+

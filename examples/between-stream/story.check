@@ -1,0 +1,12 @@
+between: foo bar
+regexp: \d+
+code:                                   \
+    for my $s (@{stream()}) {           \
+        print "# ";                     \
+        for my $i (@{$s}){              \
+            print $i;                   \
+        }                               \
+        print "\n";                     \
+    }                               
+
+

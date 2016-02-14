@@ -1,0 +1,6 @@
+between: foo bar
+    regexp: 1
+    code: print '#', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
+    regexp: 2
+    code: print '#', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
+

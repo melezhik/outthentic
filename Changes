@@ -1,7 +1,8 @@
 0.0.15 
 
-* support for stream feature
-* examples on `between' feature
+* stream function exported from dsl
+* match_lines function exported from dsl
+* new examples added
 * minor changes related debugging information presentation
 
 0.0.14 2016-01-21

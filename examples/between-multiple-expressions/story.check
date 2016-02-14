@@ -1,0 +1,16 @@
+between: foo bar
+regexp: A
+regexp: \d
+#regexp: \d
+code:                                   \
+    for my $s (@{stream()}) {           \
+        print "# ";                     \
+        for my $i (@{$s}){              \
+            print $i;                   \
+        }                               \
+        print "\n";                     \
+    }                               
+
+#code: note explain dsl()->{context_modificator}->{ranges}
+reset_context:
+

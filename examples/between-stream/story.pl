@@ -1,5 +1,9 @@
 print "
     foo
+        0
+    bar
+
+    foo
         2
         4
         6

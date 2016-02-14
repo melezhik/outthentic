@@ -15,7 +15,7 @@ our @EXPORT = qw{
 
     set_stdout
 
-    dsl captures capture stream
+    dsl captures capture stream match_lines
 
     run_story apply_story_vars story_var
 
@@ -137,6 +137,10 @@ sub capture {
     dsl()->{captures}->[0]
 }
 
+sub match_lines {
+
+    dsl()->{succeeded}
+}
 
 sub run_story {
 

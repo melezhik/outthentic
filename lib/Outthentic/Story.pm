@@ -139,7 +139,7 @@ sub capture {
 
 sub match_lines {
 
-    dsl()->{succeeded}
+    dsl()->{match_lines}
 }
 
 sub run_story {

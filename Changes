@@ -1,4 +1,4 @@
-0.0.15 
+0.0.15 2016-02-17
 
 * stream function exported from dsl
 * match_lines function exported from dsl

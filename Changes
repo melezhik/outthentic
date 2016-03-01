@@ -1,3 +1,7 @@
+0.0.16 2016-03-01
+
+* outth_show_story variable is respected ( to dump story.pl  content )
+
 0.0.15 2016-02-17
 
 * stream function exported from dsl

@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.15';
+our $VERSION = '0.0.16';
 
 
 1;
@@ -54,6 +54,14 @@ sub run_story_file {
         my $story_file = get_prop('story_file');
 
         my $st = execute_cmd("perl $story_file 1>$content_file 2>&1 && test -f $content_file");
+
+
+        if ($ENV{outth_show_story}){
+            open STR, $story_file or die $!;
+            my $sdata = join "", <STR>;
+            close CNT;
+            note("story file:\n$sdata");
+        }
 
         if ($st) {
             ok(1, "perl $story_file succeeded");
@@ -1038,6 +1046,15 @@ C<match_l> - in TAP output truncate matching strings to {match_l} bytes
 =back
 
 See also `--match_l' in L<options|#options> section
+
+=over
+
+=item *
+
+C<outth_show_story> - if set, then content of story.pl file gets dumped in TAP output
+
+
+=back
 
 
 =head1 Examples

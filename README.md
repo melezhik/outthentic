@@ -568,6 +568,7 @@ Outthentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to exec
 
 See also \`--match_l' in [options](#options) section
 
+* `outth_show_story` - if set, then content of story.pl file gets dumped in TAP output
 
 # Examples
 

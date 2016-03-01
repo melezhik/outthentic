@@ -901,6 +901,15 @@ C<match_l> - in TAP output truncate matching strings to {match_l} bytes
 
 See also `--match_l' in L<options|#options> section
 
+=over
+
+=item *
+
+C<outth_show_story> - if set, then content of story.pl file gets dumped in TAP output
+
+
+=back
+
 
 =head1 Examples
 

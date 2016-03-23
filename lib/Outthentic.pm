@@ -1,7 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.16';
-
+our $VERSION = '0.0.17';
 
 1;
 
@@ -931,7 +930,7 @@ C<--match_l> - truncate matching strings
 
 =back
 
-In a TAP output truncate matching strings to {match_l} bytes;  default value is `30'
+In a TAP output truncate matching strings to {match_l} bytes;  default value is `200'
 
 =over
 

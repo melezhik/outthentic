@@ -490,7 +490,7 @@ If root parameter is not set current working directory is assumed as project roo
 
 * `--match_l` - truncate matching strings 
 
-In a TAP output truncate matching strings to {match_l} bytes;  default value is \`30'
+In a TAP output truncate matching strings to {match_l} bytes;  default value is \`200'
 
 * `--story` -  run only single story
 

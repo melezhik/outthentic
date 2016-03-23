@@ -13,7 +13,7 @@ my $debug_mod = 0;
 my $verbose;
 my $story_path;
 my $prove_opts = '-v';
-my $match_l = $ENV{'match_l'} || 30;
+my $match_l = $ENV{'match_l'} || 200;
 my $host;
 my $ini_file_path;
 

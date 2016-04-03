@@ -44,7 +44,7 @@ sub new_story {
 sub end_of_story {
 
     if (debug_mod12()){
-        Test::More::ok(1,"end of story: ".(get_prop('story')));
+        Test::More::note("end of story: ".(get_prop('story')));
     }
     delete $stories[-1];
 
@@ -158,7 +158,7 @@ sub run_story {
     die "test file: $test_file does not exist" unless -e $test_file;
 
     if (debug_mod12()){
-        Test::More::ok(1,"run downstream story: $path"); 
+        Test::More::note("run downstream story: $path"); 
     }
 
     do_perl_file($test_file);

@@ -101,11 +101,11 @@ sub header {
     my $debug = get_prop('debug');
     my $ignore_story_err = ignore_story_err();
     
-    ok(1, "project: $project");
-    ok(1, "story: $story");
-    ok(1, "story_type: $story_type");
-    ok(1, "debug: $debug");
-    ok(1, "ignore story errors: $ignore_story_err");
+    note("project: $project");
+    note("story: $story");
+    note("story_type: $story_type");
+    note("debug: $debug");
+    note("ignore story errors: $ignore_story_err");
 
 }
 
@@ -113,7 +113,7 @@ sub generate_asserts {
 
     my $story_check_file = shift;
 
-    header() if debug_mod12();
+    header() if debug_mod2();
 
     dsl()->{debug_mod} = get_prop('debug');
 

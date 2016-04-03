@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.17';
+our $VERSION = '0.0.18';
 
 1;
 
@@ -41,12 +41,12 @@ sub run_story_file {
 
     if (get_prop('my_stdout') and @{get_prop('my_stdout')} ){
 
-        ok(1,"stdout is already set");
+        note("stdout is already set") if debug_mod12;
 
         open F, ">", $content_file or die $!;
         print F (join "\n", @{get_prop('my_stdout')});
         close F;
-        ok(1, "stdout saved to $content_file");
+        note("stdout saved to $content_file") if debug_mod12;
 
     }else{
 
@@ -63,9 +63,9 @@ sub run_story_file {
         }
 
         if ($st) {
-            ok(1, "perl $story_file succeeded");
+            note("perl $story_file succeeded") if debug_mod12;
         }elsif(ignore_story_err()){
-            ok(1, "perl $story_file failed, still continue due to ignore_story_err enabled");
+            note("perl $story_file failed, still continue due to ignore_story_err enabled");
         }else{
             ok(0, "perl $story_file succeeded");
             open CNT, $content_file or die $!;
@@ -74,7 +74,7 @@ sub run_story_file {
             note("perl $story_file \n===>\n$rdata");
         }
 
-        ok(1,"stdout saved to $content_file");
+        note("stdout saved to $content_file") if debug_mod12;
 
     }
 

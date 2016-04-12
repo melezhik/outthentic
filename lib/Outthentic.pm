@@ -991,38 +991,68 @@ This optional parameter sets base url or hostname of a service or application be
 
 =item *
 
-`--ini' - test suite ini file path
+`--ini' - configuration ini file path
+
+
+
+=item *
+
+`--yaml'- yaml configuration file path
+
 
 
 =back
 
-See L<test suite ini file|#test-suite-ini-file> section for details.
+See L<suite configuration|#suite-configuration> section for details.
 
 
-=head1 Test suite ini file
+=head1 Suite configuration
 
-Test suite ini file is a configuration file where you may pass any additional data could be used in your tests:
+Outthentic suites could be configurable. Configuration files contain a supplemental data to adjust suite behavior
 
-    cat suite.ini
+There are two type of configuration files are supported:
+
+=over
+
+=item *
+
+.Ini style format
+
+
+=item *
+
+YAML format
+
+
+=back
+
+.Ini  style configuration files are passed by `--ini' parameter
+
+    $ strun --ini /etc/suites/foo.ini
+    
+    $ cat /etc/suites/foo.ini
     
     [main]
     
     foo = 1
     bar = 2
 
-There is no special magic behind this ini file, except this should be L<Config Tiny|https://metacpan.org/pod/Config::Tiny> compliant configuration file.
+There is no special magic behind ini files, except this should be L<Config Tiny|https://metacpan.org/pod/Config::Tiny> compliant configuration file.
 
-By default story runner script looks for file named suite.ini placed at current working directory.
+Or you can choose YAML format for suite configuration by using `--yaml' parameter:
 
-You my redefine this by using suiteI<ini>file environment variable:
+    $ strun --ini /etc/suites/foo.yaml
+    
+    $ cat /etc/suites/foo.yaml
+    
+    main:
+      foo : 1
+      bar : 2
 
-    suite_ini_file=/path/to/your/ini/file
+Unless user sets path to configuration file explicitly by `--ini' or \'--yaml' story runner looks for the 
+files named suite.ini and I<then> ( if suite.ini is not found ) for suite.yaml at the current working directory.
 
-Or by `--ini' parameter of story runner:
-
-    strun --ini /path/to/your/ini/file
-
-Once suite ini file is read up one may use it in hook.pm files via config()
+If configuration file is passed and read a related configuration data is accessible via config() function, for example in hook.pm file:
 
     # cat story.pm
     

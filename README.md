@@ -556,7 +556,7 @@ Or you can choose YAML format for suite configuration by using \`--yaml' paramet
 Unless user sets path to configuration file explicitly by \`--ini' or \'--yaml' story runner looks for the 
 files named suite.ini and _then_ ( if suite.ini is not found ) for suite.yaml at the current working directory.
 
-If configuration file is passed and read a related configuration data is accessible via config() function, for example in hook.pm file:
+If configuration file is passed and read a related configuration data is accessible via config() function, for example in story hook file:
 
     # cat story.pm
 

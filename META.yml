@@ -25,7 +25,8 @@ requires:
   Outthentic::DSL: 0.0.6
   Test::Harness: 0
   Test::More: 0
+  YAML: 0
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/outthentic
-version: 0.0.18
+version: 0.0.19

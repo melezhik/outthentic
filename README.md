@@ -513,34 +513,50 @@ See [prove settings](#prove-settings) section for details.
 
 This optional parameter sets base url or hostname of a service or application being tested.
 
-* `--ini' - test suite ini file path
+* `--ini' - configuration ini file path
 
-See [test suite ini file](#test-suite-ini-file) section for details.
+* `--yaml'- yaml configuration file path
 
-# Test suite ini file
+See [suite configuration](#suite-configuration) section for details.
 
-Test suite ini file is a configuration file where you may pass any additional data could be used in your tests:
 
-    cat suite.ini
+# Suite configuration
+
+Outthentic suites could be configurable. Configuration files contain a supplemental data to adjust suite behavior
+
+There are two type of configuration files are supported:
+
+* .Ini style format
+* YAML format
+
+.Ini  style configuration files are passed by \`--ini' parameter
+
+    $ strun --ini /etc/suites/foo.ini
+
+    $ cat /etc/suites/foo.ini
 
     [main]
 
     foo = 1
     bar = 2
 
-There is no special magic behind this ini file, except this should be [Config Tiny](https://metacpan.org/pod/Config::Tiny) compliant configuration file.
+There is no special magic behind ini files, except this should be [Config Tiny](https://metacpan.org/pod/Config::Tiny) compliant configuration file.
 
-By default story runner script looks for file named suite.ini placed at current working directory.
+Or you can choose YAML format for suite configuration by using \`--yaml' parameter:
 
-You my redefine this by using suite_ini_file environment variable:
+    $ strun --ini /etc/suites/foo.yaml
 
-    suite_ini_file=/path/to/your/ini/file
+    $ cat /etc/suites/foo.yaml
 
-Or by \`--ini' parameter of story runner:
+    ---
+    foo : 1
+    bar : 2
 
-    strun --ini /path/to/your/ini/file
 
-Once suite ini file is read up one may use it in hook.pm files via config()
+Unless user sets path to configuration file explicitly by \`--ini' or \'--yaml' story runner looks for the 
+files named suite.ini and _then_ suite.yaml at the current working directory.
+
+If configuration file is passed and read a related configuration data is accessible via config() function, for example in hook.pm file:
 
     # cat story.pm
 

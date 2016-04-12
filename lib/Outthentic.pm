@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.18';
+our $VERSION = '0.0.19';
 
 1;
 
@@ -8,6 +8,7 @@ package main;
 
 use Carp;
 use Config::Tiny;
+use YAML qw{LoadFile};
 
 use strict;
 use Test::More;
@@ -26,10 +27,23 @@ sub execute_cmd {
 sub config {
 
     unless ($config){
-        $config = Config::Tiny->read( 
-            get_prop('ini_file_path') || $ENV{'suite_ini_file'} || 'suite.ini' 
-            ) or confess "can't read ini file: $!";
+        if (get_prop('ini_file_path') and -f get_prop('ini_file_path') ){
+          my $path = get_prop('ini_file_path');
+          $config = $config = Config::Tiny->read($path) or confess "file $path is not valid .ini file";
+        }elsif(get_prop('yaml_file_path') and -f get_prop('yaml_file_path')){
+          my $path = get_prop('yaml_file_path');
+          my $config = LoadFile($path);
+        }elsif ( -f 'suite.ini' ){
+          my $path = 'suite.ini';
+          $config = $config = Config::Tiny->read($path) or confess "file $path is not valid .ini file";
+        }elsif ( -f 'suite.yml'){
+          my $path = 'suite.yml';
+          my $config = LoadFile($path);
+        }else{
+          confess "configuration file is not found"
+        }
     }
+
     return $config;
 }
 

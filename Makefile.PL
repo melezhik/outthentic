@@ -11,6 +11,7 @@ requires    'Test::More';
 requires    'Test::Harness';
 requires    'File::Temp';
 requires    'Config::Tiny';
+requires    'YAML';
 
 requires    'Outthentic::DSL', "0.0.6";
 

@@ -32,13 +32,13 @@ sub config {
           $config = $config = Config::Tiny->read($path) or confess "file $path is not valid .ini file";
         }elsif(get_prop('yaml_file_path') and -f get_prop('yaml_file_path')){
           my $path = get_prop('yaml_file_path');
-          my $config = LoadFile($path);
+          ($config) = LoadFile($path);
         }elsif ( -f 'suite.ini' ){
           my $path = 'suite.ini';
           $config = $config = Config::Tiny->read($path) or confess "file $path is not valid .ini file";
-        }elsif ( -f 'suite.yml'){
-          my $path = 'suite.yml';
-          my $config = LoadFile($path);
+        }elsif ( -f 'suite.yaml'){
+          my $path = 'suite.yaml';
+          ($config) = LoadFile($path);
         }else{
           confess "configuration file is not found"
         }

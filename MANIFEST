@@ -66,4 +66,5 @@ META.yml
 README.md
 README.pod
 suite.ini
+suite.yaml
 t/outthentic.t

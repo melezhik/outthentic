@@ -325,10 +325,10 @@ This might be helpful when for some reasons you can't produce a stdout via story
 
 This is simple an example :
 
-    # story.pm
+    $ cat story.pm
     set_stdout("THIS IS I FAKE RESPONSE\n HELLO WORLD");
 
-    # story.check
+    $ cat story.check
     THIS IS FAKE RESPONSE
     HELLO WORLD
 
@@ -398,7 +398,7 @@ Here are the brief comments to the example above:
 Here is an example code snippet:
 
 
-    # story.pm
+    $ cat story.pm
     run_story( 'some_story' )
     run_story( 'yet_another_story' )
     run_story( 'some_story' )
@@ -412,7 +412,7 @@ You may pass variables to downstream story with the second argument of `run_stor
 
 Story variables get accessed by  \`story_var' function:
 
-    # create_calc_object/story.pm
+    $ cat create_calc_object/story.pm
     story_var('use_float');
     story_var('use_complex_numbers');
     story_var('foo');
@@ -456,9 +456,11 @@ Returns value of \`--host' parameter.
 
 ## Ignore unsuccessful codes when run stories
 
-As every story is a perl script gets run via system call, it returns an exit code. None zero exit codes result in test failures, this default behavior , to disable this say:
+Every story is a perl script gets run by perl `system()` function returing an exit code. 
 
+None zero exit codes result in test failures, this default behavior, to disable this say in hook file:
 
+    $ cat story.pm
     ignore_story_err(1);
 
 ## PERL5LIB

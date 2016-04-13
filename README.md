@@ -475,9 +475,13 @@ custom modules under $project\_root\_directory'/lib directory:
  
 ## Options
 
-* `--root`  - Root directory of outthentic project. If root parameter is not set current working directory is assumed as project root directory.
+* `--root`  
 
-* `--debug` - Enable/disable debug mode
+Root directory of outthentic project. If root parameter is not set current working directory is assumed as project root directory.
+
+* `--debug` 
+
+Enable/disable debug mode:
 
     * Increasing debug value results in more low level information appeared at output
 
@@ -485,9 +489,13 @@ custom modules under $project\_root\_directory'/lib directory:
 
     * Possible values: 0,1,2,3
 
-* `--match_l` - Truncate matching strings. In a TAP output truncate matching strings to {match_l} bytes;  default value is \`200'
+* `--match_l` 
 
-* `--story` -  Run only single story. This should be file path without extensions ( .pl, .check ):
+Truncate matching strings. In a TAP output truncate matching strings to {match_l} bytes;  default value is 200.
+
+* `--story` 
+
+Run only single story. This should be file path without extensions ( .pl, .check ):
 
     foo/story.pl
     foo/bar/story.pl
@@ -498,17 +506,23 @@ custom modules under $project\_root\_directory'/lib directory:
     --story foo/bar/ # runs foo/bar/ stories
 
 
-* `--prove` - prove parameters
+* `--prove` 
 
-See [prove settings](#prove-settings) section for details.
+Prove parameters. See [prove settings](#prove-settings) section for details.
 
-* `--host` - hostname 
+* `--host`
 
 This optional parameter sets base url or hostname of a service or application being tested.
 
-* `--ini`  - configuration ini file path
+* `--ini`  
 
-* `--yaml` - yaml configuration file path
+Configuration ini file path.
+
+See [suite configuration](#suite-configuration) section for details.
+
+* `--yaml` 
+
+Yaml configuration file path. 
 
 See [suite configuration](#suite-configuration) section for details.
 

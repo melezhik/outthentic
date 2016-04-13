@@ -159,15 +159,15 @@ Runner consequentially goes several phases:
 
 ## A compilation phase. 
 
-Stories are converted into perl test files *.t ( compilation phase ) and saved into temporary directory.
+Stories are converted into perl test files \*.t ( compilation phase ) and saved into temporary directory.
 
 ## An execution phase. 
 
 [Prove](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) utility recursively executes 
-test files under temporary directory and thus provide final suite execution status.
+test files under temporary directory and thus gives a final suite execution status.
 
-So after all outthentic project is just perl test project with *.t files inside, the difference is that
-while with common test project *.t files _are created by user_, in outthentic project *.t files _are generated_
+So after all outthentic project is just perl test project with \*.t files inside, the difference is that
+while with common test project \*.t files _are created by user_, in outthentic project \*.t files _are generated_
 by story files.
  
 

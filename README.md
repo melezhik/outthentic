@@ -4,7 +4,7 @@ Outthentic
 
 # Synopsis
 
-Generic testing framework, based on [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl)
+Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl)
 
 # Install
 
@@ -78,6 +78,8 @@ Let's create a project to test a simple calculator application:
 
     mkdir calc-app
     cd calc-app
+
+_Suite_ is a synonym for project term. Meaning one runs suite of releated scenarios or stories.
 
 ## Stories
 
@@ -440,13 +442,13 @@ Root directory of outthentic project.
 
 Root directory of generated perl tests , see [story runner](#story-runner) section for details.
 
-* config() - returns hash of test suite configuration
+* config() - returns suite configuration hash object
 
-See[test suites ini file](#test-suite-ini-file) section for details.
+See[suite configuration](#suite-configuration) section for details.
 
 * host() 
 
-A value of \`--host' parameter.
+Returns value of \`--host' parameter.
 
 ## Ignore unsuccessful codes when run stories
 
@@ -455,11 +457,9 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
     ignore_story_err(1);
 
-
 ## PERL5LIB
 
-\`project\_root\_directory'/lib is added to PERL5LIB path, 
-which make it easy to place some custom modules under \`project\_root\_directory'/lib directory:
+\`project\_root\_directory'/lib is added to PERL5LIB path, which make it easy to place some custom modules under \`project\_root\_directory'/lib directory:
 
     # my-app/lib/Foo/Bar/Baz.pm
     package Foo::Bar::Baz;
@@ -522,7 +522,7 @@ See [suite configuration](#suite-configuration) section for details.
 
 # Suite configuration
 
-Outthentic suites could be configurable. Configuration files contain a supplemental data to adjust suite behavior
+Outthentic projects are configurable. Configuration data is passed via configuration files.
 
 There are two type of configuration files are supported:
 

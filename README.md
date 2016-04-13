@@ -79,7 +79,7 @@ Let's create a project to test a simple calculator application:
     mkdir calc-app
     cd calc-app
 
-_Suite_ is a synonym for project term. Meaning one runs suite of releated scenarios or stories.
+_Suite_ is a synonym for project term. Meaning one runs suite of related scenarios or stories.
 
 ## Stories
 
@@ -444,7 +444,7 @@ Root directory of generated perl tests , see [story runner](#story-runner) secti
 
 * config() - returns suite configuration hash object
 
-See[suite configuration](#suite-configuration) section for details.
+See [suite configuration](#suite-configuration) section for details.
 
 * host() 
 

@@ -163,11 +163,11 @@ Stories are converted into perl test files *.t ( compilation phase ) and saved i
 
 ## An execution phase. 
 
-[Prove](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) utilty recursively executes 
+[Prove](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) utility recursively executes 
 test files under temporary directory and thus provide final suite execution status.
 
-So under the hood outthentic project is just perl test project with *.t inside, the difference is that
-while with common test project *.t files are created by user, in outthentic project *.t files _are generated_
+So after all outthentic project is just perl test project with *.t files inside, the difference is that
+while with common test project *.t files _are created by user_, in outthentic project *.t files _are generated_
 by story files.
  
 
@@ -213,11 +213,11 @@ You may use regular expressions as well:
     OK - output matches /\d/
 
 See [check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) in Outthentic::DSL
-documenation pages.
+documentaion pages.
 
 * generators
 
-Yes you may generate new check enties on run time:
+Yes you may generate new check entries on run time:
 
     # original check list
    
@@ -237,7 +237,7 @@ Yes you may generate new check enties on run time:
     again
 
 See [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL
-documenation pages.
+documentaion pages.
 
    
 * inline perl code
@@ -250,7 +250,7 @@ What about inline arbitrary perl code? Well, it's easy!
     validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
 
 See [perl expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions) in Outthentic::DSL
-documenation pages.
+documentaion pages.
 
 * text blocks
 
@@ -283,7 +283,7 @@ Need to validate that some lines goes successively?
         end:
 
 See [comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks) in Outthentic::DSL
-documenation pages.
+documentaion pages.
 
 # Hooks
 

@@ -4,7 +4,7 @@ Outthentic
 
 # Synopsis
 
-Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl)
+Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl).
 
 # Install
 
@@ -42,9 +42,9 @@ The verification process consists of:
 
 * executing story file and saving stdout into file.
 * validating stdout against a story check.
-* returning result as the list of statuses, where every status relates to a single rule
+* returning result as the list of statuses, where every status relates to a single rule.
 
-See also [story runner](#story-runner) section.
+See also [story runner](#story-runner).
 
 ## Suite
 
@@ -345,11 +345,11 @@ A final stdout will be:
 
 ## Upstream and downstream stories
 
-It is possible to run one story from another, using notion of downstream stories.
+It is possible to run one story from another with the help of downstream stories.
 
 Downstream stories are reusable stories or modules. 
 
-Story runner never executes downstream stories directly, instead you have to call downstream story from the _upstream_ one:
+Story runner never executes downstream stories _directly_, instead of downstream story always gets called from the _upstream_ one:
 
     $ cat modules/create_calc_object/story.pl
     # this is a downstream story
@@ -410,7 +410,7 @@ You may pass variables to downstream story with the second argument of `run_stor
     run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
 
 
-Story variables get accessed by  \`story_var' function:
+Story variables get accessed by  `story_var` function:
 
     $ cat create_calc_object/story.pm
     story_var('use_float');
@@ -588,7 +588,6 @@ See also \`--match_l' in [options](#options) section
 # Examples
 
 An example outthentic project lives at examples/ directory, to run it say this:
-
 
     $ strun --root examples/
 

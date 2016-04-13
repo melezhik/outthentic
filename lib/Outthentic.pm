@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.21';
+our $VERSION = '0.0.22';
 
 1;
 
@@ -172,7 +172,7 @@ Generic testing, reporting, monitoring framework consuming L<Outthentic::DSL|htt
 
 =head1 Install
 
-    cpanm Outthentic
+  $ cpanm Outthentic
 
 
 =head1 Short introduction
@@ -604,38 +604,36 @@ Downstream stories are reusable stories or modules.
 
 Story runner never executes downstream stories I<directly>, instead of downstream story always gets called from the I<upstream> one:
 
-    $ cat modules/create_calc_object/story.pl
+    $ cat modules/create_calc_object/story.pm
     # this is a downstream story
     # to make story downstream
-    # simply create story file
+    # simply create story 
     # in modules/ directory
     use MyCalc;
     our $calc = MyCalc->new();
-    print ref($calc), "\n"
+    set_stdout(ref($calc));
      
     $ cat modules/create_calc_object/story.check
     MyCalc
     
-    $ cat addition/story.pl
-    # this is a upstream story
-    our $calc->addition(2,2);
      
     $ cat addition/story.pm
+    # this is a upstream story
     # to run downstream story
+    
     # call run_story function
     # inside upstream story hook
     # with a single parameter - story path,
     # note that you don't have to
     # leave modules/ directory in the path
+    
     run_story( 'create_calc_object' );
-     
-     
-    $ cat multiplication/story.pl
-    # this is a upstream story too
-    our $calc->multiplication(2,2);
-     
-    $ cat multiplication/story.pm
-    run_story( 'create_calc_object' );
+    
+    # here $calc object is created by 
+    # create_calc_object story
+    # so we can use it!
+    
+    our $calc->addition(2,2);
 
 Here are the brief comments to the example above:
 
@@ -643,7 +641,7 @@ Here are the brief comments to the example above:
 
 =item *
 
-to make story as downstream simply create story file at modules/ directory
+to make story as downstream simply create story at modules/ directory
 
 
 
@@ -710,8 +708,11 @@ you can't use story variables in a none downstream story
 
 =back
 
-One word about sharing state between upstream/downstream stories. As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories.
-The straightforward way to share state is to use global variables :
+One word about I<sharing state> between upstream/downstream stories. 
+
+As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories.
+
+The straightforward way to share state is to use global variables:
 
     # upstream story hook:
     our $state = [ 'this is upstream story' ]
@@ -719,12 +720,10 @@ The straightforward way to share state is to use global variables :
     # downstream story hook:
     push our @$state, 'I was here'
 
-Of course more proper approaches for state sharing could be used as singeltones or something else.
-
 
 =head2 Story variables accessors
 
-There are some variables exposed to hooks API, they could be useful:
+There are some useful variables exposed by hooks API:
 
 =over
 
@@ -767,21 +766,22 @@ None zero exit codes result in test failures, this default behavior, to disable 
 
 =head2 PERL5LIB
 
-$project_root_directory/lib is added to PERL5LIB path, which make it easy to place 
-custom modules under $project_root_directory'/lib directory:
+$project_root_directory/lib path gets added to $PERL5LIB variable. 
 
-    # my-app/lib/Foo/Bar/Baz.pm
+This make it easy to place custom modules under project root directory:
+
+    $ cat my-app/lib/Foo/Bar/Baz.pm
     package Foo::Bar::Baz;
     ...
     
-    # hook.pm
+    $ cat  hook.pm
     use Foo::Bar::Baz;
     ...
 
 
 =head1 Story runner client
 
-    strun <options>
+    $ strun <options>
 
 
 =head2 Options

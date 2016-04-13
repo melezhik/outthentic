@@ -213,7 +213,7 @@ You may use regular expressions as well:
     OK - output matches /\d/
 
 See [check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) in Outthentic::DSL
-documentaion pages.
+documentation pages.
 
 * generators
 
@@ -237,7 +237,7 @@ Yes you may generate new check entries on run time:
     again
 
 See [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL
-documentaion pages.
+documentation pages.
 
    
 * inline perl code
@@ -250,7 +250,7 @@ What about inline arbitrary perl code? Well, it's easy!
     validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
 
 See [perl expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions) in Outthentic::DSL
-documentaion pages.
+documentation pages.
 
 * text blocks
 
@@ -283,23 +283,27 @@ Need to validate that some lines goes successively?
         end:
 
 See [comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks) in Outthentic::DSL
-documentaion pages.
+documentation pages.
 
 # Hooks
 
-Story hooks are extension points to hack into story run time phase. It's just files with perl code gets executed in the beginning of a story. You should named your hook file as \`story.pm' and place it into \`story' directory:
+Story hooks are extension points to change [story run](#story-run) process. 
+
+It's just files with perl code gets executed in the beginning of a story. 
+
+You should name your hooks as \`story.pm' and place them into story directory:
 
 
-    # addition/story.pm
+    $ cat addition/story.pm
     diag "hello, I am addition story hook";
     sub is_number { [ 'regexp: ^\\d+$' ] }
  
 
-    # addition/story.check
+    $ cat addition/story.check
     generator: is_number
  
 
-There are lot of reasons why you might need a hooks. To say a few:
+Reasons why you might need a hooks:
 
 * redefine story stdout
 * define generators
@@ -309,13 +313,15 @@ There are lot of reasons why you might need a hooks. To say a few:
 
 # Hooks API
 
-Story hooks API provides several functions to change story behavior at run time
+Story hooks API provides several functions to hack into story run process:
 
 ## Redefine stdout
 
 *set_stdout(string)*
 
-Using set_stdout means that you never call a real story to get a tested data, but instead set stdout on your own side. It might be helpful when you still have no a certain knowledge of tested code to produce a stdout:
+Using set_stdout means that you never execute a story.pl to get a stdout, but instead you set stdout on your own side. 
+
+This might be helpful when for some reasons you can't produce a stdout via story.pl file:
 
 This is simple an example :
 
@@ -339,11 +345,13 @@ A final stdout will be:
 
 ## Upstream and downstream stories
 
-Story runner allow you to call one story from another, using notion of downstream stories.
+It is possible to run one story from another, using notion of downstream stories.
 
-Downstream stories are reusable stories. Runner never executes downstream stories directly, instead you have to call downstream story from _upstream_ one:
+Downstream stories are reusable stories or modules. 
 
-    # modules/create_calc_object/story.pl
+Story runner never executes downstream stories directly, instead you have to call downstream story from the _upstream_ one:
+
+    $ cat modules/create_calc_object/story.pl
     # this is a downstream story
     # to make story downstream
     # simply create story file
@@ -352,14 +360,14 @@ Downstream stories are reusable stories. Runner never executes downstream storie
     our $calc = MyCalc->new();
     print ref($calc), "\n"
  
-    # modules/create_calc_object/story.check
+    $ cat modules/create_calc_object/story.check
     MyCalc
 
-    # addition/story.pl
+    $ cat addition/story.pl
     # this is a upstream story
     our $calc->addition(2,2);
  
-    # addition/story.pm
+    $ cat addition/story.pm
     # to run downstream story
     # call run_story function
     # inside upstream story hook
@@ -369,11 +377,11 @@ Downstream stories are reusable stories. Runner never executes downstream storie
     run_story( 'create_calc_object' );
  
  
-    # multiplication/story.pl
+    $ cat multiplication/story.pl
     # this is a upstream story too
     our $calc->multiplication(2,2);
  
-    # multiplication/story.pm
+    $ cat multiplication/story.pm
     run_story( 'create_calc_object' );
 
 
@@ -397,7 +405,7 @@ Here is an example code snippet:
 
 * stories variables 
 
-You may pass variables to downstream story with the second argument of \`run_story'  function:
+You may pass variables to downstream story with the second argument of `run_story`  function:
 
     run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
 

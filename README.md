@@ -588,7 +588,6 @@ An example outthentic project lives at examples/ directory, to run it say this:
 
     $ strun --root examples/
 
-
 # AUTHOR
 
 [Aleksei Melezhik](mailto:melezhik@gmail.com)
@@ -599,17 +598,11 @@ https://github.com/melezhik/outthentic
 
 # See also
 
-* [sparrow](https://github.com/melezhik/sparrow)
+* [sparrow](https://github.com/melezhik/sparrow) - outthentic suites manager.
 
-Outthentic test suites manager.
+* [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl) - Outthentic::DSL specification.
 
-* [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl)
-
-Outthentic DSL specification.
-
-* [swat](https://github.com/melezhik/swat) 
-
-Yet another outthentic test suite runner ( designed specially for web application tests ).
+* [swat](https://github.com/melezhik/swat) - web testing framework consuming Outthentic::DSL.
 
 
 # Thanks

@@ -14,41 +14,48 @@ Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](htt
 
 This is a quick tutorial on outthentic usage.
 
-## Create a story file 
+## Story being tested
 
 Story is just a perl script that yields something into stdout:
 
-    # story.pl
+    $ cat story.pl
 
     print "I am OK\n";
     print "I am outthentic\n";
 
 Sometimes we can also call story file as scenario.
 
-## Create a story check file
+## Check file
 
 Story check is a bunch of lines stdout should match. Here we require to have \`I am OK' and \`I am outthentic' lines in stdout:
 
-    # story.check
+    $ cat story.check
 
     I am OK
     I am outthentic
 
-## Run a story
+## Story run
 
-Story run is process of verification of your story, it consists of:
+Story run is process of verification of your story. A story verification is based on rules defined in story check file.
 
-* executing story file.
-* saving story stdout into a file.
+The verification process consists of:
+
+* executing story file and saving stdout into file.
 * validating stdout against a story check.
+* returning result as the list of statuses, where every status relates to a single rule
 
+See also [story runner](#story-runner) section.
 
-## Run a suite
+## Suite
 
-You may have more then one story. A bunch of related stories is called project or suite.
+A bunch of related stories is called project or suite. Sure you may have more then one story at your project.
+Just create a new directories with story files inside:
 
-`strun` - is story runner script to find all the stories in the suite and execute them:
+    $ mkdir hello
+    $ echo 'print "hello"' > hello/story.pl
+    $ echo hello > hello/story.check
 
+Now run the suite with `strun` command:
 
     $ strun
     ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/story.pl succeeded
@@ -67,23 +74,20 @@ You may have more then one story. A bunch of related stories is called project o
     Files=2, Tests=7,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.01 csys =  0.13 CPU)
     Result: PASS
 
-Follow [story runner](#story-runner) section for details.
-         
-# Hello world example
+
+# Calculator project example
 
 Here is more detailed tutorial where we will build a test suite for calculator program.
 
-Let's say it again. There are three basic outthentic entities: 
+Let's repeat it again - there are three basic outthentic entities: 
 
-* project (suite)
-* story files (scenarios)
-* story checks (rules)
+* project ( suite )
+* story files ( scenarios )
+* story checks ( rules )
 
 ## Project
 
-Outthentic project or suite is a bunch of related stories. 
-
-Every project is _represented_ by a directory holding story files.
+Outthentic project is a bunch of related stories. Every project is _represented_ by a directory.
 
 Let's create a project to test a simple calculator application:
 
@@ -94,9 +98,7 @@ Let's create a project to test a simple calculator application:
 
 Stories are just perl scripts placed at project sub-directories and named `story.pl`. 
 
-Every story is a small testing scenario to execute.
-
-One my think about them like about  `*.t` files in a perl test suite.
+Every story is a small program with stdout gets tested.
 
 Let's create two stories for our calc project. One story for \`addition' operation and another for \`multiplication':
 
@@ -123,7 +125,7 @@ Let's create two stories for our calc project. One story for \`addition' operati
 
 ## Story check files
 
-Story check files contain validation rules for story.pl files. Every story.pl is always accompanied by 
+Story checks file contain validation rules for story.pl files. Every story.pl is always accompanied by 
 story.check file. Story check files should be placed at the same directory as story.pl file.
 
 Lets add some rules for multiplication and addition stories:
@@ -137,7 +139,7 @@ Lets add some rules for multiplication and addition stories:
     12
  
 
-And finally run test suite:
+And finally lets run test suite:
 
     $ strun
 
@@ -151,27 +153,23 @@ to avoid ambiguity.
 
 # Story runner
 
-Story runner - is a script to run outthentic stories. It consequentially goes several phases:
+Story runner - is a script to run outthentic stories. It is called `strun`.
 
-* A compilation phase. Stories are converted into perl test files ( compilation phase ) and saved into temporary directory
-* An execution phase. [prove](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) script recursively executes test files under temporary directory
+Runner consequentially goes several phases:
 
-## Execution phase
+## A compilation phase. 
 
-* During execution phase for every perl test file a Test::More::ok asserts sequence is generated and then executed which finally
-define a story status. 
+Stories are converted into perl test files *.t ( compilation phase ) and saved into temporary directory.
 
-* All the story statuses are then accumulated by [Test::Harness](https://metacpan.org/pod/Test::Harness) and determine
-a final suite result. 
+## An execution phase. 
 
-Test::More::ok asserts sequence generation:
+[Prove](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) utilty recursively executes 
+test files under temporary directory and thus provide final suite execution status.
 
-    * new instance of Outthentic::DSL object (ODO) is created 
-    * story check file is passed to ODO
-    * story file is executed and it's stdout passed to ODO
-    * ODO makes validation of given stdout against rules defined at story check file
-    * results are returned back as list of Test::More::ok asserts
-    * every assert in assert list is executed resulting in true or false 
+So under the hood outthentic project is just perl test project with *.t inside, the difference is that
+while with common test project *.t files are created by user, in outthentic project *.t files _are generated_
+by story files.
+ 
 
 # Story checks syntax
 
@@ -214,11 +212,12 @@ You may use regular expressions as well:
     OK - output matches /L+/
     OK - output matches /\d/
 
-Follow [https://github.com/melezhik/outthentic-dsl#check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) to know more.
+See [check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) in Outthentic::DSL
+documenation pages.
 
 * generators
 
-Yes you may generate new check list on run time:
+Yes you may generate new check enties on run time:
 
     # original check list
    
@@ -237,7 +236,9 @@ Yes you may generate new check list on run time:
     hello
     again
 
-Follow [https://github.com/melezhik/outthentic-dsl#generators](https://github.com/melezhik/outthentic-dsl#generators) to know more.
+See [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL
+documenation pages.
+
    
 * inline perl code
 
@@ -248,7 +249,8 @@ What about inline arbitrary perl code? Well, it's easy!
     regexp: number: (\d+)
     validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
 
-Follow [https://github.com/melezhik/outthentic-dsl#perl-expressions](https://github.com/melezhik/outthentic-dsl#validators) to know more.
+See [perl expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions) in Outthentic::DSL
+documenation pages.
 
 * text blocks
 
@@ -280,12 +282,12 @@ Need to validate that some lines goes successively?
             at the very end
         end:
 
-Follow [https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks)
-to know more.
+See [comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks) in Outthentic::DSL
+documenation pages.
 
 # Hooks
 
-Story Hooks are extension points to hack into story run time phase. It's just files with perl code gets executed in the beginning of a story. You should named your hook file as \`story.pm' and place it into \`story' directory:
+Story hooks are extension points to hack into story run time phase. It's just files with perl code gets executed in the beginning of a story. You should named your hook file as \`story.pm' and place it into \`story' directory:
 
 
     # addition/story.pm

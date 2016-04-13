@@ -1,5 +1,5 @@
 ---
-abstract: 'Generic testing framework based on Outthentic::DSL'
+abstract: 'Generic testing, reporting, monitoring framework consuming Outthentic::DSL'
 author:
   - 'L<Aleksei Melezhik|mailto:melezhik@gmail.com>'
 build_requires:
@@ -29,4 +29,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/outthentic
-version: 0.0.19
+version: 0.0.20

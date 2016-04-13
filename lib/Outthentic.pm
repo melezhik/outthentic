@@ -915,7 +915,7 @@ YAML format
 
 =back
 
-.Ini  style configuration files are passed by `--ini' parameter
+.Ini  style configuration files are passed by C<--ini> parameter
 
     $ strun --ini /etc/suites/foo.ini
     
@@ -928,7 +928,7 @@ YAML format
 
 There is no special magic behind ini files, except this should be L<Config Tiny|https://metacpan.org/pod/Config::Tiny> compliant configuration file.
 
-Or you can choose YAML format for suite configuration by using `--yaml' parameter:
+Or you can choose YAML format for suite configuration by using C<--yaml> parameter:
 
     $ strun --yaml /etc/suites/foo.yaml
     
@@ -1032,7 +1032,7 @@ L<Swat|https://github.com/melezhik/swat> - web testing framework consuming Outth
 
 =item *
 
-perl prove, TAP, Test::More
+Perl prove, TAP, Test::More
 
 
 

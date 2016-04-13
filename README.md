@@ -536,7 +536,7 @@ There are two type of configuration files are supported:
 * .Ini style format
 * YAML format
 
-.Ini  style configuration files are passed by \`--ini' parameter
+.Ini  style configuration files are passed by `--ini` parameter
 
     $ strun --ini /etc/suites/foo.ini
 
@@ -549,7 +549,7 @@ There are two type of configuration files are supported:
 
 There is no special magic behind ini files, except this should be [Config Tiny](https://metacpan.org/pod/Config::Tiny) compliant configuration file.
 
-Or you can choose YAML format for suite configuration by using \`--yaml' parameter:
+Or you can choose YAML format for suite configuration by using `--yaml` parameter:
 
     $ strun --yaml /etc/suites/foo.yaml
 
@@ -619,7 +619,7 @@ https://github.com/melezhik/outthentic
 
 * [Swat](https://github.com/melezhik/swat) - web testing framework consuming Outthentic::DSL.
 
-* perl prove, TAP, Test::More
+* Perl prove, TAP, Test::More
 
 # Thanks
 

@@ -552,15 +552,16 @@ Or you can choose YAML format for suite configuration by using \`--yaml' paramet
       bar : 2
 
 
-Unless user sets path to configuration file explicitly by \`--ini' or \'--yaml' story runner looks for the 
+Unless user sets path to configuration file explicitly by `--ini` or `--yaml` story runner looks for the 
 files named suite.ini and _then_ ( if suite.ini is not found ) for suite.yaml at the current working directory.
 
-If configuration file is passed and read a related configuration data is accessible via config() function, for example in story hook file:
+If configuration file is passed and read a related configuration data is accessible via config() function, 
+for example in story hook file:
 
-    # cat story.pm
+    $ cat story.pm
 
-    my $foo = config()->{main}{foo};
-    my $bar = config()->{main}{bar};
+    my $foo = config()->{main}->{foo};
+    my $bar = config()->{main}->{bar};
 
 # TAP
 
@@ -577,18 +578,16 @@ Here is example for having output in JUNIT format:
 # Prove settings
 
 Story runner uses [prove utility](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) to execute generated perl tests,
-you may pass prove related parameters using \`--prove-opts'. Here are some examples:
+you may pass prove related parameters using `--prove-opts`. Here are some examples:
 
     strun --prove "-Q" # don't show anythings unless test summary
     strun --prove "-q -s" # run prove tests in random and quite mode
 
 # Environment variables
 
-* `match_l` - in a suite runner output truncate matching strings to {match_l} bytes.
+* `match_l` - In a suite runner output truncate matching strings to {match_l} bytes. See also `--match_l` in [options](#options).
 
-See also `--match_l` in [options](#options).
-
-* `outth_show_story` - if set, then content of story.pl file gets dumped in TAP output.
+* `outth_show_story` - If set, then content of story.pl file gets dumped in TAP output.
 
 # Examples
 

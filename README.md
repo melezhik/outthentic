@@ -448,7 +448,7 @@ There are some variables exposed to hooks API, they could be useful:
 
 ## Ignore unsuccessful codes when run stories
 
-Every story is a perl script gets run by perl `system()` function returing an exit code. 
+Every story is a perl script gets run by perl `system()` function returning an exit code. 
 
 None zero exit codes result in test failures, this default behavior, to disable this say in hook file:
 
@@ -564,7 +564,11 @@ If configuration file is passed and read a related configuration data is accessi
 
 # TAP
 
-Outthentic produces output in [TAP](https://testanything.org/) format, that means you may use your favorite tap parser to bring result to another test / reporting systems, follow TAP documentation to get more on this.
+Story runner emit results in a [TAP](https://testanything.org/) format.
+
+You may use your favorite TAP parser to port result to another test / reporting systems.
+
+Follow [TAP](https://testanything.org/) documentation to get more on this.
 
 Here is example for having output in JUNIT format:
 
@@ -572,14 +576,15 @@ Here is example for having output in JUNIT format:
 
 # Prove settings
 
-Outthentic utilize [prove utility](http://search.cpan.org/perldoc?prove) to execute tests, one my pass prove related parameters using \`--prove-opts'. Here are some examples:
+Story runner uses [prove utility](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) to execute generated perl tests,
+you may pass prove related parameters using \`--prove-opts'. Here are some examples:
 
     strun --prove "-Q" # don't show anythings unless test summary
     strun --prove "-q -s" # run prove tests in random and quite mode
 
 # Environment variables
 
-* `match_l` - in TAP output truncate matching strings to {match_l} bytes
+* `match_l` - in a suite runner output truncate matching strings to {match_l} bytes
 
 See also \`--match_l' in [options](#options) section
 
@@ -601,15 +606,16 @@ https://github.com/melezhik/outthentic
 
 # See also
 
-* [sparrow](https://github.com/melezhik/sparrow) - outthentic suites manager.
+* [Sparrow](https://github.com/melezhik/sparrow) - outthentic suites manager.
 
 * [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl) - Outthentic::DSL specification.
 
-* [swat](https://github.com/melezhik/swat) - web testing framework consuming Outthentic::DSL.
+* [Swat](https://github.com/melezhik/swat) - web testing framework consuming Outthentic::DSL.
 
+* perl prove, TAP, Test::More
 
 # Thanks
 
-* to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
+To God as the One who inspires me to do my job!
 
-* to the Authors of : perl, TAP, Test::More, Test::Harness
+

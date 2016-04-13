@@ -14,17 +14,18 @@ Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](htt
 
 This is a quick tutorial on outthentic usage.
 
-* Create a story file 
+## Create a story file 
 
-Story is just an any perl script that yields something into stdout:
+Story is just a perl script that yields something into stdout:
 
     # story.pl
 
     print "I am OK\n";
     print "I am outthentic\n";
 
+Sometimes we can also call story file as scenario.
 
-* Create a story check file
+## Create a story check file
 
 Story check is a bunch of lines stdout should match. Here we require to have \`I am OK' and \`I am outthentic' lines in stdout:
 
@@ -33,7 +34,7 @@ Story check is a bunch of lines stdout should match. Here we require to have \`I
     I am OK
     I am outthentic
 
-* Run a story
+## Run a story
 
 Story run is process of verification of your story, it consists of:
 
@@ -42,9 +43,10 @@ Story run is process of verification of your story, it consists of:
 * validating stdout against a story check.
 
 
-* Run a suite
+## Run a suite
 
-You may have more then one story. A bunch or related stories is called project or suite.
+You may have more then one story. A bunch of related stories is called project or suite.
+
 `strun` - is story runner script to find all the stories in the suite and execute them:
 
 
@@ -69,11 +71,13 @@ Follow [story runner](#story-runner) section for details.
          
 # Hello world example
 
-Here is more detailed explanation of basic outthentic entities:
+Here is more detailed tutorial where we will build a test suite for calculator program.
+
+Let's say it again. There are three basic outthentic entities: 
 
 * project (suite)
-* stories
-* story checks
+* story files (scenarios)
+* story checks (rules)
 
 ## Project
 
@@ -83,32 +87,34 @@ Every project is _represented_ by a directory holding story files.
 
 Let's create a project to test a simple calculator application:
 
-    mkdir calc-app
-    cd calc-app
+    $ mkdir calc-app
+    $ cd calc-app
 
 ## Stories
 
 Stories are just perl scripts placed at project sub-directories and named `story.pl`. 
 
-Every story is a small testing, reporting scenario to execute.
+Every story is a small testing scenario to execute.
 
 One my think about them like about  `*.t` files in a perl test suite.
 
 Let's create two stories for our calc project. One story for \`addition' operation and another for \`multiplication':
 
-    # let's create story directories
-    mkdir addition # a+b
-    mkdir multiplication # a*b
+    # story directories
+
+    $ mkdir addition # a+b
+    $ mkdir multiplication # a*b
 
 
-    # then create story files
-    # addition/story.pl
+    # story files
+
+    $ cat  addition/story.pl
     use MyCalc;
     my $calc = MyCalc->new();
     print $calc->add(2,2), "\n";
     print $calc->add(3,3), "\n";
 
-    # multiplication/story.pl
+    $ cat  multiplication/story.pl
     use MyCalc;
     my $calc = MyCalc->new();
     print $calc->mult(2,3), "\n";
@@ -117,42 +123,45 @@ Let's create two stories for our calc project. One story for \`addition' operati
 
 ## Story check files
 
-Story check files contains validation rules for story.pl files. Thus every story.pl is accompanied by 
+Story check files contain validation rules for story.pl files. Every story.pl is always accompanied by 
 story.check file. Story check files should be placed at the same directory as story.pl file.
 
 Lets add some rules for multiplication and addition stories:
 
-    # addition/story.check
+    $ cat addition/story.check
     4
     6
  
-    # multiplication/story.check
+    $ cat multiplication/story.check
     6
     12
  
 
-And then run suite:
+And finally run test suite:
 
     $ strun
 
 # Story term ambiguity
 
-Sometimes when speak about _stories_ we will mean a elementary scenario executed by story runner and
-represented by a couple of files - story.pl,story.check. In other case we would mean just a story.pl
-file or even story.check separately. The one should take the context into account when talking about stories.
+Sometimes when we speak about _stories_ we mean an elementary scenario executed by story runner and
+represented by a couple of files - story.pl,story.check. In other cases we mean just a story.pl
+file or even story.check given separately. The one should always take _the context_ into account when talking about stories
+to avoid ambiguity.
 
 
 # Story runner
 
-This is detailed explanation of story runner life cycle.
+Story runner - is a script to run outthentic stories. It consequentially goes several phases:
 
-Story runner script consequentially goes two phases:
+* A compilation phase. Stories are converted into perl test files ( compilation phase ) and saved into temporary directory
+* An execution phase. [prove](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) script recursively executes test files under temporary directory
 
-* stories are converted into perl test files ( compilation phase )
-* perl test files are recursively executed by prove ( execution phase )
+## Execution phase
 
-During execution phase for every story a Test::More::ok asserts sequence is generated and executed which finally
-define a story status. All the story statuses are then accumulated by [Test::Harness](https://metacpan.org/pod/Test::Harness) and determine
+* During execution phase for every perl test file a Test::More::ok asserts sequence is generated and then executed which finally
+define a story status. 
+
+* All the story statuses are then accumulated by [Test::Harness](https://metacpan.org/pod/Test::Harness) and determine
 a final suite result. 
 
 Test::More::ok asserts sequence generation:

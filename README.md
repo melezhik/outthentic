@@ -10,9 +10,9 @@ Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](htt
 
     cpanm Outthentic
 
-# Short story
+# Short introduction
 
-This is a five minutes tutorial on framework workflow.
+This is a quick tutorial on outthentic usage.
 
 * Create a story file 
 
@@ -35,15 +35,18 @@ Story check is a bunch of lines stdout should match. Here we require to have \`I
 
 * Run a story
 
-Story runner is script that parses and then executes stories, it:
+Story run is process of verification of your story, it consists of:
 
-* finds and executes story files.
-* remembers stdout.
-* validates stdout against a story checks content.
+* executing story file.
+* saving story stdout into a file.
+* validating stdout against a story check.
 
-Follow [story runner](#story-runner) section for details on story runner "guts".
 
-To execute story runner say \`strun':
+* Run a suite
+
+You may have more then one story. A bunch or related stories is called project or suite.
+`strun` - is story runner script to find all the stories in the suite and execute them:
+
 
     $ strun
     ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/story.pl succeeded
@@ -61,35 +64,37 @@ To execute story runner say \`strun':
     All tests successful.
     Files=2, Tests=7,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.01 csys =  0.13 CPU)
     Result: PASS
+
+Follow [story runner](#story-runner) section for details.
          
-# Long story
+# Hello world example
 
-Here is a step by step explanation of outthentic project layout. We explain here basic outthentic entities:
+Here is more detailed explanation of basic outthentic entities:
 
-* project
+* project (suite)
 * stories
 * story checks
 
 ## Project
 
-Outthentic project is bunch of related stories. Every project is _represented_ by a directory where all the stuff is placed at.
+Outthentic project or suite is a bunch of related stories. 
+
+Every project is _represented_ by a directory holding story files.
 
 Let's create a project to test a simple calculator application:
 
     mkdir calc-app
     cd calc-app
 
-_Suite_ is a synonym for project term. Meaning one runs suite of related scenarios or stories.
-
 ## Stories
 
-Stories are just perl scripts placed at project directory and named \`story.pl'. In a testing context, stories are pieces of logic to be tested.
+Stories are just perl scripts placed at project sub-directories and named `story.pl`. 
 
-Think about them like \`*.t' files in a perl unit test system.
+Every story is a small testing, reporting scenario to execute.
 
-To tell one story file from another one should keep them in different directories.
+One my think about them like about  `*.t` files in a perl test suite.
 
-Let's create two stories for our calc project. One story to represent addition operation and other for addition operation:
+Let's create two stories for our calc project. One story for \`addition' operation and another for \`multiplication':
 
     # let's create story directories
     mkdir addition # a+b
@@ -112,11 +117,10 @@ Let's create two stories for our calc project. One story to represent addition o
 
 ## Story check files
 
-Story check files (or short form story checks)  are files that contain lines for validation of stdout from story scripts.
+Story check files contains validation rules for story.pl files. Thus every story.pl is accompanied by 
+story.check file. Story check files should be placed at the same directory as story.pl file.
 
-Story checks should be placed at the same directory as story file and named \`story.check'.
-
-Following are story check for a multiplication and addition stories:
+Lets add some rules for multiplication and addition stories:
 
     # addition/story.check
     4
@@ -127,64 +131,45 @@ Following are story check for a multiplication and addition stories:
     12
  
 
-Now we ready to invoke a story runner:
+And then run suite:
 
     $ strun
 
 # Story term ambiguity
 
-Sometimes term \`story' refers to a couple of files representing story unit - story.pl and story.check,
-in other cases this term refers to a single story file - story.pl.
+Sometimes when speak about _stories_ we will mean a elementary scenario executed by story runner and
+represented by a couple of files - story.pl,story.check. In other case we would mean just a story.pl
+file or even story.check separately. The one should take the context into account when talking about stories.
 
 
 # Story runner
 
 This is detailed explanation of story runner life cycle.
 
-Story runner script consequentially hits two phases:
+Story runner script consequentially goes two phases:
 
 * stories are converted into perl test files ( compilation phase )
 * perl test files are recursively executed by prove ( execution phase )
 
-Generating Test::More asserts sequence
+During execution phase for every story a Test::More::ok asserts sequence is generated and executed which finally
+define a story status. All the story statuses are then accumulated by [Test::Harness](https://metacpan.org/pod/Test::Harness) and determine
+a final suite result. 
 
-* for every story found:
+Test::More::ok asserts sequence generation:
 
     * new instance of Outthentic::DSL object (ODO) is created 
-    * story check file passed to ODO
+    * story check file is passed to ODO
     * story file is executed and it's stdout passed to ODO
-    * ODO makes validation of given stdout against given story check file
-    * validation results are turned into a _sequence_ of Test::More ok() asserts
+    * ODO makes validation of given stdout against rules defined at story check file
+    * results are returned back as list of Test::More::ok asserts
+    * every assert in assert list is executed resulting in true or false 
 
-## Time diagram
-
-This is a time diagram for story runner life cycle:
-
-* Hits compilation phase
-
-* For every story and story check file found:
-
-    * Creates a perl test file
-
-* The end of compilation phase
-
-* Hits execution phase - runs \`prove' recursively on a directory with a perl test files
-
-* For every perl test file gets executed:
-
-    * Test::More asserts sequence is generated
-
-* The end of execution phase
- 
 # Story checks syntax
 
-Story checks syntax complies [Outthentic DSL](https://github.com/melezhik/outthentic-dsl) format.
+Outthentic consumes [Outthentic DSL](https://github.com/melezhik/outthentic-dsl), so story checks are
+just rules defined in terms of Outthentic DSL - a language to validate unstructured text data.
 
-There are lot of possibilities here!
-
-( For full explanation of outthentic DSL please follow [documentation](https://github.com/melezhik/outthentic-dsl). )
-
-A few examples:
+A few ( not all ) usage examples listed below.
 
 * plain strings checks
 

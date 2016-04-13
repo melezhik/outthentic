@@ -459,7 +459,8 @@ As every story is a perl script gets run via system call, it returns an exit cod
 
 ## PERL5LIB
 
-\`project\_root\_directory'/lib is added to PERL5LIB path, which make it easy to place some custom modules under \`project\_root\_directory'/lib directory:
+$project\_root\_directory/lib is added to PERL5LIB path, which make it easy to place 
+custom modules under $project\_root\_directory'/lib directory:
 
     # my-app/lib/Foo/Bar/Baz.pm
     package Foo::Bar::Baz;

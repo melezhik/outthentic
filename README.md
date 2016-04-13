@@ -291,7 +291,7 @@ Story hooks are extension points to change [story run](#story-run) process.
 
 It's just files with perl code gets executed in the beginning of a story. 
 
-You should name your hooks as \`story.pm' and place them into story directory:
+You should name your hooks as `story.pm` and place them into story directory:
 
 
     $ cat addition/story.pm
@@ -332,7 +332,7 @@ This is simple an example :
     THIS IS FAKE RESPONSE
     HELLO WORLD
 
-You may call \`set_stdout' more then once:
+You may call `set_stdout()` more then once:
 
 
     set_stdout("HELLO WORLD");
@@ -389,7 +389,7 @@ Here are the brief comments to the example above:
 
 * to make story as downstream simply create story file at modules/ directory
 
-* call \`run\_story(story\_path)' function inside upstream story hook to run downstream story.
+* call `run\_story(story\_path)` function inside upstream story hook to run downstream story.
 
 * you can call as many downstream stories as you wish.
 
@@ -405,12 +405,12 @@ Here is an example code snippet:
 
 * stories variables 
 
-You may pass variables to downstream story with the second argument of `run_story`  function:
+You may pass variables to downstream story with the second argument of `run_story()`  function:
 
     run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
 
 
-Story variables get accessed by  `story_var` function:
+Story variables get accessed by  `story_var()` function:
 
     $ cat create_calc_object/story.pm
     story_var('use_float');
@@ -512,9 +512,9 @@ See [prove settings](#prove-settings) section for details.
 
 This optional parameter sets base url or hostname of a service or application being tested.
 
-* `--ini' - configuration ini file path
+* `--ini`  - configuration ini file path
 
-* `--yaml'- yaml configuration file path
+* `--yaml` - yaml configuration file path
 
 See [suite configuration](#suite-configuration) section for details.
 
@@ -543,7 +543,7 @@ There is no special magic behind ini files, except this should be [Config Tiny](
 
 Or you can choose YAML format for suite configuration by using \`--yaml' parameter:
 
-    $ strun --ini /etc/suites/foo.yaml
+    $ strun --yaml /etc/suites/foo.yaml
 
     $ cat /etc/suites/foo.yaml
 
@@ -584,11 +584,11 @@ you may pass prove related parameters using \`--prove-opts'. Here are some examp
 
 # Environment variables
 
-* `match_l` - in a suite runner output truncate matching strings to {match_l} bytes
+* `match_l` - in a suite runner output truncate matching strings to {match_l} bytes.
 
-See also \`--match_l' in [options](#options) section
+See also `--match_l` in [options](#options).
 
-* `outth_show_story` - if set, then content of story.pl file gets dumped in TAP output
+* `outth_show_story` - if set, then content of story.pl file gets dumped in TAP output.
 
 # Examples
 
@@ -616,6 +616,6 @@ https://github.com/melezhik/outthentic
 
 # Thanks
 
-To God as the One who inspires me to do my job!
+To God as the One Who inspires me to do my job!
 
 

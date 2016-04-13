@@ -475,11 +475,9 @@ custom modules under $project\_root\_directory'/lib directory:
  
 ## Options
 
-* `--root`  - root directory of outthentic project
+* `--root`  - Root directory of outthentic project. If root parameter is not set current working directory is assumed as project root directory.
 
-If root parameter is not set current working directory is assumed as project root directory.
-
-* `--debug` - enable/disable debug mode
+* `--debug` - Enable/disable debug mode
 
     * Increasing debug value results in more low level information appeared at output
 
@@ -487,13 +485,9 @@ If root parameter is not set current working directory is assumed as project roo
 
     * Possible values: 0,1,2,3
 
-* `--match_l` - truncate matching strings 
+* `--match_l` - Truncate matching strings. In a TAP output truncate matching strings to {match_l} bytes;  default value is \`200'
 
-In a TAP output truncate matching strings to {match_l} bytes;  default value is \`200'
-
-* `--story` -  run only single story
-
-This should be file path without extensions ( .pl, .check ):
+* `--story` -  Run only single story. This should be file path without extensions ( .pl, .check ):
 
     foo/story.pl
     foo/bar/story.pl

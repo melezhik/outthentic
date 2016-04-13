@@ -438,21 +438,13 @@ Of course more proper approaches for state sharing could be used as singeltones 
 
 There are some variables exposed to hooks API, they could be useful:
 
-* project_root_dir()
+* `project_root_dir()` - Root directory of outthentic project.
 
-Root directory of outthentic project.
+* `test_root_dir()` - Test root directory. Root directory of generated perl test files , see also [story runner](#story-runner).
 
-* test_root_dir() - test root directory
+* `config()` - Returns suite configuration hash object. See also [suite configuration](#suite-configuration).
 
-Root directory of generated perl tests , see [story runner](#story-runner) section for details.
-
-* config() - returns suite configuration hash object
-
-See [suite configuration](#suite-configuration) section for details.
-
-* host() 
-
-Returns value of \`--host' parameter.
+* `host()` - Returns value of \`--host' parameter.
 
 ## Ignore unsuccessful codes when run stories
 

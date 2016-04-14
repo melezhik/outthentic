@@ -574,29 +574,29 @@ for example in story hook file:
 Runtime configuration parameters is way to override suite configuration data. Consider this example:
 
 
-  $ cat suite.ini
-  [foo]
-  bar = 10
-
-
-  $ strun --param foo.bar=20
-
+    $ cat suite.ini
+    [foo]
+    bar = 10
+  
+  
+    $ strun --param foo.bar=20
+  
 This way we will override foo.bar to value \`20'.
 
 
 It is possible to override any data in configuration files, for example arrays values:
 
 
-  $ cat suite.ini
-
-  [foo]
-  bar = 1
-  bar = 2
-  bar = 3
-
-
-  $ suite --param foo.bar=11 --param foo.bar=22 --param foo.bar=33
-
+    $ cat suite.ini
+    
+    [foo]
+    bar = 1
+    bar = 2
+    bar = 3
+    
+    
+    $ suite --param foo.bar=11 --param foo.bar=22 --param foo.bar=33
+    
 
 # TAP
 

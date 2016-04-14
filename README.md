@@ -212,8 +212,7 @@ You may use regular expressions as well:
     OK - output matches /L+/
     OK - output matches /\d/
 
-See [check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) in Outthentic::DSL
-documentation pages.
+See [check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) in Outthentic::DSL documentation pages.
 
 * generators
 
@@ -236,8 +235,7 @@ Yes you may generate new check entries on run time:
     hello
     again
 
-See [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL
-documentation pages.
+See [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL documentation pages.
 
    
 * inline perl code
@@ -249,8 +247,7 @@ What about inline arbitrary perl code? Well, it's easy!
     regexp: number: (\d+)
     validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
 
-See [perl expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions) in Outthentic::DSL
-documentation pages.
+See [perl expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions) in Outthentic::DSL documentation pages.
 
 * text blocks
 
@@ -282,8 +279,7 @@ Need to validate that some lines goes successively?
             at the very end
         end:
 
-See [comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks) in Outthentic::DSL
-documentation pages.
+See [comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks) in Outthentic::DSL documentation pages.
 
 # Hooks
 
@@ -572,6 +568,35 @@ for example in story hook file:
 
     my $foo = config()->{main}->{foo};
     my $bar = config()->{main}->{bar};
+
+# Runtime configuration
+
+Runtime configuration parameters is way to override suite configuration data. Consider this example:
+
+
+  $ cat suite.ini
+  [foo]
+  bar = 10
+
+
+  $ strun --param foo.bar=20
+
+This way we will override foo.bar to value \`20'.
+
+
+It is possible to override any data in configuration files, for example arrays values:
+
+
+  $ cat suite.ini
+
+  [foo]
+  bar = 1
+  bar = 2
+  bar = 3
+
+
+  $ suite --param foo.bar=11 --param foo.bar=22 --param foo.bar=33
+
 
 # TAP
 

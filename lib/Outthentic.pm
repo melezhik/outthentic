@@ -451,8 +451,7 @@ You may use regular expressions as well:
     OK - output matches /L+/
     OK - output matches /\d/
 
-See L<check-expressions|https://github.com/melezhik/outthentic-dsl#check-expressions> in Outthentic::DSL
-documentation pages.
+See L<check-expressions|https://github.com/melezhik/outthentic-dsl#check-expressions> in Outthentic::DSL documentation pages.
 
 =over
 
@@ -482,8 +481,7 @@ Yes you may generate new check entries on run time:
     hello
     again
 
-See L<generators|https://github.com/melezhik/outthentic-dsl#generators> in Outthentic::DSL
-documentation pages.
+See L<generators|https://github.com/melezhik/outthentic-dsl#generators> in Outthentic::DSL documentation pages.
 
 =over
 
@@ -500,8 +498,7 @@ What about inline arbitrary perl code? Well, it's easy!
     regexp: number: (\d+)
     validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
 
-See L<perl expressions|https://github.com/melezhik/outthentic-dsl#perl-expressions> in Outthentic::DSL
-documentation pages.
+See L<perl expressions|https://github.com/melezhik/outthentic-dsl#perl-expressions> in Outthentic::DSL documentation pages.
 
 =over
 
@@ -540,8 +537,7 @@ Need to validate that some lines goes successively?
             at the very end
         end:
 
-See L<comments-blank-lines-and-text-blocks|https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks> in Outthentic::DSL
-documentation pages.
+See L<comments-blank-lines-and-text-blocks|https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks> in Outthentic::DSL documentation pages.
 
 
 =head1 Hooks
@@ -671,7 +667,7 @@ to make story as downstream simply create story at modules/ directory
 
 =item *
 
-call C<run\_story(story\_path)> function inside upstream story hook to run downstream story.
+call C<run_story(story_path)> function inside upstream story hook to run downstream story.
 
 
 
@@ -972,6 +968,34 @@ for example in story hook file:
     
     my $foo = config()->{main}->{foo};
     my $bar = config()->{main}->{bar};
+
+
+=head1 Runtime configuration
+
+WARNING: this feature is quite experimental, needs to be tested and is could be buggy, don't use it unless this warning will be removed 
+
+Runtime configuration parameters is way to override suite configuration data. Consider this example:
+
+    $ cat suite.ini
+    [foo]
+    bar = 10
+      
+      
+    $ strun --param foo.bar=20
+
+This way we will override foo.bar to value `20'.
+
+It is possible to override any data in configuration files, for example arrays values:
+
+    $ cat suite.ini
+    
+    [foo]
+    bar = 1
+    bar = 2
+    bar = 3
+    
+    
+    $ suite --param foo.bar=11 --param foo.bar=22 --param foo.bar=33
 
 
 =head1 TAP

@@ -571,6 +571,8 @@ for example in story hook file:
 
 # Runtime configuration
 
+WARNING: this feature is quite experimental, needs to be tested and is could be buggy, don't use it unless this warning will be removed 
+
 Runtime configuration parameters is way to override suite configuration data. Consider this example:
 
 

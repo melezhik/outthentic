@@ -17,6 +17,8 @@ my $match_l = $ENV{'match_l'} || 200;
 my $host;
 my $ini_file_path;
 my $yaml_file_path;
+my @runtime_params;
+
 
 GetOptions (
         "debug=i"       => \$debug_mod,         # numeric
@@ -27,6 +29,7 @@ GetOptions (
         "host=s"        => \$host,              # string
         "ini=s"         => \$ini_file_path,     # string
         "yaml=s"        => \$yaml_file_path,    # string
+        "param=s"       => \@runtime_params,    # string
 
 
 ) or die("Error in command line arguments\n");
@@ -102,6 +105,7 @@ sub wanted {
         print F "set_prop( debug => $debug_mod );\n";
         print F "set_prop( debug_bytes => 700 );\n";
         print F "set_prop( match_l => $match_l );\n";
+        print F "set_prop( runtime_params => q{".(join ':::', @runtime_params)."} );\n";
     
         if ($story_type eq 'downstream') {
             print F "apply_story_vars();\n";

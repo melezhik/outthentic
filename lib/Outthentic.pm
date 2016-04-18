@@ -48,16 +48,24 @@ sub config {
     my @runtime_params = split /:::/, get_prop('runtime_params');
 
     PARAM: for my $rp (@runtime_params){
-      my $root = $config;
+
       my $value;
-      for my $path (split /\./, $rp ){
-        if ($path=~s/=(.*)//){
-          $value = $1;
-        }  
+
+      if ($rp=~s/=(.*)//){
+        $value = $1;
+      }else{
+        next PARAM;
+      }  
+
+      my @pathes = split /\./, $rp;
+      my $last_path = pop @pathes;
+
+      my $root = $config;
+      for my $path (@pathes){
         next PARAM unless defined $root->{$path};
-        $root->{$path} = $value if defined $value;
         $root = $root->{$path};
       }
+      $root->{$last_path} = $value;
     }
 
     return $config;

@@ -145,7 +145,8 @@ sub get_stdout {
 
 sub stdout_file {
 
-  test_root_dir()."/story."._story_id().'.stdout';
+  _story_glue_dir()."/std.out"
+
 }
 
 sub _story_glue_dir {
@@ -228,8 +229,23 @@ sub do_ruby_file {
     open RUBY_GLUE, ">", _ruby_glue_file() or die $!;
 
     my $stdout_file = stdout_file();
+    my $test_root_dir = test_root_dir();
+    my $project_root_dir = project_root_dir();
+    my $debug_mod12 = debug_mod12();
 
     print RUBY_GLUE <<"CODE";
+
+    def debug_mod12 
+      '$debug_mod12'
+    end
+
+    def test_root_dir
+      '$test_root_dir' 
+    end
+
+    def project_root_dir
+      '$project_root_dir' 
+    end
 
     def stdout_file
       '$stdout_file' 
@@ -247,7 +263,9 @@ CODE
         Test::More::note("do_ruby_file: $cmd"); 
     }
 
-    system($cmd);
+    for my $l ( split /\n/, `$cmd`){
+      print "$l\n";
+    }
 
     return 1;
 }

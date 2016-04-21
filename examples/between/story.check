@@ -4,14 +4,15 @@ regexp: (\d+)
 
 validator: [ ( scalar @{captures()} == 11 ), '11 numbers between start ... end' ];
 
-code:                                   \
+code: <<CODE
 
-for my $s (@{stream()}){                \
-    for my $i (@{$s}){                  \
-        print "# $i\n";                 \
-    }                                   \
-    print "#---\n\n"                    \
+for my $s (@{stream()}){                
+    for my $i (@{$s}){                  
+        print "# $i\n";                 
+    }                                   
+    print "#---\n\n"                    
 }
+CODE
 
 
 validator: [ ( captures->[0]->[0] == 0 ), 'first number is 0' ];
@@ -25,6 +26,7 @@ validator: [ ( captures->[6]->[0] == 8 ), 'seven number is 8' ];
 validator: [ ( captures->[7]->[0] == 9 ), 'eight number is 9' ];
 
 reset_context:
+
 regexp: (\d+)
 validator: [ ( scalar @{captures()} == 15 ), '15 numbers total' ];
 validator: [ ( captures->[0]->[0] == 100 ), 'first number is 100' ];

@@ -1,2 +1,2 @@
 require 'outthentic';
-set_stdout('KK!!!');
+set_stdout('ruby rocks!');

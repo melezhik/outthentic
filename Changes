@@ -1,7 +1,24 @@
-0.0.20 
+0.0.24 
 
 * requires latest version of Outthentic::DSL
 * some examples changed to show new features of Outthentic:DSL ( here documents for multiline expressions )
+
+0.0.23 2016-04-18
+
+* first try on runtime parameters implementation
+
+0.0.22 2016-04-13
+
+* documentation - fixed example for downstream stories
+
+0.0.21 2016-04-13
+
+* yet another documentation improvements
+
+0.0.20 2016-04-13
+
+* many documentation improvements
+>>>>>>> 246aae8c5005070bbdd5c481dfe8327b12f26fc0
 
 0.0.19 2016-04-12
 

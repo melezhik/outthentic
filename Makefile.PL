@@ -12,13 +12,15 @@ requires    'Test::Harness';
 requires    'File::Temp';
 requires    'Config::Tiny';
 requires    'YAML';
-
+requires    'File::ShareDir';
 requires    'Outthentic::DSL', "0.1.0";
 
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';
 
 install_script 'bin/strun';
+
+install_share 'ruby_lib';
 
 no_index    directory => 'examples';
 

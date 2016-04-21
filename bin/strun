@@ -21,6 +21,7 @@ my @runtime_params;
 
 
 GetOptions (
+
         "debug=i"       => \$debug_mod,         # numeric
         "match_l=i"     => \$match_l,           # numeric
         "root=s"        => \$project_root_dir,  # string
@@ -73,7 +74,6 @@ sub wanted {
 
         make_path("$test_root_dir/$story_dir");
 
-
         open F, ">", $tfile or die $!;
     
         print F "package main;\n\n";
@@ -113,6 +113,8 @@ sub wanted {
 
         if ( -e "$File::Find::dir/story.pm" ){
             print F "do_perl_file('$File::Find::dir/story.pm');\n\n";
+        }elsif ( -e "$File::Find::dir/hook.rb" ){
+            print F "do_ruby_file('$File::Find::dir/hook.rb');\n\n";
         }
 
         print F "\n\nSKIP: {\n\n";

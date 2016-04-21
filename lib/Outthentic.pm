@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.0.24';
+our $VERSION = '0.1.0';
 
 1;
 
@@ -77,12 +77,12 @@ sub run_story_file {
 
     my ($fh, $content_file) = tempfile( DIR => get_prop('test_root_dir') );
 
-    if (get_prop('my_stdout') and @{get_prop('my_stdout')} ){
+    if ( get_stdout() ){
 
-        note("stdout is already set") if debug_mod12;
+        note("stdout is already set at ".stdout_file()) if debug_mod12;
 
         open F, ">", $content_file or die $!;
-        print F (join "\n", @{get_prop('my_stdout')});
+        print F get_stdout();
         close F;
         note("stdout saved to $content_file") if debug_mod12;
 

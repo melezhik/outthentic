@@ -4,6 +4,7 @@ package Outthentic::Story;
 use strict;
 use base 'Exporter';
 use Outthentic::DSL;
+use File::ShareDir;
 
 our @EXPORT = qw{ 
 
@@ -13,13 +14,15 @@ our @EXPORT = qw{
 
     debug_mod1 debug_mod2 debug_mod12
 
-    set_stdout
+    set_stdout get_stdout stdout_file
 
     dsl captures capture stream match_lines
 
     run_story apply_story_vars story_var
 
     do_perl_file
+
+    do_ruby_file
 
     ignore_story_err
 
@@ -35,8 +38,9 @@ our @stories = ();
 sub new_story {
     
     push @stories, {
+        ID =>  int(rand(1000)),
         story_vars => {},
-        props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new(), my_stdout => [] },
+        props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new() },
     };
 
 }
@@ -52,6 +56,10 @@ sub end_of_story {
 
 sub _story {
     @stories[-1];
+}
+
+sub _story_id {
+  _story()->{ID};
 }
 
 sub get_prop {
@@ -115,9 +123,41 @@ sub debug_mod12 {
 
 
 sub set_stdout {
-    my $cv = get_prop('my_stdout');
-    push @$cv, shift(); 
-    set_prop('my_stdout', $cv);
+
+    my $line = shift;
+    open FSTDOUT, ">>", stdout_file() or die $!;
+    print FSTDOUT $line, "\n";
+    close FSTDOUT;
+
+}
+
+sub get_stdout {
+
+    return unless -f stdout_file();
+
+    my $data;
+
+    open FSTDOUT, stdout_file() or die $!;
+    my $data = join "",  <FSTDOUT>;
+    close FSTDOUT;
+    $data;
+}
+
+sub stdout_file {
+
+  test_root_dir()."/story."._story_id().'.stdout';
+}
+
+sub _story_glue_dir {
+
+  my $glue_dir = test_root_dir()."/story-"._story_id();
+  system("mkdir -p $glue_dir");
+  $glue_dir;
+
+}
+
+sub _ruby_glue_file {
+  _story_glue_dir()."/glue.rb";
 }
 
 sub dsl {
@@ -149,8 +189,8 @@ sub run_story {
 
     $main::story_vars = $story_vars;
 
-
     my $test_root_dir = get_prop('test_root_dir');
+
     my $project_root_dir = get_prop('project_root_dir');
 
     my $test_file = "$test_root_dir/$project_root_dir/modules/$path/story.d";
@@ -170,12 +210,45 @@ sub do_perl_file {
     my $file = shift;
 
     {
-    package main;
-    my $return;
-    unless ($return = do $file) {
+      package main;
+      my $return;
+      unless ($return = do $file) {
         die "couldn't parse $file: $@" if $@;
+      }
     }
+
+    return 1;
+}
+
+
+sub do_ruby_file {
+
+    my $file = shift;
+
+    open RUBY_GLUE, ">", _ruby_glue_file() or die $!;
+
+    my $stdout_file = stdout_file();
+
+    print RUBY_GLUE <<"CODE";
+
+    def stdout_file
+      '$stdout_file' 
+    end
+
+CODE
+
+    close RUBY_GLUE,;
+
+    my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
+
+    my $cmd = "ruby -I ".$ruby_lib_dir." -I ".(_story_glue_dir())." $file";
+
+    if (debug_mod12()){
+        Test::More::note("do_ruby_file: $cmd"); 
     }
+
+    system($cmd);
+
     return 1;
 }
 

@@ -1,4 +1,9 @@
-0.0.24 
+0.1.0 
+
+* starting support for ruby 
+* stories stdouts are kept in files ( not in perl hash )
+
+0.0.24 2016-04-21
 
 * requires latest version of Outthentic::DSL
 * some examples changed to show new features of Outthentic:DSL ( here documents for multiline expressions )

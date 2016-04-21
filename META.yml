@@ -18,9 +18,11 @@ no_index:
   directory:
     - examples
     - inc
+    - ruby_lib
     - t
 requires:
   Config::Tiny: 0
+  File::ShareDir: 0
   File::Temp: 0
   Outthentic::DSL: 0.1.0
   Test::Harness: 0
@@ -29,4 +31,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/outthentic
-version: 0.0.24
+version: 0.1.0

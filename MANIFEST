@@ -31,6 +31,9 @@ examples/modules/foo/story.pl
 examples/modules/foo/story.pm
 examples/multiline/story.check
 examples/multiline/story.pl
+examples/outthentic.rb
+examples/ruby/hook.rb
+examples/ruby/story.check
 examples/run-story/story.check
 examples/run-story/story.pl
 examples/run-story/story.pm
@@ -56,6 +59,7 @@ inc/Module/Install/Fetch.pm
 inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
 inc/Module/Install/Scripts.pm
+inc/Module/Install/Share.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Outthentic.pm
@@ -65,6 +69,7 @@ MANIFEST			This list of files
 META.yml
 README.md
 README.pod
+ruby_lib/outthentic.rb
 suite.ini
 suite.yaml
 t/outthentic.t

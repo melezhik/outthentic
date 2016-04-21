@@ -22,11 +22,11 @@ no_index:
 requires:
   Config::Tiny: 0
   File::Temp: 0
-  Outthentic::DSL: 0.0.6
+  Outthentic::DSL: 0.1.0
   Test::Harness: 0
   Test::More: 0
   YAML: 0
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/outthentic
-version: 0.0.19
+version: 0.0.20

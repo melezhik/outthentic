@@ -3,17 +3,19 @@ regexp: A
 regexp: \d
 regexp: \d
 regexp: \d
-code:                                   \
-    for my $s (@{stream()}) {           \
-        print "# ";                     \
-        for my $i (@{$s}){              \
-            print $i;                   \
-        }                               \
-        print "\n";                     \
+
+code: <<CODE
+    for my $s (@{stream()}) {           
+        print "# ";                     
+        for my $i (@{$s}){              
+            print $i;                   
+        }                               
+        print "\n";                     
     }                               
+CODE
 
 validator: [(scalar @{stream()} == 1), '1 stream found']
-code: note explain stream()->[0]->[0]
+
 validator: my $i = stream()->[0]->[0]; s{\s+}[] for $i;  [ $i eq '0' , "$i found" ]
 validator: my $i = stream()->[0]->[1]; s{\s+}[] for $i;  [ $i eq '1' , "$i found" ]
 validator: my $i = stream()->[0]->[2]; s{\s+}[] for $i;  [ $i eq 'A' , "$i found" ]

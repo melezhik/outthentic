@@ -13,7 +13,7 @@ requires    'File::Temp';
 requires    'Config::Tiny';
 requires    'YAML';
 
-requires    'Outthentic::DSL', "0.0.6";
+requires    'Outthentic::DSL', "0.1.0";
 
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';

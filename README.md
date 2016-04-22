@@ -323,26 +323,28 @@ See [comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthenti
 
 Story hooks are extension points to change [story run](#story-run) process. 
 
-It's just files with perl code gets executed in the beginning of a story. 
+It's just a scripts  gets executed _in the beginning_ of a story. 
+  
+You should name your hooks as `hook.*` and place them into story directory
 
-You should name your hooks as `story.pm` and place them into story directory:
+
+    $ cat perl/hook.pl
+    
+    print "this is a story hook!";
+
+Hooks could be written on Perl or Ruby:
 
 
-    $ cat addition/story.pm
-    diag "hello, I am addition story hook";
-    sub is_number { [ 'regexp: ^\\d+$' ] }
- 
-
-    $ cat addition/story.check
-    generator: is_number
- 
+    | Language  | File      |
+    ------------+------------
+    | Perl      | hook.pl   |
+    | Ruby      | hook.rb   |
 
 Reasons why you might need a hooks:
 
+* execute story initialization code
 * redefine story stdout
-* define generators
 * call downstream stories
-* other custom code
 
 
 # Hooks API
@@ -353,21 +355,20 @@ Story hooks API provides several functions to hack into story run process:
 
 *set_stdout(string)*
 
-Using set_stdout means that you never execute a story.pl to get a stdout, but instead you set stdout on your own side. 
+Using `set_stdout` means that you define story output on hook side ( and story script is not executed ). 
 
-This might be helpful when for some reasons you can't produce a stdout via story.pl file:
+This might be helpful when for some reasons you do not want provide story script
 
-This is simple an example :
+This is simple an example:
 
-    $ cat story.pm
-    set_stdout("THIS IS I FAKE RESPONSE\n HELLO WORLD");
+    $ cat hook.pm
+    set_stdout("THIS IS I FAKE RESPONSE \n HELLO WORLD");
 
     $ cat story.check
     THIS IS FAKE RESPONSE
     HELLO WORLD
 
 You may call `set_stdout()` more then once:
-
 
     set_stdout("HELLO WORLD");
     set_stdout("HELLO WORLD2");

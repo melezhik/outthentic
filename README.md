@@ -112,7 +112,7 @@ Let's create a project to test a simple calculator application:
 
 ## Story scripts
 
-Stories are just a scripts to be executed and then stdout are analyzed by rules defined at check files.
+Stories are just a scripts to be executed and then resulted stdout is analyzed by rules defined at check files.
 
 Thus every story is a small program with some stdout gets tested.
 
@@ -145,7 +145,7 @@ Story check file contains validation rules to test script output. Every story sc
 
 Story check files should be placed at the same directory as story script and be named as `story.check`.
 
-Lets add some rules for multiplication and addition stories:
+Lets add some rules for \`multiplication' and \`addition' stories:
 
     $ cat addition/story.check
     4
@@ -234,8 +234,15 @@ Yes you may generate new check entries on run time:
    
     # this generator creates 3 new check expressions:
    
-    generator: [ qw{ say hello again } ]
-   
+    generator: <<CODE
+    !perl
+
+    print "say\n";
+    print "hello\n";
+    print "again\n";
+
+    CODE
+
     # final check list:
    
     Say
@@ -244,9 +251,31 @@ Yes you may generate new check entries on run time:
     hello
     again
 
-See [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL documentation pages.
+You may use many languages in generator expressions:
 
-   
+Bash:
+
+    generator: <<CODE
+    !bash
+    echo say
+    echo hello
+    echo again
+
+    CODE
+
+Ruby:
+
+    generator: <<CODE
+    !ruby
+    puts 'say'
+    puts 'hello'
+    puts 'again'
+
+    CODE
+
+Follow [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL documentation pages
+to get more.
+
 * inline perl code
 
 What about inline arbitrary perl code? Well, it's easy!

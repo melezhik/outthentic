@@ -558,7 +558,7 @@ Ruby:
 
     super_utility 'foo', 'bar'
 
-Here is the list for libabry file names for various languages:
+Here is the list for library file names for various languages:
 
     | Language  | file        |
     ------------+--------------

@@ -483,7 +483,7 @@ Here is the `run_story` signature list for various languages:
     | Language  | signature                     | comment                                 |
     ------------+-------------------------------+-----------------------------------------+
     | Perl      | run_story($SCALAR,$HASHREF)   |                                         |
-    | Ruby      | run_story(STRING              | passing story variables not implemented |
+    | Ruby      | run_story(STRING)             | passing story variables not implemented |
 
 
 * downstream stories may invoke other downstream stories

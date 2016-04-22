@@ -390,43 +390,55 @@ Here is `set_stdout()` function signatures list for various languages:
 
 It is possible to run one story from another with the help of downstream stories.
 
-Downstream stories are reusable stories or modules. 
+Downstream stories are reusable stories ( modules ). 
 
-Story runner never executes downstream stories _directly_, instead of downstream story always gets called from the _upstream_ one:
+Story runner never executes downstream stories _directly_.
 
-    $ cat modules/create_calc_object/story.pm
+Downstream story always gets called from the _upstream_ one:
+
+    $ cat modules/knock-the-door/story.rb
+
     # this is a downstream story
     # to make story downstream
     # simply create story 
     # in modules/ directory
-    use MyCalc;
-    our $calc = MyCalc->new();
-    set_stdout(ref($calc));
+
+    puts 'knock-knock!'
  
-    $ cat modules/create_calc_object/story.check
-    MyCalc
+    $ cat modules/knock-the-door/story.check
+    knock-knock!
 
  
-    $ cat addition/story.pm
+    $ cat open-the-door/hook.rb
+
     # this is a upstream story
     # to run downstream story
-
     # call run_story function
     # inside upstream story hook
+
     # with a single parameter - story path,
     # note that you don't have to
     # leave modules/ directory in the path
 
-    run_story( 'create_calc_object' );
+    require 'outthentic'
+    run_story( 'knock-the-door' );
 
-    # here $calc object is created by 
-    # create_calc_object story
-    # so we can use it!
+    $ cat open-the-door/story.rb
+    puts 'opening ...' 
 
-    our $calc->addition(2,2);
+    $ cat open-the-door/story.check
+    opening
  
- 
-
+    $ strun 
+    /tmp/.outthentic/3815/home/melezhik/projects/outthentic-dsl-examples/downstream/open-the-door/story.t .. 
+    ok 1 - output match 'knock-knock!'
+    ok 2 - output match 'opening'
+    1..2
+    ok
+    All tests successful.
+    Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.05 cusr  0.01 csys =  0.08 CPU)
+    Result: PASS
+    
 Here are the brief comments to the example above:
 
 * to make story as downstream simply create story at modules/ directory

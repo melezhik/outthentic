@@ -179,7 +179,6 @@ So after all outthentic project is just perl test project with \*.t files inside
 while with common test project \*.t files _are created by user_, in outthentic project \*.t files _are generated_
 by story files.
  
-
 # Story checks syntax
 
 Outthentic consumes [Outthentic DSL](https://github.com/melezhik/outthentic-dsl), so story checks are
@@ -523,7 +522,7 @@ this is treated as story verification failure.
 
 Use `ignore_story_err()` function to ignore unsuccessful story code:
 
-    $ cat hook.pm
+    $ cat hook.rb
 
     ignore_story_err 1
 
@@ -558,6 +557,13 @@ Ruby:
     $ cat hook.pl
 
     super_utility 'foo', 'bar'
+
+Here is the list for libabry file names for various languages:
+
+    | Language  | file        |
+    ------------+--------------
+    | Perl      | common.pm   |
+    | Ruby      | common.rb   |
     
 # Language libraries
 
@@ -602,13 +608,13 @@ Truncate matching strings. In a TAP output truncate matching strings to {match_l
 
 * `--story` 
 
-Run only single story. This should be file path without extensions ( .pl, .check ):
+Run only single story. This should be file path without extensions ( .pl, .rb, .check ):
 
     foo/story.pl
-    foo/bar/story.pl
+    foo/bar/story.rb
     bar/story.pl
 
-    --story 'foo' # runs foo/ stories
+    --story foo # runs foo/ stories
     --story foo/story # runs foo/story.pl
     --story foo/bar/ # runs foo/bar/ stories
 
@@ -673,7 +679,7 @@ files named suite.ini and _then_ ( if suite.ini is not found ) for suite.yaml at
 If configuration file is passed and read a related configuration data is accessible via config() function, 
 for example in story hook file:
 
-    $ cat story.pm
+    $ cat hook.pl
 
     my $foo = config()->{main}->{foo};
     my $bar = config()->{main}->{bar};

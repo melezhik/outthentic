@@ -145,11 +145,11 @@ sub get_stdout {
 
 sub stdout_file {
 
-  _story_glue_dir()."/std.out"
+  _story_cache_dir()."/std.out"
 
 }
 
-sub _story_glue_dir {
+sub _story_cache_dir {
 
   my $glue_dir = test_root_dir()."/story-"._story_id();
   system("mkdir -p $glue_dir");
@@ -158,7 +158,7 @@ sub _story_glue_dir {
 }
 
 sub _ruby_glue_file {
-  _story_glue_dir()."/glue.rb";
+  _story_cache_dir()."/glue.rb";
 }
 
 sub dsl {
@@ -261,7 +261,7 @@ CODE
 
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $cmd = "ruby -I ".$ruby_lib_dir." -I ".(_story_glue_dir())." $file";
+    my $cmd = "ruby -I ".$ruby_lib_dir." -I ".(_story_cache_dir())." $file";
 
     if (debug_mod12()){
         Test::More::note("do_ruby_hook: $cmd"); 

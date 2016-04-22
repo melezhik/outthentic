@@ -88,10 +88,18 @@ sub run_story_file {
 
     }else{
 
-        my $story_file = get_prop('story_file');
+        my $story_dir = get_prop('story_dir');
+        my $story_command;
+        my $story_file;
 
-        my $st = execute_cmd("perl $story_file 1>$content_file 2>&1 && test -f $content_file");
+        if ( -f "$story_dir/story.pl" ){
+            $story_file = "$story_dir/story.pl";
+            $story_command = "perl $story_dir/story.pl";
 
+        }elsif(-f "$story_dir/story.rb") {
+            $story_file = "$story_dir/story.rb";
+            $story_command = "ruby $story_dir/story.rb";
+        }
 
         if ($ENV{outth_show_story}){
             open STR, $story_file or die $!;
@@ -100,19 +108,21 @@ sub run_story_file {
             note("story file:\n$sdata");
         }
 
+        my $st = execute_cmd("$story_command 1>$content_file 2>&1 && test -f $content_file");
+
         if ($st) {
-            note("perl $story_file succeeded") if debug_mod12;
+            note("$story_command succeeded") if debug_mod12;
         }elsif(ignore_story_err()){
-            note("perl $story_file failed, still continue due to ignore_story_err enabled");
+            note("$story_command failed, still continue due to ignore_story_err enabled");
         }else{
-            ok(0, "perl $story_file succeeded");
+            ok(0, "$story_command succeeded");
             open CNT, $content_file or die $!;
             my $rdata = join "", <CNT>;
             close CNT;
-            note("perl $story_file \n===>\n$rdata");
+            note("story output \n===>\n$rdata");
         }
 
-        note("stdout saved to $content_file") if debug_mod12;
+        note("story output saved to $content_file") if debug_mod12;
 
     }
 

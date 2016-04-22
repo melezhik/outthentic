@@ -353,11 +353,9 @@ Story hooks API provides several functions to hack into story run process:
 
 ## Redefine stdout
 
-*set_stdout(string)*
+Redefining stdout feature means you define a story output on the hook side ( thus story script is not executed ). 
 
-Using `set_stdout` means that you define story output on hook side ( and story script is not executed ). 
-
-This might be helpful when for some reasons you do not want provide story script
+This might be helpful when for some reasons you do not want provide story script.
 
 This is simple an example:
 
@@ -441,35 +439,51 @@ Downstream story always gets called from the _upstream_ one:
     
 Here are the brief comments to the example above:
 
-* to make story as downstream simply create story at modules/ directory
+* to make story as downstream simply create a story in `modules/` directory.
 
-* call `run_story(story_path)` function inside upstream story hook to run downstream story.
+* to run downstream story call `run_story(story_path)` function inside upstream story hook.
 
 * you can call as many downstream stories as you wish.
 
 * you can call the same downstream story more than once.
 
-Here is an example code snippet:
+Here is an example of multiple downstream stories calls:
 
 
-    $ cat story.pm
-    run_story( 'some_story' )
-    run_story( 'yet_another_story' )
-    run_story( 'some_story' )
+    $ cat two-jumps/hook.pl
 
-* stories variables 
+    run_story( 'up' );
+    run_story( 'down' );
+    run_story( 'up' );
+    run_story( 'down' );
+
+* story variables 
 
 You may pass variables to downstream story with the second argument of `run_story()`  function:
 
-    run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
+
+    # cat hook.pl
+
+    run_story( 
+      'greeting', {  name => 'Alexey' , message => 'hello' }  
+    );
 
 
-Story variables get accessed by  `story_var()` function:
 
-    $ cat create_calc_object/story.pm
-    story_var('use_float');
-    story_var('use_complex_numbers');
-    story_var('foo');
+Story variables are accessed by  calling `story_var()` function inside downstream story hook:
+
+    $ cat hook.pl
+
+    story_var('name');
+    story_var('message');
+
+Here is the `run_story` signature list for various languages:
+
+
+    | Language  | signature                     | comment                                 |
+    ------------+-------------------------------+-----------------------------------------+
+    | Perl      | run_story($SCALAR,$HASHREF)   |                                         |
+    | Ruby      | run_story(STRING              | passing story variables not implemented |
 
 
 * downstream stories may invoke other downstream stories

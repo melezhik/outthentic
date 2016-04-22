@@ -268,7 +268,11 @@ CODE
     }
 
     for my $l ( split /\n/, `$cmd`){
+      next if $l=~/#/;
       next unless $l=~/story:\s+(\S+)/;
+      if (debug_mod12()){
+          Test::More::note("run downstream story from ruby hook"); 
+      }
       run_story($1);
     }
 

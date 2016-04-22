@@ -486,27 +486,16 @@ Here is the `run_story` signature list for various languages:
     | Ruby      | run_story(STRING)             | passing story variables not implemented |
 
 
-* downstream stories may invoke other downstream stories
+And finally:
 
-* you can't use story variables in a none downstream story
+* downstream stories may invoke other downstream stories.
 
+* you can't only use story variables inside downstream stories.
 
-One word about _sharing state_ between upstream/downstream stories. 
+## Story properties
 
-As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories.
+Some story properties have a proper accessors functions. Here is the list:
 
-The straightforward way to share state is to use global variables:
-
-    # upstream story hook:
-    our $state = [ 'this is upstream story' ]
-
-    # downstream story hook:
-    push our @$state, 'I was here'
- 
-
-## Story variables accessors
-
-There are some useful variables exposed by hooks API:
 
 * `project_root_dir()` - Root directory of outthentic project.
 
@@ -516,28 +505,65 @@ There are some useful variables exposed by hooks API:
 
 * `host()` - Returns value of \`--host' parameter.
 
-## Ignore unsuccessful codes when run stories
+## Ignore unsuccessful story code
 
-Every story is a perl script gets run by perl `system()` function returning an exit code. 
+Every story is a script gets executed and thus returning an exit code. If exit code is bad (!=0)
+this is treated as story verification failure. 
 
-None zero exit codes result in test failures, this default behavior, to disable this say in hook file:
+Use `ignore_story_err()` function to ignore unsuccessful story code:
 
-    $ cat story.pm
-    ignore_story_err(1);
+    $ cat hook.pm
 
-## PERL5LIB
+    ignore_story_err 1
+
+## Story libraries
+
+Story libraries are files to keep your libraries code to _automatically required_ into story hooks and check files context:
+
+Here are some examples:
+
+Perl:
+
+    $ cat common.pm
+    sub abc_generator {
+      print $_, "\n" for a..z;
+    } 
+
+    $ cat story.check
+
+    generator: <<CODE;
+    !perl
+      abc_generator()
+    CODE
+
+
+Ruby:
+
+    $ cat common.rb
+    def super_utility arg1, arg2
+      # I am cool! But I do nothing!
+    end
+
+    $ cat hook.pl
+
+    super_utility 'foo', 'bar'
+    
+# Language libraries
+
+## Perl
+
+*PERL5LIB*
 
 $project\_root\_directory/lib path gets added to $PERL5LIB variable. 
 
-This make it easy to place custom modules under project root directory:
+This make it easy to place custom Perl modules under project root directory:
 
     $ cat my-app/lib/Foo/Bar/Baz.pm
     package Foo::Bar::Baz;
     ...
 
-    $ cat  hook.pm
+    $ cat  hook.pl
     use Foo::Bar::Baz;
-    ...
 
 
 # Story runner client

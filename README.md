@@ -58,7 +58,7 @@ Story run is process of verification of your story. A story verification is base
 
 The verification process consists of:
 
-* executing story file and saving stdout into file.
+* executing story script and saving stdout into file.
 * validating stdout against a story check.
 * returning result as the list of statuses, where every status relates to a single rule.
 
@@ -73,7 +73,7 @@ Just create a new directories with stories inside:
     $ echo 'print "hello from perl";' > perl/story.pl
     $ echo 'hello from perl' > perl/story.check
     $ mkdir ruby
-    $ echo 'puts "hello from ruby"' > ruby/ruby.pl
+    $ echo 'puts "hello from ruby"' > ruby/story.rb
     $ echo 'hello from ruby' > ruby/story.check
 
 `strun` is a command to run stories:
@@ -110,11 +110,11 @@ Let's create a project to test a simple calculator application:
     $ mkdir calc-app
     $ cd calc-app
 
-## Stories
+## Story scripts
 
-Stories are just perl scripts placed at project sub-directories and named `story.pl`. 
+Stories are just a scripts to be executed and then stdout are analyzed by rules defined at check files.
 
-Every story is a small program with stdout gets tested.
+Thus every story is a small program with some stdout gets tested.
 
 Let's create two stories for our calc project. One story for \`addition' operation and another for \`multiplication':
 
@@ -139,10 +139,11 @@ Let's create two stories for our calc project. One story for \`addition' operati
     print $calc->mult(3,4), "\n";
  
 
-## Story check files
+## Check files
 
-Story checks file contain validation rules for story.pl files. Every story.pl is always accompanied by 
-story.check file. Story check files should be placed at the same directory as story.pl file.
+Story check file contains validation rules to test script output. Every story script is always accompanied by story check file. 
+
+Story check files should be placed at the same directory as story script and be named as `story.check`.
 
 Lets add some rules for multiplication and addition stories:
 
@@ -158,14 +159,6 @@ Lets add some rules for multiplication and addition stories:
 And finally lets run test suite:
 
     $ strun
-
-# Story term ambiguity
-
-Sometimes when we speak about _stories_ we mean an elementary scenario executed by story runner and
-represented by a couple of files - story.pl,story.check. In other cases we mean just a story.pl
-file or even story.check given separately. The one should always take _the context_ into account when talking about stories
-to avoid ambiguity.
-
 
 # Story runner
 

@@ -95,7 +95,7 @@ sub wanted {
         print F "set_prop( test_root_dir    => q{$test_root_dir} );\n";
         print F "set_prop( host             => q{$host} );\n";
         print F "set_prop( ini_file_path    => q{$ini_file_path} );\n"    if $ini_file_path;
-        print F "set_prop( yaml_file_path    => q{$yaml_file_path} );\n"  if $yaml_file_path;
+        print F "set_prop( yaml_file_path   => q{$yaml_file_path} );\n"  if $yaml_file_path;
     
         print F "set_prop( story => q{$File::Find::dir} );\n";
         print F "set_prop( story_file => q{$File::Find::dir/story.pl} );\n";
@@ -112,9 +112,9 @@ sub wanted {
         }
 
         if ( -e "$File::Find::dir/story.pm" ){
-            print F "do_perl_file('$File::Find::dir/story.pm');\n\n";
+            print F "do_perl_hook('$File::Find::dir/story.pm');\n\n";
         }elsif ( -e "$File::Find::dir/hook.rb" ){
-            print F "do_ruby_file('$File::Find::dir/hook.rb');\n\n";
+            print F "do_ruby_hook('$File::Find::dir/hook.rb');\n\n";
         }
 
         print F "\n\nSKIP: {\n\n";

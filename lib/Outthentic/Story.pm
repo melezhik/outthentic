@@ -20,9 +20,9 @@ our @EXPORT = qw{
 
     run_story apply_story_vars story_var
 
-    do_perl_file
+    do_perl_hook
 
-    do_ruby_file
+    do_ruby_hook
 
     ignore_story_err
 
@@ -194,27 +194,31 @@ sub run_story {
 
     my $project_root_dir = get_prop('project_root_dir');
 
-    my $test_file = "$test_root_dir/$project_root_dir/modules/$path/story.d";
+    my $story_module = "$test_root_dir/$project_root_dir/modules/$path/story.d";
 
-    die "test file: $test_file does not exist" unless -e $test_file;
+    die "story module file $story_module does not exist" unless -e $story_module;
 
     if (debug_mod12()){
         Test::More::note("run downstream story: $path"); 
     }
 
-    do_perl_file($test_file);
-    
+    {
+      package main;
+      unless (do $story_module) {
+        die "couldn't parse story module file $story_module: $@" if $@;
+      }
+    }
+
 }
 
-sub do_perl_file {
+sub do_perl_hook {
 
-    my $file = shift;
+    my $hook_file = shift;
 
     {
       package main;
-      my $return;
-      unless ($return = do $file) {
-        die "couldn't parse $file: $@" if $@;
+      unless (do $hook_file) {
+        die "couldn't parse perl hook file $hook_file: $@" if $@;
       }
     }
 
@@ -222,7 +226,7 @@ sub do_perl_file {
 }
 
 
-sub do_ruby_file {
+sub do_ruby_hook {
 
     my $file = shift;
 
@@ -260,11 +264,12 @@ CODE
     my $cmd = "ruby -I ".$ruby_lib_dir." -I ".(_story_glue_dir())." $file";
 
     if (debug_mod12()){
-        Test::More::note("do_ruby_file: $cmd"); 
+        Test::More::note("do_ruby_hook: $cmd"); 
     }
 
     for my $l ( split /\n/, `$cmd`){
-      print "$l\n";
+      next unless $l=~/story:\s+(\S+)/;
+      run_story($1);
     }
 
     return 1;

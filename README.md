@@ -361,7 +361,7 @@ This might be helpful when for some reasons you do not want provide story script
 
 This is simple an example:
 
-    $ cat hook.pm
+    $ cat hook.pl
     set_stdout("THIS IS I FAKE RESPONSE \n HELLO WORLD");
 
     $ cat story.check

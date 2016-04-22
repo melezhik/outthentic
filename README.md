@@ -16,14 +16,32 @@ This is a quick tutorial on outthentic usage.
 
 ## Story being tested
 
-Story is just a perl script that yields something into stdout:
+Story is just a script that yields something into stdout.
+
+Perl story example:
 
     $ cat story.pl
 
     print "I am OK\n";
     print "I am outthentic\n";
 
+Ruby story example:
+
+    $ cat story.rb
+
+    puts "I am OK"
+    puts "I am outthentic"
+
 Sometimes we can also call story file as scenario.
+
+Story could be written on Perl or Ruby:
+
+
+    | Language  | File      |
+    ------------+------------
+    | Perl      | story.pl  |
+    | Ruby      | story.rb  |
+  
 
 ## Check file
 

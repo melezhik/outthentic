@@ -232,8 +232,8 @@ Yes you may generate new check entries on run time:
     Say
     HELLO
    
+    # check list
     # this generator creates 3 new check expressions:
-   
     generator: <<CODE
     !perl
 
@@ -276,16 +276,27 @@ Ruby:
 Follow [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL documentation pages
 to get more.
 
-* inline perl code
+* inline code
 
-What about inline arbitrary perl code? Well, it's easy!
+What about inline arbitrary code? Well, it's easy!
 
 
     # check list
     regexp: number: (\d+)
-    validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
 
-See [perl expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions) in Outthentic::DSL documentation pages.
+    validator: <<CODE
+    !perl
+        print capture()->[0] '>=' 0, ' ', 'got none zero number' 
+    CODE
+
+    code: <<CODE
+    !ruby
+        puts '# I like Ruby as well'
+    CODE
+
+Follow [perl-expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions), [validators](https://github.com/melezhik/outthentic-dsl#validators) and
+[Inline code from other languages](https://github.com/melezhik/outthentic-dsl#inline-code-from-other-languages) in Outthentic::DSL documentation pages to get more.
+
 
 * text blocks
 

@@ -571,11 +571,10 @@ This make it easy to place custom Perl modules under project root directory:
 
     $ cat my-app/lib/Foo/Bar/Baz.pm
     package Foo::Bar::Baz;
-    ...
+    1;
 
-    $ cat  hook.pl
+    $ cat common.pm
     use Foo::Bar::Baz;
-
 
 # Story runner client
 

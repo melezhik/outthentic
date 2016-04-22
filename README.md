@@ -67,32 +67,30 @@ See also [story runner](#story-runner).
 ## Suite
 
 A bunch of related stories is called project or suite. Sure you may have more then one story at your project.
-Just create a new directories with story files inside:
+Just create a new directories with stories inside:
 
-    $ mkdir hello
-    $ echo 'print "hello"' > hello/story.pl
-    $ echo hello > hello/story.check
+    $ mkdir perl
+    $ echo 'print "hello from perl";' > perl/story.pl
+    $ echo 'hello from perl' > perl/story.check
+    $ mkdir ruby
+    $ echo 'puts "hello from ruby"' > ruby/ruby.pl
+    $ echo 'hello from ruby' > ruby/story.check
 
-Now run the suite with `strun` command:
+`strun` is a command to run stories:
 
-    $ strun
-    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/story.pl succeeded
-    ok 2 - stdout saved to /tmp/.outthentic/29566/QKDi3p573L
-    ok 3 - output match 'hello'
-    1..3
+    $ strun 
+    /tmp/.outthentic/3359/home/melezhik/projects/outthentic-dsl-examples/perl-and-ruby/perl/story.t ..
+    ok 1 - output match 'hello from perl'
+    1..1
     ok
-    /tmp/.outthentic/29566/home/vagrant/projects/outthentic/examples/hello/world/story.t ..
-    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/world/story.pl succeeded
-    ok 2 - stdout saved to /tmp/.outthentic/29566/xC3wrsS195
-    ok 3 - output match 'I am OK'
-    ok 4 - output match 'I am outthentic'
-    1..4
+    /tmp/.outthentic/3359/home/melezhik/projects/outthentic-dsl-examples/perl-and-ruby/ruby/story.t .. 
+    ok 1 - output match 'hello from ruby'
+    1..1
     ok
     All tests successful.
-    Files=2, Tests=7,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.01 csys =  0.13 CPU)
+    Files=2, Tests=2,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.07 cusr  0.02 csys =  0.11 CPU)
     Result: PASS
-
-
+    
 # Calculator project example
 
 Here is more detailed tutorial where we will build a test suite for calculator program.

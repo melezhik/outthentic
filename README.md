@@ -378,6 +378,14 @@ A final stdout will be:
     HELLO WORLD
     HELLO WORLD2
 
+Here is `set_stdout()` function signatures list for various languages:
+
+    | Language  | signature             |
+    ------------+------------------------
+    | Perl      | set_stdout($SCALAR)   |
+    | Ruby      | set_stdout(STRING)    |
+
+
 ## Upstream and downstream stories
 
 It is possible to run one story from another with the help of downstream stories.

@@ -32,8 +32,12 @@ examples/modules/foo/story.pm
 examples/multiline/story.check
 examples/multiline/story.pl
 examples/outthentic.rb
+examples/ruby/hello/story.check
+examples/ruby/hello/story.rb
 examples/ruby/hook.rb
 examples/ruby/story.check
+examples/ruby2/story.check
+examples/ruby2/story.rb
 examples/run-story/story.check
 examples/run-story/story.pl
 examples/run-story/story.pm
@@ -67,6 +71,7 @@ lib/Outthentic/Story.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
+out.log
 README.md
 README.pod
 ruby_lib/outthentic.rb

@@ -186,6 +186,7 @@ sub match_lines {
 sub run_story {
 
     my $path = shift;
+
     my $story_vars = shift || {};
 
     $main::story_vars = $story_vars;
@@ -237,7 +238,11 @@ sub do_ruby_hook {
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
 
+    my $require_story_lib = -f get_prop('story_dir')."/common.rb" ? 'require "common";' : ''  ;
+
     print RUBY_GLUE <<"CODE";
+
+    $require_story_lib
 
     def debug_mod12 
       '$debug_mod12'
@@ -261,7 +266,7 @@ CODE
 
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $cmd = "ruby -I ".$ruby_lib_dir." -I ".(_story_cache_dir())." $file";
+    my $cmd = "ruby -I ".(get_prop('story_dir'))." -I ".$ruby_lib_dir." -I ".(_story_cache_dir())." $file";
 
     if (debug_mod12()){
         Test::More::note("do_ruby_hook: $cmd"); 

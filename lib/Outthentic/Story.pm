@@ -272,7 +272,24 @@ CODE
         Test::More::note("do_ruby_hook: $cmd"); 
     }
 
-    for my $l ( split /\n/, `$cmd`){
+
+    my $rand = int(rand(1000));
+
+    my $st = system("$cmd 2>"._story_cache_dir()."/$rand.err 1>"._story_cache_dir()."/$rand.out");
+
+    if($st != 0){
+      die "do_ruby_hook failed. \n see "._story_cache_dir()."/$rand.err for details";
+    }
+
+    my $out_file = _story_cache_dir()."/$rand.out";
+
+    open RUBY_HOOK_OUT, $out_file or die "can't open RUBY_HOOK_OUT file $out_file to read!";
+
+    my @out = <RUBY_HOOK_OUT>;
+
+    close RUBY_HOOK_OUT;
+
+    for my $l (@out){
       next if $l=~/#/;
       next unless $l=~/story:\s+(\S+)/;
       if (debug_mod12()){
@@ -280,6 +297,7 @@ CODE
       }
       run_story($1);
     }
+
 
     return 1;
 }

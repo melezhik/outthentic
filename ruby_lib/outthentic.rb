@@ -18,5 +18,7 @@ def run_story path
 end
 
 
-
+def ignore_story_err val
+  puts "ignore_story_err: #{val}"
+end
 

@@ -289,15 +289,19 @@ CODE
 
     close RUBY_HOOK_OUT;
 
-    for my $l (@out){
-      next if $l=~/#/;
-      next unless $l=~/story:\s+(\S+)/;
-      if (debug_mod12()){
-          Test::More::note("run downstream story from ruby hook"); 
-      }
-      run_story($1);
-    }
+    for my $l (@out) {
 
+      next if $l=~/#/;
+
+      ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
+
+      if ($l=~/story:\s+(\S+)/){
+        if (debug_mod12()){
+            Test::More::note("run downstream story from ruby hook"); 
+        }
+        run_story($1);
+      }
+    }
 
     return 1;
 }

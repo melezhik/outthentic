@@ -8,12 +8,15 @@ def set_stdout line
 end
 
 
-def run_story path
+def run_story path, params = {}
 
     if debug_mod12
         puts "# run downstream story: #{path}"
     end
 
+    puts "story_vars:"
+    puts params.to_json
+    puts "story_vars:"
     puts "story: #{path}"
 
 end
@@ -30,3 +33,12 @@ end
 def capture
     captures.first
 end
+
+def story_variables 
+   @module_varaibles ||= JSON.parse(File.read("#{cache_dir}/variables.json"))  
+end
+
+def story_variable name
+  story_variables[name]
+end
+

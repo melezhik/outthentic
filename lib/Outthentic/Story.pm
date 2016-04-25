@@ -177,9 +177,9 @@ sub stdout_file {
 
 sub _story_cache_dir {
 
-  my $glue_dir = test_root_dir()."/story-"._story_id();
-  system("mkdir -p $glue_dir");
-  $glue_dir;
+  my $cache_dir = test_root_dir()."/story-"._story_id();
+  system("mkdir -p $cache_dir");
+  $cache_dir;
 
 }
 
@@ -331,17 +331,24 @@ sub do_ruby_hook {
 
     close RUBY_HOOK_OUT;
 
+    my $story_vars;
+
     for my $l (@out) {
 
       next if $l=~/#/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
+      
+      if ($l=~s/story_vars:.*// .. $l=~s/story_vars:.*//){
+        $story_vars.=$l;    
+      }
 
       if ($l=~/story:\s+(\S+)/){
+        my $path = $1;
         if (debug_mod12()){
             Test::More::note("run downstream story from ruby hook"); 
         }
-        run_story($1);
+        run_story($path, decode_json($story_vars||{}));
       }
     }
 
@@ -352,11 +359,19 @@ sub do_ruby_hook {
 sub apply_story_vars {
 
     set_prop( story_vars => $main::story_vars );
+
+    open STORY_VARS, ">", (_story_cache_dir())."/variables.json" 
+    or die "can't open ".(_story_cache_dir())."/variables.json write: $!";
+
+    print STORY_VARS encode_json($main::story_vars);
+
+    close STORY_VARS;
 }
 
 sub story_var {
 
     my $name = shift;
+
     get_prop( 'story_vars' )->{$name};
 
 }

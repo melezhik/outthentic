@@ -1,4 +1,5 @@
 require 'glue'
+require 'json'
 
 def set_stdout line
   open(stdout_file(), 'a') do |f|
@@ -22,3 +23,10 @@ def ignore_story_err val
   puts "ignore_story_err: #{val}"
 end
 
+def captures
+   @captures ||= JSON.parse(File.read("#{cache_dir}/captures.json"))  
+end
+
+def capture
+    captures.first
+end

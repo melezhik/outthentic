@@ -1,0 +1,13 @@
+regexp: (\d+)
+
+
+code: <<CODE
+!ruby
+
+  require 'outthentic'
+
+  captures.each do |c|
+    puts "# #{c.first}"
+  end
+
+CODE

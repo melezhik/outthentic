@@ -12,6 +12,7 @@ requires    'Test::Harness';
 requires    'File::Temp';
 requires    'Config::Tiny';
 requires    'YAML';
+requires    'JSON';
 requires    'File::ShareDir';
 requires    'Outthentic::DSL', "0.1.0";
 

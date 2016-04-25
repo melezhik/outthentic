@@ -24,6 +24,7 @@ requires:
   Config::Tiny: 0
   File::ShareDir: 0
   File::Temp: 0
+  JSON: 0
   Outthentic::DSL: 0.1.0
   Test::Harness: 0
   Test::More: 0

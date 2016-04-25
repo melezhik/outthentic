@@ -5,10 +5,11 @@ use strict;
 use base 'Exporter';
 use Outthentic::DSL;
 use File::ShareDir;
+use JSON;
 
 our @EXPORT = qw{ 
 
-    new_story end_of_story 
+    new_story end_of_story set_story
 
     get_prop set_prop 
 
@@ -37,11 +38,17 @@ our @stories = ();
 
 sub new_story {
     
-    push @stories, {
+
+    my $self = {
         ID =>  int(rand(1000)),
         story_vars => {},
         props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new() },
     };
+
+    push @stories, $self;
+
+
+    1;
 
 }
 
@@ -51,6 +58,25 @@ sub end_of_story {
         Test::More::note("end of story: ".(get_prop('story')));
     }
     delete $stories[-1];
+
+}
+
+sub set_story {
+
+    my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
+
+    my $ruby_run_opts = "-I $ruby_lib_dir -I "._story_cache_dir();
+
+    if  (-f get_prop('story_dir')."/common.rb"){
+      $ruby_run_opts.= " -I ".(get_prop('story_dir')); 
+      $ruby_run_opts.= " -r common"; 
+    }
+
+    get_prop('dsl')->{languages}->{ruby} = $ruby_run_opts; 
+
+    get_prop('dsl')->{cache_dir} = _story_cache_dir();
+
+    _mk_ruby_glue_file();
 
 }
 
@@ -227,9 +253,7 @@ sub do_perl_hook {
 }
 
 
-sub do_ruby_hook {
-
-    my $file = shift;
+sub _mk_ruby_glue_file {
 
     open RUBY_GLUE, ">", _ruby_glue_file() or die $!;
 
@@ -238,11 +262,11 @@ sub do_ruby_hook {
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
 
-    my $require_story_lib = -f get_prop('story_dir')."/common.rb" ? 'require "common";' : ''  ;
+    my $json = JSON->new->allow_nonref;
+
+    my $cache_dir = _story_cache_dir;
 
     print RUBY_GLUE <<"CODE";
-
-    $require_story_lib
 
     def debug_mod12 
       '$debug_mod12'
@@ -256,6 +280,10 @@ sub do_ruby_hook {
       '$project_root_dir' 
     end
 
+    def cache_dir
+      '$cache_dir'
+    end
+
     def stdout_file
       '$stdout_file' 
     end
@@ -264,9 +292,23 @@ CODE
 
     close RUBY_GLUE,;
 
+}
+
+sub do_ruby_hook {
+
+    my $file = shift;
+
+
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $cmd = "ruby -I ".(get_prop('story_dir'))." -I ".$ruby_lib_dir." -I ".(_story_cache_dir())." $file";
+    my $cmd = "ruby -I $ruby_lib_dir -I "._story_cache_dir();
+
+    if  (-f get_prop('story_dir')."/common.rb"){
+      $cmd.= " -I ".(get_prop('story_dir')); 
+      $cmd.= " -r common"; 
+    }
+
+    $cmd.=" $file";
 
     if (debug_mod12()){
         Test::More::note("do_ruby_hook: $cmd"); 

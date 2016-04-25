@@ -106,6 +106,8 @@ sub wanted {
         print F "set_prop( debug_bytes => 700 );\n";
         print F "set_prop( match_l => $match_l );\n";
         print F "set_prop( runtime_params => q{".(join ':::', @runtime_params)."} );\n";
+
+        print F "\nset_story();\n\n";
     
         if ($story_type eq 'downstream') {
             print F "apply_story_vars();\n";

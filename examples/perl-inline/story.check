@@ -1,0 +1,10 @@
+code: <<CODE
+!perl
+note 'hello world'
+CODE
+
+
+generator: <<CODE
+!perl
+[ 'OK' ]
+CODE

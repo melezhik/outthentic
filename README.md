@@ -236,9 +236,7 @@ Yes you may generate new check entries on run time:
     generator: <<CODE
     !perl
 
-    print "say\n";
-    print "hello\n";
-    print "again\n";
+    qw{say hello again}
 
     CODE
 

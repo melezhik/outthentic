@@ -65,7 +65,7 @@ sub set_story {
 
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $ruby_run_opts = "-I $ruby_lib_dir -I "._story_cache_dir();
+    my $ruby_run_opts = "-I $ruby_lib_dir -r outthentic -I "._story_cache_dir();
 
     if  (-f get_prop('story_dir')."/common.rb"){
       $ruby_run_opts.= " -I ".(get_prop('story_dir')); 
@@ -301,7 +301,7 @@ sub do_ruby_hook {
 
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $cmd = "ruby -I $ruby_lib_dir -I "._story_cache_dir();
+    my $cmd = "ruby -I $ruby_lib_dir -r outthentic -I "._story_cache_dir();
 
     if  (-f get_prop('story_dir')."/common.rb"){
       $cmd.= " -I ".(get_prop('story_dir')); 

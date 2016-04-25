@@ -428,7 +428,6 @@ Downstream story always gets called from the _upstream_ one:
     # note that you don't have to
     # leave modules/ directory in the path
 
-    require 'outthentic'
     run_story( 'knock-the-door' );
 
     $ cat open-the-door/story.rb

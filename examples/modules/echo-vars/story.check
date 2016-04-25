@@ -1,0 +1,29 @@
+generator: [ "foo: ".().story_var('foo') ] 
+
+generator: <<CODE
+[ 
+  "foo: ".().story_var('foo') 
+] 
+CODE
+
+generator: <<CODE
+!ruby
+  puts "foo: #{story_var('foo')}" 
+CODE
+
+generator: [ "bar: ".().story_var('bar') ] 
+
+generator: <<CODE
+[ 
+  "bar: ".().story_var('bar') 
+] 
+CODE
+
+generator: <<CODE
+!ruby
+  puts "bar: #{story_var('bar')}" 
+CODE
+
+foo:
+bar:
+

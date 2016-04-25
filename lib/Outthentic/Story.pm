@@ -9,7 +9,7 @@ use JSON;
 
 our @EXPORT = qw{ 
 
-    new_story end_of_story set_story
+    new_story end_of_story set_story story_cache_dir
 
     get_prop set_prop 
 
@@ -65,7 +65,7 @@ sub set_story {
 
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $ruby_run_opts = "-I $ruby_lib_dir -r outthentic -I "._story_cache_dir();
+    my $ruby_run_opts = "-I $ruby_lib_dir -r outthentic -I ".story_cache_dir();
 
     if  (-f get_prop('story_dir')."/common.rb"){
       $ruby_run_opts.= " -I ".(get_prop('story_dir')); 
@@ -74,7 +74,7 @@ sub set_story {
 
     get_prop('dsl')->{languages}->{ruby} = $ruby_run_opts; 
 
-    get_prop('dsl')->{cache_dir} = _story_cache_dir();
+    get_prop('dsl')->{cache_dir} = story_cache_dir();
 
     _mk_ruby_glue_file();
 
@@ -171,11 +171,11 @@ sub get_stdout {
 
 sub stdout_file {
 
-  _story_cache_dir()."/std.out"
+  story_cache_dir()."/std.out"
 
 }
 
-sub _story_cache_dir {
+sub story_cache_dir {
 
   my $cache_dir = test_root_dir()."/story-"._story_id();
   system("mkdir -p $cache_dir");
@@ -184,7 +184,7 @@ sub _story_cache_dir {
 }
 
 sub _ruby_glue_file {
-  _story_cache_dir()."/glue.rb";
+  story_cache_dir()."/glue.rb";
 }
 
 sub dsl {
@@ -264,7 +264,7 @@ sub _mk_ruby_glue_file {
 
     my $json = JSON->new->allow_nonref;
 
-    my $cache_dir = _story_cache_dir;
+    my $cache_dir = story_cache_dir;
 
     print RUBY_GLUE <<"CODE";
 
@@ -301,7 +301,7 @@ sub do_ruby_hook {
 
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $cmd = "ruby -I $ruby_lib_dir -r outthentic -I "._story_cache_dir();
+    my $cmd = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir();
 
     if  (-f get_prop('story_dir')."/common.rb"){
       $cmd.= " -I ".(get_prop('story_dir')); 
@@ -317,13 +317,13 @@ sub do_ruby_hook {
 
     my $rand = int(rand(1000));
 
-    my $st = system("$cmd 2>"._story_cache_dir()."/$rand.err 1>"._story_cache_dir()."/$rand.out");
+    my $st = system("$cmd 2>".story_cache_dir()."/$rand.err 1>".story_cache_dir()."/$rand.out");
 
     if($st != 0){
-      die "do_ruby_hook failed. \n see "._story_cache_dir()."/$rand.err for details";
+      die "do_ruby_hook failed. \n see ".story_cache_dir()."/$rand.err for details";
     }
 
-    my $out_file = _story_cache_dir()."/$rand.out";
+    my $out_file = story_cache_dir()."/$rand.out";
 
     open RUBY_HOOK_OUT, $out_file or die "can't open RUBY_HOOK_OUT file $out_file to read!";
 
@@ -360,8 +360,8 @@ sub apply_story_vars {
 
     set_prop( story_vars => $main::story_vars );
 
-    open STORY_VARS, ">", (_story_cache_dir())."/variables.json" 
-    or die "can't open ".(_story_cache_dir())."/variables.json write: $!";
+    open STORY_VARS, ">", (story_cache_dir())."/variables.json" 
+    or die "can't open ".(story_cache_dir())."/variables.json write: $!";
 
     print STORY_VARS encode_json($main::story_vars);
 

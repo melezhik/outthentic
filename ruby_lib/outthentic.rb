@@ -38,7 +38,7 @@ def story_variables
    @module_varaibles ||= JSON.parse(File.read("#{cache_dir}/variables.json"))  
 end
 
-def story_variable name
+def story_var name
   story_variables[name]
 end
 

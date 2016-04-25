@@ -98,7 +98,9 @@ sub run_story_file {
 
         }elsif(-f "$story_dir/story.rb") {
             $story_file = "$story_dir/story.rb";
-            $story_command = "ruby $story_dir/story.rb";
+            my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
+            $story_command = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir();
+            $story_command.= " $story_dir/story.rb";
         }
 
         if ($ENV{outth_show_story}){

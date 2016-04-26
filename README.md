@@ -8,15 +8,15 @@ Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](htt
 
 # Install
 
-  $ cpanm Outthentic
+    $ cpanm Outthentic
 
 # Short introduction
 
 This is a quick tutorial on outthentic usage.
 
-## Story being tested
+## Run your scenario
 
-Story is just a script that yields something into stdout.
+Story is just a script that you can run and that yields something into stdout.
 
 Perl story example:
 
@@ -45,7 +45,9 @@ Story could be written on Perl or Ruby:
 
 ## Check file
 
-Story check is a bunch of lines stdout should match. Here we require to have \`I am OK' and \`I am outthentic' lines in stdout:
+Story check file contains rules to match a stdout produced by story script. 
+
+Here we require that our scenario should produce  \`I am OK' and \`I am outthentic' lines in stdout:
 
     $ cat story.check
 
@@ -236,7 +238,7 @@ Yes you may generate new check entries on run time:
     generator: <<CODE
     !perl
 
-    qw{say hello again}
+    [ qw{say hello again} ]
 
     CODE
 

@@ -646,7 +646,7 @@ Outthentic projects are configurable. Configuration data is passed via configura
 
 There are two type of configuration files are supported:
 
-* .Ini style format
+* Config::General format
 * YAML format
 
 .Ini  style configuration files are passed by `--ini` parameter
@@ -655,10 +655,12 @@ There are two type of configuration files are supported:
 
     $ cat /etc/suites/foo.ini
 
-    [main]
+    <main>
 
-    foo = 1
-    bar = 2
+    foo 1
+    bar 2
+
+    </main>
 
 There is no special magic behind ini files, except this should be [Config General](https://metacpan.org/pod/Config::General) compliant configuration file.
 
@@ -668,7 +670,7 @@ Or you can choose YAML format for suite configuration by using `--yaml` paramete
 
     $ cat /etc/suites/foo.yaml
 
-    main:
+    main :
       foo : 1
       bar : 2
 

@@ -1,5 +1,12 @@
+
 require 'glue'
 require 'json'
+
+if File.exist? "#{story_dir}/common.rb"
+
+  require "#{story_dir}/common.rb"
+
+end
 
 def set_stdout line
   open(stdout_file(), 'a') do |f|

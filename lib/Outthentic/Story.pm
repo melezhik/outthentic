@@ -69,11 +69,6 @@ sub set_story {
 
     my $ruby_run_opts = "-I $ruby_lib_dir -r outthentic -I ".story_cache_dir();
 
-    if  (-f get_prop('story_dir')."/common.rb"){
-      $ruby_run_opts.= " -I ".(get_prop('story_dir')); 
-      $ruby_run_opts.= " -r common"; 
-    }
-
     get_prop('dsl')->{languages}->{ruby} = $ruby_run_opts; 
 
     get_prop('dsl')->{cache_dir} = story_cache_dir();
@@ -267,6 +262,7 @@ sub _mk_ruby_glue_file {
 
     my $stdout_file = stdout_file();
     my $test_root_dir = test_root_dir();
+    my $story_dir = get_prop('story_dir');
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
 
@@ -292,6 +288,10 @@ sub _mk_ruby_glue_file {
       '$cache_dir'
     end
 
+    def story_dir
+      '$story_dir'
+    end
+
     def stdout_file
       '$stdout_file' 
     end
@@ -304,6 +304,9 @@ CODE
 
 sub _mk_bash_glue_file {
 
+
+    my $story_dir = get_prop('story_dir');
+
     open BASH_GLUE, ">", _bash_glue_file() or die $!;
 
     my $stdout_file = stdout_file();
@@ -311,7 +314,7 @@ sub _mk_bash_glue_file {
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
 
-    my $json = JSON->new->allow_nonref;
+    my $json = JSON->new;
 
     my $cache_dir = story_cache_dir;
 
@@ -324,6 +327,8 @@ sub _mk_bash_glue_file {
     set project_root_dir=$project_root_dir
 
     set cache_dir=$cache_dir
+
+    set story_dir=$story_dir
 
     set stdout_file=$stdout_file 
 
@@ -340,11 +345,6 @@ sub do_ruby_hook {
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
     my $cmd = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir();
-
-    if  (-f get_prop('story_dir')."/common.rb"){
-      $cmd.= " -I ".(get_prop('story_dir')); 
-      $cmd.= " -r common"; 
-    }
 
     $cmd.=" $file";
 
@@ -398,10 +398,6 @@ sub do_bash_hook {
     my $file = shift;
 
     my $cmd = "source "._bash_glue_file();
-
-    if  (-f get_prop('story_dir')."/common.bash"){
-      $cmd.= " && source ".(get_prop('story_dir')."/common.bash"); 
-    }
 
     $cmd.=" && source $file";
 

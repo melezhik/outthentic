@@ -320,17 +320,17 @@ sub _mk_bash_glue_file {
 
     print BASH_GLUE <<"CODE";
 
-    set debug_mod=debug_mod12 
+    debug_mod=debug_mod12 
 
-    set test_root_dir=$test_root_dir
+    test_root_dir=$test_root_dir
 
-    set project_root_dir=$project_root_dir
+    project_root_dir=$project_root_dir
 
-    set cache_dir=$cache_dir
+    cache_dir=$cache_dir
 
-    set story_dir=$story_dir
+    story_dir=$story_dir
 
-    set stdout_file=$stdout_file 
+    stdout_file=$stdout_file 
 
 CODE
 
@@ -397,7 +397,9 @@ sub do_bash_hook {
 
     my $file = shift;
 
-    my $cmd = "source "._bash_glue_file();
+    my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');
+
+    my $cmd = "source "._bash_glue_file()." && source $bash_lib_dir/outthentic.bash";
 
     $cmd.=" && source $file";
 

@@ -16,6 +16,7 @@ meta-spec:
 name: Outthentic
 no_index:
   directory:
+    - bash_lib
     - examples
     - inc
     - ruby_lib

@@ -80,6 +80,8 @@ sub set_story {
 
     _mk_ruby_glue_file();
 
+    _mk_bash_glue_file();
+
 }
 
 sub _story {
@@ -189,6 +191,10 @@ sub _ruby_glue_file {
   story_cache_dir()."/glue.rb";
 }
 
+sub _bash_glue_file {
+  story_cache_dir()."/glue.bash";
+}
+
 sub dsl {
     get_prop('dsl')
 }
@@ -296,10 +302,40 @@ CODE
 
 }
 
+sub _mk_bash_glue_file {
+
+    open BASH_GLUE, ">", _bash_glue_file() or die $!;
+
+    my $stdout_file = stdout_file();
+    my $test_root_dir = test_root_dir();
+    my $project_root_dir = project_root_dir();
+    my $debug_mod12 = debug_mod12();
+
+    my $json = JSON->new->allow_nonref;
+
+    my $cache_dir = story_cache_dir;
+
+    print BASH_GLUE <<"CODE";
+
+    set debug_mod=debug_mod12 
+
+    set test_root_dir=$test_root_dir
+
+    set project_root_dir=$project_root_dir
+
+    set cache_dir=$cache_dir
+
+    set stdout_file=$stdout_file 
+
+CODE
+
+    close BASH_GLUE,;
+
+}
+
 sub do_ruby_hook {
 
     my $file = shift;
-
 
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
@@ -360,6 +396,61 @@ sub do_ruby_hook {
 sub do_bash_hook {
 
     my $file = shift;
+
+    my $cmd = "source "._bash_glue_file();
+
+    if  (-f get_prop('story_dir')."/common.bash"){
+      $cmd.= " && source ".(get_prop('story_dir')."/common.bash"); 
+    }
+
+    $cmd.=" && source $file";
+
+    $cmd="bash -c '$cmd'";
+
+    if (debug_mod12()){
+        Test::More::note("do_bash_hook: $cmd"); 
+    }
+
+
+    my $rand = int(rand(1000));
+
+    my $st = system("$cmd 2>".story_cache_dir()."/$rand.err 1>".story_cache_dir()."/$rand.out");
+
+    if($st != 0){
+      die "do_bash_hook failed. \n see ".story_cache_dir()."/$rand.err for details";
+    }
+
+    my $out_file = story_cache_dir()."/$rand.out";
+
+    open HOOK_OUT, $out_file or die "can't open HOOK_OUT file $out_file to read!";
+
+    my @out = <HOOK_OUT>;
+
+    close HOOK_OUT;
+
+    my $story_vars;
+
+    for my $l (@out) {
+
+      next if $l=~/#/;
+
+      ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
+      
+      if ($l=~s/story_vars:.*// .. $l=~s/story_vars:.*//){
+        $story_vars.=$l;    
+      }
+
+      if ($l=~/story:\s+(\S+)/){
+        my $path = $1;
+        if (debug_mod12()){
+            Test::More::note("run downstream story from bash hook"); 
+        }
+        run_story($path, decode_json($story_vars||{}));
+      }
+    }
+
+    return 1;
+
 }
 
 

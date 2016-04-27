@@ -108,6 +108,7 @@ sub wanted {
         print F "set_prop( runtime_params => q{".(join ':::', @runtime_params)."} );\n";
 
         print F "\nset_story();\n\n";
+        print F "\npopulate_config();\n\n";
     
         if ($story_type eq 'downstream') {
             print F "apply_story_vars();\n";

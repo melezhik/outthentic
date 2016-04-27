@@ -180,8 +180,6 @@ sub generate_asserts {
 
     header() if debug_mod2();
 
-    populate_config();
-
     dsl()->{debug_mod} = get_prop('debug');
 
     dsl()->{match_l} = get_prop('match_l');

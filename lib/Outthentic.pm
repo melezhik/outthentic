@@ -7,7 +7,7 @@ our $VERSION = '0.1.0';
 package main;
 
 use Carp;
-use Config::Tiny;
+use Config::General;
 use YAML qw{LoadFile};
 use JSON;
 
@@ -26,22 +26,28 @@ sub execute_cmd {
 }
 
 sub config {
+  $config
+}
+
+sub populate_config {
 
     unless ($config){
         if (get_prop('ini_file_path') and -f get_prop('ini_file_path') ){
           my $path = get_prop('ini_file_path');
-          $config = $config = Config::Tiny->read($path) or confess "file $path is not valid .ini file";
+          my %config  = Config::General->new($path)->getall or confess "file $path is not valid .ini file";
+          $config = {%config};
         }elsif(get_prop('yaml_file_path') and -f get_prop('yaml_file_path')){
           my $path = get_prop('yaml_file_path');
           ($config) = LoadFile($path);
         }elsif ( -f 'suite.ini' ){
           my $path = 'suite.ini';
-          $config = $config = Config::Tiny->read($path) or confess "file $path is not valid .ini file";
+          my %config = Config::General->new($path)->getall or confess "file $path is not valid .ini file";
+          $config = {%config};
         }elsif ( -f 'suite.yaml'){
           my $path = 'suite.yaml';
           ($config) = LoadFile($path);
         }else{
-          $config = { foo => 1000 };
+          $config = { };
         }
     }
 
@@ -72,10 +78,11 @@ sub config {
     open CONFIG, '>', story_cache_dir().'/config.json' 
       or die "can't open to write file ".story_cache_dir()."/config.json : $!";
     my $json = JSON->new();
-    $json->allow_blessed();
-    $json->convert_blessed();
     print CONFIG $json->encode($config);
     close CONFIG;
+
+    note("configuration populated and saved to ".story_cache_dir()."/config.json") if debug_mod12;
+
     return $config;
 }
 
@@ -173,7 +180,7 @@ sub generate_asserts {
 
     header() if debug_mod2();
 
-    config();
+    populate_config();
 
     dsl()->{debug_mod} = get_prop('debug');
 

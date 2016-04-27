@@ -10,7 +10,7 @@ all_from       'lib/Outthentic.pm';
 requires    'Test::More';
 requires    'Test::Harness';
 requires    'File::Temp';
-requires    'Config::Tiny';
+requires    'Config::General';
 requires    'YAML';
 requires    'JSON';
 requires    'File::ShareDir';

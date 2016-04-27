@@ -21,7 +21,7 @@ no_index:
     - ruby_lib
     - t
 requires:
-  Config::Tiny: 0
+  Config::General: 0
   File::ShareDir: 0
   File::Temp: 0
   JSON: 0

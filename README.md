@@ -660,7 +660,7 @@ There are two type of configuration files are supported:
     foo = 1
     bar = 2
 
-There is no special magic behind ini files, except this should be [Config Tiny](https://metacpan.org/pod/Config::Tiny) compliant configuration file.
+There is no special magic behind ini files, except this should be [Config General](https://metacpan.org/pod/Config::General) compliant configuration file.
 
 Or you can choose YAML format for suite configuration by using `--yaml` parameter:
 

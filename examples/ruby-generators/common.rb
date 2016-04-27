@@ -4,4 +4,5 @@ def my_generator
   puts 2
   puts 3
   puts 'end:'
+  puts 'assert: 1 I am OK'
 end

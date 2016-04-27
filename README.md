@@ -657,12 +657,12 @@ There are two type of configuration files are supported:
 
     <main>
 
-    foo 1
-    bar 2
+      foo 1
+      bar 2
 
     </main>
 
-There is no special magic behind ini files, except this should be [Config General](https://metacpan.org/pod/Config::General) compliant configuration file.
+There is no special magic behind ini files, except this should be [Config::General](https://metacpan.org/pod/Config::General) compliant configuration file.
 
 Or you can choose YAML format for suite configuration by using `--yaml` parameter:
 
@@ -694,9 +694,9 @@ Runtime configuration parameters is way to override suite configuration data. Co
 
 
     $ cat suite.ini
-    [foo]
-    bar = 10
-  
+    <foo>
+      bar 10
+    </foo>
   
     $ strun --param foo.bar=20
   
@@ -708,11 +708,13 @@ It is possible to override any data in configuration files, for example arrays v
 
     $ cat suite.ini
     
-    [foo]
-    bar = 1
-    bar = 2
-    bar = 3
-    
+    <foo>
+
+      bar 1
+      bar 2
+      bar 3
+
+    </foo>    
     
     $ suite --param foo.bar=11 --param foo.bar=22 --param foo.bar=33
     

@@ -14,7 +14,7 @@ requires    'Config::Tiny';
 requires    'YAML';
 requires    'JSON';
 requires    'File::ShareDir';
-requires    'Outthentic::DSL', "0.1.0";
+requires    'Outthentic::DSL', "0.1.1";
 
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';

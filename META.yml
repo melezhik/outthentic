@@ -25,7 +25,7 @@ requires:
   File::ShareDir: 0
   File::Temp: 0
   JSON: 0
-  Outthentic::DSL: 0.1.0
+  Outthentic::DSL: 0.1.1
   Test::Harness: 0
   Test::More: 0
   YAML: 0

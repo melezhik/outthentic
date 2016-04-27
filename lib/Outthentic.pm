@@ -9,6 +9,7 @@ package main;
 use Carp;
 use Config::Tiny;
 use YAML qw{LoadFile};
+use JSON;
 
 use strict;
 use Test::More;
@@ -40,7 +41,7 @@ sub config {
           my $path = 'suite.yaml';
           ($config) = LoadFile($path);
         }else{
-          confess "configuration file is not found"
+          $config = { foo => 1000 };
         }
     }
 
@@ -68,6 +69,13 @@ sub config {
       $root->{$last_path} = $value;
     }
 
+    open CONFIG, '>', story_cache_dir().'/config.json' 
+      or die "can't open to write file ".story_cache_dir()."/config.json : $!";
+    my $json = JSON->new();
+    $json->allow_blessed();
+    $json->convert_blessed();
+    print CONFIG $json->encode($config);
+    close CONFIG;
     return $config;
 }
 
@@ -164,6 +172,8 @@ sub generate_asserts {
     my $story_check_file = shift;
 
     header() if debug_mod2();
+
+    config();
 
     dsl()->{debug_mod} = get_prop('debug');
 

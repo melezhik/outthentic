@@ -25,6 +25,8 @@ our @EXPORT = qw{
 
     do_ruby_hook
 
+    do_bash_hook
+
     ignore_story_err
 
     project_root_dir
@@ -353,6 +355,11 @@ sub do_ruby_hook {
     }
 
     return 1;
+}
+
+sub do_bash_hook {
+
+    my $file = shift;
 }
 
 

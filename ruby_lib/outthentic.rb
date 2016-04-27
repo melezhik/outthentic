@@ -42,3 +42,7 @@ def story_var name
   story_variables[name]
 end
 
+def config
+   @config ||= JSON.parse(File.read("#{cache_dir}/config.json"))  
+end
+

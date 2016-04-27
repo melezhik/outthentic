@@ -117,6 +117,8 @@ sub wanted {
             print F "do_perl_hook('$File::Find::dir/story.pm');\n\n";
         }elsif ( -e "$File::Find::dir/hook.rb" ){
             print F "do_ruby_hook('$File::Find::dir/hook.rb');\n\n";
+        }elsif ( -e "$File::Find::dir/hook.bash" ){
+            print F "do_bash_hook('$File::Find::dir/hook.bash');\n\n";
         }
 
         print F "\n\nSKIP: {\n\n";

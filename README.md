@@ -32,15 +32,25 @@ Ruby story example:
     puts "I am OK"
     puts "I am outthentic"
 
+Bash story example:
+
+    $ cat story.bash
+
+    echo I am OK
+    echo I am outthentic
+
 Sometimes we can also call story file as scenario.
 
 Story could be written on Perl or Ruby:
 
 
-    | Language  | File      |
-    ------------+------------
-    | Perl      | story.pl  |
-    | Ruby      | story.rb  |
+    +-----------+--------------+
+    | Language  | File         |
+    +-----------+--------------+
+    | Perl      | story.pl     |
+    | Ruby      | story.rb     |
+    | Ruby      | story.bash   |
+    +-----------+--------------+
   
 
 ## Check file

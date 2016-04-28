@@ -2,6 +2,10 @@ bash_lib/outthentic.bash
 bin/strun
 Changes
 examples/.exists
+examples/bash-downstream-story-pass-variables/hook.bash
+examples/bash-downstream-story-pass-variables/story.check
+examples/bash-downstream-story/hook.bash
+examples/bash-downstream-story/story.check
 examples/bash-hook/hook.bash
 examples/bash-hook/story.check
 examples/bash-hook/story.rb

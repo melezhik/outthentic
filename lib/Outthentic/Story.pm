@@ -229,7 +229,11 @@ sub run_story {
     die "story module file $story_module does not exist" unless -e $story_module;
 
     if (debug_mod12()){
-        Test::More::note("run downstream story: $path"); 
+        Test::More::note("run downstream story: $path");
+        for my $k (keys %{$story_vars}){
+          my $v = $story_vars->{$k};
+          Test::More::note("downstream story var: $k => $v"); 
+        } 
     }
 
     {
@@ -369,7 +373,7 @@ sub do_ruby_hook {
 
     close RUBY_HOOK_OUT;
 
-    my $story_vars;
+    my $story_vars_json;
 
     for my $l (@out) {
 
@@ -377,17 +381,24 @@ sub do_ruby_hook {
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       
-      if ($l=~s/story_vars:.*// .. $l=~s/story_vars:.*//){
-        $story_vars.=$l;    
+      if ($l=~s/story_var_json_begin.*// .. $l=~s/story_var_json_end.*//){
+        $story_vars_json.=$l;    
+        next;
       }
 
+
       if ($l=~/story:\s+(\S+)/){
+
         my $path = $1;
+
         if (debug_mod12()){
             Test::More::note("run downstream story from ruby hook"); 
         }
-        run_story($path, decode_json($story_vars||{}));
-      }
+
+        run_story($path, decode_json($story_vars_json||{}));
+        $story_vars_json = undef;
+
+        }
     }
 
     return 1;
@@ -426,7 +437,7 @@ sub do_bash_hook {
 
     close HOOK_OUT;
 
-    my $story_vars;
+    my %story_vars_bash = ();
 
     for my $l (@out) {
 
@@ -434,8 +445,10 @@ sub do_bash_hook {
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       
-      if ($l=~s/story_vars:.*// .. $l=~s/story_vars:.*//){
-        $story_vars.=$l;    
+      if ($l=~/story_var_bash:\s+(\S+)\s+(.*)/){
+        $story_vars_bash{$1}=$2;
+        #warn %story_vars_bash;
+        next;    
       }
 
       if ($l=~/story:\s+(\S+)/){
@@ -443,7 +456,8 @@ sub do_bash_hook {
         if (debug_mod12()){
             Test::More::note("run downstream story from bash hook"); 
         }
-        run_story($path, decode_json($story_vars||{}));
+        run_story($path, {%story_vars_bash});
+        %story_vars_bash = ();
       }
     }
 
@@ -462,6 +476,16 @@ sub apply_story_vars {
     print STORY_VARS encode_json($main::story_vars);
 
     close STORY_VARS;
+
+    open STORY_VARS, ">", (story_cache_dir())."/variables.bash" 
+    or die "can't open ".(story_cache_dir())."/variables.bash write: $!";
+
+    for my $name (keys %{$main::story_vars} ){
+      print STORY_VARS "$name=$main::story_vars{$name}\n";
+    }
+
+    close STORY_VARS;
+
 }
 
 sub story_var {

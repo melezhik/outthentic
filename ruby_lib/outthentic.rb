@@ -21,9 +21,9 @@ def run_story path, params = {}
         puts "# run downstream story: #{path}"
     end
 
-    puts "story_vars:"
+    puts "story_var_json_begin"
     puts params.to_json
-    puts "story_vars:"
+    puts "story_var_json_end"
     puts "story: #{path}"
 
 end

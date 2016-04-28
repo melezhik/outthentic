@@ -6,9 +6,14 @@ examples/bash-downstream-story-pass-variables/hook.bash
 examples/bash-downstream-story-pass-variables/story.check
 examples/bash-downstream-story/hook.bash
 examples/bash-downstream-story/story.check
+examples/bash-generators/common.bash
+examples/bash-generators/story.bash
+examples/bash-generators/story.check
 examples/bash-hook/hook.bash
 examples/bash-hook/story.check
 examples/bash-hook/story.rb
+examples/bash-pass-config/story.bash
+examples/bash-pass-config/story.check
 examples/between-keep-order/story.check
 examples/between-keep-order/story.pl
 examples/between-multiple-expressions/story.check
@@ -93,6 +98,7 @@ inc/Module/Install/Share.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Outthentic.pm
+lib/Outthentic/Glue/Bash.pm
 lib/Outthentic/Story.pm
 Makefile.PL
 MANIFEST			This list of files

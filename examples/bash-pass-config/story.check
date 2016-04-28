@@ -1,0 +1,6 @@
+generator: <<CODE
+!bash
+config 'main.foo'
+CODE
+
+

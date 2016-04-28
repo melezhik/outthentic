@@ -29,3 +29,8 @@ function run_story {
 
 }
 
+
+function config {
+   perl -MOutthentic::Glue::Bash -e config "${cache_dir}/config.json" $1
+}
+

@@ -118,9 +118,10 @@ sub run_story_file {
             $story_command.= " $story_dir/story.rb";
         }elsif(-f "$story_dir/story.bash") {
             $story_file = "$story_dir/story.bash";
-            my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
-            $story_command = "source ".story_cache_dir()."/outthetic.bash";
-            $story_command.= "bash -c '$story_command && source $story_dir/story.bash'";
+            my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');
+            $story_command = "bash -c 'source ".story_cache_dir()."/glue.bash";
+            $story_command.= " && source $bash_lib_dir/outthentic.bash";
+            $story_command.= " && source $story_dir/story.bash'";
         }
 
         if ($ENV{outth_show_story}){

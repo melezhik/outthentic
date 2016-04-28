@@ -2,3 +2,9 @@ generator: <<CODE
 !bash
 echo $FOO
 CODE
+
+
+code: <<CODE
+!bash
+echo "# ${FOO}"
+CODE

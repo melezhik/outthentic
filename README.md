@@ -224,7 +224,7 @@ rules defined in terms of Outthentic DSL - a language to validate unstructured t
 
 Below some examples of check file syntax, you may learn more at Outthentic::DSL documentation.
 
-* plain strings checks
+## plain strings checks
 
 Often all you need is to ensure that stdout has some strings in:
 
@@ -247,7 +247,7 @@ Often all you need is to ensure that stdout has some strings in:
     OK - output matches 'HELLO WORLD'
     OK - output matches '123'
 
-* regular expressions
+## regular expressions
 
 You may use regular expressions as well:
 
@@ -265,9 +265,32 @@ You may use regular expressions as well:
 
 See [check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) in Outthentic::DSL documentation pages.
 
+## inline code, generators and asserts
+
+You may inline code from other language to add some extra logic into your check file:
+
+### Inline code
+
+    # check file
+
+    code: <<CODE
+    !bash
+    echo '# this is debug message will be shown at console'
+    CODE
+
+    code: <<CODE
+    !ruby
+    puts '# this is debug message will be shown at console'
+    CODE
+
+    code: <<CODE
+    # by default Perl language is used
+    note('this is debug message will be shown at console')
+    CODE
+
 * generators
 
-Yes you may generate new **check entries** on run time:
+You may generate new **check entries** on runtime:
 
     # check file
     # with 2 check entries
@@ -322,7 +345,7 @@ to learn more.
 
 Asserts are statements returning true of false with some extra text description.
 
-Asserts are very powefull feature when combined with **captures** and **generators**:
+Asserts are very powerful feature when combined with **captures** and **generators**:
 
 
     # scenario output
@@ -345,9 +368,8 @@ Asserts are very powefull feature when combined with **captures** and **generato
     CODE  
     
 
-Follow [perl-expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions), [asserts](https://github.com/melezhik/outthentic-dsl#asserts) and
-[Inline code from other languages](https://github.com/melezhik/outthentic-dsl#inline-code-from-other-languages) in Outthentic::DSL documentation pages 
-to learn more about perl expressions, inline expressions and asserts.
+Follow [code expressions](https://github.com/melezhik/outthentic-dsl#code-expressions), [generators](https://github.com/melezhik/outthentic-dsl#generators) and [asserts](https://github.com/melezhik/outthentic-dsl#asserts)
+in Outthentic::DSL documentation pages to learn more about code expressions, generators and asserts.
 
 
 * text blocks

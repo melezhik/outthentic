@@ -2,7 +2,7 @@ use inc::Module::Install;
 
 # Define metadata
 name           'Outthentic';
-abstract       'Generic testing, reporting, monitoring framework consuming Outthentic::DSL';
+abstract       'Multipurpose scenarios framework';
 
 all_from       'lib/Outthentic.pm';
 

@@ -14,35 +14,42 @@ Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](htt
 
 This is a quick tutorial on outthentic usage.
 
-## Run your scenario
+## Run your scenarios
 
-Story is just a script that you can run and that yields something into stdout.
+Scenario is just a script that you **run** and that yields something into **stdout**.
 
-Perl story example:
+Perl scenario example:
 
     $ cat story.pl
 
     print "I am OK\n";
     print "I am outthentic\n";
 
-Ruby story example:
+Ruby scenario example:
 
     $ cat story.rb
 
     puts "I am OK"
     puts "I am outthentic"
 
-Bash story example:
+Bash scenario example:
 
     $ cat story.bash
 
     echo I am OK
     echo I am outthentic
 
-Sometimes we can also call story file as scenario.
+Outthentic scenarios could be written on one of three languages:
 
-Story could be written on Perl or Ruby:
+* Perl 
+* Ruby
+* Bash
 
+Choose you favorite one!
+
+Outthentic relies on file names to determine scenario type. 
+
+This is the table to describe language / file name conventions:
 
     +-----------+--------------+
     | Language  | File         |
@@ -55,7 +62,7 @@ Story could be written on Perl or Ruby:
 
 ## Check file
 
-Story check file contains rules to match a stdout produced by story script. 
+Check file contains rules to **verify** a stdout produced by scenario script. 
 
 Here we require that our scenario should produce  \`I am OK' and \`I am outthentic' lines in stdout:
 
@@ -64,22 +71,22 @@ Here we require that our scenario should produce  \`I am OK' and \`I am outthent
     I am OK
     I am outthentic
 
-## Story run
+## Story
 
-Story run is process of verification of your story. A story verification is based on rules defined in story check file.
+Outthentic story is a scenarios + check file. When outthentic **run** story it:
 
-The verification process consists of:
-
-* executing story script and saving stdout into file.
-* validating stdout against a story check.
-* returning result as the list of statuses, where every status relates to a single rule.
+* executes scenario script and saves stdout into file.
+* verifies stdout against a check file
 
 See also [story runner](#story-runner).
 
 ## Suite
 
-A bunch of related stories is called project or suite. Sure you may have more then one story at your project.
-Just create a new directories with stories inside:
+Outthentic suite is a bunch of related stories.
+
+One may have more then one story at your project.
+
+Just create a new directories with a story data inside:
 
     $ mkdir perl-story
     $ echo 'print "hello from perl";' > perl-story/story.pl

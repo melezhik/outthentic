@@ -1,3 +1,3 @@
-config main.foo
+echo $(config main.foo)
 
 

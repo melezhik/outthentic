@@ -1,6 +1,6 @@
 generator: <<CODE
 !bash
-config 'main.foo'
+echo $(config 'main.foo')
 CODE
 
 

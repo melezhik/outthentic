@@ -1,3 +1,4 @@
+.travis.yml
 bash_lib/outthentic.bash
 bin/strun
 Changes
@@ -37,6 +38,8 @@ examples/ini-file/story.check
 examples/ini-file/story.pm
 examples/modules/00/story.check
 examples/modules/00/story.pl
+examples/modules/01/story.check
+examples/modules/01/story.pl
 examples/modules/bar/story.check
 examples/modules/bar/story.pm
 examples/modules/echo-vars/story.check
@@ -51,6 +54,8 @@ examples/perl-inline/story.check
 examples/perl-inline/story.pl
 examples/perl-pass-conf-to-scenario/story.check
 examples/perl-pass-conf-to-scenario/story.pl
+examples/perl-pass-story-vars-to-scenario/hook.pl
+examples/perl-pass-story-vars-to-scenario/story.check
 examples/ruby-captures/common.rb
 examples/ruby-captures/story.check
 examples/ruby-captures/story.rb
@@ -106,6 +111,7 @@ lib/Outthentic/Story.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
+out.log
 README.md
 README.pod
 ruby_lib/outthentic.rb

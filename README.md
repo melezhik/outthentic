@@ -288,7 +288,7 @@ You may inline code from other language to add some extra logic into your check 
     note('this is debug message will be shown at console')
     CODE
 
-* generators
+### generators
 
 You may generate new **check entries** on runtime:
 
@@ -338,10 +338,7 @@ Ruby:
     CODE
 
 
-Follow [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL documentation pages
-to learn more.
-
-* asserts
+###  asserts
 
 Asserts are statements returning true of false with some extra text description.
 
@@ -372,7 +369,7 @@ Follow [code expressions](https://github.com/melezhik/outthentic-dsl#code-expres
 in Outthentic::DSL documentation pages to learn more about code expressions, generators and asserts.
 
 
-* text blocks
+### text blocks
 
 Need to validate that some lines goes successively?
 

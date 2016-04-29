@@ -1,0 +1,1 @@
+exec 'strun --root examples'

@@ -95,19 +95,33 @@ Just create a new directories with stories inside:
 
 `strun` is a command to run stories:
 
-    $ strun 
-    /tmp/.outthentic/3359/home/melezhik/projects/outthentic-dsl-examples/perl-and-ruby/perl/story.t ..
+    $ strun
+
+    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/bash-story/story.t .. 
+    ok 1 - output match 'hello from bash'
+    1..1
+    ok
+    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/perl-story/story.t .. 
     ok 1 - output match 'hello from perl'
     1..1
     ok
-    /tmp/.outthentic/3359/home/melezhik/projects/outthentic-dsl-examples/perl-and-ruby/ruby/story.t .. 
+    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/ruby-story/story.t .. 
     ok 1 - output match 'hello from ruby'
     1..1
     ok
     All tests successful.
-    Files=2, Tests=2,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.07 cusr  0.02 csys =  0.11 CPU)
+    Files=3, Tests=3,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.18 cusr  0.04 csys =  0.24 CPU)
     Result: PASS
-    
+
+
+Summary:
+
+* Stories are executed independently, means generally one story is not dependent upon another story (but see "downstream stories section").        
+
+* strun gives result in [TAP](https://testanything.org/) format, which is  is a simple text-based interface between testing modules in a test harness.
+
+* Thus outthentic suite is bunch of related scenarios ( one or many ) to **be run** and to **be verified** ( by analyzing scenarios output against rules )
+
 # Calculator project example
 
 Here is more detailed tutorial where we will build a test suite for calculator program.

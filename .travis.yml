@@ -1,0 +1,5 @@
+language: "perl"
+perl:
+  - "5.20"
+
+script: "cpanm --installdeps . && perl Makefile.PL && make test && sudo make install"

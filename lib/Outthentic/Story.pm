@@ -79,6 +79,8 @@ sub set_story {
 
     get_prop('dsl')->{languages}->{bash} = $bash_run_opts; 
 
+    _mk_perl_glue_file();
+
     _mk_ruby_glue_file();
 
     _mk_bash_glue_file();
@@ -188,6 +190,10 @@ sub story_cache_dir {
 
 }
 
+sub _perl_glue_file {
+  story_cache_dir()."/glue.pm";
+}
+
 sub _ruby_glue_file {
   story_cache_dir()."/glue.rb";
 }
@@ -266,6 +272,52 @@ sub do_perl_hook {
 }
 
 
+sub _mk_perl_glue_file {
+
+    open PERL_GLUE, ">", _perl_glue_file() or die $!;
+
+    my $test_root_dir = test_root_dir();
+    my $story_dir = get_prop('story_dir');
+    my $project_root_dir = project_root_dir();
+    my $debug_mod12 = debug_mod12();
+    my $cache_dir = story_cache_dir;
+
+    print PERL_GLUE <<"CODE";
+
+package glue;
+1;
+
+package main;
+use strict;
+  
+    sub debug_mod12 {
+      $debug_mod12
+    }
+
+    sub test_root_dir {
+      '$test_root_dir'
+    }
+
+    sub project_root_dir {
+      '$project_root_dir' 
+    }
+
+    sub  cache_dir {
+      '$cache_dir'
+    }
+
+    sub story_dir {
+      '$story_dir'
+    }
+
+1;
+
+CODE
+
+    close PERL_GLUE,;
+
+}
+
 sub _mk_ruby_glue_file {
 
     open RUBY_GLUE, ">", _ruby_glue_file() or die $!;
@@ -275,8 +327,6 @@ sub _mk_ruby_glue_file {
     my $story_dir = get_prop('story_dir');
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
-
-    my $json = JSON->new->allow_nonref;
 
     my $cache_dir = story_cache_dir;
 
@@ -323,8 +373,6 @@ sub _mk_bash_glue_file {
     my $test_root_dir = test_root_dir();
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
-
-    my $json = JSON->new;
 
     my $cache_dir = story_cache_dir;
 

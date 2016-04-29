@@ -109,7 +109,8 @@ sub run_story_file {
 
         if ( -f "$story_dir/story.pl" ){
             $story_file = "$story_dir/story.pl";
-            $story_command = "perl $story_dir/story.pl";
+            $story_command = "perl -I ".story_cache_dir()." -MOutthentic::Glue::Perl";
+            $story_command.= " $story_dir/story.pl";
 
         }elsif(-f "$story_dir/story.rb") {
             $story_file = "$story_dir/story.rb";

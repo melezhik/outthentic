@@ -49,7 +49,7 @@ Story could be written on Perl or Ruby:
     +-----------+--------------+
     | Perl      | story.pl     |
     | Ruby      | story.rb     |
-    | Ruby      | story.bash   |
+    | Bash      | story.bash   |
     +-----------+--------------+
   
 

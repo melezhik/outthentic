@@ -4,7 +4,7 @@ Outthentic
 
 # Synopsis
 
-Generic testing, reporting, monitoring framework consuming [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl).
+Multipurpose scenarios framework.
 
 # Install
 
@@ -82,9 +82,9 @@ See also [story runner](#story-runner).
 
 ## Suite
 
-Outthentic suite is a bunch of related stories.
+Outthentic suite is a bunch of related stories. You may also call suite as projects.
 
-One may have more then one story at your project.
+One may have more then one story at the project.
 
 Just create a new directories with a story data inside:
 
@@ -100,7 +100,7 @@ Just create a new directories with a story data inside:
     $ echo 'echo hello from bash' > bash-story/story.bash
     $ echo 'hello from bash' > bash-story/story.check
 
-`strun` is a command to run stories:
+Now, let's use `strun` command to run suite:
 
     $ strun
 
@@ -123,11 +123,11 @@ Just create a new directories with a story data inside:
 
 Summary:
 
-* Stories are executed independently, means generally one story is not dependent upon another story (but see "downstream stories section").        
+* Stories are executed independently, means *generally* one story **is not dependent upon** another story (but see "downstream stories section").        
 
-* strun gives result in [TAP](https://testanything.org/) format, which is  is a simple text-based interface between testing modules in a test harness.
+* Outthentic suite is bunch of related scenarios ( one or many ) to **be run** and to **be verified** ( by analyzing scenarios output against rules )
 
-* Thus outthentic suite is bunch of related scenarios ( one or many ) to **be run** and to **be verified** ( by analyzing scenarios output against rules )
+* strun - suite runner - produces result in [TAP](https://testanything.org/) format, which is  is a simple text-based interface between testing modules in a test harness.
 
 # Calculator project example
 
@@ -135,9 +135,9 @@ Here is more detailed tutorial where we will build a test suite for calculator p
 
 Let's repeat it again - there are three basic outthentic entities: 
 
-* project ( suite )
-* story files ( scenarios )
-* story checks ( rules )
+* suite
+* scenarios 
+* check files
 
 ## Project
 
@@ -148,11 +148,11 @@ Let's create a project to test a simple calculator application:
     $ mkdir calc-app
     $ cd calc-app
 
-## Story scripts
+## Scenarios
 
-Stories are just a scripts to be executed and then resulted stdout is analyzed by rules defined at check files.
+Scenarios are just a scripts to be executed so that their output to be verified by rules defined at check files.
 
-Thus every story is a small program with some stdout gets tested.
+In other words, every story is like a small program to be executed and then gets tested ( by it's output )
 
 Let's create two stories for our calc project. One story for \`addition' operation and another for \`multiplication':
 
@@ -162,7 +162,7 @@ Let's create two stories for our calc project. One story for \`addition' operati
     $ mkdir multiplication # a*b
 
 
-    # story files
+    # scenarios
 
     $ cat  addition/story.pl
     use MyCalc;
@@ -179,9 +179,9 @@ Let's create two stories for our calc project. One story for \`addition' operati
 
 ## Check files
 
-Story check file contains validation rules to test script output. Every story script is always accompanied by story check file. 
+Check file contains validation rules to test script output. Every scenario **is always accompanied by** story check file. 
 
-Story check files should be placed at the same directory as story script and be named as `story.check`.
+Check files should be placed at the same directory as scenario and be named as `story.check`.
 
 Lets add some rules for \`multiplication' and \`addition' stories:
 
@@ -194,7 +194,7 @@ Lets add some rules for \`multiplication' and \`addition' stories:
     12
  
 
-And finally lets run test suite:
+And finally lets run our suite:
 
     $ strun
 
@@ -211,11 +211,11 @@ Stories are converted into perl test files \*.t ( compilation phase ) and saved 
 ## An execution phase. 
 
 [Prove](https://metacpan.org/pod/distribution/Test-Harness/bin/prove) utility recursively executes 
-test files under temporary directory and thus gives a final suite execution status.
+test files under temporary directory and thus produces a **final suite execution status**.
 
-So after all outthentic project is just perl test project with \*.t files inside, the difference is that
-while with common test project \*.t files _are created by user_, in outthentic project \*.t files _are generated_
-by story files.
+So, after all outthentic project *is very like* a perl test project with \*.t files inside, with the difference that
+outthentic \*.t files *are generated  by story files* dynamically.
+
  
 # Story checks syntax
 

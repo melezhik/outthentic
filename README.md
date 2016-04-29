@@ -217,29 +217,32 @@ So, after all outthentic project *is very like* a perl test project with \*.t fi
 outthentic \*.t files *are generated  by story files* dynamically.
 
  
-# Story checks syntax
+# Check files syntax
 
-Outthentic consumes [Outthentic DSL](https://github.com/melezhik/outthentic-dsl), so story checks are
-just rules defined in terms of Outthentic DSL - a language to validate unstructured text data.
+Outthentic consumes [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl), so check files contain
+rules defined in terms of Outthentic DSL - a language to validate unstructured text data.
 
-A few ( not all ) usage examples listed below.
+Below some examples of check file syntax, you may learn more at Outthentic::DSL documentation.
 
 * plain strings checks
 
 Often all you need is to ensure that stdout has some strings in:
 
 
-    # stdout
+    # scenario stdout
+
     HELLO
     HELLO WORLD
     123456
 
 
-    # check list
+    # check file
+
     HELLO
     123
 
-    # validation output
+    # verification output
+
     OK - output matches 'HELLO'
     OK - output matches 'HELLO WORLD'
     OK - output matches '123'
@@ -249,12 +252,14 @@ Often all you need is to ensure that stdout has some strings in:
 You may use regular expressions as well:
 
 
-    # check list
+    # check file
+
     regexp: L+
     regexp: \d
 
 
-    # validation output
+    # verification output
+
     OK - output matches /L+/
     OK - output matches /\d/
 
@@ -262,23 +267,24 @@ See [check-expressions](https://github.com/melezhik/outthentic-dsl#check-express
 
 * generators
 
-Yes you may generate new check entries on run time:
+Yes you may generate new **check entries** on run time:
 
-    # original check list
+    # check file
+    # with 2 check entries
    
     Say
     HELLO
    
-    # check list
-    # this generator creates 3 new check expressions:
     generator: <<CODE
-    !perl
+    !bash
 
-    [ qw{say hello again} ]
+    echo say 
+    echo hello 
+    echo again
 
     CODE
 
-    # final check list:
+    # a new check list would be:
    
     Say
     HELLO
@@ -286,15 +292,15 @@ Yes you may generate new check entries on run time:
     hello
     again
 
-You may use many languages in generator expressions:
+Here examples on using other languages in generator expressions:
 
-Bash:
+Perl:
 
     generator: <<CODE
-    !bash
-    echo say
-    echo hello
-    echo again
+    !perl
+    [ 
+      qw { say hello again } 
+    ]
 
     CODE
 
@@ -308,29 +314,40 @@ Ruby:
 
     CODE
 
+
 Follow [generators](https://github.com/melezhik/outthentic-dsl#generators) in Outthentic::DSL documentation pages
-to get more.
+to learn more.
 
-* inline code
+* asserts
 
-What about inline arbitrary code? Well, it's easy!
+Asserts are statements returning true of false with some extra text description.
+
+Asserts are very powefull feature when combined with **captures** and **generators**:
 
 
-    # check list
-    regexp: number: (\d+)
+    # scenario output
 
-    validator: <<CODE
-    !perl
-        print capture()->[0] '>=' 0, ' ', 'got none zero number' 
-    CODE
+    ten       for 10
+    twenty   for 20
+    thirty    for 30
 
-    code: <<CODE
+    # check file
+    
+    regexp: \w+\s+for\s(\d+)
+
+    generator: <<CODE
     !ruby
-        puts '# I like Ruby as well'
-    CODE
+      sum=0
+      (captures()).each do |c|
+        sum+=c.first
+      end
+    puts "assert: #{sum==60} sum should be 60!"
+    CODE  
+    
 
-Follow [perl-expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions), [validators](https://github.com/melezhik/outthentic-dsl#validators) and
-[Inline code from other languages](https://github.com/melezhik/outthentic-dsl#inline-code-from-other-languages) in Outthentic::DSL documentation pages to get more.
+Follow [perl-expressions](https://github.com/melezhik/outthentic-dsl#perl-expressions), [asserts](https://github.com/melezhik/outthentic-dsl#asserts) and
+[Inline code from other languages](https://github.com/melezhik/outthentic-dsl#inline-code-from-other-languages) in Outthentic::DSL documentation pages 
+to learn more about perl expressions, inline expressions and asserts.
 
 
 * text blocks

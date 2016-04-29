@@ -81,12 +81,17 @@ See also [story runner](#story-runner).
 A bunch of related stories is called project or suite. Sure you may have more then one story at your project.
 Just create a new directories with stories inside:
 
-    $ mkdir perl
-    $ echo 'print "hello from perl";' > perl/story.pl
-    $ echo 'hello from perl' > perl/story.check
-    $ mkdir ruby
-    $ echo 'puts "hello from ruby"' > ruby/story.rb
-    $ echo 'hello from ruby' > ruby/story.check
+    $ mkdir perl-story
+    $ echo 'print "hello from perl";' > perl-story/story.pl
+    $ echo 'hello from perl' > perl-story/story.check
+
+    $ mkdir ruby-story
+    $ echo 'puts "hello from ruby"' > ruby-story/story.rb
+    $ echo 'hello from ruby' > ruby-story/story.check
+
+    $ mkdir bash-story
+    $ echo 'echo hello from bash' > bash-story/story.bash
+    $ echo 'hello from bash' > bash-story/story.check
 
 `strun` is a command to run stories:
 

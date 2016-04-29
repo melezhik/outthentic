@@ -50,7 +50,7 @@ Outthentic scenarios could be written on one of three languages:
 * Ruby
 * Bash
 
-Choose you favorite one!
+Choose you favorite language ;) !
 
 Outthentic relies on file names to determine scenario type. 
 
@@ -377,40 +377,40 @@ in Outthentic::DSL documentation pages to learn more about code expressions, gen
 ### text blocks
 
 Need to validate that some lines goes successively?
-
-        # stdout
-
+    
+    # stdout
+    
+    this string followed by
+    that string followed by
+    another one string
+    with that string
+    at the very end.
+    
+    
+    # check list
+    # this text block
+    # consists of 5 strings
+    # goes consequentially
+    # line by line:
+    
+    begin:
+        # plain strings
         this string followed by
         that string followed by
-        another one string
-        with that string
-        at the very end.
-
-
-        # check list
-        # this text block
-        # consists of 5 strings
-        # goes consequentially
-        # line by line:
-
-        begin:
-            # plain strings
-            this string followed by
-            that string followed by
-            another one
-            # regexps patterns:
-        regexp: with (this|that)
-            # and the last one in a block
-            at the very end
-        end:
-
+        another one
+        # regexps patterns:
+    regexp: with (this|that)
+        # and the last one in a block
+        at the very end
+    end:
+    
 See [comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks) in Outthentic::DSL documentation pages.
 
 # Hooks
 
-Story hooks are extension points to change [story run](#story-run) process. 
+Story hooks are extension points to change [story runner](#story-runner) behavior. 
 
-It's just a scripts  gets executed _in the beginning_ of a story. 
+It's just a scripts gets executed _before scenario script_. 
   
 You should name your hooks as `hook.*` and place them into story directory
 
@@ -419,30 +419,39 @@ You should name your hooks as `hook.*` and place them into story directory
     
     print "this is a story hook!";
 
-Hooks could be written on Perl or Ruby:
+Hooks could be written on one of three languages:
+
+* Perl 
+* Ruby
+* Bash
+
+Here is naming convention for hook files:
 
 
-    | Language  | File      |
-    ------------+------------
-    | Perl      | hook.pl   |
-    | Ruby      | hook.rb   |
+    +-----------+--------------+
+    | Language  | File         |
+    +-----------+--------------+
+    | Perl      | hook.pl      |
+    | Ruby      | hook.rb      |
+    | Bash      | hook.bash    |
+    +-----------+--------------+
 
 Reasons why you might need a hooks:
 
-* execute story initialization code
-* redefine story stdout
+* execute some *initialization code* before running a scenario script
+* redefine scenario stdout
 * call downstream stories
 
 
 # Hooks API
 
-Story hooks API provides several functions to hack into story run process:
+Story hooks API provides several functions to hack into story runner execution process:
 
 ## Redefine stdout
 
-Redefining stdout feature means you define a story output on the hook side ( thus story script is not executed ). 
+Redefining stdout feature means you define a scenario output on the hook side ( thus scenario script is never executed ). 
 
-This might be helpful when for some reasons you do not want provide story script.
+This might be helpful when for some reasons you do not want to run or you don't have by hand a proper scenario script.
 
 This is simple an example:
 
@@ -458,34 +467,39 @@ You may call `set_stdout()` more then once:
     set_stdout("HELLO WORLD");
     set_stdout("HELLO WORLD2");
 
-A final stdout will be:
+An effective scenario stdout will be:
 
     HELLO WORLD
     HELLO WORLD2
 
 Here is `set_stdout()` function signatures list for various languages:
 
+    +-----------+-----------------------+
     | Language  | signature             |
-    ------------+------------------------
+    +-----------+-----------------------+
     | Perl      | set_stdout($SCALAR)   |
     | Ruby      | set_stdout(STRING)    |
+    | Bash      | set_stdout STRING     |
+    +-----------+-----------------------+
+
+IMPORTANT: You should only use a set\_stdout inside story hook, not scenario file.
 
 
 ## Upstream and downstream stories
 
 It is possible to run one story from another with the help of downstream stories.
 
-Downstream stories are reusable stories ( modules ). 
+Downstream stories are reusable stories ( aka modules ). 
 
 Story runner never executes downstream stories _directly_.
 
-Downstream story always gets called from the _upstream_ one:
+Downstream story always gets called from the _upstream_ one. This is example:
 
     $ cat modules/knock-the-door/story.rb
 
     # this is a downstream story
     # to make story downstream
-    # simply create story 
+    # simply create story files 
     # in modules/ directory
 
     puts 'knock-knock!'
@@ -502,8 +516,8 @@ Downstream story always gets called from the _upstream_ one:
     # inside upstream story hook
 
     # with a single parameter - story path,
-    # note that you don't have to
-    # leave modules/ directory in the path
+    # notice that you have to remove
+    # `modules/' chunk from story path parameter
 
     run_story( 'knock-the-door' );
 
@@ -523,9 +537,9 @@ Downstream story always gets called from the _upstream_ one:
     Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.05 cusr  0.01 csys =  0.08 CPU)
     Result: PASS
     
-Here are the brief comments to the example above:
+Summary:
 
-* to make story as downstream simply create a story in `modules/` directory.
+* to make story a downstream simply create a story  in a `modules/` directory.
 
 * to run downstream story call `run_story(story_path)` function inside upstream story hook.
 
@@ -533,8 +547,16 @@ Here are the brief comments to the example above:
 
 * you can call the same downstream story more than once.
 
-Here is an example of multiple downstream stories calls:
+* downstream storis in trun may call other downstream stories.
 
+Here is an example of multiple downstream story calls:
+
+    $ mkdir module/up
+    $ mkdir module/down
+    $ echo 'UP!' > module/up/story.check
+    $ echo 'and DOWN!' > module/down/story.check
+    $ echo 'print qq{UP!}' > modules/up/story.pl 
+    $ echo 'print qq{DOWN!}' > modules/down/story.pl 
 
     $ cat two-jumps/hook.pl
 
@@ -543,35 +565,62 @@ Here is an example of multiple downstream stories calls:
     run_story( 'up' );
     run_story( 'down' );
 
-* story variables 
+### story variables 
 
-You may pass variables to downstream story with the second argument of `run_story()`  function:
+You may pass a variables to downstream story using second argument of `run_story()`  function. For example:
 
+    $ mkdir modules/greeting
 
-    # cat hook.pl
+    $ cat hook.pl
 
     run_story( 
       'greeting', {  name => 'Alexey' , message => 'hello' }  
     );
 
+Or using Ruby:
 
+    $ cat hook.rb
 
-Story variables are accessed by  calling `story_var()` function inside downstream story hook:
+    run_story  'greeting', {  'name' => 'Alexey' , 'message' => 'hello' }
 
-    $ cat hook.pl
+Or Bash:
 
-    story_var('name');
-    story_var('message');
+    $ cat hook.bash
+
+    run_story  greeting name Alexey message hello 
+
 
 Here is the `run_story` signature list for various languages:
 
-    +-----------+-------------------------------+
-    | Language  | signature                     |
-    +-----------+-------------------------------+
-    | Perl      | run_story($SCALAR,$HASHREF)   |
-    | Ruby      | run_story(STRING,HASH)        | 
-    +-----------+-------------------------------+
+    +-----------+---------------------------------------------+
+    | Language  | signature                                   |
+    +-----------+---------------------------------------------+
+    | Perl      | run_story($SCALAR,$HASHREF)                 |
+    | Ruby      | run_story(STRING,HASH)                      | 
+    | Bash      | run_story(STRING NAME VAL NAME2 VAL2 ...)   | 
+    +-----------+---------------------------------------------+
 
+Story variables are accessible via `story_var()` function. For example:
+
+    $ cat modules/greeting/story.rb
+
+    puts "#{story_var('name')} say #{story_var('message')}"
+
+
+Or if you use Perl:
+
+    $ cat modules/greeting/story.pl
+
+    print (story_var('name')).'say '.(story_var('message'))
+
+Or finally Bash:
+
+    $ cat modules/greeting/story.bash
+
+    echo $name say $message
+
+
+You may access story variables inside story hooks and check files as well.
 
 And finally:
 

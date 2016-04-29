@@ -34,3 +34,7 @@ function config {
    perl -MOutthentic::Glue::Bash -e config "${cache_dir}/config.json" $1
 }
 
+function story_var {
+   perl -MOutthentic::Glue::Bash -e variables "${cache_dir}/variables.json" $1
+}
+

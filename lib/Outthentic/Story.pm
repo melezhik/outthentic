@@ -535,7 +535,7 @@ sub apply_story_vars {
     or die "can't open ".(story_cache_dir())."/variables.bash write: $!";
 
     for my $name (keys %{$main::story_vars} ){
-      print STORY_VARS "$name=$main::story_vars{$name}\n";
+      print STORY_VARS "$name=".$main::story_vars->{$name}."\n";
     }
 
     close STORY_VARS;

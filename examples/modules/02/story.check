@@ -1,0 +1,4 @@
+generator: <<CODE
+!bash
+echo FOO: $FOO_THING
+CODE

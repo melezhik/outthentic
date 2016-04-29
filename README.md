@@ -6,6 +6,11 @@ Outthentic
 
 Multipurpose scenarios framework.
 
+# Build status
+
+[![Build Status](https://travis-ci.org/melezhik/outthentic.svg)](https://travis-ci.org/melezhik/outthentic)
+
+
 # Install
 
     $ cpanm Outthentic

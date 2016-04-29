@@ -1,5 +1,5 @@
 ---
-abstract: 'Generic testing, reporting, monitoring framework consuming Outthentic::DSL'
+abstract: 'Multipurpose scenarios framework'
 author:
   - 'L<Aleksei Melezhik|mailto:melezhik@gmail.com>'
 build_requires:

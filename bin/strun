@@ -116,6 +116,8 @@ sub wanted {
 
         if ( -e "$File::Find::dir/story.pm" ){
             print F "do_perl_hook('$File::Find::dir/story.pm');\n\n";
+        }elsif ( -e "$File::Find::dir/hook.pl" ){
+            print F "do_perl_hook('$File::Find::dir/hook.pl');\n\n";
         }elsif ( -e "$File::Find::dir/hook.rb" ){
             print F "do_ruby_hook('$File::Find::dir/hook.rb');\n\n";
         }elsif ( -e "$File::Find::dir/hook.bash" ){

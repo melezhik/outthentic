@@ -1,0 +1,3 @@
+generator: <<CODE
+[ "foo: ".story_var("foo") ]
+CODE

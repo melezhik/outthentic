@@ -1147,7 +1147,7 @@ C<--verbose>
 =back
 
 Enable/disable verbose mode. When verbose mode is enabled strun prints scenarios stdout. By default verbose mode
-is disabled
+is disabled.
 
 =over
 
@@ -1291,8 +1291,8 @@ Ruby:
 
     $ cat hook.rb
     
-    foo = config()['main']['foo']
-    bar = config()['main']['bar']
+    foo = config['main']['foo']
+    bar = config['main']['bar']
 
 Bash:
 

@@ -9,6 +9,7 @@ use File::Path qw(make_path remove_tree);
 use File::Spec;
 
 my $project_root_dir  = getcwd();
+my $verbose_mod = 0;
 my $debug_mod = 0;
 my $verbose;
 my $story_path;
@@ -22,6 +23,7 @@ my @runtime_params;
 
 GetOptions (
 
+        "verbose"       => \$verbose_mod,       # boolean
         "debug=i"       => \$debug_mod,         # numeric
         "match_l=i"     => \$match_l,           # numeric
         "root=s"        => \$project_root_dir,  # string
@@ -102,8 +104,8 @@ sub wanted {
         print F "set_prop( story_check_file => q{$File::Find::dir/story.check} );\n";
         print F "set_prop( story_type => q{$story_type} );\n";
     
+        print F "set_prop( verbose => $verbose_mod );\n";
         print F "set_prop( debug => $debug_mod );\n";
-        print F "set_prop( debug_bytes => 700 );\n";
         print F "set_prop( match_l => $match_l );\n";
         print F "set_prop( runtime_params => q{".(join ':::', @runtime_params)."} );\n";
 

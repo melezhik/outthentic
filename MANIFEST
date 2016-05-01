@@ -40,6 +40,8 @@ examples/modules/00/story.check
 examples/modules/00/story.pl
 examples/modules/01/story.check
 examples/modules/01/story.pl
+examples/modules/02/story.bash
+examples/modules/02/story.check
 examples/modules/bar/story.check
 examples/modules/bar/story.pm
 examples/modules/echo-vars/story.check

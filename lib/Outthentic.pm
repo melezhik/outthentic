@@ -16,6 +16,7 @@ use Test::More;
 use Data::Dumper;
 use File::Temp qw/ tempfile /;
 use Outthentic::Story;
+use Term::ANSIColor;
 
 my $config; 
 
@@ -152,14 +153,15 @@ sub run_story_file {
 
     open F, $content_file or die $!;
     my $cont = '';
-    $cont.= $_ while <F>;
+    while (my $l = <F>){
+      $cont.= $l;
+      if (get_prop('verbose')){
+          note colored(['green'],$l);
+      }
+    }
     close F;
 
     set_prop( stdout => $cont );
-
-    my $debug_bytes = get_prop('debug_bytes');
-
-    note `head -c $debug_bytes $content_file` if debug_mod2();
 
     return get_prop('stdout');
 }

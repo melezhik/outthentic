@@ -13,7 +13,7 @@ examples/bash-generators/story.check
 examples/bash-hook/hook.bash
 examples/bash-hook/story.check
 examples/bash-hook/story.rb
-examples/bash-ignore-story-err/hook.rb
+examples/bash-ignore-story-err/hook.bash
 examples/bash-ignore-story-err/story.check
 examples/bash-ignore-story-err/story.pl
 examples/bash-pass-config/story.bash

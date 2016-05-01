@@ -221,12 +221,17 @@ Outthentic
 
 =head1 Synopsis
 
-Generic testing, reporting, monitoring framework consuming L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl>.
+Multipurpose scenarios framework.
+
+
+=head1 Build status
+
+L<![Build Status](https://travis-ci.org/melezhik/outthentic.svg)|https://travis-ci.org/melezhik/outthentic>
 
 
 =head1 Install
 
-  $ cpanm Outthentic
+    $ cpanm Outthentic
 
 
 =head1 Short introduction
@@ -234,21 +239,72 @@ Generic testing, reporting, monitoring framework consuming L<Outthentic::DSL|htt
 This is a quick tutorial on outthentic usage.
 
 
-=head2 Story being tested
+=head2 Run your scenarios
 
-Story is just a perl script that yields something into stdout:
+Scenario is just a script that you B<run> and that yields something into B<stdout>.
+
+Perl scenario example:
 
     $ cat story.pl
     
     print "I am OK\n";
     print "I am outthentic\n";
 
-Sometimes we can also call story file as scenario.
+Ruby scenario example:
+
+    $ cat story.rb
+    
+    puts "I am OK"
+    puts "I am outthentic"
+
+Bash scenario example:
+
+    $ cat story.bash
+    
+    echo I am OK
+    echo I am outthentic
+
+Outthentic scenarios could be written on one of three languages:
+
+=over
+
+=item *
+
+Perl 
+
+
+=item *
+
+Ruby
+
+
+=item *
+
+Bash
+
+
+=back
+
+Choose you favorite language ;) !
+
+Outthentic relies on file names to determine scenario type. 
+
+This is the table to describe language / file name conventions:
+
+    +-----------+--------------+
+    | Language  | File         |
+    +-----------+--------------+
+    | Perl      | story.pl     |
+    | Ruby      | story.rb     |
+    | Bash      | story.bash   |
+    +-----------+--------------+
 
 
 =head2 Check file
 
-Story check is a bunch of lines stdout should match. Here we require to have `I am OK' and `I am outthentic' lines in stdout:
+Check file contains rules to B<verify> a stdout produced by scenario script. 
+
+Here we require that our scenario should produce  `I am OK' and `I am outthentic' lines in stdout:
 
     $ cat story.check
     
@@ -256,27 +312,20 @@ Story check is a bunch of lines stdout should match. Here we require to have `I 
     I am outthentic
 
 
-=head2 Story run
+=head2 Story
 
-Story run is process of verification of your story. A story verification is based on rules defined in story check file.
-
-The verification process consists of:
+Outthentic story is a scenarios + check file. When outthentic B<run> story it:
 
 =over
 
 =item *
 
-executing story file and saving stdout into file.
+executes scenario script and saves stdout into file.
 
 
 =item *
 
-validating stdout against a story check.
-
-
-=item *
-
-returning result as the list of statuses, where every status relates to a single rule.
+verifies stdout against a check file
 
 
 =back
@@ -286,31 +335,68 @@ See also L<story runner|#story-runner>.
 
 =head2 Suite
 
-A bunch of related stories is called project or suite. Sure you may have more then one story at your project.
-Just create a new directories with story files inside:
+Outthentic suite is a bunch of related stories. You may also call suite as projects.
 
-    $ mkdir hello
-    $ echo 'print "hello"' > hello/story.pl
-    $ echo hello > hello/story.check
+One may have more then one story at the project.
 
-Now run the suite with C<strun> command:
+Just create a new directories with a story data inside:
+
+    $ mkdir perl-story
+    $ echo 'print "hello from perl";' > perl-story/story.pl
+    $ echo 'hello from perl' > perl-story/story.check
+    
+    $ mkdir ruby-story
+    $ echo 'puts "hello from ruby"' > ruby-story/story.rb
+    $ echo 'hello from ruby' > ruby-story/story.check
+    
+    $ mkdir bash-story
+    $ echo 'echo hello from bash' > bash-story/story.bash
+    $ echo 'hello from bash' > bash-story/story.check
+
+Now, let's use C<strun> command to run suite:
 
     $ strun
-    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/story.pl succeeded
-    ok 2 - stdout saved to /tmp/.outthentic/29566/QKDi3p573L
-    ok 3 - output match 'hello'
-    1..3
+    
+    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/bash-story/story.t .. 
+    ok 1 - output match 'hello from bash'
+    1..1
     ok
-    /tmp/.outthentic/29566/home/vagrant/projects/outthentic/examples/hello/world/story.t ..
-    ok 1 - perl /home/vagrant/projects/outthentic/examples/hello/world/story.pl succeeded
-    ok 2 - stdout saved to /tmp/.outthentic/29566/xC3wrsS195
-    ok 3 - output match 'I am OK'
-    ok 4 - output match 'I am outthentic'
-    1..4
+    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/perl-story/story.t .. 
+    ok 1 - output match 'hello from perl'
+    1..1
+    ok
+    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/ruby-story/story.t .. 
+    ok 1 - output match 'hello from ruby'
+    1..1
     ok
     All tests successful.
-    Files=2, Tests=7,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.01 csys =  0.13 CPU)
+    Files=3, Tests=3,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.18 cusr  0.04 csys =  0.24 CPU)
     Result: PASS
+
+Summary:
+
+=over
+
+=item *
+
+Stories are executed independently, means I<generally> one story B<is not dependent upon> another story (but see "downstream stories section").      
+
+
+
+
+=item *
+
+Outthentic suite is bunch of related scenarios ( one or many ) to B<be run> and to B<be verified> ( by analyzing scenarios output against rules )
+
+
+
+=item *
+
+strun - suite runner - produces result in L<TAP|https://testanything.org/> format, which is  is a simple text-based interface between testing modules in a test harness.
+
+
+
+=back
 
 
 =head1 Calculator project example
@@ -323,17 +409,17 @@ Let's repeat it again - there are three basic outthentic entities:
 
 =item *
 
-project ( suite )
+suite
 
 
 =item *
 
-story files ( scenarios )
+scenarios 
 
 
 =item *
 
-story checks ( rules )
+check files
 
 
 =back
@@ -349,11 +435,11 @@ Let's create a project to test a simple calculator application:
     $ cd calc-app
 
 
-=head2 Stories
+=head2 Scenarios
 
-Stories are just perl scripts placed at project sub-directories and named C<story.pl>. 
+Scenarios are just a scripts to be executed so that their output to be verified by rules defined at check files.
 
-Every story is a small program with stdout gets tested.
+In other words, every story is like a small program to be executed and then gets tested ( by it's output )
 
 Let's create two stories for our calc project. One story for `addition' operation and another for `multiplication':
 
@@ -363,7 +449,7 @@ Let's create two stories for our calc project. One story for `addition' operatio
     $ mkdir multiplication # a*b
     
     
-    # story files
+    # scenarios
     
     $ cat  addition/story.pl
     use MyCalc;
@@ -378,12 +464,13 @@ Let's create two stories for our calc project. One story for `addition' operatio
     print $calc->mult(3,4), "\n";
 
 
-=head2 Story check files
+=head2 Check files
 
-Story checks file contain validation rules for story.pl files. Every story.pl is always accompanied by 
-story.check file. Story check files should be placed at the same directory as story.pl file.
+Check file contains validation rules to test script output. Every scenario B<is always accompanied by> story check file. 
 
-Lets add some rules for multiplication and addition stories:
+Check files should be placed at the same directory as scenario and be named as C<story.check>.
+
+Lets add some rules for `multiplication' and `addition' stories:
 
     $ cat addition/story.check
     4
@@ -393,17 +480,9 @@ Lets add some rules for multiplication and addition stories:
     6
     12
 
-And finally lets run test suite:
+And finally lets run our suite:
 
     $ strun
-
-
-=head1 Story term ambiguity
-
-Sometimes when we speak about I<stories> we mean an elementary scenario executed by story runner and
-represented by a couple of files - story.pl,story.check. In other cases we mean just a story.pl
-file or even story.check given separately. The one should always take I<the context> into account when talking about stories
-to avoid ambiguity.
 
 
 =head1 Story runner
@@ -421,89 +500,106 @@ Stories are converted into perl test files *.t ( compilation phase ) and saved i
 =head2 An execution phase. 
 
 L<Prove|https://metacpan.org/pod/distribution/Test-Harness/bin/prove> utility recursively executes 
-test files under temporary directory and thus gives a final suite execution status.
+test files under temporary directory and thus produces a B<final suite execution status>.
 
-So after all outthentic project is just perl test project with *.t files inside, the difference is that
-while with common test project *.t files I<are created by user>, in outthentic project *.t files I<are generated>
-by story files.
-
-
-=head1 Story checks syntax
-
-Outthentic consumes L<Outthentic DSL|https://github.com/melezhik/outthentic-dsl>, so story checks are
-just rules defined in terms of Outthentic DSL - a language to validate unstructured text data.
-
-A few ( not all ) usage examples listed below.
-
-=over
-
-=item *
-
-plain strings checks
+So, after all outthentic project I<is very like> a perl test project with *.t files inside, with the difference that
+outthentic *.t files I<are generated  by story files> dynamically.
 
 
-=back
+=head1 Check files syntax
+
+Outthentic consumes L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl>, so check files contain
+rules defined in terms of Outthentic DSL - a language to validate unstructured text data.
+
+Below some examples of check file syntax, you may learn more at Outthentic::DSL documentation.
+
+
+=head2 plain strings checks
 
 Often all you need is to ensure that stdout has some strings in:
 
-    # stdout
+    # scenario stdout
+    
     HELLO
     HELLO WORLD
     123456
     
     
-    # check list
+    # check file
+    
     HELLO
     123
     
-    # validation output
+    # verification output
+    
     OK - output matches 'HELLO'
     OK - output matches 'HELLO WORLD'
     OK - output matches '123'
 
-=over
 
-=item *
-
-regular expressions
-
-
-=back
+=head2 regular expressions
 
 You may use regular expressions as well:
 
-    # check list
+    # check file
+    
     regexp: L+
     regexp: \d
     
     
-    # validation output
+    # verification output
+    
     OK - output matches /L+/
     OK - output matches /\d/
 
 See L<check-expressions|https://github.com/melezhik/outthentic-dsl#check-expressions> in Outthentic::DSL documentation pages.
 
-=over
 
-=item *
+=head2 inline code, generators and asserts
 
-generators
+You may inline code from other language to add some extra logic into your check file:
 
 
-=back
+=head3 Inline code
 
-Yes you may generate new check entries on run time:
+    # check file
+    
+    code: <<CODE
+    !bash
+    echo '# this is debug message will be shown at console'
+    CODE
+    
+    code: <<CODE
+    !ruby
+    puts '# this is debug message will be shown at console'
+    CODE
+    
+    code: <<CODE
+    # by default Perl language is used
+    note('this is debug message will be shown at console')
+    CODE
 
-    # original check list
+
+=head3 generators
+
+You may generate new B<check entries> on runtime:
+
+    # check file
+    # with 2 check entries
        
     Say
     HELLO
        
-    # this generator creates 3 new check expressions:
-       
-    generator: [ qw{ say hello again } ]
-       
-    # final check list:
+    generator: <<CODE
+    !bash
+    
+    echo say 
+    echo hello 
+    echo again
+    
+    CODE
+    
+    # a new check list would be:
        
     Say
     HELLO
@@ -511,80 +607,133 @@ Yes you may generate new check entries on run time:
     hello
     again
 
-See L<generators|https://github.com/melezhik/outthentic-dsl#generators> in Outthentic::DSL documentation pages.
+Here examples on using other languages in generator expressions:
 
-=over
+Perl:
 
-=item *
+    generator: <<CODE
+    !perl
+    [ 
+      qw { say hello again } 
+    ]
+    
+    CODE
 
-inline perl code
+Ruby:
 
-
-=back
-
-What about inline arbitrary perl code? Well, it's easy!
-
-    # check list
-    regexp: number: (\d+)
-    validator: [ ( capture()->[0] '>=' 0 ), 'got none zero number') ];
-
-See L<perl expressions|https://github.com/melezhik/outthentic-dsl#perl-expressions> in Outthentic::DSL documentation pages.
-
-=over
-
-=item *
-
-text blocks
+    generator: <<CODE
+    !ruby
+    puts 'say'
+    puts 'hello'
+    puts 'again'
+    
+    CODE
 
 
-=back
+=head3 asserts
+
+Asserts are statements returning true of false with some extra text description.
+
+Asserts are very powerful feature when combined with B<captures> and B<generators>:
+
+    # scenario output
+    
+    ten       for 10
+    twenty   for 20
+    thirty    for 30
+    
+    # check file
+    
+    regexp: \w+\s+for\s(\d+)
+    
+    generator: <<CODE
+    !ruby
+      sum=0
+      (captures()).each do |c|
+        sum+=c.first
+      end
+    puts "assert: #{sum==60} sum should be 60!"
+    CODE  
+
+Follow L<code expressions|https://github.com/melezhik/outthentic-dsl#code-expressions>, L<generators|https://github.com/melezhik/outthentic-dsl#generators> and L<asserts|https://github.com/melezhik/outthentic-dsl#asserts>
+in Outthentic::DSL documentation pages to learn more about code expressions, generators and asserts.
+
+
+=head3 text blocks
 
 Need to validate that some lines goes successively?
 
-        # stdout
+    # stdout
     
+    this string followed by
+    that string followed by
+    another one string
+    with that string
+    at the very end.
+    
+    
+    # check list
+    # this text block
+    # consists of 5 strings
+    # goes consequentially
+    # line by line:
+    
+    begin:
+        # plain strings
         this string followed by
         that string followed by
-        another one string
-        with that string
-        at the very end.
-    
-    
-        # check list
-        # this text block
-        # consists of 5 strings
-        # goes consequentially
-        # line by line:
-    
-        begin:
-            # plain strings
-            this string followed by
-            that string followed by
-            another one
-            # regexps patterns:
-        regexp: with (this|that)
-            # and the last one in a block
-            at the very end
-        end:
+        another one
+        # regexps patterns:
+    regexp: with (this|that)
+        # and the last one in a block
+        at the very end
+    end:
 
 See L<comments-blank-lines-and-text-blocks|https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks> in Outthentic::DSL documentation pages.
 
 
 =head1 Hooks
 
-Story hooks are extension points to change L<story run|#story-run> process. 
+Story hooks are extension points to change L<story runner|#story-runner> behavior. 
 
-It's just files with perl code gets executed in the beginning of a story. 
+It's just a scripts gets executed I<before scenario script>. 
 
-You should name your hooks as C<story.pm> and place them into story directory:
+You should name your hooks as C<hook.*> and place them into story directory
 
-    $ cat addition/story.pm
-    diag "hello, I am addition story hook";
-    sub is_number { [ 'regexp: ^\\d+$' ] }
-     
+    $ cat perl/hook.pl
     
-    $ cat addition/story.check
-    generator: is_number
+    print "this is a story hook!";
+
+Hooks could be written on one of three languages:
+
+=over
+
+=item *
+
+Perl 
+
+
+=item *
+
+Ruby
+
+
+=item *
+
+Bash
+
+
+=back
+
+Here is naming convention for hook files:
+
+    +-----------+--------------+
+    | Language  | File         |
+    +-----------+--------------+
+    | Perl      | hook.pl      |
+    | Ruby      | hook.rb      |
+    | Bash      | hook.bash    |
+    +-----------+--------------+
 
 Reasons why you might need a hooks:
 
@@ -592,12 +741,12 @@ Reasons why you might need a hooks:
 
 =item *
 
-redefine story stdout
+execute some I<initialization code> before running a scenario script
 
 
 =item *
 
-define generators
+redefine scenario stdout
 
 
 =item *
@@ -605,31 +754,24 @@ define generators
 call downstream stories
 
 
-=item *
-
-other custom code
-
-
 =back
 
 
 =head1 Hooks API
 
-Story hooks API provides several functions to hack into story run process:
+Story hooks API provides several functions to hack into story runner execution process:
 
 
 =head2 Redefine stdout
 
-I<set_stdout(string)>
+Redefining stdout feature means you define a scenario output on the hook side ( thus scenario script is never executed ). 
 
-Using set_stdout means that you never execute a story.pl to get a stdout, but instead you set stdout on your own side. 
+This might be helpful when for some reasons you do not want to run or you don't have by hand a proper scenario script.
 
-This might be helpful when for some reasons you can't produce a stdout via story.pl file:
+This is simple an example:
 
-This is simple an example :
-
-    $ cat story.pm
-    set_stdout("THIS IS I FAKE RESPONSE\n HELLO WORLD");
+    $ cat hook.pl
+    set_stdout("THIS IS I FAKE RESPONSE \n HELLO WORLD");
     
     $ cat story.check
     THIS IS FAKE RESPONSE
@@ -640,64 +782,89 @@ You may call C<set_stdout()> more then once:
     set_stdout("HELLO WORLD");
     set_stdout("HELLO WORLD2");
 
-A final stdout will be:
+An effective scenario stdout will be:
 
     HELLO WORLD
     HELLO WORLD2
+
+Here is C<set_stdout()> function signatures list for various languages:
+
+    +-----------+-----------------------+
+    | Language  | signature             |
+    +-----------+-----------------------+
+    | Perl      | set_stdout(SCALAR)    |
+    | Ruby      | set_stdout(STRING)    |
+    | Bash      | set_stdout(STRING)    |
+    +-----------+-----------------------+
+
+IMPORTANT: You should only use a set_stdout inside story hook, not scenario file.
 
 
 =head2 Upstream and downstream stories
 
 It is possible to run one story from another with the help of downstream stories.
 
-Downstream stories are reusable stories or modules. 
+Downstream stories are reusable stories ( aka modules ). 
 
-Story runner never executes downstream stories I<directly>, instead of downstream story always gets called from the I<upstream> one:
+Story runner never executes downstream stories I<directly>.
 
-    $ cat modules/create_calc_object/story.pm
+Downstream story always gets called from the I<upstream> one. This is example:
+
+    $ cat modules/knock-the-door/story.rb
+    
     # this is a downstream story
     # to make story downstream
-    # simply create story 
+    # simply create story files 
     # in modules/ directory
-    use MyCalc;
-    our $calc = MyCalc->new();
-    set_stdout(ref($calc));
+    
+    puts 'knock-knock!'
      
-    $ cat modules/create_calc_object/story.check
-    MyCalc
+    $ cat modules/knock-the-door/story.check
+    knock-knock!
     
      
-    $ cat addition/story.pm
+    $ cat open-the-door/hook.rb
+    
     # this is a upstream story
     # to run downstream story
-    
     # call run_story function
     # inside upstream story hook
+    
     # with a single parameter - story path,
-    # note that you don't have to
-    # leave modules/ directory in the path
+    # notice that you have to remove
+    # `modules/' chunk from story path parameter
     
-    run_story( 'create_calc_object' );
+    run_story( 'knock-the-door' );
     
-    # here $calc object is created by 
-    # create_calc_object story
-    # so we can use it!
+    $ cat open-the-door/story.rb
+    puts 'opening ...' 
     
-    our $calc->addition(2,2);
+    $ cat open-the-door/story.check
+    opening
+     
+    $ strun 
+    /tmp/.outthentic/3815/home/melezhik/projects/outthentic-dsl-examples/downstream/open-the-door/story.t .. 
+    ok 1 - output match 'knock-knock!'
+    ok 2 - output match 'opening'
+    1..2
+    ok
+    All tests successful.
+    Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.05 cusr  0.01 csys =  0.08 CPU)
+    Result: PASS
 
-Here are the brief comments to the example above:
+Summary:
 
 =over
 
 =item *
 
-to make story as downstream simply create story at modules/ directory
+to make story a downstream simply create a story  in a C<modules/> directory.
 
 
 
 =item *
 
-call C<run_story(story_path)> function inside upstream story hook to run downstream story.
+to run downstream story call C<run_story(story_path)> function inside upstream story hook.
 
 
 
@@ -713,67 +880,124 @@ you can call the same downstream story more than once.
 
 
 
-=back
-
-Here is an example code snippet:
-
-    $ cat story.pm
-    run_story( 'some_story' )
-    run_story( 'yet_another_story' )
-    run_story( 'some_story' )
-
-=over
-
 =item *
 
-stories variables 
-
-
-=back
-
-You may pass variables to downstream story with the second argument of C<run_story()>  function:
-
-    run_story( 'create_calc_object', { use_floats => 1, use_complex_numbers => 1, foo => 'bar'   }  )
-
-Story variables get accessed by  C<story_var()> function:
-
-    $ cat create_calc_object/story.pm
-    story_var('use_float');
-    story_var('use_complex_numbers');
-    story_var('foo');
-
-=over
-
-=item *
-
-downstream stories may invoke other downstream stories
-
-
-
-=item *
-
-you can't use story variables in a none downstream story
+downstream stories in turn may call other downstream stories.
 
 
 
 =back
 
-One word about I<sharing state> between upstream/downstream stories. 
+Here is an example of multiple downstream story calls:
 
-As downstream stories get executed in the same process as upstream one there is no magic about sharing data between upstream and downstream stories.
-
-The straightforward way to share state is to use global variables:
-
-    # upstream story hook:
-    our $state = [ 'this is upstream story' ]
+    $ mkdir module/up
+    $ mkdir module/down
+    $ echo 'UP!' > module/up/story.check
+    $ echo 'and DOWN!' > module/down/story.check
+    $ echo 'print qq{UP!}' > modules/up/story.pl 
+    $ echo 'print qq{DOWN!}' > modules/down/story.pl 
     
-    # downstream story hook:
-    push our @$state, 'I was here'
+    $ cat two-jumps/hook.pl
+    
+    run_story( 'up' );
+    run_story( 'down' );
+    run_story( 'up' );
+    run_story( 'down' );
 
 
-=head2 Story variables accessors
+=head3 story variables 
 
-There are some useful variables exposed by hooks API:
+You may pass a variables to downstream story using second argument of C<run_story()>  function. For example:
+
+    $ mkdir modules/greeting
+    
+    $ cat hook.pl
+    
+    run_story( 
+      'greeting', {  name => 'Alexey' , message => 'hello' }  
+    );
+
+Or using Ruby:
+
+    $ cat hook.rb
+    
+    run_story  'greeting', {  'name' => 'Alexey' , 'message' => 'hello' }
+
+Or Bash:
+
+    $ cat hook.bash
+    
+    run_story  greeting name Alexey message hello 
+
+Here is the C<run_story> signature list for various languages:
+
+    +-----------+----------------------------------------------+
+    | Language  | signature                                    |
+    +-----------+----------------------------------------------+
+    | Perl      | run_story(SCALAR,HASHREF)                    |
+    | Ruby      | run_story(STRING,HASH)                       | 
+    | Bash      | run_story(STORY_NAME NAME VAL NAME2 VAL2 ... | 
+    +-----------+----------------------------------------------+
+
+Story variables are accessible via C<story_var()> function. For example:
+
+    $ cat modules/greeting/story.rb
+    
+    puts "#{story_var('name')} say #{story_var('message')}"
+
+Or if you use Perl:
+
+    $ cat modules/greeting/story.pl
+    
+    print (story_var('name')).'say '.(story_var('message'))
+
+Or finally Bash (1-st way):
+
+    $ cat modules/greeting/story.bash
+    
+    echo $name say $message
+
+Bash (2-nd way):
+
+    $ cat modules/greeting/story.bash
+    
+    echo $(story_var name) say $(story_var message)
+
+You may access story variables inside story hooks and check files as well.
+
+And finally:
+
+=over
+
+=item *
+
+downstream stories may invoke other downstream stories.
+
+
+
+=item *
+
+you can't only use story variables inside downstream stories.
+
+
+
+=back
+
+Here is the how you access story variable in all three languages
+
+    +------------------+---------------------------------------------+
+    | Language         | signature                                   |
+    +------------------+---------------------------------------------+
+    | Perl             | story_var(SCALAR)                           |
+    | Ruby             | story_var(STRING)                           | 
+    | Bash (1-st way)  | $foo $bar ...                               |
+    | Bash (2-nd way)  | $(story_var foo.bar)                        |
+    +------------------+---------------------------------------------+
+
+
+=head2 Story properties
+
+Some story properties have a proper accessors functions. Here is the list:
 
 =over
 
@@ -804,29 +1028,77 @@ C<host()> - Returns value of `--host' parameter.
 =back
 
 
-=head2 Ignore unsuccessful codes when run stories
+=head2 Ignore unsuccessful story code
 
-Every story is a perl script gets run by perl C<system()> function returning an exit code. 
+Every story is a script gets executed and thus returning an exit code. If exit code is bad (!=0)
+this is treated as story verification failure. 
 
-None zero exit codes result in test failures, this default behavior, to disable this say in hook file:
+Use C<ignore_story_err()> function to ignore unsuccessful story code:
 
-    $ cat story.pm
-    ignore_story_err(1);
+    $ cat hook.rb
+    
+    ignore_story_err 1
 
 
-=head2 PERL5LIB
+=head2 Story libraries
+
+Story libraries are files to keep your libraries code to I<automatically required> into story hooks and check files context:
+
+Here are some examples:
+
+Perl:
+
+    $ cat common.pm
+    sub abc_generator {
+      print $_, "\n" for a..z;
+    } 
+    
+    $ cat story.check
+    
+    generator: <<CODE;
+    !perl
+      abc_generator()
+    CODE
+
+Ruby:
+
+    $ cat common.rb
+    def super_utility arg1, arg2
+      # I am cool! But I do nothing!
+    end
+    
+    $ cat hook.pl
+    
+    super_utility 'foo', 'bar'
+
+Here is the list for library file names for various languages:
+
+    +-----------+-----------------+
+    | Language  | file            |
+    +-----------+-----------------+
+    | Perl      | common.pm       |
+    | Ruby      | common.rb       |
+    | Bash      | common.bash     |
+    +-----------+-----------------+
+
+
+=head1 Language libraries
+
+
+=head2 Perl
+
+I<PERL5LIB>
 
 $project_root_directory/lib path gets added to $PERL5LIB variable. 
 
-This make it easy to place custom modules under project root directory:
+This make it easy to place custom Perl modules under project root directory:
 
     $ cat my-app/lib/Foo/Bar/Baz.pm
     package Foo::Bar::Baz;
-    ...
+    1;
     
-    $ cat  hook.pm
+    $ cat common.pm
     use Foo::Bar::Baz;
-    ...
 
 
 =head1 Story runner client
@@ -869,6 +1141,18 @@ Enable/disable debug mode:
 
 =item *
 
+C<--verbose> 
+
+
+=back
+
+Enable/disable verbose mode. When verbose mode is enabled strun prints scenarios stdout. By default verbose mode
+is disabled
+
+=over
+
+=item *
+
 C<--match_l> 
 
 
@@ -885,13 +1169,13 @@ C<--story>
 
 =back
 
-Run only single story. This should be file path without extensions ( .pl, .check ):
+Run only single story. This should be file path without extensions ( .pl, .rb, .check ):
 
     foo/story.pl
-    foo/bar/story.pl
+    foo/bar/story.rb
     bar/story.pl
     
-    --story 'foo' # runs foo/ stories
+    --story foo # runs foo/ stories
     --story foo/story # runs foo/story.pl
     --story foo/bar/ # runs foo/bar/ stories
 
@@ -905,17 +1189,6 @@ C<--prove>
 =back
 
 Prove parameters. See L<prove settings|#prove-settings> section for details.
-
-=over
-
-=item *
-
-C<--host>
-
-
-=back
-
-This optional parameter sets base url or hostname of a service or application being tested.
 
 =over
 
@@ -944,6 +1217,17 @@ Yaml configuration file path.
 
 See L<suite configuration|#suite-configuration> section for details.
 
+=over
+
+=item *
+
+C<--host>
+
+
+=back
+
+This optional parameter sets base url or hostname of a service or application being tested.
+
 
 =head1 Suite configuration
 
@@ -955,7 +1239,7 @@ There are two type of configuration files are supported:
 
 =item *
 
-.Ini style format
+Config::General format
 
 
 =item *
@@ -971,12 +1255,14 @@ YAML format
     
     $ cat /etc/suites/foo.ini
     
-    [main]
+    <main>
     
-    foo = 1
-    bar = 2
+      foo 1
+      bar 2
+    
+    </main>
 
-There is no special magic behind ini files, except this should be L<Config Tiny|https://metacpan.org/pod/Config::Tiny> compliant configuration file.
+There is no special magic behind ini files, except this should be L<Config::General|https://metacpan.org/pod/Config::General> compliant configuration file.
 
 Or you can choose YAML format for suite configuration by using C<--yaml> parameter:
 
@@ -984,7 +1270,7 @@ Or you can choose YAML format for suite configuration by using C<--yaml> paramet
     
     $ cat /etc/suites/foo.yaml
     
-    main:
+    main :
       foo : 1
       bar : 2
 
@@ -994,10 +1280,26 @@ files named suite.ini and I<then> ( if suite.ini is not found ) for suite.yaml a
 If configuration file is passed and read a related configuration data is accessible via config() function, 
 for example in story hook file:
 
-    $ cat story.pm
+    $ cat hook.pl
     
     my $foo = config()->{main}->{foo};
     my $bar = config()->{main}->{bar};
+
+Examples for other languages:
+
+Ruby:
+
+    $ cat hook.rb
+    
+    foo = config()['main']['foo']
+    bar = config()['main']['bar']
+
+Bash:
+
+    $ cat hook.bash
+    
+    foo=$(config main.foo )
+    bar=$(config main.bar )
 
 
 =head1 Runtime configuration
@@ -1007,9 +1309,9 @@ WARNING: this feature is quite experimental, needs to be tested and is could be 
 Runtime configuration parameters is way to override suite configuration data. Consider this example:
 
     $ cat suite.ini
-    [foo]
-    bar = 10
-      
+    <foo>
+      bar 10
+    </foo>
       
     $ strun --param foo.bar=20
 
@@ -1019,11 +1321,13 @@ It is possible to override any data in configuration files, for example arrays v
 
     $ cat suite.ini
     
-    [foo]
-    bar = 1
-    bar = 2
-    bar = 3
+    <foo>
     
+      bar 1
+      bar 2
+      bar 3
+    
+    </foo>    
     
     $ suite --param foo.bar=11 --param foo.bar=22 --param foo.bar=33
 
@@ -1057,13 +1361,6 @@ you may pass prove related parameters using C<--prove-opts>. Here are some examp
 =item *
 
 C<match_l> - In a suite runner output truncate matching strings to {match_l} bytes. See also C<--match_l> in L<options|#options>.
-
-
-
-=item *
-
-C<outth_show_story> - If set, then content of story.pl file gets dumped in TAP output.
-
 
 
 =back

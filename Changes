@@ -1,7 +1,13 @@
-0.1.0 
+0.1.0 2016-05-01
 
-* starting support for ruby 
-* stories stdouts are kept in files ( not in perl hash )
+A very important and huge release as the base for all other 0.1.* series releases.
+An outthentic becomes a multipurposes scenarios framework.
+
+* new languages support - Ruby and Bash! WoW! 
+* verbose option added to strun to see scenarios output
+* debug_bytes - deprecated
+* outth_show_story - deprecated
+* A LOT of  changes, improvements in documentation
 
 0.0.24 2016-04-21
 

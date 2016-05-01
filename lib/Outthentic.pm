@@ -126,13 +126,6 @@ sub run_story_file {
             $story_command.= " && source $story_dir/story.bash'";
         }
 
-        if ($ENV{outth_show_story}){
-            open STR, $story_file or die $!;
-            my $sdata = join "", <STR>;
-            close CNT;
-            note("story file:\n$sdata");
-        }
-
         my $st = execute_cmd("$story_command 1>$content_file 2>&1 && test -f $content_file");
 
         if ($st) {
@@ -156,6 +149,7 @@ sub run_story_file {
     while (my $l = <F>){
       $cont.= $l;
       if (get_prop('verbose')){
+          chomp $l;
           note colored(['green'],$l);
       }
     }

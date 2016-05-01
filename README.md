@@ -477,9 +477,9 @@ Here is `set_stdout()` function signatures list for various languages:
     +-----------+-----------------------+
     | Language  | signature             |
     +-----------+-----------------------+
-    | Perl      | set_stdout($SCALAR)   |
+    | Perl      | set_stdout(SCALAR)    |
     | Ruby      | set_stdout(STRING)    |
-    | Bash      | set_stdout STRING     |
+    | Bash      | set_stdout(STRING)    |
     +-----------+-----------------------+
 
 IMPORTANT: You should only use a set\_stdout inside story hook, not scenario file.
@@ -547,7 +547,7 @@ Summary:
 
 * you can call the same downstream story more than once.
 
-* downstream storis in trun may call other downstream stories.
+* downstream stories in turn may call other downstream stories.
 
 Here is an example of multiple downstream story calls:
 
@@ -592,13 +592,13 @@ Or Bash:
 
 Here is the `run_story` signature list for various languages:
 
-    +-----------+---------------------------------------------+
-    | Language  | signature                                   |
-    +-----------+---------------------------------------------+
-    | Perl      | run_story($SCALAR,$HASHREF)                 |
-    | Ruby      | run_story(STRING,HASH)                      | 
-    | Bash      | run_story(STRING NAME VAL NAME2 VAL2 ...)   | 
-    +-----------+---------------------------------------------+
+    +-----------+----------------------------------------------+
+    | Language  | signature                                    |
+    +-----------+----------------------------------------------+
+    | Perl      | run_story(SCALAR,HASHREF)                    |
+    | Ruby      | run_story(STRING,HASH)                       | 
+    | Bash      | run_story(STORY_NAME NAME VAL NAME2 VAL2 ... | 
+    +-----------+----------------------------------------------+
 
 Story variables are accessible via `story_var()` function. For example:
 
@@ -613,11 +613,17 @@ Or if you use Perl:
 
     print (story_var('name')).'say '.(story_var('message'))
 
-Or finally Bash:
+Or finally Bash (1-st way):
 
     $ cat modules/greeting/story.bash
 
     echo $name say $message
+
+Bash (2-nd way):
+
+    $ cat modules/greeting/story.bash
+
+    echo $(story_var name) say $(story_var message)
 
 
 You may access story variables inside story hooks and check files as well.
@@ -627,6 +633,17 @@ And finally:
 * downstream stories may invoke other downstream stories.
 
 * you can't only use story variables inside downstream stories.
+
+Here is the how you access story variable in all three languages
+
+    +------------------+---------------------------------------------+
+    | Language         | signature                                   |
+    +------------------+---------------------------------------------+
+    | Perl             | story_var(SCALAR)                           |
+    | Ruby             | story_var(STRING)                           | 
+    | Bash (1-st way)  | $foo $bar ...                               |
+    | Bash (2-nd way)  | $(story_var foo.bar)                        |
+    +------------------+---------------------------------------------+
 
 ## Story properties
 
@@ -686,10 +703,13 @@ Ruby:
 
 Here is the list for library file names for various languages:
 
-    | Language  | file        |
-    ------------+--------------
-    | Perl      | common.pm   |
-    | Ruby      | common.rb   |
+    +-----------+-----------------+
+    | Language  | file            |
+    +-----------+-----------------+
+    | Perl      | common.pm       |
+    | Ruby      | common.rb       |
+    | Bash      | common.bash     |
+    +-----------+-----------------+
     
 # Language libraries
 
@@ -728,6 +748,12 @@ Enable/disable debug mode:
 
     * Possible values: 0,1,2,3
 
+* `--verbose` 
+
+Enable/disable verbose mode. When verbose mode is enabled strun prints scenarios stdout. By default verbose mode
+is disabled
+ 
+
 * `--match_l` 
 
 Truncate matching strings. In a TAP output truncate matching strings to {match_l} bytes;  default value is 200.
@@ -749,9 +775,6 @@ Run only single story. This should be file path without extensions ( .pl, .rb, .
 
 Prove parameters. See [prove settings](#prove-settings) section for details.
 
-* `--host`
-
-This optional parameter sets base url or hostname of a service or application being tested.
 
 * `--ini`  
 
@@ -765,6 +788,9 @@ Yaml configuration file path.
 
 See [suite configuration](#suite-configuration) section for details.
 
+* `--host`
+
+This optional parameter sets base url or hostname of a service or application being tested.
 
 # Suite configuration
 
@@ -811,6 +837,24 @@ for example in story hook file:
 
     my $foo = config()->{main}->{foo};
     my $bar = config()->{main}->{bar};
+
+Examples for other languages:
+
+
+Ruby:
+
+    $ cat hook.rb
+
+    foo = config()['main']['foo']
+    bar = config()['main']['bar']
+
+Bash:
+
+    $ cat hook.bash
+
+    foo=$(config main.foo )
+    bar=$(config main.bar )
+
 
 # Runtime configuration
 
@@ -868,8 +912,6 @@ you may pass prove related parameters using `--prove-opts`. Here are some exampl
 # Environment variables
 
 * `match_l` - In a suite runner output truncate matching strings to {match_l} bytes. See also `--match_l` in [options](#options).
-
-* `outth_show_story` - If set, then content of story.pl file gets dumped in TAP output.
 
 # Examples
 

@@ -13,6 +13,9 @@ examples/bash-generators/story.check
 examples/bash-hook/hook.bash
 examples/bash-hook/story.check
 examples/bash-hook/story.rb
+examples/bash-ignore-story-err/hook.rb
+examples/bash-ignore-story-err/story.check
+examples/bash-ignore-story-err/story.pl
 examples/bash-pass-config/story.bash
 examples/bash-pass-config/story.check
 examples/between-keep-order/story.check
@@ -69,9 +72,9 @@ examples/ruby-generators/story.rb
 examples/ruby-hooks/common.rb
 examples/ruby-hooks/hook.rb
 examples/ruby-hooks/story.check
-examples/ruby-ignore-stderr/hook.rb
-examples/ruby-ignore-stderr/story.check
-examples/ruby-ignore-stderr/story.pl
+examples/ruby-ignore-story-err/hook.rb
+examples/ruby-ignore-story-err/story.check
+examples/ruby-ignore-story-err/story.pl
 examples/ruby-pass-config-to-hook/hook.rb
 examples/ruby-pass-config-to-hook/story.check
 examples/ruby-pass-config-to-scenario/story.check

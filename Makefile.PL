@@ -14,7 +14,8 @@ requires    'Config::General';
 requires    'YAML';
 requires    'JSON';
 requires    'File::ShareDir';
-requires    'Outthentic::DSL', "0.1.1";
+requires    'Outthentic::DSL', "0.1.3";
+requires    'Term::ANSIColor' => '4.02';
 
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';

@@ -10,6 +10,10 @@ function set_stdout {
   echo $* 1>>"${stdout_file}"
 }
 
+function ignore_story_err {
+  echo ignore_story_err: $1
+}
+
 function run_story {
 
   story_to_run=$1

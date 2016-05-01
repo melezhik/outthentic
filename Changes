@@ -4,6 +4,7 @@ A very important and huge release as the base for all other 0.1.* series release
 An outthentic becomes a multipurposes scenarios framework.
 
 * new languages support - Ruby and Bash! WoW! 
+* BREAKING CHANGES - ini configuration files format - switched to Config::General from Config::Tiny 
 * verbose option added to strun to see scenarios output
 * debug_bytes - deprecated
 * outth_show_story - deprecated

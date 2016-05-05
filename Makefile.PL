@@ -14,7 +14,7 @@ requires    'Config::General';
 requires    'YAML';
 requires    'JSON';
 requires    'File::ShareDir';
-requires    'Outthentic::DSL', "0.1.3";
+requires    'Outthentic::DSL' => "0.1.4";
 requires    'Term::ANSIColor' => '4.02';
 
 license     'perl';

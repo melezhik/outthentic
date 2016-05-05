@@ -67,22 +67,22 @@ sub set_story {
 
     my $dist_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $ruby_run_opts;
+    my $ruby_run_cmd;
 
     if (-f project_root_dir()."/Gemfile" ){
-      $ruby_run_opts  = "cd ".project_root_dir()." && bundle exec ruby -I $dist_lib_dir -r outthentic -I ".story_cache_dir()
+      $ruby_run_cmd  = "cd ".project_root_dir()." && bundle exec ruby -I $dist_lib_dir -r outthentic -I ".story_cache_dir()
     } else {
-      $ruby_run_opts = "-I $dist_lib_dir -r outthentic -I ".story_cache_dir();
+      $ruby_run_cmd = "ruby -I $dist_lib_dir -r outthentic -I ".story_cache_dir();
     }
 
 
-    get_prop('dsl')->{languages}->{ruby} = $ruby_run_opts; 
+    get_prop('dsl')->{languages}->{ruby} = $ruby_run_cmd; 
 
     get_prop('dsl')->{cache_dir} = story_cache_dir();
 
     my $bash_run_opts = "source "._bash_glue_file()." && source $dist_lib_dir/outthentic.bash";
 
-    get_prop('dsl')->{languages}->{ruby} = $ruby_run_opts; 
+    get_prop('dsl')->{languages}->{ruby} = $ruby_run_cmd; 
 
     get_prop('dsl')->{languages}->{bash} = $bash_run_opts; 
 

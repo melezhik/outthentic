@@ -1,3 +1,7 @@
+0.1.1 2016-05-05
+
+* fixing a flickering bug with story cache directory path
+
 0.1.0 2016-05-01
 
 A very important and huge release as the base for all other 0.1.* series releases.

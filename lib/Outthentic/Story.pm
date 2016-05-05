@@ -6,6 +6,7 @@ use base 'Exporter';
 use Outthentic::DSL;
 use File::ShareDir;
 use JSON;
+use Carp;
 
 our @EXPORT = qw{ 
 
@@ -42,13 +43,12 @@ sub new_story {
     
 
     my $self = {
-        ID =>  int(rand(1000)),
+        ID =>  scalar(@stories),
         story_vars => {},
         props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new() },
     };
 
     push @stories, $self;
-
 
     1;
 
@@ -78,6 +78,8 @@ sub set_story {
     get_prop('dsl')->{languages}->{ruby} = $ruby_run_opts; 
 
     get_prop('dsl')->{languages}->{bash} = $bash_run_opts; 
+
+    _make_cache_dir();
 
     _mk_perl_glue_file();
 
@@ -182,12 +184,19 @@ sub stdout_file {
 
 }
 
-sub story_cache_dir {
+sub _make_cache_dir {
 
   my $cache_dir = test_root_dir()."/story-"._story_id();
-  system("mkdir -p $cache_dir");
-  $cache_dir;
 
+  if (debug_mod12()){
+    Test::More::note("make cache dir: $cache_dir");
+  }
+  system("rm -rf $cache_dir");
+  system("mkdir -p $cache_dir");
+}
+
+sub story_cache_dir {
+  test_root_dir()."/story-"._story_id();
 }
 
 sub _perl_glue_file {
@@ -274,7 +283,7 @@ sub do_perl_hook {
 
 sub _mk_perl_glue_file {
 
-    open PERL_GLUE, ">", _perl_glue_file() or die $!;
+    open PERL_GLUE, ">", _perl_glue_file() or confess "can't create perl glue file ".(_perl_glue_file())." : $!";
 
     my $test_root_dir = test_root_dir();
     my $story_dir = get_prop('story_dir');

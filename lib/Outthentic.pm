@@ -1304,8 +1304,6 @@ Bash:
 
 =head1 Runtime configuration
 
-WARNING: this feature is quite experimental, needs to be tested and is could be buggy, don't use it unless this warning will be removed 
-
 Runtime configuration parameters is way to override suite configuration data. Consider this example:
 
     $ cat suite.ini
@@ -1317,24 +1315,10 @@ Runtime configuration parameters is way to override suite configuration data. Co
 
 This way we will override foo.bar to value `20'.
 
-It is possible to override any data in configuration files, for example arrays values:
-
-    $ cat suite.ini
-    
-    <foo>
-    
-      bar 1
-      bar 2
-      bar 3
-    
-    </foo>    
-    
-    $ suite --param foo.bar=11 --param foo.bar=22 --param foo.bar=33
-
 
 =head1 TAP
 
-Story runner emit results in a L<TAP|https://testanything.org/> format.
+Story runner emits results in a L<TAP|https://testanything.org/> format.
 
 You may use your favorite TAP parser to port result to another test / reporting systems.
 

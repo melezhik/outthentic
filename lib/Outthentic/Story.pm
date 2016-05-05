@@ -67,7 +67,14 @@ sub set_story {
 
     my $dist_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $ruby_run_opts = "-I $dist_lib_dir -r outthentic -I ".story_cache_dir();
+    my $ruby_run_opts;
+
+    if (-f project_root_dir()."/Gemfile" ){
+      $ruby_run_opts  = "cd ".project_root_dir()." && bundle exec ruby -I $dist_lib_dir -r outthentic -I ".story_cache_dir()
+    } else {
+      $ruby_run_opts = "-I $dist_lib_dir -r outthentic -I ".story_cache_dir();
+    }
+
 
     get_prop('dsl')->{languages}->{ruby} = $ruby_run_opts; 
 
@@ -411,9 +418,13 @@ sub do_ruby_hook {
 
     my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $cmd = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir();
+    my $cmd;
 
-    $cmd.=" $file";
+    if (-f project_root_dir()."/Gemfile" ){
+      $cmd = "cd ".project_root_dir()." && bundle exec ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $file"
+    } else {
+      $cmd = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $file"
+    }
 
     if (debug_mod12()){
         Test::More::note("do_ruby_hook: $cmd"); 

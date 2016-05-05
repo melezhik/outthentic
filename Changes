@@ -1,3 +1,7 @@
+0.1.2
+
+Dependencies support for Ruby ( Gemfile )
+
 0.1.1 2016-05-05
 
 * fixing a flickering bug with story cache directory path

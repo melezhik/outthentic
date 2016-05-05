@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.1';
+our $VERSION = '0.1.2';
 
 1;
 
@@ -114,10 +114,16 @@ sub run_story_file {
             $story_command.= " $story_dir/story.pl";
 
         }elsif(-f "$story_dir/story.rb") {
+
             $story_file = "$story_dir/story.rb";
             my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
-            $story_command = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir();
-            $story_command.= " $story_dir/story.rb";
+
+            if (-f project_root_dir()."/Gemfile" ){
+              $story_command  = "cd ".project_root_dir()." && bundle exec ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $story_file";
+            } else {
+              $story_command = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $story_file";
+            }
+
         }elsif(-f "$story_dir/story.bash") {
             $story_file = "$story_dir/story.bash";
             my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');

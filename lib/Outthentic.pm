@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.2';
+our $VERSION = '0.1.3';
 
 1;
 
@@ -105,17 +105,22 @@ sub run_story_file {
     }else{
 
         my $story_dir = get_prop('story_dir');
+
         my $story_command;
-        my $story_file;
 
         if ( -f "$story_dir/story.pl" ){
-            $story_file = "$story_dir/story.pl";
-            $story_command = "perl -I ".story_cache_dir()." -MOutthentic::Glue::Perl";
-            $story_command.= " $story_dir/story.pl";
+
+          if (-f project_root_dir()."/cpanfile" ){
+            $story_command  = "PATH=\$PATH:".project_root_dir()."/local/bin/ perl -I ".story_cache_dir().
+            " -I ".project_root_dir()."/local/lib/perl5 -MOutthentic::Glue::Perl $story_dir/story.pl";
+          } else {
+            $story_command = "perl -I ".story_cache_dir()." -MOutthentic::Glue::Perl $story_dir/story.pl";
+          }
 
         }elsif(-f "$story_dir/story.rb") {
 
-            $story_file = "$story_dir/story.rb";
+            my $story_file = "$story_dir/story.rb";
+
             my $ruby_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
             if (-f project_root_dir()."/Gemfile" ){
@@ -125,7 +130,7 @@ sub run_story_file {
             }
 
         }elsif(-f "$story_dir/story.bash") {
-            $story_file = "$story_dir/story.bash";
+
             my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');
             $story_command = "bash -c 'source ".story_cache_dir()."/glue.bash";
             $story_command.= " && source $bash_lib_dir/outthentic.bash";
@@ -293,7 +298,7 @@ Bash
 
 Choose you favorite language ;) !
 
-Outthentic relies on file names to determine scenario type. 
+Outthentic relies on file names to determine scenario language. 
 
 This is the table to describe language / file name conventions:
 
@@ -1025,12 +1030,6 @@ C<config()> - Returns suite configuration hash object. See also L<suite configur
 
 
 
-=item *
-
-C<host()> - Returns value of `--host' parameter.
-
-
-
 =back
 
 
@@ -1147,13 +1146,12 @@ Enable/disable debug mode:
 
 =item *
 
-C<--verbose> 
+C<--silent> 
 
 
 =back
 
-Enable/disable verbose mode. When verbose mode is enabled strun prints scenarios stdout. By default verbose mode
-is disabled.
+Run in silent mode. By default strun prints all scenarios output (in green color), to disable this choose C<--silent> option.
 
 =over
 
@@ -1222,17 +1220,6 @@ C<--yaml>
 Yaml configuration file path. 
 
 See L<suite configuration|#suite-configuration> section for details.
-
-=over
-
-=item *
-
-C<--host>
-
-
-=back
-
-This optional parameter sets base url or hostname of a service or application being tested.
 
 
 =head1 Suite configuration

@@ -1,6 +1,12 @@
-0.1.2
+0.1.3 2016-05-06
 
-Dependencies support for Ruby ( Gemfile )
+* strun - `--verbose` mode is ON by default, choose `--silent` option to disable this
+* run perl story stories respecting carton environment
+* host parameter removed and deprecated
+
+0.1.2 2016-05-05
+
+* Dependencies support for Ruby ( Gemfile )
 
 0.1.1 2016-05-05
 

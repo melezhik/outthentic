@@ -52,7 +52,7 @@ Outthentic scenarios could be written on one of three languages:
 
 Choose you favorite language ;) !
 
-Outthentic relies on file names to determine scenario type. 
+Outthentic relies on file names to determine scenario language. 
 
 This is the table to describe language / file name conventions:
 
@@ -656,7 +656,6 @@ Some story properties have a proper accessors functions. Here is the list:
 
 * `config()` - Returns suite configuration hash object. See also [suite configuration](#suite-configuration).
 
-* `host()` - Returns value of \`--host' parameter.
 
 ## Ignore unsuccessful story code
 
@@ -748,10 +747,9 @@ Enable/disable debug mode:
 
     * Possible values: 0,1,2,3
 
-* `--verbose` 
+* `--silent` 
 
-Enable/disable verbose mode. When verbose mode is enabled strun prints scenarios stdout. By default verbose mode
-is disabled.
+Run in silent mode. By default strun prints all scenarios output (in green color), to disable this choose `--silent` option.
  
 
 * `--match_l` 
@@ -787,10 +785,6 @@ See [suite configuration](#suite-configuration) section for details.
 Yaml configuration file path. 
 
 See [suite configuration](#suite-configuration) section for details.
-
-* `--host`
-
-This optional parameter sets base url or hostname of a service or application being tested.
 
 # Suite configuration
 

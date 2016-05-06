@@ -28,6 +28,8 @@ examples/between-stream/story.check
 examples/between-stream/story.pl
 examples/between/story.check
 examples/between/story.pl
+examples/cpanfile
+examples/cpanfile.snapshot
 examples/hello/story.check
 examples/hello/story.pl
 examples/hello/world/story.check
@@ -39,6 +41,7 @@ examples/ignore-story-err/story.pl
 examples/ignore-story-err/story.pm
 examples/ini-file/story.check
 examples/ini-file/story.pm
+examples/local/cache/modules/02packages.details.txt
 examples/modules/00/story.check
 examples/modules/00/story.pl
 examples/modules/01/story.check

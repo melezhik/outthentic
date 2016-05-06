@@ -74,7 +74,7 @@ Bash
 
 Choose you favorite language ;) !
 
-Outthentic relies on file names to determine scenario type. 
+Outthentic relies on file names to determine scenario language. 
 
 This is the table to describe language / file name conventions:
 
@@ -806,12 +806,6 @@ C<config()> - Returns suite configuration hash object. See also L<suite configur
 
 
 
-=item *
-
-C<host()> - Returns value of `--host' parameter.
-
-
-
 =back
 
 
@@ -928,13 +922,12 @@ Enable/disable debug mode:
 
 =item *
 
-C<--verbose> 
+C<--silent> 
 
 
 =back
 
-Enable/disable verbose mode. When verbose mode is enabled strun prints scenarios stdout. By default verbose mode
-is disabled.
+Run in silent mode. By default strun prints all scenarios output (in green color), to disable this choose C<--silent> option.
 
 =over
 
@@ -1003,17 +996,6 @@ C<--yaml>
 Yaml configuration file path. 
 
 See L<suite configuration|#suite-configuration> section for details.
-
-=over
-
-=item *
-
-C<--host>
-
-
-=back
-
-This optional parameter sets base url or hostname of a service or application being tested.
 
 
 =head1 Suite configuration

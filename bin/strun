@@ -9,13 +9,11 @@ use File::Path qw(make_path remove_tree);
 use File::Spec;
 
 my $project_root_dir  = getcwd();
-my $verbose_mod = 0;
+my $silent_mod = 0;
 my $debug_mod = 0;
-my $verbose;
 my $story_path;
 my $prove_opts = '-v';
 my $match_l = $ENV{'match_l'} || 200;
-my $host;
 my $ini_file_path;
 my $yaml_file_path;
 my @runtime_params;
@@ -23,13 +21,12 @@ my @runtime_params;
 
 GetOptions (
 
-        "verbose"       => \$verbose_mod,       # boolean
+        "silent"        => \$silent_mod,        # boolean
         "debug=i"       => \$debug_mod,         # numeric
         "match_l=i"     => \$match_l,           # numeric
         "root=s"        => \$project_root_dir,  # string
         "story=s"       => \$story_path,        # string
         "prove=s"       => \$prove_opts,        # string
-        "host=s"        => \$host,              # string
         "ini=s"         => \$ini_file_path,     # string
         "yaml=s"        => \$yaml_file_path,    # string
         "param=s"       => \@runtime_params,    # string
@@ -95,7 +92,6 @@ sub wanted {
     
         print F "set_prop( project_root_dir => q{$project_root_dir} );\n";
         print F "set_prop( test_root_dir    => q{$test_root_dir} );\n";
-        print F "set_prop( host             => q{$host} );\n";
         print F "set_prop( ini_file_path    => q{$ini_file_path} );\n"    if $ini_file_path;
         print F "set_prop( yaml_file_path   => q{$yaml_file_path} );\n"  if $yaml_file_path;
     
@@ -103,8 +99,11 @@ sub wanted {
         print F "set_prop( story_dir => q{$File::Find::dir} );\n";
         print F "set_prop( story_check_file => q{$File::Find::dir/story.check} );\n";
         print F "set_prop( story_type => q{$story_type} );\n";
-    
-        print F "set_prop( verbose => $verbose_mod );\n";
+        if ($silent_mod){
+          print F "set_prop( verbose => 0 );\n";
+        }else{
+          print F "set_prop( verbose => 1 );\n";
+        }
         print F "set_prop( debug => $debug_mod );\n";
         print F "set_prop( match_l => $match_l );\n";
         print F "set_prop( runtime_params => q{".(join ':::', @runtime_params)."} );\n";

@@ -118,7 +118,9 @@ sub run_story_file {
     if ( get_stdout() ){
 
         note("stdout is already set") if debug_mod12;
-        note colored(['green'],get_stdout());
+        for my $l (split /\n/, get_stdout()){
+          note colored(['green'],$l);
+        };
         set_prop( stdout => get_stdout() );
 
     }else{

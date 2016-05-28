@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.4';
+our $VERSION = '0.1.5';
 
 1;
 
@@ -118,6 +118,7 @@ sub run_story_file {
     if ( get_stdout() ){
 
         note("stdout is already set") if debug_mod12;
+        note colored(['green'],get_stdout());
         set_prop( stdout => get_stdout() );
 
     }else{

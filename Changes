@@ -1,3 +1,7 @@
+0.1.5 2016-05-28
+
+* hotfix for 0.1.4 version ( dump stdout for spoofed responses )
+
 0.1.4 2016-05-28
 
 * run scenarios in perlipc way, to get stdout from long running scripts appeared as it goes

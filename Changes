@@ -1,3 +1,9 @@
+0.1.4 2016-05-28
+
+* run scenarios in perlipc way, to get stdout from long running scripts appeared as it goes
+* added story directories markers to make TAP output even more readable
+ 
+
 0.1.3 2016-05-06
 
 * strun - `--verbose` mode is ON by default, choose `--silent` option to disable this

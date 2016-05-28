@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.3';
+our $VERSION = '0.1.4';
 
 1;
 
@@ -24,6 +24,27 @@ sub execute_cmd {
     my $cmd = shift;
     note("execute cmd: $cmd") if debug_mod2();
     (system($cmd) == 0);
+}
+
+sub execute_cmd2 {
+
+    my $cmd = shift;
+    my $out;
+    my $status = 1;
+
+    note("execute scenario: $cmd") if debug_mod2();
+
+    open(OUT, "$cmd 2>&1 |") || die "can't fork: $!";
+
+    while (my $l = <OUT>) {
+        $out.=$l;
+        chomp $l;
+        note colored(['green'],$l);
+    }
+
+    $status = 0 unless close OUT;
+
+    return ($status,$out);
 }
 
 sub config {
@@ -90,21 +111,17 @@ sub populate_config {
 sub run_story_file {
 
     return get_prop('stdout') if defined get_prop('stdout');
+    my $story_dir = get_prop('story_dir');
 
-    my ($fh, $content_file) = tempfile( DIR => get_prop('test_root_dir') );
+    note colored(['blue'],"[$story_dir]");
 
     if ( get_stdout() ){
 
-        note("stdout is already set at ".stdout_file()) if debug_mod12;
-
-        open F, ">", $content_file or die $!;
-        print F get_stdout();
-        close F;
-        note("stdout saved to $content_file") if debug_mod12;
+        note("stdout is already set") if debug_mod12;
+        set_prop( stdout => get_stdout() );
 
     }else{
 
-        my $story_dir = get_prop('story_dir');
 
         my $story_command;
 
@@ -137,36 +154,20 @@ sub run_story_file {
             $story_command.= " && source $story_dir/story.bash'";
         }
 
-        my $st = execute_cmd("$story_command 1>$content_file 2>&1 && test -f $content_file");
+        my ($st, $out) = execute_cmd2($story_command);
 
         if ($st) {
-            note("$story_command succeeded") if debug_mod12;
+            note("scenario succeeded") if debug_mod12;
         }elsif(ignore_story_err()){
-            note("$story_command failed, still continue due to ignore_story_err enabled");
+            note("scenario failed, still continue due to `ignore_story_err' is set");
         }else{
-            ok(0, "$story_command succeeded");
-            open CNT, $content_file or die $!;
-            my $rdata = join "", <CNT>;
-            close CNT;
-            note("story output \n===>\n$rdata");
+            ok(0, "scenario succeeded");
         }
 
-        note("story output saved to $content_file") if debug_mod12;
+        set_prop( stdout => $out );
 
     }
 
-    open F, $content_file or die $!;
-    my $cont = '';
-    while (my $l = <F>){
-      $cont.= $l;
-      if (get_prop('verbose')){
-          chomp $l;
-          note colored(['green'],$l);
-      }
-    }
-    close F;
-
-    set_prop( stdout => $cont );
 
     return get_prop('stdout');
 }

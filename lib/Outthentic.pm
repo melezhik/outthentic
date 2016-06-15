@@ -62,7 +62,7 @@ sub populate_config {
           my $path = get_prop('yaml_file_path');
           ($config) = LoadFile($path);
         }elsif ( get_prop('json_file_path') and -f get_prop('json_file_path') ){
-          my $path = 'suite.json';
+          my $path = get_prop('json_file_path');
           open DATA, $path or confess "can't open file $path to read: $!";
           my $json_str = join "", <DATA>;
           close DATA;

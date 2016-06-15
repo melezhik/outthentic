@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.5';
+our $VERSION = '0.1.6';
 
 1;
 
@@ -61,6 +61,12 @@ sub populate_config {
         }elsif(get_prop('yaml_file_path') and -f get_prop('yaml_file_path')){
           my $path = get_prop('yaml_file_path');
           ($config) = LoadFile($path);
+        }elsif ( get_prop('json_file_path') and -f get_prop('json_file_path') ){
+          my $path = 'suite.json';
+          open DATA, $path or confess "can't open file $path to read: $!";
+          my $json_str = join "", <DATA>;
+          close DATA;
+          $config = from_json($json_str);
         }elsif ( -f 'suite.ini' ){
           my $path = 'suite.ini';
           my %config = Config::General->new($path)->getall or confess "file $path is not valid .ini file";
@@ -68,6 +74,12 @@ sub populate_config {
         }elsif ( -f 'suite.yaml'){
           my $path = 'suite.yaml';
           ($config) = LoadFile($path);
+        }elsif ( -f 'suite.json'){
+          my $path = 'suite.json';
+          open DATA, $path or confess "can't open file $path to read: $!";
+          my $json_str = join "", <DATA>;
+          close DATA;
+          $config = from_json($json_str);
         }else{
           $config = { };
         }
@@ -1221,7 +1233,20 @@ C<--yaml>
 
 =back
 
-Yaml configuration file path. 
+YAML configuration file path. 
+
+See L<suite configuration|#suite-configuration> section for details.
+
+=over
+
+=item *
+
+C<--json> 
+
+
+=back
+
+JSON configuration file path. 
 
 See L<suite configuration|#suite-configuration> section for details.
 
@@ -1230,7 +1255,7 @@ See L<suite configuration|#suite-configuration> section for details.
 
 Outthentic projects are configurable. Configuration data is passed via configuration files.
 
-There are two type of configuration files are supported:
+There are three type of configuration files are supported:
 
 =over
 
@@ -1244,9 +1269,14 @@ Config::General format
 YAML format
 
 
+=item *
+
+JSON format
+
+
 =back
 
-.Ini  style configuration files are passed by C<--ini> parameter
+Config::General  style configuration files are passed by C<--ini> parameter
 
     $ strun --ini /etc/suites/foo.ini
     
@@ -1271,8 +1301,8 @@ Or you can choose YAML format for suite configuration by using C<--yaml> paramet
       foo : 1
       bar : 2
 
-Unless user sets path to configuration file explicitly by C<--ini> or C<--yaml> story runner looks for the 
-files named suite.ini and I<then> ( if suite.ini is not found ) for suite.yaml at the current working directory.
+Unless user sets path to configuration file explicitly by C<--ini> or C<--yaml> or C<--json>  story runner looks for the 
+files named suite.ini and I<then> ( if suite.ini is not found ) for suite.yaml, suite.json at the current working directory.
 
 If configuration file is passed and read a related configuration data is accessible via config() function, 
 for example in story hook file:

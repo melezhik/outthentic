@@ -782,7 +782,13 @@ See [suite configuration](#suite-configuration) section for details.
 
 * `--yaml` 
 
-Yaml configuration file path. 
+YAML configuration file path. 
+
+See [suite configuration](#suite-configuration) section for details.
+
+* `--json` 
+
+JSON configuration file path. 
 
 See [suite configuration](#suite-configuration) section for details.
 
@@ -790,12 +796,13 @@ See [suite configuration](#suite-configuration) section for details.
 
 Outthentic projects are configurable. Configuration data is passed via configuration files.
 
-There are two type of configuration files are supported:
+There are three type of configuration files are supported:
 
 * Config::General format
 * YAML format
+* JSON format
 
-.Ini  style configuration files are passed by `--ini` parameter
+Config::General  style configuration files are passed by `--ini` parameter
 
     $ strun --ini /etc/suites/foo.ini
 
@@ -821,8 +828,8 @@ Or you can choose YAML format for suite configuration by using `--yaml` paramete
       bar : 2
 
 
-Unless user sets path to configuration file explicitly by `--ini` or `--yaml` story runner looks for the 
-files named suite.ini and _then_ ( if suite.ini is not found ) for suite.yaml at the current working directory.
+Unless user sets path to configuration file explicitly by `--ini` or `--yaml` or `--json`  story runner looks for the 
+files named suite.ini and _then_ ( if suite.ini is not found ) for suite.yaml, suite.json at the current working directory.
 
 If configuration file is passed and read a related configuration data is accessible via config() function, 
 for example in story hook file:

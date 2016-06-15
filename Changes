@@ -1,3 +1,7 @@
+0.1.6
+
+* task json configuration support
+
 0.1.5 2016-05-28
 
 * hotfix for 0.1.4 version ( dump stdout for spoofed responses )

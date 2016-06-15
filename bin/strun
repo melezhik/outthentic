@@ -96,7 +96,7 @@ sub wanted {
         print F "set_prop( test_root_dir    => q{$test_root_dir} );\n";
         print F "set_prop( ini_file_path    => q{$ini_file_path} );\n"    if $ini_file_path;
         print F "set_prop( yaml_file_path   => q{$yaml_file_path} );\n"  if $yaml_file_path;
-        print F "set_prop( json_file_path   => q{$json_file_path} );\n"  if $yaml_file_path;
+        print F "set_prop( json_file_path   => q{$json_file_path} );\n"  if $json_file_path;
     
         print F "set_prop( story => q{$File::Find::dir} );\n";
         print F "set_prop( story_dir => q{$File::Find::dir} );\n";

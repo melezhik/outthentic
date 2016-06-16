@@ -17,6 +17,7 @@ use Data::Dumper;
 use File::Temp qw/ tempfile /;
 use Outthentic::Story;
 use Term::ANSIColor;
+use Hash::Merge qw{merge};
 
 my $config; 
 
@@ -56,7 +57,7 @@ sub populate_config {
     unless ($config){
         if (get_prop('ini_file_path') and -f get_prop('ini_file_path') ){
           my $path = get_prop('ini_file_path');
-          my %config  = Config::General->new($path)->getall or confess "file $path is not valid .ini file";
+          my %config  = Config::General->new($path)->getall or confess "file $path is not valid config file";
           $config = {%config};
         }elsif(get_prop('yaml_file_path') and -f get_prop('yaml_file_path')){
           my $path = get_prop('yaml_file_path');
@@ -69,7 +70,7 @@ sub populate_config {
           $config = from_json($json_str);
         }elsif ( -f 'suite.ini' ){
           my $path = 'suite.ini';
-          my %config = Config::General->new($path)->getall or confess "file $path is not valid .ini file";
+          my %config = Config::General->new($path)->getall or confess "file $path is not valid config file";
           $config = {%config};
         }elsif ( -f 'suite.yaml'){
           my $path = 'suite.yaml';
@@ -85,8 +86,19 @@ sub populate_config {
         }
     }
 
+    my $default_config = {};
+
+    if ( -f 'suite.ini' ){
+      my $path = 'suite.ini';
+      my %config = Config::General->new($path)->getall or confess "file $path is not valid config file";
+      $default_config = {%config};
+    }
 
     my @runtime_params = split /:::/, get_prop('runtime_params');
+
+    Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
+
+    $config = merge( $default_config, $config );
 
     PARAM: for my $rp (@runtime_params){
 

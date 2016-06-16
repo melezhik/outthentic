@@ -16,6 +16,7 @@ requires    'JSON';
 requires    'File::ShareDir';
 requires    'Outthentic::DSL' => "0.1.4";
 requires    'Term::ANSIColor' => '4.02';
+requires    'Hash::Merge';
 
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';

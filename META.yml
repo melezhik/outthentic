@@ -25,9 +25,10 @@ requires:
   Config::General: 0
   File::ShareDir: 0
   File::Temp: 0
+  Hash::Merge: 0
   JSON: 0
   Outthentic::DSL: 0.1.4
-  Term::ANSIColor: 4.02
+  Term::ANSIColor: '4.02'
   Test::Harness: 0
   Test::More: 0
   YAML: 0

@@ -1,6 +1,7 @@
 0.1.6
 
 * task json configuration support
+* merge default configuration using Hash::Merge module
 
 0.1.5 2016-05-28
 

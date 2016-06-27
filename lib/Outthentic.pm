@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.6';
+our $VERSION = '0.1.7';
 
 1;
 
@@ -40,7 +40,7 @@ sub execute_cmd2 {
     while (my $l = <OUT>) {
         $out.=$l;
         chomp $l;
-        note colored(['green'],$l);
+        note colored(['green'],$l) if get_prop('verbose');
     }
 
     $status = 0 unless close OUT;
@@ -142,9 +142,11 @@ sub run_story_file {
     if ( get_stdout() ){
 
         note("stdout is already set") if debug_mod12;
-        for my $l (split /\n/, get_stdout()){
-          note colored(['green'],$l);
-        };
+        if ( get_prop('verbose') ){
+          for my $l (split /\n/, get_stdout()){
+            note colored(['green'],$l);
+          };
+        }
         set_prop( stdout => get_stdout() );
 
     }else{

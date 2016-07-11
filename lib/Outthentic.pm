@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.8';
+our $VERSION = '0.1.9';
 
 1;
 
@@ -1393,12 +1393,12 @@ C<match_l> - In a suite runner output truncate matching strings to {match_l} byt
 
 C<SPARROW_ROOT> - if set, used as prefix for test root directory.
 
-  +---------------------+----------------------+
-  | Test root directory | SPARROWI<ROOT Is Set? |
-  +---------------------+----------------------+
-  | /tmp/.outthentic    | No                   |
-  | $SPARROW>ROOT/tmp/  | Yes                  |
-  +---------------------+----------------------+
++---------------------+----------------------+
+| Test root directory | SPARROWI<ROOT Is Set? |
++---------------------+----------------------+
+| /tmp/.outthentic    | No                   |
+| $SPARROW>ROOT/tmp/  | Yes                  |
++---------------------+----------------------+
 
 
 

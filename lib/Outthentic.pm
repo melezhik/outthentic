@@ -1393,16 +1393,18 @@ C<match_l> - In a suite runner output truncate matching strings to {match_l} byt
 
 C<SPARROW_ROOT> - if set, used as prefix for test root directory.
 
-+---------------------+----------------------+
-| Test root directory | SPARROWI<ROOT Is Set? |
-+---------------------+----------------------+
-| /tmp/.outthentic    | No                   |
-| $SPARROW>ROOT/tmp/  | Yes                  |
-+---------------------+----------------------+
-
 
 
 =back
+
+Test root directory resolution table:
+
+    +---------------------+----------------------+
+    | Test root directory | SPARROW_ROOT Is Set? |
+    +---------------------+----------------------+
+    | /tmp/.outthentic    | No                   |
+    | $SPARROW_ROOT/tmp/  | Yes                  |
+    +---------------------+----------------------+
 
 
 =head1 Examples

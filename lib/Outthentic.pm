@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.7';
+our $VERSION = '0.1.8';
 
 1;
 
@@ -1386,6 +1386,20 @@ you may pass prove related parameters using C<--prove-opts>. Here are some examp
 =item *
 
 C<match_l> - In a suite runner output truncate matching strings to {match_l} bytes. See also C<--match_l> in L<options|#options>.
+
+
+
+=item *
+
+C<SPARROW_ROOT> - if set, used as prefix for test root directory.
+
+  +---------------------+----------------------+
+  | Test root directory | SPARROWI<ROOT Is Set? |
+  +---------------------+----------------------+
+  | /tmp/.outthentic    | No                   |
+  | $SPARROW>ROOT/tmp/  | Yes                  |
+  +---------------------+----------------------+
+
 
 
 =back

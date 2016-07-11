@@ -1,3 +1,7 @@
+0.1.8 2016-07-11
+
+* bin/strun: now accepts $SPARROW_ROOT directory as test root directory prefix
+
 0.1.7 2016-06-27
 
 * now outtnentic respect silent mode

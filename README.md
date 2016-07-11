@@ -895,14 +895,16 @@ you may pass prove related parameters using `--prove-opts`. Here are some exampl
 * `match_l` - In a suite runner output truncate matching strings to {match_l} bytes. See also `--match_l` in [options](#options).
 
 * `SPARROW_ROOT` - if set, used as prefix for test root directory.
-
+    
+    
     +---------------------+----------------------+
     | Test root directory | SPARROW_ROOT Is Set? |
     +---------------------+----------------------+
     | /tmp/.outthentic    | No                   |
     | $SPARROW_ROOT/tmp/  | Yes                  |
     +---------------------+----------------------+
-
+    
+        
 # Examples
 
 An example outthentic project lives at examples/ directory, to run it say this:

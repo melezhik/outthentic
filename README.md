@@ -896,14 +896,12 @@ you may pass prove related parameters using `--prove-opts`. Here are some exampl
 
 * `SPARROW_ROOT` - if set, used as prefix for test root directory.
 
-             
     +---------------------+----------------------+
     | Test root directory | SPARROW_ROOT Is Set? |
     +---------------------+----------------------+
     | /tmp/.outthentic    | No                   |
     | $SPARROW_ROOT/tmp/  | Yes                  |
     +---------------------+----------------------+
-         
 
 # Examples
 

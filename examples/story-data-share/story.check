@@ -1,7 +1,7 @@
 OK
 
-code: our @foo; cmp_ok($foo[1], 'eq', 'foo was here','foo was here');
-code: our @foo; cmp_ok($foo[2], 'eq', 'bar was here', 'bar was here' );
+generator: our @foo; [ "assert: ".($foo[1] eq  'foo was here'). ' foo was here'];
+generator: our @foo; [ "assert: ".($foo[2] eq  'bar was here'). ' bar was here'];
 
 
 

@@ -2,5 +2,5 @@ begin:
 hello
 regexp: .*orld
 jan
-code: note explain match_lines
+code: print Dumper(dsl()->match_lines())
 end:

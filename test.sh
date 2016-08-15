@@ -1,0 +1,1 @@
+OUTTHENTIC_ROOT=`pwd` && find $1 -name story.rb -or -name story.bash -or -name story.pl -execdir pwd \; | grep -v modules/ | perl -n -e 'chomp; s{.*examples/}[]; push @foo, "strun --root examples --story $_"; END { print join " && " , @foo }' | bash

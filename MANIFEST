@@ -125,3 +125,4 @@ ruby_lib/outthentic.rb
 suite.ini
 suite.yaml
 t/outthentic.t
+test.sh

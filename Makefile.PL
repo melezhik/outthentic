@@ -7,8 +7,6 @@ abstract       'Multipurpose scenarios framework';
 all_from       'lib/Outthentic.pm';
 
 # Specific dependencies
-requires    'Test::More';
-requires    'Test::Harness';
 requires    'File::Temp';
 requires    'Config::General';
 requires    'YAML';

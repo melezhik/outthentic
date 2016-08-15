@@ -2,20 +2,22 @@ between: foo bar
 # here will be everything
 # between foo and bar lines
 regexp: \d+
-code: \
-for my $i (@{captures()}) { \
-    diag $i->[0] \
-} \
-diag "foo/bar end"
+code: <<CODE
+for my $i (@{captures()}) { 
+    print $i->[0], "\n";
+}
+print "foo/bar end\n";
+CODE
 
 between: fooo baaar
 # here will be everything
 # between fooo and baaar lines
 # NOT necessarily inside foo bar block 
 regexp: \d+
-code: \
-for my $i (@{captures()}) { \
-    diag $i->[0] \
-} \
-diag "fooo/baaar end"
+code: <<CODE
+for my $i (@{captures()}) { 
+    print $i->[0], "\n";
+} 
+print "fooo/baaar end\n";
+CODE
 

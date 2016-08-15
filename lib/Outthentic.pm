@@ -10,6 +10,7 @@ use Carp;
 use Config::General;
 use YAML qw{LoadFile};
 use JSON;
+use Cwd;
 
 use strict;
 use Data::Dumper;
@@ -41,7 +42,7 @@ sub execute_cmd2 {
     while (my $l = <OUT>) {
         $out.=$l;
         chomp $l;
-        note(colored(['green'],$l)) if get_prop('verbose');
+        note(colored(['white'],$l)) if get_prop('verbose');
     }
 
     $status = 0 unless close OUT;
@@ -136,9 +137,20 @@ sub populate_config {
 sub run_story_file {
 
     return get_prop('stdout') if defined get_prop('stdout');
+
     my $story_dir = get_prop('story_dir');
 
-    note(colored(['blue'],"[$story_dir]"));
+    my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
+
+    my $short_story_dir;
+    my $i;
+
+    for my $l (split /\//, $story_dir){
+      $short_story_dir.="/$l" unless $i++ < $cwd_size;
+
+    }
+
+    note(colored(['yellow'],$short_story_dir."\n\n"));
 
     if ( get_stdout() ){
 
@@ -249,7 +261,7 @@ sub ok {
 
     my $st = shift;
     my $message = shift;
-    print "$st $message\n";
+    print $st ? colored(['green'],"OK\t$message\n") : colored(['red'], "NOT OK\t$message\n");
     $STATUS = 0 unless $st;
 }
 
@@ -257,13 +269,16 @@ sub note {
 
     my $message = shift;
 
-    print "[$message]\n";
+    print "$message\n";
 
 }
 
 END {
 
-  print "STATUS: $STATUS\n"
+  print "-"x3;
+  print "\n";
+
+  print $STATUS ? colored(["green"],"STATUS\tSUCCEED\n") : coloree(["red"],"STATUS\tFAIL\n");
 
 }
 

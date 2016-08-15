@@ -57,7 +57,7 @@ sub new_story {
 sub end_of_story {
 
     if (debug_mod12()){
-        Test::More::note("end of story: ".(get_prop('story')));
+        main::note("end of story: ".(get_prop('story')));
     }
     delete $stories[-1];
 
@@ -196,7 +196,7 @@ sub _make_cache_dir {
   my $cache_dir = test_root_dir()."/story-"._story_id();
 
   if (debug_mod12()){
-    Test::More::note("make cache dir: $cache_dir");
+    main::note("make cache dir: $cache_dir");
   }
   system("rm -rf $cache_dir");
   system("mkdir -p $cache_dir");
@@ -257,10 +257,10 @@ sub run_story {
     die "story module file $story_module does not exist" unless -e $story_module;
 
     if (debug_mod12()){
-        Test::More::note("run downstream story: $path");
+        main::note("run downstream story: $path");
         for my $k (keys %{$story_vars}){
           my $v = $story_vars->{$k};
-          Test::More::note("downstream story var: $k => $v"); 
+          main::note("downstream story var: $k => $v"); 
         } 
     }
 
@@ -427,7 +427,7 @@ sub do_ruby_hook {
     }
 
     if (debug_mod12()){
-        Test::More::note("do_ruby_hook: $cmd"); 
+        main::note("do_ruby_hook: $cmd"); 
     }
 
 
@@ -466,7 +466,7 @@ sub do_ruby_hook {
         my $path = $1;
 
         if (debug_mod12()){
-            Test::More::note("run downstream story from ruby hook"); 
+            main::note("run downstream story from ruby hook"); 
         }
 
         run_story($path, decode_json($story_vars_json||{}));
@@ -491,7 +491,7 @@ sub do_bash_hook {
     $cmd="bash -c '$cmd'";
 
     if (debug_mod12()){
-        Test::More::note("do_bash_hook: $cmd"); 
+        main::note("do_bash_hook: $cmd"); 
     }
 
 
@@ -528,7 +528,7 @@ sub do_bash_hook {
       if ($l=~/story:\s+(\S+)/){
         my $path = $1;
         if (debug_mod12()){
-            Test::More::note("run downstream story from bash hook"); 
+            main::note("run downstream story from bash hook"); 
         }
         run_story($path, {%story_vars_bash});
         %story_vars_bash = ();

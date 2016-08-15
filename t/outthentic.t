@@ -9,7 +9,9 @@ use strict;
 use warnings;
 
 use Test::More tests => 1;
-BEGIN { use_ok('Outthentic') };
+BEGIN { $Outthentic::Silent=1 };
+use_ok('Outthentic');
+
 
 #########################
 

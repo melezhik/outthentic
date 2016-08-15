@@ -1,3 +1,7 @@
+0.2.1 2016-08-15
+
+* fixed minor issues related to outthentic exit code and make it possible run a Test-Harness tests
+
 0.2.0 2016-08-15
 
 * don't use Test::More, Test-Harness anymore.

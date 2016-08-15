@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.1';
+our $VERSION = '0.2.2';
 
 1;
 
@@ -266,7 +266,7 @@ sub outh_ok {
 
     my $st = shift;
     my $message = shift;
-    print $st ? colored(['green'],"outh_ok\t$message")."\n" : colored(['red'], "NOT outh_ok\t$message")."\n";
+    print $st ? colored(['green'],"ok\t$message")."\n" : colored(['red'], "NOT OK\t$message")."\n";
     $STATUS = 0 unless $st;
 }
 
@@ -339,21 +339,21 @@ Perl scenario example:
 
     $ cat story.pl
     
-    print "I am outh_ok\n";
+    print "I am OK\n";
     print "I am outthentic\n";
 
 Ruby scenario example:
 
     $ cat story.rb
     
-    puts "I am outh_ok"
+    puts "I am OK"
     puts "I am outthentic"
 
 Bash scenario example:
 
     $ cat story.bash
     
-    echo I am outh_ok
+    echo I am OK
     echo I am outthentic
 
 Outthentic scenarios could be written on one of three languages:
@@ -396,11 +396,11 @@ This is the table to describe language / file name conventions:
 
 Check file contains rules to B<verify> a stdout produced by scenario script. 
 
-Here we require that our scenario should produce  `I am outh_ok' and `I am outthentic' lines in stdout:
+Here we require that our scenario should produce  `I am OK' and `I am outthentic' lines in stdout:
 
     $ cat story.check
     
-    I am outh_ok
+    I am OK
     I am outthentic
 
 
@@ -452,8 +452,8 @@ Now, let's use C<strun> command to run suite stories:
     /perl-story/ started
     
     hello from perl
-    outh_ok  scenario succeeded
-    outh_ok  output match 'hello from perl'
+    OK  scenario succeeded
+    OK  output match 'hello from perl'
     ---
     STATUS  SUCCEED
     
@@ -484,7 +484,7 @@ Outthentic suites are bunches of I<related> stories.
 
 =item *
 
-By default strun loouth_oks for story.(pl|rb|bash) file at the project root directory. This is so called a default story.
+By default strun looks for story.(pl|rb|bash) file at the project root directory. This is so called a default story.
 
 
 
@@ -618,7 +618,7 @@ Stories are converted into perl files *.pl ( compilation phase ) and saved into 
 
 =head2 An execution phase. 
 
-Perl executes a compiled perl file. As it was told before if not set explicitly strun loouth_oks for 
+Perl executes a compiled perl file. As it was told before if not set explicitly strun looks for 
 something like story.(pl|rb|bash) at the top of project root directory and then compiles it in 
 regular perl script and then give it Perl to run to execute such a script.
 
@@ -649,9 +649,9 @@ Often all you need is to ensure that stdout has some strings in:
     
     # verification output
     
-    outh_ok - output matches 'HELLO'
-    outh_ok - output matches 'HELLO WORLD'
-    outh_ok - output matches '123'
+    OK - output matches 'HELLO'
+    OK - output matches 'HELLO WORLD'
+    OK - output matches '123'
 
 
 =head2 regular expressions
@@ -666,8 +666,8 @@ You may use regular expressions as well:
     
     # verification output
     
-    outh_ok - output matches /L+/
-    outh_ok - output matches /\d/
+    OK - output matches /L+/
+    OK - output matches /\d/
 
 See L<check-expressions|https://github.com/melezhik/outthentic-dsl#check-expressions> in Outthentic::DSL documentation pages.
 
@@ -809,19 +809,19 @@ Need to validate that some lines goes successively?
 See L<comments-blank-lines-and-text-blocks|https://github.com/melezhik/outthentic-dsl#comments-blank-lines-and-text-blocks> in Outthentic::DSL documentation pages.
 
 
-=head1 Hoouth_oks
+=head1 Hooks
 
-Story hoouth_oks are extension points to change L<story runner|#story-runner> behavior. 
+Story hooks are extension points to change L<story runner|#story-runner> behavior. 
 
 It's just a scripts gets executed I<before scenario script>. 
 
-You should name your hoouth_oks as C<hoouth_ok.*> and place them into story directory
+You should name your hooks as C<hook.*> and place them into story directory
 
-    $ cat perl/hoouth_ok.pl
+    $ cat perl/hook.pl
     
-    print "this is a story hoouth_ok!";
+    print "this is a story hook!";
 
-Hoouth_oks could be written on one of three languages:
+Hooks could be written on one of three languages:
 
 =over
 
@@ -842,17 +842,17 @@ Bash
 
 =back
 
-Here is naming convention for hoouth_ok files:
+Here is naming convention for hook files:
 
     +-----------+--------------+
     | Language  | File         |
     +-----------+--------------+
-    | Perl      | hoouth_ok.pl      |
-    | Ruby      | hoouth_ok.rb      |
-    | Bash      | hoouth_ok.bash    |
+    | Perl      | hook.pl      |
+    | Ruby      | hook.rb      |
+    | Bash      | hook.bash    |
     +-----------+--------------+
 
-Reasons why you might need a hoouth_oks:
+Reasons why you might need a hooks:
 
 =over
 
@@ -874,20 +874,20 @@ call downstream stories
 =back
 
 
-=head1 Hoouth_oks API
+=head1 Hooks API
 
-Story hoouth_oks API provides several functions to hack into story runner execution process:
+Story hooks API provides several functions to hack into story runner execution process:
 
 
 =head2 Redefine stdout
 
-Redefining stdout feature means you define a scenario output on the hoouth_ok side ( thus scenario script is never executed ). 
+Redefining stdout feature means you define a scenario output on the hook side ( thus scenario script is never executed ). 
 
 This might be helpful when for some reasons you do not want to run or you don't have by hand a proper scenario script.
 
 This is simple an example:
 
-    $ cat hoouth_ok.pl
+    $ cat hook.pl
     set_stdout("THIS IS I FAKE RESPONSE \n HELLO WORLD");
     
     $ cat story.check
@@ -914,7 +914,7 @@ Here is C<set_stdout()> function signatures list for various languages:
     | Bash      | set_stdout(STRING)    |
     +-----------+-----------------------+
 
-IMPORTANT: You should only use a set_stdout inside story hoouth_ok, not scenario file.
+IMPORTANT: You should only use a set_stdout inside story hook, not scenario file.
 
 
 =head2 Upstream and downstream stories
@@ -940,12 +940,12 @@ Downstream story always gets called from the I<upstream> one. This is example:
     knock-knock!
     
      
-    $ cat open-the-door/hoouth_ok.rb
+    $ cat open-the-door/hook.rb
     
     # this is a upstream story
     # to run downstream story
     # call run_story function
-    # inside upstream story hoouth_ok
+    # inside upstream story hook
     
     # with a single parameter - story path,
     # notice that you have to remove
@@ -964,14 +964,14 @@ Downstream story always gets called from the I<upstream> one. This is example:
     /modules/knock-the-door/ started
     
     knock-knock!
-    outh_ok  scenario succeeded
-    outh_ok  output match 'knock-knock!'
+    OK  scenario succeeded
+    OK  output match 'knock-knock!'
     
     /open-the-door/ started
     
     opening ...
-    outh_ok  scenario succeeded
-    outh_ok  output match 'opening'
+    OK  scenario succeeded
+    OK  output match 'opening'
     ---
     STATUS  SUCCEED
 
@@ -987,7 +987,7 @@ to make story a downstream simply create a story  in a C<modules/> directory.
 
 =item *
 
-to run downstream story call C<run_story(story_path)> function inside upstream story hoouth_ok.
+to run downstream story call C<run_story(story_path)> function inside upstream story hook.
 
 
 
@@ -1020,7 +1020,7 @@ Here is an example of multiple downstream story calls:
     $ echo 'print qq{UP!}' > modules/up/story.pl 
     $ echo 'print qq{DOWN!}' > modules/down/story.pl 
     
-    $ cat two-jumps/hoouth_ok.pl
+    $ cat two-jumps/hook.pl
     
     run_story( 'up' );
     run_story( 'down' );
@@ -1034,7 +1034,7 @@ You may pass a variables to downstream story using second argument of C<run_stor
 
     $ mkdir modules/greeting
     
-    $ cat hoouth_ok.pl
+    $ cat hook.pl
     
     run_story( 
       'greeting', {  name => 'Alexey' , message => 'hello' }  
@@ -1042,13 +1042,13 @@ You may pass a variables to downstream story using second argument of C<run_stor
 
 Or using Ruby:
 
-    $ cat hoouth_ok.rb
+    $ cat hook.rb
     
     run_story  'greeting', {  'name' => 'Alexey' , 'message' => 'hello' }
 
 Or Bash:
 
-    $ cat hoouth_ok.bash
+    $ cat hook.bash
     
     run_story  greeting name Alexey message hello 
 
@@ -1086,7 +1086,7 @@ Bash (2-nd way):
     
     echo $(story_var name) say $(story_var message)
 
-You may access story variables inside story hoouth_oks and check files as well.
+You may access story variables inside story hooks and check files as well.
 
 And finally:
 
@@ -1094,7 +1094,7 @@ And finally:
 
 =item *
 
-downstream stories may invouth_oke other downstream stories.
+downstream stories may invoke other downstream stories.
 
 
 
@@ -1152,14 +1152,14 @@ this is treated as story verification failure.
 
 Use C<ignore_story_err()> function to ignore unsuccessful story code:
 
-    $ cat hoouth_ok.rb
+    $ cat hook.rb
     
     ignore_story_err 1
 
 
 =head2 Story libraries
 
-Story libraries are files to keep your libraries code to I<automatically required> into story hoouth_oks and check files context:
+Story libraries are files to keep your libraries code to I<automatically required> into story hooks and check files context:
 
 Here are some examples:
 
@@ -1184,7 +1184,7 @@ Ruby:
       # I am cool! But I do nothing!
     end
     
-    $ cat hoouth_ok.pl
+    $ cat hook.pl
     
     super_utility 'foo', 'bar'
 
@@ -1389,13 +1389,13 @@ Or you can choose YAML format for suite configuration by using C<--yaml> paramet
       foo : 1
       bar : 2
 
-Unless user sets path to configuration file explicitly by C<--ini> or C<--yaml> or C<--json>  story runner loouth_oks for the 
+Unless user sets path to configuration file explicitly by C<--ini> or C<--yaml> or C<--json>  story runner looks for the 
 files named suite.ini and I<then> ( if suite.ini is not found ) for suite.yaml, suite.json at the current working directory.
 
 If configuration file is passed and read a related configuration data is accessible via config() function, 
-for example in story hoouth_ok file:
+for example in story hook file:
 
-    $ cat hoouth_ok.pl
+    $ cat hook.pl
     
     my $foo = config()->{main}->{foo};
     my $bar = config()->{main}->{bar};
@@ -1404,14 +1404,14 @@ Examples for other languages:
 
 Ruby:
 
-    $ cat hoouth_ok.rb
+    $ cat hook.rb
     
     foo = config['main']['foo']
     bar = config['main']['bar']
 
 Bash:
 
-    $ cat hoouth_ok.bash
+    $ cat hook.bash
     
     foo=$(config main.foo )
     bar=$(config main.bar )

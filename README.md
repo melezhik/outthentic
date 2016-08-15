@@ -87,7 +87,7 @@ See also [story runner](#story-runner).
 
 ## Suite
 
-Outthentic suite is a bunch of related stories. You may also call suite as projects.
+Outthentic suites are a bunch of related stories. You may also call suites as (outthentic) projects.
 
 One may have more then one story at the project.
 
@@ -105,7 +105,7 @@ Just create a new directories with a story data inside:
     $ echo 'echo hello from bash' > bash-story/story.bash
     $ echo 'hello from bash' > bash-story/story.check
 
-Now, let's use `strun` command to run suite:
+Now, let's use `strun` command to run suite stories:
 
     $ strun --story perl-story
 
@@ -116,6 +116,8 @@ Now, let's use `strun` command to run suite:
     OK  output match 'hello from perl'
     ---
     STATUS  SUCCEED
+
+    $ strun --story bash-story # so on ...
     
 Summary:
 
@@ -123,7 +125,7 @@ Summary:
 
 * Strun - a [S]tory [R]unner - a console script to execute story scenarios and validate output by given check lists.
 
-* Outthentic suites are bunches of _related_ stories
+* Outthentic suites are bunches of _related_ stories.
 
 * By default strun looks for story.(pl|rb|bash) file at the project root directory. This is so called a default story.
 
@@ -133,8 +135,15 @@ Summary:
 
 `Story` should point a directory relative to project root directory.
 
-Project root directory - a directory holding all related stories. One could omit when running `strun`, then
-it assumes project root directory is equal current working directory.
+* Project root directory - a directory holding all related stories. 
+
+A project root directory could be set explicitey using `--root` parameter:
+
+    $ strun --root /path/to/my/root/
+
+If `--root` is not set strun assumes project root directory to be equal current working directory:
+
+    $ strun # all the stories should be here
 
 # Calculator project example
 

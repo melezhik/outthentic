@@ -151,7 +151,7 @@ sub run_story_file {
 
     }
 
-    note(colored(['yellow'],$short_story_dir)." started\n\n");
+    note("\n".colored(['yellow'],$short_story_dir)." started\n");
 
     if ( get_stdout() ){
 

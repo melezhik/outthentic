@@ -136,9 +136,9 @@ sub wanted {
 }
 
 if ($story_path){
-    exec("cd $test_root_dir$project_root_dir/$story_path && perl sparrow.pl");
+    exec("perl $test_root_dir$project_root_dir/$story_path/sparrow.pl");
 }else{
-    exec("cd $test_root_dir$project_root_dir && perl sparrow.pl");
+    exec("perl $test_root_dir$project_root_dir/sparrow.pl");
 }
 
 

@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.1.9';
+our $VERSION = '0.2.0';
 
 1;
 
@@ -12,7 +12,6 @@ use YAML qw{LoadFile};
 use JSON;
 
 use strict;
-use Test::More;
 use Data::Dumper;
 use File::Temp qw/ tempfile /;
 use Outthentic::Story;
@@ -20,6 +19,8 @@ use Term::ANSIColor;
 use Hash::Merge qw{merge};
 
 my $config; 
+
+our $STATUS = 1;
 
 sub execute_cmd {
     my $cmd = shift;
@@ -40,7 +41,7 @@ sub execute_cmd2 {
     while (my $l = <OUT>) {
         $out.=$l;
         chomp $l;
-        note colored(['green'],$l) if get_prop('verbose');
+        note(colored(['green'],$l)) if get_prop('verbose');
     }
 
     $status = 0 unless close OUT;
@@ -137,14 +138,14 @@ sub run_story_file {
     return get_prop('stdout') if defined get_prop('stdout');
     my $story_dir = get_prop('story_dir');
 
-    note colored(['blue'],"[$story_dir]");
+    note(colored(['blue'],"[$story_dir]"));
 
     if ( get_stdout() ){
 
         note("stdout is already set") if debug_mod12;
         if ( get_prop('verbose') ){
           for my $l (split /\n/, get_stdout()){
-            note colored(['green'],$l);
+            note(colored(['green'],$l));
           };
         }
         set_prop( stdout => get_stdout() );
@@ -241,6 +242,28 @@ sub generate_asserts {
     }
 
     confess "parser error: $err" if $err;
+
+}
+
+sub ok {
+
+    my $st = shift;
+    my $message = shift;
+    print "$st $message\n";
+    $STATUS = 0 unless $st;
+}
+
+sub note {
+
+    my $message = shift;
+
+    print "[$message]\n";
+
+}
+
+END {
+
+  print "STATUS: $STATUS\n"
 
 }
 

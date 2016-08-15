@@ -12,7 +12,6 @@ my $project_root_dir  = getcwd();
 my $silent_mod = 0;
 my $debug_mod = 0;
 my $story_path;
-my $prove_opts = '-v';
 my $match_l = $ENV{'match_l'} || 200;
 my $ini_file_path;
 my $yaml_file_path;
@@ -27,7 +26,6 @@ GetOptions (
         "match_l=i"     => \$match_l,           # numeric
         "root=s"        => \$project_root_dir,  # string
         "story=s"       => \$story_path,        # string
-        "prove=s"       => \$prove_opts,        # string
         "ini=s"         => \$ini_file_path,     # string
         "yaml=s"        => \$yaml_file_path,    # string
         "json=s"        => \$json_file_path,    # string
@@ -71,9 +69,9 @@ sub wanted {
 
         my $story_dir = $File::Find::dir;
 
-        my $tfile = $story_type eq 'upstream' ? "$test_root_dir/$story_dir/story.t" : "$test_root_dir/$story_dir/story.d";
-
         make_path("$test_root_dir/$story_dir");
+
+        my $tfile = "$test_root_dir/$story_dir/sparrow.pl";
 
         open F, ">", $tfile or die $!;
     
@@ -83,14 +81,9 @@ sub wanted {
     
         print F "use strict;\n";
 
-        if ($story_type eq 'upstream'){
-            print F "use Test::More q{no_plan};\n";
-        }
-    
         print F "use Outthentic;\n\n\n";
     
         print F "new_story();\n\n";
-    
     
         print F "set_prop( project_root_dir => q{$project_root_dir} );\n";
         print F "set_prop( test_root_dir    => q{$test_root_dir} );\n";
@@ -128,10 +121,7 @@ sub wanted {
             print F "do_bash_hook('$File::Find::dir/hook.bash');\n\n";
         }
 
-        print F "\n\nSKIP: {\n\n";
-        print F "\t eval { generate_asserts(q{$File::Find::dir/story.check}) }; die \$@ if \$@;\n\n";
-        print F "}\n\n";
-
+        print F "eval \n\n{ generate_asserts(q{$File::Find::dir/story.check}) };\n\n die \$@ if \$@;\n\n";
 
         print F 'end_of_story();',"\n\n";
 
@@ -146,9 +136,9 @@ sub wanted {
 }
 
 if ($story_path){
-    exec("prove -r $prove_opts   $test_root_dir$project_root_dir/$story_path");
+    exec("cd $test_root_dir$project_root_dir/$story_path && perl sparrow.pl");
 }else{
-    exec("prove -r $prove_opts   $test_root_dir$project_root_dir");
+    exec("cd $test_root_dir$project_root_dir && perl sparrow.pl");
 }
 
 

@@ -252,7 +252,7 @@ sub run_story {
 
     my $project_root_dir = get_prop('project_root_dir');
 
-    my $story_module = "$test_root_dir/$project_root_dir/modules/$path/story.d";
+    my $story_module = "$test_root_dir/$project_root_dir/modules/$path/sparrow.pl";
 
     die "story module file $story_module does not exist" unless -e $story_module;
 

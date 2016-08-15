@@ -254,7 +254,11 @@ sub generate_asserts {
 
     }
 
-    confess "parser error: $err" if $err;
+
+    if ($err){
+      $STATUS = 0;
+      confess "outthentic::dsl parser error: $err";
+    }
 
 }
 
@@ -262,7 +266,7 @@ sub ok {
 
     my $st = shift;
     my $message = shift;
-    print $st ? colored(['green'],"OK\t$message\n") : colored(['red'], "NOT OK\t$message\n");
+    print $st ? colored(['green'],"OK\t$message")."\n" : colored(['red'], "NOT OK\t$message")."\n";
     $STATUS = 0 unless $st;
 }
 

@@ -157,7 +157,7 @@ sub run_story_file {
         note("stdout is already set") if debug_mod12;
         if ( get_prop('verbose') ){
           for my $l (split /\n/, get_stdout()){
-            note(colored(['green'],$l));
+            note(colored(['white'],$l));
           };
         }
         set_prop( stdout => get_stdout() );
@@ -278,7 +278,7 @@ END {
   print "-"x3;
   print "\n";
 
-  print $STATUS ? colored(["green"],"STATUS\tSUCCEED\n") : coloree(["red"],"STATUS\tFAIL\n");
+  print $STATUS ? colored(["green"],"STATUS\tSUCCEED\n") : colored(["red"],"STATUS\tFAIL\n");
 
 }
 

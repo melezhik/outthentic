@@ -1,6 +1,6 @@
-0.2.0
+0.2.0 2016-08-15
 
-* don't use Test::More, Test-Harness anymore
+* don't use Test::More, Test-Harness anymore.
 
 0.1.9 2016-07-11
 

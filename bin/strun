@@ -8,7 +8,7 @@ use Cwd;
 use File::Path qw(make_path remove_tree);
 use File::Spec;
 
-my $project_root_dir  = getcwd();
+my $project_root_dir  = $ENV{'OUTTHENTIC_ROOT'} || getcwd();
 my $silent_mod = 0;
 my $debug_mod = 0;
 my $story_path;

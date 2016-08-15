@@ -199,9 +199,9 @@ sub run_story_file {
         my ($st, $out) = execute_cmd2($story_command);
 
         if ($st) {
-            note("scenario succeeded") if debug_mod12;
+            ok(1, "scenario succeeded");
         }elsif(ignore_story_err()){
-            note("scenario failed, still continue due to `ignore_story_err' is set");
+            ok(1, "scenario failed, still continue due to `ignore_story_err' is set");
         }else{
             ok(0, "scenario succeeded");
         }

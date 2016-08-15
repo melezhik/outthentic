@@ -142,15 +142,16 @@ sub run_story_file {
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
 
-    my $short_story_dir;
+    my $short_story_dir = "/";
+
     my $i;
 
     for my $l (split /\//, $story_dir){
-      $short_story_dir.="/$l" unless $i++ < $cwd_size;
+      $short_story_dir.="$l/" unless $i++ < $cwd_size;
 
     }
 
-    note(colored(['yellow'],$short_story_dir."\n\n"));
+    note(colored(['yellow'],$short_story_dir)." started\n\n");
 
     if ( get_stdout() ){
 

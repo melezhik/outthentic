@@ -142,23 +142,15 @@ Just create a new directories with a story data inside:
 
 Now, let's use C<strun> command to run suite:
 
-    $ strun
+    $ strun --story perl-story
     
-    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/bash-story/story.t .. 
-    ok 1 - output match 'hello from bash'
-    1..1
-    ok
-    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/perl-story/story.t .. 
-    ok 1 - output match 'hello from perl'
-    1..1
-    ok
-    /tmp/.outthentic/19311/home/melezhik/projects/outthentic-demo/ruby-story/story.t .. 
-    ok 1 - output match 'hello from ruby'
-    1..1
-    ok
-    All tests successful.
-    Files=3, Tests=3,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.18 cusr  0.04 csys =  0.24 CPU)
-    Result: PASS
+    /perl-story/ started
+    
+    hello from perl
+    OK  scenario succeeded
+    OK  output match 'hello from perl'
+    ---
+    STATUS  SUCCEED
 
 Summary:
 
@@ -166,24 +158,43 @@ Summary:
 
 =item *
 
-Stories are executed independently, means I<generally> one story B<is not dependent upon> another story (but see "downstream stories section").      
+Stories are just a directories with story scenarios and check files.      
 
 
 
 
 =item *
 
-Outthentic suite is bunch of related scenarios ( one or many ) to B<be run> and to B<be verified> ( by analyzing scenarios output against rules )
+Strun - a [S]tory [R]unner - a console script to execute story scenarios and validate output by given check lists.
 
 
 
 =item *
 
-strun - suite runner - produces result in L<TAP|https://testanything.org/> format, which is  is a simple text-based interface between testing modules in a test harness.
+Outthentic suites are bunches of I<related> stories
+
+
+
+=item *
+
+By default strun looks for story.(pl|rb|bash) file at the project root directory. This is so called a default story.
+
+
+
+=item *
+
+One can point strun a distinct story by C<--story> parameter:
+
+$ strun --root /path/to/project/root/ --story /path/to/story/directory/inside/project/root
 
 
 
 =back
+
+C<Story> should point a directory relative to project root directory.
+
+Project root directory - a directory holding all related stories. One could omit when running C<strun>, then
+it assumes project root directory is equal current working directory.
 
 
 =head1 Calculator project example
@@ -281,16 +292,14 @@ Runner consequentially goes several phases:
 
 =head2 A compilation phase. 
 
-Stories are converted into perl test files *.t ( compilation phase ) and saved into temporary directory.
+Stories are converted into perl files *.pl ( compilation phase ) and saved into temporary directory.
 
 
 =head2 An execution phase. 
 
-L<Prove|https://metacpan.org/pod/distribution/Test-Harness/bin/prove> utility recursively executes 
-test files under temporary directory and thus produces a B<final suite execution status>.
-
-So, after all outthentic project I<is very like> a perl test project with *.t files inside, with the difference that
-outthentic *.t files I<are generated  by story files> dynamically.
+Perl executes a compiled perl file. As it was told before if not set explicitly strun looks for 
+something like story.(pl|rb|bash) at the top of project root directory and then compiles it in 
+regular perl script and then give it Perl to run to execute such a script.
 
 
 =head1 Check files syntax
@@ -353,17 +362,17 @@ You may inline code from other language to add some extra logic into your check 
     
     code: <<CODE
     !bash
-    echo '# this is debug message will be shown at console'
+    echo 'this is debug message will be shown at console'
     CODE
     
     code: <<CODE
     !ruby
-    puts '# this is debug message will be shown at console'
+    puts 'this is debug message will be shown at console'
     CODE
     
     code: <<CODE
     # by default Perl language is used
-    note('this is debug message will be shown at console')
+    print("this is debug message will be shown at console\n");
     CODE
 
 
@@ -470,7 +479,7 @@ Need to validate that some lines goes successively?
         this string followed by
         that string followed by
         another one
-        # regexps patterns:
+        # regexp patterns:
     regexp: with (this|that)
         # and the last one in a block
         at the very end
@@ -628,16 +637,22 @@ Downstream story always gets called from the I<upstream> one. This is example:
     
     $ cat open-the-door/story.check
     opening
+    
+    $ strun --story open-the-door/
      
-    $ strun 
-    /tmp/.outthentic/3815/home/melezhik/projects/outthentic-dsl-examples/downstream/open-the-door/story.t .. 
-    ok 1 - output match 'knock-knock!'
-    ok 2 - output match 'opening'
-    1..2
-    ok
-    All tests successful.
-    Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.05 cusr  0.01 csys =  0.08 CPU)
-    Result: PASS
+    /modules/knock-the-door/ started
+    
+    knock-knock!
+    OK  scenario succeeded
+    OK  output match 'knock-knock!'
+    
+    /open-the-door/ started
+    
+    opening ...
+    OK  scenario succeeded
+    OK  output match 'opening'
+    ---
+    STATUS  SUCCEED
 
 Summary:
 
@@ -927,7 +942,7 @@ C<--silent>
 
 =back
 
-Run in silent mode. By default strun prints all scenarios output (in green color), to disable this choose C<--silent> option.
+Run in silent mode. By default strun prints all scenarios output, to disable this choose C<--silent> option.
 
 =over
 
@@ -949,26 +964,18 @@ C<--story>
 
 =back
 
-Run only single story. This should be file path without extensions ( .pl, .rb, .check ):
+Run only single story. This should be path to a directory containing story inside project. A path should
+be relative against project root directory. Examples:
 
+    # A project  with 3 stories
     foo/story.pl
     foo/bar/story.rb
     bar/story.pl
     
+    # Run various stories
     --story foo # runs foo/ stories
     --story foo/story # runs foo/story.pl
     --story foo/bar/ # runs foo/bar/ stories
-
-=over
-
-=item *
-
-C<--prove> 
-
-
-=back
-
-Prove parameters. See L<prove settings|#prove-settings> section for details.
 
 =over
 
@@ -1103,28 +1110,6 @@ Runtime configuration parameters is way to override suite configuration data. Co
 This way we will override foo.bar to value `20'.
 
 
-=head1 TAP
-
-Story runner emits results in a L<TAP|https://testanything.org/> format.
-
-You may use your favorite TAP parser to port result to another test / reporting systems.
-
-Follow L<TAP|https://testanything.org/> documentation to get more on this.
-
-Here is example for having output in JUNIT format:
-
-    strun --prove "--formatter TAP::Formatter::JUnit"
-
-
-=head1 Prove settings
-
-Story runner uses L<prove utility|https://metacpan.org/pod/distribution/Test-Harness/bin/prove> to execute generated perl tests,
-you may pass prove related parameters using C<--prove-opts>. Here are some examples:
-
-    strun --prove "-Q" # don't show anythings unless test summary
-    strun --prove "-q -s" # run prove tests in random and quite mode
-
-
 =head1 Environment variables
 
 =over
@@ -1167,7 +1152,7 @@ L<Aleksei Melezhik|mailto:melezhik@gmail.com>
 
 =head1 Home Page
 
-https://github.com/melezhik/outthentic
+L<https://github.com/melezhik/outthentic|https://github.com/melezhik/outthentic>
 
 
 =head1 See also
@@ -1189,12 +1174,6 @@ L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl> - Outthentic::DSL 
 =item *
 
 L<Swat|https://github.com/melezhik/swat> - web testing framework consuming Outthentic::DSL.
-
-
-
-=item *
-
-Perl prove, TAP, Test::More
 
 
 

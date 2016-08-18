@@ -147,8 +147,8 @@ if ($story_path){
 if ($st==0) {
   print colored(["green"],"STATUS\tSUCCEED\n");
 }else{
-  print colored(["red"],"STATUS\tFAILED\n");
-  exit($st);
+  print colored(["red"],"STATUS\tFAILED ($st)\n");
+  exit(1);
 }
 
 

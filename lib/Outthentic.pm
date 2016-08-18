@@ -1140,6 +1140,18 @@ C<config()> - Returns suite configuration hash object. See also L<suite configur
 =back
 
 
+=head2 Helper functions and variables
+
+Outthentic provides some helpers and variables:
+
+    +------------------+-----------------------------------------------------+
+    | Language         | Type     | Name | Comment                           |
+    +------------------+-----------------------------------------------------+
+    | Perl             | function | os() | get a name of OS distribution     |
+    | Bash             | variable | os   | get a name of OS distribution     |
+    +------------------+-----------------------------------------------------+
+
+
 =head2 Ignore unsuccessful story code
 
 Every story is a script gets executed and thus returning an exit code. If exit code is bad (!=0)

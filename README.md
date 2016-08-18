@@ -664,13 +664,23 @@ Here is the how you access story variable in all three languages
 
 Some story properties have a proper accessors functions. Here is the list:
 
-
 * `project_root_dir()` - Root directory of outthentic project.
 
 * `test_root_dir()` - Test root directory. Root directory of generated perl test files , see also [story runner](#story-runner).
 
 * `config()` - Returns suite configuration hash object. See also [suite configuration](#suite-configuration).
 
+## Helper functions and variables
+
+Outthentic provides some helpers and variables:
+
+
+    +------------------+-----------------------------------------------------+
+    | Language         | Type     | Name | Comment                           |
+    +------------------+-----------------------------------------------------+
+    | Perl             | function | os() | get a name of OS distribution     |
+    | Bash             | variable | os   | get a name of OS distribution     |
+    +------------------+-----------------------------------------------------+
 
 ## Ignore unsuccessful story code
 

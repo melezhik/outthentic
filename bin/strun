@@ -139,16 +139,16 @@ sub wanted {
 my $st;
 
 if ($story_path){
-    my $st = ( system("perl $test_root_dir$project_root_dir/$story_path/sparrow.pl") == 0);
+    $st = system("perl $test_root_dir$project_root_dir/$story_path/sparrow.pl");
 }else{
-    my $st = ( system("perl $test_root_dir$project_root_dir/sparrow.pl") == 0);
+    $st = system("perl $test_root_dir$project_root_dir/sparrow.pl");
 }
 
-if ($st) {
+if ($st==0) {
   print colored(["green"],"STATUS\tSUCCEED\n");
 }else{
   print colored(["red"],"STATUS\tFAILED\n");
-  exit($!);
+  exit($st);
 }
 
 

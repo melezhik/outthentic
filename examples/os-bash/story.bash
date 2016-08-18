@@ -1,0 +1,2 @@
+echo $os
+echo OK

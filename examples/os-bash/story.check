@@ -1,0 +1,5 @@
+OK
+generator: <<CODE
+!bash
+echo $os
+CODE

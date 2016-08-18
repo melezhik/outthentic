@@ -57,6 +57,10 @@ examples/modules/foo/story.pl
 examples/modules/foo/story.pm
 examples/multiline/story.check
 examples/multiline/story.pl
+examples/os-bash/story.bash
+examples/os-bash/story.check
+examples/os-perl/story.check
+examples/os-perl/story.pl
 examples/outthentic.rb
 examples/perl-inline/story.check
 examples/perl-inline/story.pl

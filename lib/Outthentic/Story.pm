@@ -8,6 +8,7 @@ use File::ShareDir;
 use JSON;
 use Carp;
 
+
 our @EXPORT = qw{ 
 
     new_story end_of_story set_story story_cache_dir
@@ -38,6 +39,7 @@ our @EXPORT = qw{
 };
 
 our @stories = ();
+our $OS;
 
 sub new_story {
     
@@ -298,6 +300,8 @@ sub _mk_perl_glue_file {
     my $debug_mod12 = debug_mod12();
     my $cache_dir = story_cache_dir;
 
+    my $os = _resolve_os();
+
     print PERL_GLUE <<"CODE";
 
 package glue;
@@ -325,6 +329,8 @@ use strict;
     sub story_dir {
       '$story_dir'
     }
+
+    sub os { '$os' }
 
 1;
 
@@ -392,6 +398,8 @@ sub _mk_bash_glue_file {
 
     my $cache_dir = story_cache_dir;
 
+    my $os = _resolve_os();
+
     print BASH_GLUE <<"CODE";
 
     debug_mod=debug_mod12 
@@ -405,6 +413,8 @@ sub _mk_bash_glue_file {
     story_dir=$story_dir
 
     stdout_file=$stdout_file 
+
+    os=$os
 
 CODE
 
@@ -568,6 +578,30 @@ sub story_var {
 
     get_prop( 'story_vars' )->{$name};
 
+}
+
+sub _resolve_os {
+
+  if (!$OS){
+    
+    open(my $fh, '-|', 'lsb_release -d; uname -a; cat /etc/issue; cat /etc/*-release') or die $!;
+    while (my $line = <$fh>) {
+        chomp $line;
+        $line=~/CentOS \S+ release 5/i and $OS = 'centos5';
+        $line=~/CentOS \S+ release 6/i and $OS = 'centos6';
+        $line=~/CentOS \S+ release 7/i and $OS = 'centos7';
+        $line=~/Ubuntu/i and $OS = 'ubuntu';
+        $line=~/Debian/i and $OS = 'debian';
+    }
+
+    close $fh;
+  }
+
+  return $OS;
+}
+
+package main {
+  sub os { Outthentic::Story::_resolve_os }
 }
 
 

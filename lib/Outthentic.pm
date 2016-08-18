@@ -242,7 +242,12 @@ sub generate_asserts {
 
     dsl()->{match_l} = get_prop('match_l');
 
-    dsl()->{output} = run_story_file();
+    eval { dsl()->{output} = run_story_file() };
+
+    if ($@) {
+      $STATUS = 0;
+      die "story run error: $@";
+    }
 
     eval { dsl()->validate($story_check_file) };
 
@@ -255,9 +260,9 @@ sub generate_asserts {
     }
 
 
-    if ($err){
+    if ($err) {
       $STATUS = 0;
-      confess "outthentic::dsl parser error: $err";
+      die "validator error: $err";
     }
 
 }
@@ -280,6 +285,7 @@ sub note {
 
 END {
 
+  $STATUS=0 if $@;
 
   unless ($Outthentic::Silent){
     print "-"x3;

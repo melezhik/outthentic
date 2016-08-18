@@ -112,16 +112,16 @@ sub wanted {
         }
 
         if ( -e "$File::Find::dir/story.pm" ){
-            print F "do_perl_hook('$File::Find::dir/story.pm');\n\n";
+            print F "eval { do_perl_hook('$File::Find::dir/story.pm') }; die \"perl hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.pl" ){
-            print F "do_perl_hook('$File::Find::dir/hook.pl');\n\n";
+            print F "eval { do_perl_hook('$File::Find::dir/hook.pl') }; die \"perl hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.rb" ){
-            print F "do_ruby_hook('$File::Find::dir/hook.rb');\n\n";
+            print F "eval { do_ruby_hook('$File::Find::dir/hook.rb') }; die \"ruby hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.bash" ){
-            print F "do_bash_hook('$File::Find::dir/hook.bash');\n\n";
+            print F "eval { do_bash_hook('$File::Find::dir/hook.bash') } die \"bash hook error: \$@\" if \$@ ;\n\n";
         }
 
-        print F "eval \n\n{ generate_asserts(q{$File::Find::dir/story.check}) };\n\n die \$@ if \$@;\n\n";
+        print F "eval { generate_asserts(q{$File::Find::dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
 
         print F 'end_of_story();',"\n\n";
 

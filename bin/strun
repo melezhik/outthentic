@@ -4,9 +4,10 @@ use strict;
 
 use File::Find;
 use Getopt::Long;
-use Cwd;
 use File::Path qw(make_path remove_tree);
 use File::Spec;
+use Term::ANSIColor;
+use Cwd;
 
 my $project_root_dir  = $ENV{'OUTTHENTIC_ROOT'} || getcwd();
 my $silent_mod = 0;
@@ -118,7 +119,7 @@ sub wanted {
         }elsif ( -e "$File::Find::dir/hook.rb" ){
             print F "eval { do_ruby_hook('$File::Find::dir/hook.rb') }; die \"ruby hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.bash" ){
-            print F "eval { do_bash_hook('$File::Find::dir/hook.bash') } die \"bash hook error: \$@\" if \$@ ;\n\n";
+            print F "eval { do_bash_hook('$File::Find::dir/hook.bash') }; die \"bash hook error: \$@\" if \$@ ;\n\n";
         }
 
         print F "eval { generate_asserts(q{$File::Find::dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
@@ -135,10 +136,19 @@ sub wanted {
 
 }
 
+my $st;
+
 if ($story_path){
-    exec("perl $test_root_dir$project_root_dir/$story_path/sparrow.pl");
+    my $st = system("perl $test_root_dir$project_root_dir/$story_path/sparrow.pl");
 }else{
-    exec("perl $test_root_dir$project_root_dir/sparrow.pl");
+    my $st = system("perl $test_root_dir$project_root_dir/sparrow.pl");
+}
+
+if ($st == 0){
+  print colored(["green"],"STATUS\tSUCCEED\n");
+}else{
+  print colored(["red"],"STATUS\tFAILED\n");
+  exit($st);
 }
 
 

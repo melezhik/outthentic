@@ -283,23 +283,6 @@ sub note {
 
 }
 
-END {
-
-  $STATUS=0 if $@;
-
-  unless ($Outthentic::Silent){
-    print "-"x3;
-    print "\n";
-    if ($STATUS){ 
-      print colored(["green"],"STATUS\tSUCCEED\n");
-      exit(0);
-    }else{
-      print colored(["red"],"STATUS\tFAIL\n");
-      exit(1);
-    }
-  }
-
-}
 
 1;
 

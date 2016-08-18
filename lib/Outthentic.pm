@@ -284,6 +284,12 @@ sub note {
 }
 
 
+END {
+
+  exit(1) unless $STATUS;
+
+}
+
 1;
 
 

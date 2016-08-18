@@ -600,9 +600,10 @@ sub _resolve_os {
   return $OS;
 }
 
-package main {
-  sub os { Outthentic::Story::_resolve_os }
-}
+package main;
+
+sub os { Outthentic::Story::_resolve_os }
+
 
 
 1;

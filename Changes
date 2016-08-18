@@ -1,3 +1,7 @@
+0.2.3
+
+* better errors handling
+
 0.2.2 2016-08-15
 
 * a minor typo fixes ( both documentation and strun output )

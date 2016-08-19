@@ -1,3 +1,7 @@
+0.2.7 2016-08-19
+
+* fixing errors in sub _resolve_os function
+
 0.2.6 2016-08-18
 
 * fix package main bug

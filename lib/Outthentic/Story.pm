@@ -584,7 +584,7 @@ sub _resolve_os {
 
   if (!$OS){
     
-    open(my $fh, '-|', 'lsb_release -d; uname -a; cat /etc/issue; cat /etc/*-release') or die $!;
+    open(my $fh, '-|', 'lsb_release -d 2>/dev/null; uname -a; cat /etc/issue; cat /etc/*-release') or die $!;
     while (my $line = <$fh>) {
         chomp $line;
         $line=~/CentOS\s+.*release\s+(\d)/i and $OS = "centos$1";

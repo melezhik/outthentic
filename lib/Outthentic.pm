@@ -278,7 +278,8 @@ sub print_meta {
 
     open META, get_prop('story_dir')."/meta.txt" or die $!;
 
-    note( colored( ['yellow'],  short_story_name() ));
+    note( "\n\n".colored( ['yellow'],  short_story_name() )."\n\n");
+
     while (my $i = <META>){
         chomp $i;
         note( colored( ['magenta'],  "$i" ));

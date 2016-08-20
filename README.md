@@ -684,7 +684,7 @@ Outthentic provides some helpers and variables:
 
 ## Meta stories
 
-Meta stories are special type of swat stories.
+Meta stories are special type of outthentic stories.
 
 The essential property of meta story is it has no scenario file at all:
 
@@ -715,10 +715,13 @@ stories call inside meta story's hook file:
 
 
 
-Meta stories are very similar to upstream stories with redefined, with the only exclusion 
+Meta stories are very similar to upstream stories with redefined stdout, with the only exclusion 
 that as meta story has no scenario file there is no need for redefining a stdout.
 
-Meta stories can be also called as downstream stories.
+You may also call meta stories as downstream stories:
+
+
+    nano modules/foo/bar/meta.txt
 
 
 ## Ignore unsuccessful story code

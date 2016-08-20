@@ -42,6 +42,8 @@ examples/ignore-story-err/story.pm
 examples/ini-file/story.check
 examples/ini-file/story.pm
 examples/local/cache/modules/02packages.details.txt
+examples/meta-story/hook.bash
+examples/meta-story/meta.txt
 examples/modules/00/story.check
 examples/modules/00/story.pl
 examples/modules/01/story.check

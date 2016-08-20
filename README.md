@@ -682,6 +682,45 @@ Outthentic provides some helpers and variables:
     | Bash             | variable | os   | get a name of OS distribution     |
     +------------------+-----------------------------------------------------+
 
+## Meta stories
+
+Meta stories are special type of swat stories.
+
+The essential property of meta story is it has no scenario file at all:
+
+    # foo/bar story
+    mkdir foo/bar
+
+    # it's a meta story
+    touch foo/bar/meta.txt
+
+Placing a special `meta.txt' file into story directory makes that story a meta.
+
+You may live \`meta.txt' empty file or add some useful description to be printed  when story is executed:
+
+    nano foo/bar/meta.txt
+
+        This is my cool story.
+        Take a look at this!
+
+How one could use meta stories?
+
+Meta stories are just _containers_ for other downstream stories. Usually one defines some downstream
+stories call inside meta story's hook file:
+
+    nano foo/bar/hook.pm
+
+        run_story( '/story1' );
+        run_story( '/story2' );
+
+
+
+Meta stories are very similar to upstream stories with redefined, with the only exclusion 
+that as meta story has no scenario file there is no need for redefining a stdout.
+
+Meta stories can be also called as downstream stories.
+
+
 ## Ignore unsuccessful story code
 
 Every story is a script gets executed and thus returning an exit code. If exit code is bad (!=0)

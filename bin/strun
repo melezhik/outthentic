@@ -64,7 +64,7 @@ sub wanted {
 
     my $story_type = shift;
 
-    if ($file eq 'story.check') {
+    if ($file eq 'story.check' or $file eq 'meta.txt' ) {
 
         return if $seen{$File::Find::name};
 
@@ -112,6 +112,13 @@ sub wanted {
             print F "apply_story_vars();\n";
         }
 
+        if ($file eq 'meta.txt'){
+          print F "set_prop( is_meta => 1 );\n";
+          print F "print_meta();\n\n";
+        }else{
+          print F "set_prop( is_meta => 0 );\n";
+        }
+
         if ( -e "$File::Find::dir/story.pm" ){
             print F "eval { do_perl_hook('$File::Find::dir/story.pm') }; our \$STATUS=0, die \"perl hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.pl" ){
@@ -122,7 +129,11 @@ sub wanted {
             print F "eval { do_bash_hook('$File::Find::dir/hook.bash') }; our \$STATUS=0, die \"bash hook error: \$@\" if \$@ ;\n\n";
         }
 
-        print F "eval { generate_asserts(q{$File::Find::dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
+        unless ($file eq 'meta.txt'){
+
+          print F "eval { generate_asserts(q{$File::Find::dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
+
+        }
 
         print F 'end_of_story();',"\n\n";
 

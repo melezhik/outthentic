@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.7';
+our $VERSION = '0.2.8';
 
 1;
 
@@ -142,16 +142,7 @@ sub run_story_file {
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
 
-    my $short_story_dir = "/";
-
-    my $i;
-
-    for my $l (split /\//, $story_dir){
-      $short_story_dir.="$l/" unless $i++ < $cwd_size;
-
-    }
-
-    note("\n".colored(['yellow'],$short_story_dir)." started\n");
+    note("\n".colored(['yellow'],short_story_name())." started\n");
 
     if ( get_stdout() ){
 
@@ -283,6 +274,37 @@ sub note {
 
 }
 
+sub print_meta {
+
+    open META, get_prop('story_dir')."/meta.txt" or die $!;
+
+    note( colored( ['yellow'],  short_story_name() ));
+    while (my $i = <META>){
+        chomp $i;
+        note( colored( ['magenta'],  "$i" ));
+    }
+    close META;
+
+}
+
+sub short_story_name {
+
+
+    my $story_dir = get_prop('story_dir');
+
+    my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
+
+    my $short_story_dir = "/";
+
+    my $i;
+
+    for my $l (split /\//, $story_dir){
+      $short_story_dir.="$l/" unless $i++ < $cwd_size;
+
+    }
+
+    return $short_story_dir;
+}
 
 END {
 

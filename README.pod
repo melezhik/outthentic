@@ -852,6 +852,45 @@ Outthentic provides some helpers and variables:
     +------------------+-----------------------------------------------------+
 
 
+=head2 Meta stories
+
+Meta stories are special type of outthentic stories.
+
+The essential property of meta story is it has no scenario file at all:
+
+    # foo/bar story
+    mkdir foo/bar
+    
+    # it's a meta story
+    touch foo/bar/meta.txt
+
+Placing a special `meta.txt' file into story directory makes that story a meta.
+
+You may live `meta.txt' empty file or add some useful description to be printed  when story is executed:
+
+    nano foo/bar/meta.txt
+    
+        This is my cool story.
+        Take a look at this!
+
+How one could use meta stories?
+
+Meta stories are just I<containers> for other downstream stories. Usually one defines some downstream
+stories call inside meta story's hook file:
+
+    nano foo/bar/hook.pm
+    
+        run_story( '/story1' );
+        run_story( '/story2' );
+
+Meta stories are very similar to upstream stories with redefined stdout, with the only exclusion 
+that as meta story has no scenario file there is no need for redefining a stdout.
+
+You may also call meta stories as downstream stories:
+
+    nano modules/foo/bar/meta.txt
+
+
 =head2 Ignore unsuccessful story code
 
 Every story is a script gets executed and thus returning an exit code. If exit code is bad (!=0)

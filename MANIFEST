@@ -42,6 +42,8 @@ examples/ignore-story-err/story.pm
 examples/ini-file/story.check
 examples/ini-file/story.pm
 examples/local/cache/modules/02packages.details.txt
+examples/meta-story-as-downstream/hook.bash
+examples/meta-story-as-downstream/meta.txt
 examples/meta-story/hook.bash
 examples/meta-story/meta.txt
 examples/modules/00/story.check
@@ -57,6 +59,8 @@ examples/modules/echo-vars/story.rb
 examples/modules/foo/story.check
 examples/modules/foo/story.pl
 examples/modules/foo/story.pm
+examples/modules/meta-story/hook.bash
+examples/modules/meta-story/meta.txt
 examples/multiline/story.check
 examples/multiline/story.pl
 examples/os-bash/story.bash

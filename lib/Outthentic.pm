@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.9';
+our $VERSION = '0.2.10';
 
 1;
 
@@ -278,7 +278,7 @@ sub print_meta {
 
     open META, get_prop('story_dir')."/meta.txt" or die $!;
 
-    note( "\n\n".colored( ['yellow'],  short_story_name() )."\n\n");
+    note( "\n\n".colored( ['yellow'],  short_story_name() )." started\n");
 
     while (my $i = <META>){
         chomp $i;

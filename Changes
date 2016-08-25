@@ -1,3 +1,8 @@
+0.2.10 2016-08-25
+
+* sub _resolve_os - recognize a Red Hat OS
+* sub dump_os - dump OS strings as is ( helpful when troubleshooting OS recognition issues )
+
 0.2.9 2016-08-21
 
 * meta stories - POD updated

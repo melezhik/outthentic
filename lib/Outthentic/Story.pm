@@ -36,6 +36,8 @@ our @EXPORT = qw{
     test_root_dir
 
     host
+
+    dump_os
 };
 
 our @stories = ();
@@ -332,6 +334,7 @@ use strict;
 
     sub os { '$os' }
 
+
 1;
 
 CODE
@@ -580,19 +583,29 @@ sub story_var {
 
 }
 
-sub _resolve_os {
+sub dump_os {
 
-  if (!$OS){
-    
+    my $data;
+
     open(my $fh, '-|', 'lsb_release -d 2>/dev/null; uname -a; cat /etc/issue; cat /etc/*-release') or die $!;
+
     while (my $line = <$fh>) {
-        chomp $line;
-        $line=~/CentOS\s+.*release\s+(\d)/i and $OS = "centos$1";
-        $line=~/Ubuntu/i and $OS = 'ubuntu';
-        $line=~/Debian/i and $OS = 'debian';
+      $data.=$line;
     }
 
     close $fh;
+
+    $data;
+}
+
+sub _resolve_os {
+
+  if (!$OS){
+        my $data = dump_os();
+        $data=~/CentOS\s+.*release\s+(\d)/i and $OS = "centos$1";
+        $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1";
+        $data=~/Ubuntu/i and $OS = 'ubuntu';
+        $data=~/Debian/i and $OS = 'debian';
   }
 
   return $OS;

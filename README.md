@@ -76,6 +76,13 @@ Here we require that our scenario should produce  \`I am OK' and \`I am outthent
     I am OK
     I am outthentic
 
+NOTE: You can leave check file empty, but it's required anyway
+
+    $ touch story.check
+
+Empty check file means you just want to ensure that your story succeed ( exit code 0 ) and don't want
+run any checks for story stdout.
+
 ## Story
 
 Outthentic story is a scenarios + check file. When outthentic **run** story it:

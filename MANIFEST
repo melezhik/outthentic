@@ -30,6 +30,8 @@ examples/between/story.check
 examples/between/story.pl
 examples/cpanfile
 examples/cpanfile.snapshot
+examples/empty-check-file/story.bash
+examples/empty-check-file/story.check
 examples/hello/story.check
 examples/hello/story.pl
 examples/hello/world/story.check

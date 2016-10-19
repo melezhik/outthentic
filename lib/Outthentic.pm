@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.10';
+our $VERSION = '0.2.11';
 
 1;
 
@@ -153,6 +153,7 @@ sub run_story_file {
           };
         }
         set_prop( stdout => get_stdout() );
+        set_prop( scenario_status => 1 );
 
     }else{
 
@@ -192,10 +193,14 @@ sub run_story_file {
 
         if ($st) {
             outh_ok(1, "scenario succeeded");
+            set_prop( scenario_status => 1 );
         }elsif(ignore_story_err()){
             outh_ok(1, "scenario failed, still continue due to `ignore_story_err' is set");
+            set_prop( scenario_status => 2 );
         }else{
             outh_ok(0, "scenario succeeded");
+            set_prop( scenario_status => 0 );
+
         }
 
         set_prop( stdout => $out );
@@ -235,10 +240,15 @@ sub generate_asserts {
 
     eval { dsl()->{output} = run_story_file() };
 
+
     if ($@) {
       $STATUS = 0;
       die "story run error: $@";
     }
+
+    return unless get_prop('scenario_status'); # we don't run checks for failed scenarios
+
+    return unless -s $story_check_file; # don't run check when check file is empty
 
     eval { dsl()->validate($story_check_file) };
 

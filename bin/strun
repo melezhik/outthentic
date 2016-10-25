@@ -36,7 +36,7 @@ GetOptions (
 ) or die("Error in command line arguments\n");
 
 
-my $test_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}/tmp/".$$ : '/tmp/.outthentic/'.$$;
+my $test_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}/tmp/".$$ : "$ENV{HOME}/.outthentic/tmp/".$$;
 
 remove_tree($test_root_dir);
 make_path($test_root_dir);

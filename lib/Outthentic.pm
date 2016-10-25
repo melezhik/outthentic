@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.11';
+our $VERSION = '0.2.12';
 
 1;
 
@@ -1540,7 +1540,7 @@ Test root directory resolution table:
     +---------------------+----------------------+
     | Test root directory | SPARROW_ROOT Is Set? |
     +---------------------+----------------------+
-    | /tmp/.outthentic    | No                   |
+    | ~/.outthentic/tmp/  | No                   |
     | $SPARROW_ROOT/tmp/  | Yes                  |
     +---------------------+----------------------+
 

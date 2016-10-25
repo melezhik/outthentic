@@ -1207,7 +1207,7 @@ Test root directory resolution table:
     +---------------------+----------------------+
     | Test root directory | SPARROW_ROOT Is Set? |
     +---------------------+----------------------+
-    | /tmp/.outthentic    | No                   |
+    | ~/.outthentic/tmp/  | No                   |
     | $SPARROW_ROOT/tmp/  | Yes                  |
     +---------------------+----------------------+
 

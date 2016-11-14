@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.12';
+our $VERSION = '0.2.13';
 
 1;
 

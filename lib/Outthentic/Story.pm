@@ -587,7 +587,7 @@ sub dump_os {
 
     my $data;
 
-    open(my $fh, '-|', 'lsb_release -d 2>/dev/null; uname -a; cat /etc/issue; cat /etc/*-release') or die $!;
+    open(my $fh, '-|', 'lsb_release -d 2>/dev/null; uname -a; cat /etc/issue; cat /etc/*-release 2>&1') or die $!;
 
     while (my $line = <$fh>) {
       $data.=$line;
@@ -602,6 +602,7 @@ sub _resolve_os {
 
   if (!$OS){
         my $data = dump_os();
+        $data=~/Minoca OS/i and $OS = "minoca";
         $data=~/CentOS\s+.*release\s+(\d)/i and $OS = "centos$1";
         $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1";
         $data=~/Ubuntu/i and $OS = 'ubuntu';

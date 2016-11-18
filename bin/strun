@@ -12,6 +12,7 @@ use Cwd;
 my $project_root_dir  = $ENV{'OUTTHENTIC_ROOT'} || getcwd();
 my $silent_mod = 0;
 my $debug_mod = 0;
+my $nocolor = 0;
 my $story_path;
 my $match_l = $ENV{'match_l'} || 200;
 my $ini_file_path;
@@ -23,6 +24,7 @@ my @runtime_params;
 GetOptions (
 
         "silent"        => \$silent_mod,        # boolean
+        "nocolor"       => \$nocolor,           # boolean
         "debug=i"       => \$debug_mod,         # numeric
         "match_l=i"     => \$match_l,           # numeric
         "root=s"        => \$project_root_dir,  # string
@@ -35,6 +37,8 @@ GetOptions (
 
 ) or die("Error in command line arguments\n");
 
+
+$nocolor ||= $ENV{SPARROW_NO_COLOR};
 
 my $test_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}/tmp/".$$ : "$ENV{HOME}/.outthentic/tmp/".$$;
 
@@ -102,6 +106,7 @@ sub wanted {
           print F "set_prop( verbose => 1 );\n";
         }
         print F "set_prop( debug => $debug_mod );\n";
+        print F "set_prop( nocolor => $nocolor );\n";
         print F "set_prop( match_l => $match_l );\n";
         print F "set_prop( runtime_params => q{".(join ':::', @runtime_params)."} );\n";
 
@@ -156,9 +161,9 @@ if ($story_path){
 }
 
 if ($st==0) {
-  print colored(["green"],"STATUS\tSUCCEED\n");
+  print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n");
 }else{
-  print colored(["red"],"STATUS\tFAILED ($st)\n");
+  print $nocolor ? "STATUS\tFAILED ($st)\n" :  colored(["red"],"STATUS\tFAILED ($st)\n");
   exit(1);
 }
 

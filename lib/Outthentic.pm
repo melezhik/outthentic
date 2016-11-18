@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.13';
+our $VERSION = '0.2.14';
 
 1;
 
@@ -42,7 +42,7 @@ sub execute_cmd2 {
     while (my $l = <OUT>) {
         $out.=$l;
         chomp $l;
-        note(colored(['white'],$l)) if get_prop('verbose');
+        note( nocolor() ? $l : colored(['white'],$l)) if get_prop('verbose');
     }
 
     $status = 0 unless close OUT;
@@ -54,12 +54,16 @@ sub config {
   $config
 }
 
+sub nocolor {
+  get_prop('nocolor')
+}
+
 sub populate_config {
 
     unless ($config){
         if (get_prop('ini_file_path') and -f get_prop('ini_file_path') ){
           my $path = get_prop('ini_file_path');
-          my %config  = Config::General->new($path)->getall or confess "file $path is not valid config file";
+          my %config  = Config::General->new( -InterPolateVars => 1 , -ConfigFile => $path )->getall or confess "file $path is not valid config file";
           $config = {%config};
         }elsif(get_prop('yaml_file_path') and -f get_prop('yaml_file_path')){
           my $path = get_prop('yaml_file_path');
@@ -72,7 +76,7 @@ sub populate_config {
           $config = from_json($json_str);
         }elsif ( -f 'suite.ini' ){
           my $path = 'suite.ini';
-          my %config = Config::General->new($path)->getall or confess "file $path is not valid config file";
+          my %config = Config::General->new( -InterPolateVars => 1 , -ConfigFile => $path )->getall or confess "file $path is not valid config file";
           $config = {%config};
         }elsif ( -f 'suite.yaml'){
           my $path = 'suite.yaml';
@@ -92,7 +96,7 @@ sub populate_config {
 
     if ( -f 'suite.ini' ){
       my $path = 'suite.ini';
-      my %config = Config::General->new($path)->getall or confess "file $path is not valid config file";
+      my %config = Config::General->new( -InterPolateVars => 1 , -ConfigFile => $path )->getall or confess "file $path is not valid config file";
       $default_config = {%config};
     }
 
@@ -142,14 +146,14 @@ sub run_story_file {
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
 
-    note("\n".colored(['yellow'],short_story_name())." started\n");
+    note("\n". ( nocolor() ? short_story_name() : colored(['yellow'],short_story_name()) )." started\n");
 
     if ( get_stdout() ){
 
         note("stdout is already set") if debug_mod12;
         if ( get_prop('verbose') ){
           for my $l (split /\n/, get_stdout()){
-            note(colored(['white'],$l));
+            note( nocolor() ? $l : colored(['white'],$l));
           };
         }
         set_prop( stdout => get_stdout() );
@@ -272,7 +276,13 @@ sub outh_ok {
 
     my $st = shift;
     my $message = shift;
-    print $st ? colored(['green'],"ok\t$message")."\n" : colored(['red'], "NOT OK\t$message")."\n";
+
+    if ($st) {
+      print nocolor() ? "ok\t$message\n" : colored(['green'],"ok\t$message")."\n";
+    } else {
+      print nocolor() ? "not ok\t$message\n" : colored(['red'], "not ok\t$message")."\n";
+    };
+
     $STATUS = 0 unless $st;
 }
 
@@ -288,11 +298,11 @@ sub print_meta {
 
     open META, get_prop('story_dir')."/meta.txt" or die $!;
 
-    note( "\n\n".colored( ['yellow'],  short_story_name() )." started\n");
+    note( "\n\n". ( nocolor() ? short_story_name() : colored( ['yellow'],  short_story_name() ) )." started\n");
 
     while (my $i = <META>){
         chomp $i;
-        note( colored( ['magenta'],  "$i" ));
+        note( nocolor() ? $i : colored( ['magenta'],  "$i" ));
     }
     close META;
 
@@ -544,7 +554,7 @@ Project root directory - a directory holding all related stories.
 
 =back
 
-A project root directory could be set explicitey using C<--root> parameter:
+A project root directory could be set explicitly using C<--root> parameter:
 
     $ strun --root /path/to/my/root/
 
@@ -1371,7 +1381,7 @@ C<--story>
 
 =back
 
-Run only single story. This should be path to a directory containing story inside project. A path should
+Run only single story. This should be path to a directory containing story inside project. A path should 
 be relative against project root directory. Examples:
 
     # A project  with 3 stories
@@ -1423,6 +1433,17 @@ C<--json>
 JSON configuration file path. 
 
 See L<suite configuration|#suite-configuration> section for details.
+
+=over
+
+=item *
+
+C<--nocolor>
+
+
+=back
+
+If set disable color output. By default C<strun> prints with colors.
 
 
 =head1 Suite configuration
@@ -1530,6 +1551,12 @@ C<match_l> - In a suite runner output truncate matching strings to {match_l} byt
 =item *
 
 C<SPARROW_ROOT> - if set, used as prefix for test root directory.
+
+
+
+=item *
+
+C<SPARROW_NO_COLOR> - disable color output (see --nocolor option of C<strun>)
 
 
 

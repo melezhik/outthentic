@@ -28,6 +28,8 @@ examples/between-stream/story.check
 examples/between-stream/story.pl
 examples/between/story.check
 examples/between/story.pl
+examples/config-general-interpolate-vars/story.bash
+examples/config-general-interpolate-vars/story.check
 examples/cpanfile
 examples/cpanfile.snapshot
 examples/empty-check-file/story.bash

@@ -211,7 +211,7 @@ Project root directory - a directory holding all related stories.
 
 =back
 
-A project root directory could be set explicitey using C<--root> parameter:
+A project root directory could be set explicitly using C<--root> parameter:
 
     $ strun --root /path/to/my/root/
 
@@ -1038,7 +1038,7 @@ C<--story>
 
 =back
 
-Run only single story. This should be path to a directory containing story inside project. A path should
+Run only single story. This should be path to a directory containing story inside project. A path should 
 be relative against project root directory. Examples:
 
     # A project  with 3 stories
@@ -1090,6 +1090,17 @@ C<--json>
 JSON configuration file path. 
 
 See L<suite configuration|#suite-configuration> section for details.
+
+=over
+
+=item *
+
+C<--nocolor>
+
+
+=back
+
+If set disable color output. By default C<strun> prints with colors.
 
 
 =head1 Suite configuration
@@ -1197,6 +1208,12 @@ C<match_l> - In a suite runner output truncate matching strings to {match_l} byt
 =item *
 
 C<SPARROW_ROOT> - if set, used as prefix for test root directory.
+
+
+
+=item *
+
+C<SPARROW_NO_COLOR> - disable color output (see --nocolor option of C<strun>)
 
 
 

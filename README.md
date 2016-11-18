@@ -144,7 +144,7 @@ Summary:
 
 * Project root directory - a directory holding all related stories. 
 
-A project root directory could be set explicitey using `--root` parameter:
+A project root directory could be set explicitly using `--root` parameter:
 
     $ strun --root /path/to/my/root/
 
@@ -832,7 +832,7 @@ Truncate matching strings. In a TAP output truncate matching strings to {match_l
 
 * `--story` 
 
-Run only single story. This should be path to a directory containing story inside project. A path should
+Run only single story. This should be path to a directory containing story inside project. A path should 
 be relative against project root directory. Examples:
 
     # A project  with 3 stories
@@ -863,6 +863,10 @@ See [suite configuration](#suite-configuration) section for details.
 JSON configuration file path. 
 
 See [suite configuration](#suite-configuration) section for details.
+
+* `--nocolor`
+
+If set disable color output. By default `strun` prints with colors.
 
 # Suite configuration
 
@@ -947,6 +951,8 @@ This way we will override foo.bar to value \`20'.
 * `match_l` - In a suite runner output truncate matching strings to {match_l} bytes. See also `--match_l` in [options](#options).
 
 * `SPARROW_ROOT` - if set, used as prefix for test root directory.
+
+* `SPARROW_NO_COLOR` - disable color output (see --nocolor option of `strun`)
 
 Test root directory resolution table:
     

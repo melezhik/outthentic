@@ -866,7 +866,12 @@ See [suite configuration](#suite-configuration) section for details.
 
 * `--nocolor`
 
-If set disable color output. By default `strun` prints with colors.
+If set - disable color output. By default `strun` prints with colors.
+
+* `--dump-config`
+
+If set - dumps a suite configuration and exit not doing any other actions. See also suite configuration section.
+
 
 # Suite configuration
 

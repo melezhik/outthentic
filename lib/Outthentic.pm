@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.14';
+our $VERSION = '0.2.15';
 
 1;
 
@@ -63,7 +63,11 @@ sub populate_config {
     unless ($config){
         if (get_prop('ini_file_path') and -f get_prop('ini_file_path') ){
           my $path = get_prop('ini_file_path');
-          my %config  = Config::General->new( -InterPolateVars => 1 , -ConfigFile => $path )->getall or confess "file $path is not valid config file";
+          my %config  = Config::General->new( 
+            -InterPolateVars => 1 ,
+            -InterPolateEnv  => 1 ,
+            -ConfigFile => $path 
+          )->getall or confess "file $path is not valid config file";
           $config = {%config};
         }elsif(get_prop('yaml_file_path') and -f get_prop('yaml_file_path')){
           my $path = get_prop('yaml_file_path');
@@ -76,7 +80,11 @@ sub populate_config {
           $config = from_json($json_str);
         }elsif ( -f 'suite.ini' ){
           my $path = 'suite.ini';
-          my %config = Config::General->new( -InterPolateVars => 1 , -ConfigFile => $path )->getall or confess "file $path is not valid config file";
+          my %config  = Config::General->new( 
+            -InterPolateVars => 1 ,
+            -InterPolateEnv  => 1 ,
+            -ConfigFile => $path 
+          )->getall or confess "file $path is not valid config file";
           $config = {%config};
         }elsif ( -f 'suite.yaml'){
           my $path = 'suite.yaml';
@@ -96,7 +104,11 @@ sub populate_config {
 
     if ( -f 'suite.ini' ){
       my $path = 'suite.ini';
-      my %config = Config::General->new( -InterPolateVars => 1 , -ConfigFile => $path )->getall or confess "file $path is not valid config file";
+      my %config  = Config::General->new( 
+        -InterPolateVars => 1 ,
+        -InterPolateEnv  => 1 ,
+        -ConfigFile => $path 
+      )->getall or confess "file $path is not valid config file";
       $default_config = {%config};
     }
 

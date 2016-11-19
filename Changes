@@ -1,3 +1,9 @@
+0.2.15 2016-11-19
+
+* `strun` --dump-config option to dump suite configuration
+* suite.ini files - use Config::General with InterPolateEnv enabled
+
+
 0.2.14 2016-11-18
 
 * suite.ini files - use Config::General with InterPolateVars enabled

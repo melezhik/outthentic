@@ -54,6 +54,11 @@ sub config {
   $config
 }
 
+sub dump_config {
+  my $json = JSON->new->pretty;
+  print $json->encode(config());
+}
+
 sub nocolor {
   get_prop('nocolor')
 }
@@ -1455,7 +1460,18 @@ C<--nocolor>
 
 =back
 
-If set disable color output. By default C<strun> prints with colors.
+If set - disable color output. By default C<strun> prints with colors.
+
+=over
+
+=item *
+
+C<--dump-config>
+
+
+=back
+
+If set - dumps a suite configuration and exit not doing any other actions. See also suite configuration section.
 
 
 =head1 Suite configuration

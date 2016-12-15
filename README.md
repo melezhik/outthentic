@@ -824,6 +824,10 @@ Enable/disable debug mode:
 * `--silent` 
 
 Run in silent mode. By default strun prints all scenarios output, to disable this choose `--silent` option.
+
+* `--purge-cache`
+
+Purge strun cache upon exit. By default `--purge-cache` is disabled ( cache remains to allow debugging and trouble shooting)
  
 
 * `--match_l` 

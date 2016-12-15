@@ -15,7 +15,8 @@ sub wanted  {
 
   (my $dir = $File::Find::dir)=~s{examples/}{};
  
-  (system("strun --root ./examples --story $dir") == 0)  or die "strun --root ./examples --story $dir failed";
+  my $cmd = "strun --purge-cache --root ./examples --story $dir";
+  (system($cmd) == 0)  or die "$cmd failed";
 
 }
 

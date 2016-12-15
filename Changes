@@ -1,3 +1,7 @@
+0.2.16 2016-12-15
+
+* `--purge-cache` parameter
+
 0.2.15 2016-11-19
 
 * `strun` --dump-config option to dump suite configuration

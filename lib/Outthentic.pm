@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.15';
+our $VERSION = '0.2.16';
 
 1;
 
@@ -1377,6 +1377,17 @@ C<--silent>
 =back
 
 Run in silent mode. By default strun prints all scenarios output, to disable this choose C<--silent> option.
+
+=over
+
+=item *
+
+C<--purge-cache>
+
+
+=back
+
+Purge strun cache upon exit. By default C<--purge-cache> is disabled ( cache remains to allow debugging and trouble shooting)
 
 =over
 

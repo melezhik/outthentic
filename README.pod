@@ -1027,7 +1027,7 @@ C<--purge-cache>
 
 =back
 
-Purge strun cache upon exit. By default C<--purge-cache> is disabled ( cache remains to allow debugging and trouble shooting)
+Purge strun cache upon exit. By default C<--purge-cache> is disabled ( cache remains to allow debugging and troubleshooting ).
 
 =over
 

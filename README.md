@@ -827,7 +827,7 @@ Run in silent mode. By default strun prints all scenarios output, to disable thi
 
 * `--purge-cache`
 
-Purge strun cache upon exit. By default `--purge-cache` is disabled ( cache remains to allow debugging and trouble shooting)
+Purge strun cache upon exit. By default `--purge-cache` is disabled ( cache remains to allow debugging and troubleshooting ).
  
 
 * `--match_l` 

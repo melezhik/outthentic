@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.16';
+our $VERSION = '0.2.17';
 
 1;
 
@@ -163,7 +163,7 @@ sub run_story_file {
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
 
-    note("\n". ( nocolor() ? short_story_name() : colored(['yellow'],short_story_name()) )." started\n");
+    note("\n". ( nocolor() ? short_story_name() : colored(['yellow'],short_story_name()) )." started");
 
     if ( get_stdout() ){
 

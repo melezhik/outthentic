@@ -174,9 +174,9 @@ system("rm -rf $test_root_dir") if $purge_cache;
 unless ( $dump_config ) { # do not check story status in case we only dump config data
 
   if ($st==0) {
-    print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n");
+    print $nocolor ? "\nSTATUS\tSUCCEED\n" : "\n".colored(["green"],"STATUS\tSUCCEED\n");
   }else{
-    print $nocolor ? "STATUS\tFAILED ($st)\n" :  colored(["red"],"STATUS\tFAILED ($st)\n");
+    print $nocolor ? "\nSTATUS\tFAILED ($st)\n" :  "\n".colored(["red"],"STATUS\tFAILED ($st)\n");
     exit(1);
   }
   

@@ -38,6 +38,7 @@ our @EXPORT = qw{
     host
 
     dump_os
+
 };
 
 our @stories = ();
@@ -63,6 +64,7 @@ sub end_of_story {
     if (debug_mod12()){
         main::note("end of story: ".(get_prop('story')));
     }
+
     delete $stories[-1];
 
 }

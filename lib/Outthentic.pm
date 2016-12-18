@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.17';
+our $VERSION = '0.2.18';
 
 1;
 
@@ -213,14 +213,18 @@ sub run_story_file {
         my ($st, $out) = execute_cmd2($story_command);
 
         if ($st) {
-            outh_ok(1, "scenario succeeded");
+            outh_ok(1, "scenario succeeded" );
             set_prop( scenario_status => 1 );
+            push @Outthentic::STORY_STAT, [ short_story_name(), 1, $out ];
+
         }elsif(ignore_story_err()){
             outh_ok(1, "scenario failed, still continue due to `ignore_story_err' is set");
             set_prop( scenario_status => 2 );
+            push @Outthentic::STORY_STAT, [ short_story_name(), 2, $out ];
         }else{
             outh_ok(0, "scenario succeeded");
             set_prop( scenario_status => 0 );
+            push @Outthentic::STORY_STAT, [ short_story_name(), 0, $out ];
 
         }
 
@@ -277,7 +281,10 @@ sub generate_asserts {
 
     for my $r ( @{dsl()->results}){
         note($r->{message}) if $r->{type} eq 'debug';
-        outh_ok($r->{status}, $r->{message}) if $r->{type} eq 'check_expression';
+        if ($r->{type} eq 'check_expression' ){
+          push @Outthentic::STORY_STAT, [ short_story_name(), $r->{status}, $r->{message} ];
+          outh_ok($r->{status}, $r->{message}) 
+        };
 
     }
 
@@ -289,9 +296,11 @@ sub generate_asserts {
 
 }
 
+      
+
 sub outh_ok {
 
-    my $st = shift;
+    my $st      = shift;
     my $message = shift;
 
     if ($st) {

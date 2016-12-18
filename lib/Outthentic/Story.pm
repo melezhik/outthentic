@@ -21,7 +21,7 @@ our @EXPORT = qw{
 
     dsl captures capture stream match_lines
 
-    run_story apply_story_vars story_var
+    run_story apply_story_vars story_var story_vars_pretty
 
     do_perl_hook
 
@@ -49,8 +49,7 @@ sub new_story {
 
     my $self = {
         ID =>  scalar(@stories),
-        story_vars => {},
-        props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new() },
+        props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new() , story_vars => {} },
     };
 
     push @stories, $self;
@@ -582,6 +581,12 @@ sub story_var {
     my $name = shift;
 
     get_prop( 'story_vars' )->{$name};
+
+}
+
+sub story_vars_pretty {
+
+    join " ", map { "$_:".(story_var($_)) } keys %{get_prop( 'story_vars' ) };
 
 }
 

@@ -350,7 +350,7 @@ sub short_story_name {
 
     }
 
-    return $short_story_dir;
+    return $short_story_dir.' '.story_vars_pretty();
 }
 
 END {

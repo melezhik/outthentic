@@ -91,6 +91,10 @@ sub set_story {
 
     my $bash_run_opts = "source "._bash_glue_file()." && source $dist_lib_dir/outthentic.bash";
 
+    get_prop('dsl')->{languages}->{ruby} = $ruby_run_cmd; 
+
+    get_prop('dsl')->{languages}->{bash} = $bash_run_opts; 
+
     _make_cache_dir();
 
     _mk_perl_glue_file();

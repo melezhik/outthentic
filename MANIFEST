@@ -112,6 +112,8 @@ examples/run-story/story.pm
 examples/story-data-share/story.check
 examples/story-data-share/story.pl
 examples/story-data-share/story.pm
+examples/story-stat/hook.pl
+examples/story-stat/story.check
 examples/text-blocks-stream/story.check
 examples/text-blocks-stream/story.pl
 examples/text-blocks-stream2/story.check

@@ -283,6 +283,8 @@ sub run_story {
       }
     }
 
+    # return statistic for downstream story just executed
+    return Outthentic::Story::Stat->current;
 }
 
 sub do_perl_hook {

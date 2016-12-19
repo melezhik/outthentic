@@ -4,6 +4,7 @@ package Outthentic::Story;
 use strict;
 use base 'Exporter';
 use Outthentic::DSL;
+use Outthentic::Story::Stat;
 use File::ShareDir;
 use JSON;
 use Carp;
@@ -49,7 +50,10 @@ sub new_story {
 
     my $self = {
         ID =>  scalar(@stories),
-        props => { ignore_story_err => 0 , dsl => Outthentic::DSL->new() , story_vars => {} },
+        props => { 
+          ignore_story_err => 0 , 
+          dsl => Outthentic::DSL->new() , 
+          story_vars => {} },
     };
 
     push @stories, $self;
@@ -86,10 +90,6 @@ sub set_story {
     get_prop('dsl')->{cache_dir} = story_cache_dir();
 
     my $bash_run_opts = "source "._bash_glue_file()." && source $dist_lib_dir/outthentic.bash";
-
-    get_prop('dsl')->{languages}->{ruby} = $ruby_run_cmd; 
-
-    get_prop('dsl')->{languages}->{bash} = $bash_run_opts; 
 
     _make_cache_dir();
 
@@ -251,7 +251,10 @@ sub run_story {
 
     my $story_vars = shift || {};
 
-    $main::story_vars = $story_vars;
+    Outthentic::Story::Stat->new_story({
+      vars => $story_vars,
+      path => $path
+    });
 
     my $test_root_dir = get_prop('test_root_dir');
 
@@ -556,20 +559,22 @@ sub do_bash_hook {
 
 sub apply_story_vars {
 
-    set_prop( story_vars => $main::story_vars );
+    my $story_vars = Outthentic::Story::Stat->current->{vars};
+
+    set_prop( story_vars =>  $story_vars );
 
     open STORY_VARS, ">", (story_cache_dir())."/variables.json" 
     or die "can't open ".(story_cache_dir())."/variables.json write: $!";
 
-    print STORY_VARS encode_json($main::story_vars);
+    print STORY_VARS encode_json($story_vars);
 
     close STORY_VARS;
 
     open STORY_VARS, ">", (story_cache_dir())."/variables.bash" 
     or die "can't open ".(story_cache_dir())."/variables.bash write: $!";
 
-    for my $name (keys %{$main::story_vars} ){
-      print STORY_VARS "$name=".$main::story_vars->{$name}."\n";
+    for my $name (keys %{$story_vars} ){
+      print STORY_VARS "$name=".$story_vars->{$name}."\n";
     }
 
     close STORY_VARS;

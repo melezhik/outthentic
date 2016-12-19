@@ -2,13 +2,50 @@ run_story('00');
 run_story('01', { foo => 'hello world'});
 run_story('02', { FOO_THING => 'FOO_VALUE!!!' });
 
+my @s;
+my @chk_list;
 
-#print STDERR Dumper([@Outthentic::STORY_STAT]);
+select(STDERR);
 
-print STDERR "story | status |  message \n";
+for my $s (Outthentic::Story::Stat->all){
+    @s = (
+      $s->{path}, 
+      ( join ' ', map { "$_: $s->{vars}->{$_}" } keys %{$s->{vars}} ), 
+      ( $s->{scenario_status} ? "OK" : "FAILED" ), 
+      $s->{stdout}
+    );
 
-for my $s (@Outthentic::STORY_STAT){
-    my @s = ($s->[0],( $s->[1] ? "OK" : "FAILED" ), $s->[2]);
-    print STDERR join " | ", map {chomp $_; $_}  @s;
-    print STDERR "\n";
+    for my $c (@{$s->{check_stat}}) {
+      push @chk_list, ( $c->{status} ? "ok" : "not ok" ). " - $c->{message}";
+    }
+
+  write;
+
 }
+
+format STDERR_TOP = 
+
+/////////////////////
+/// Custom Report ///
+/////////////////////
+
+.
+
+format STDERR = 
+@*
+"story: $s[0]"
+@*
+"variables: $s[1]"
+@*
+"scenario status: $s[2]"
+stdout:
+@*
+$s[3]
+
+check list:
+@* ~~
+shift @chk_list
+---------------------------------------------------------------------------
+.
+
+

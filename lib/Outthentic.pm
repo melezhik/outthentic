@@ -215,17 +215,19 @@ sub run_story_file {
         if ($st) {
             outh_ok(1, "scenario succeeded" );
             set_prop( scenario_status => 1 );
-            push @Outthentic::STORY_STAT, [ short_story_name(), 1, $out ];
+            Outthentic::Story::Stat->set_scenario_status(1);
+            Outthentic::Story::Stat->set_stdout($out);
 
         }elsif(ignore_story_err()){
             outh_ok(1, "scenario failed, still continue due to `ignore_story_err' is set");
             set_prop( scenario_status => 2 );
-            push @Outthentic::STORY_STAT, [ short_story_name(), 2, $out ];
+            Outthentic::Story::Stat->set_scenario_status(2);
+            Outthentic::Story::Stat->set_stdout($out);
         }else{
             outh_ok(0, "scenario succeeded");
             set_prop( scenario_status => 0 );
-            push @Outthentic::STORY_STAT, [ short_story_name(), 0, $out ];
-
+            Outthentic::Story::Stat->set_scenario_status(0);
+            Outthentic::Story::Stat->set_stdout($out);
         }
 
         set_prop( stdout => $out );
@@ -282,7 +284,7 @@ sub generate_asserts {
     for my $r ( @{dsl()->results}){
         note($r->{message}) if $r->{type} eq 'debug';
         if ($r->{type} eq 'check_expression' ){
-          push @Outthentic::STORY_STAT, [ short_story_name(), $r->{status}, $r->{message} ];
+          Outthentic::Story::Stat->add_check_stat($r);
           outh_ok($r->{status}, $r->{message}) 
         };
 

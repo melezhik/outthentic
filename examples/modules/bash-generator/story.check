@@ -1,0 +1,6 @@
+generator: <<CODE
+!bash
+foo=$(story_var foo)
+echo foo: $foo 
+CODE
+

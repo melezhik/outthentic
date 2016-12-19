@@ -1,3 +1,7 @@
+0.2.19 2016-12-19
+
+* restore lost META.yml 
+
 0.2.18 2016-12-19
 
 * print story variables in strun's report 

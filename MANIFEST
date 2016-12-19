@@ -3,8 +3,6 @@ bash_lib/outthentic.bash
 bin/strun
 Changes
 examples/.exists
-examples/bash-downstream-story-pass-variables/hook.bash
-examples/bash-downstream-story-pass-variables/story.check
 examples/bash-generators/common.bash
 examples/bash-generators/story.bash
 examples/bash-generators/story.check
@@ -16,6 +14,8 @@ examples/bash-ignore-story-err/story.check
 examples/bash-ignore-story-err/story.pl
 examples/bash-pass-config/story.bash
 examples/bash-pass-config/story.check
+examples/bash-run-story/hook.bash
+examples/bash-run-story/story.check
 examples/bash-set-stdout/hook.bash
 examples/bash-set-stdout/story.check
 examples/between-keep-order/story.check
@@ -34,8 +34,10 @@ examples/config-general-interpolate-vars/story.bash
 examples/config-general-interpolate-vars/story.check
 examples/cpanfile
 examples/cpanfile.snapshot
-examples/custom-reports/hook.pl
-examples/custom-reports/meta.txt
+examples/custom-reports-all/hook.pl
+examples/custom-reports-all/meta.txt
+examples/custom-reports-failures/hook.pl
+examples/custom-reports-failures/meta.txt
 examples/empty-check-file/story.bash
 examples/empty-check-file/story.check
 examples/hello/story.check
@@ -62,8 +64,10 @@ examples/modules/02/story.bash
 examples/modules/02/story.check
 examples/modules/bar/story.check
 examples/modules/bar/story.pm
-examples/modules/echo-vars/story.check
-examples/modules/echo-vars/story.rb
+examples/modules/bash-generator/story.bash
+examples/modules/bash-generator/story.check
+examples/modules/echo-vars-ruby/story.check
+examples/modules/echo-vars-ruby/story.rb
 examples/modules/foo/story.check
 examples/modules/foo/story.pl
 examples/modules/foo/story.pm

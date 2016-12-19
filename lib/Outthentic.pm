@@ -176,6 +176,9 @@ sub run_story_file {
         set_prop( stdout => get_stdout() );
         set_prop( scenario_status => 1 );
 
+        Outthentic::Story::Stat->set_scenario_status(1);
+        Outthentic::Story::Stat->set_stdout(get_stdout());
+
     }else{
 
 
@@ -228,6 +231,7 @@ sub run_story_file {
             set_prop( scenario_status => 0 );
             Outthentic::Story::Stat->set_scenario_status(0);
             Outthentic::Story::Stat->set_stdout($out);
+            Outthentic::Story::Stat->set_status(0);
         }
 
         set_prop( stdout => $out );
@@ -285,7 +289,8 @@ sub generate_asserts {
         note($r->{message}) if $r->{type} eq 'debug';
         if ($r->{type} eq 'check_expression' ){
           Outthentic::Story::Stat->add_check_stat($r);
-          outh_ok($r->{status}, $r->{message}) 
+          outh_ok($r->{status}, $r->{message}); 
+          Outthentic::Story::Stat->set_status(0) unless $r->{status};
         };
 
     }

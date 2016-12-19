@@ -6,51 +6,65 @@ my $current;
 
 sub current {
 
-  my $self = shift;
-
+  my $class = shift;
   $current || {}; # we return "fake" current for upstream stories
 
 }
 
 sub all {
+  my $class = shift;
   @stories
+}
+
+sub failures {
+  my $class = shift;
+  grep { $_->{status} == 0  } $class->all
 }
 
 sub new_story {
 
   # gets called in Outthentic::Story::run_story 
   # for downstream stories only
-  my $self = shift;
+  my $class = shift;
   my $data = shift;
-  push @stories, { vars => {} , %$data };
+  push @stories, { vars => {} , %$data , status => 1 };
   $current = $stories[-1];
 
 }
 
 sub add_check_stat {
 
-  my $self = shift;
+  my $class = shift;
   my $data = shift;
 
-  push @{$self->current->{check_stat}}, $data;
+  push @{$class->current->{check_stat}}, $data;
 
 }
 
 sub set_stdout {
 
-  my $self = shift;
+  my $class = shift;
   my $stdout = shift;
 
-  $self->current->{stdout} = $stdout;
+  $class->current->{stdout} = $stdout;
 
 }
 
 sub set_scenario_status {
 
-  my $self    = shift;
+  my $class    = shift;
   my $status  = shift;
 
-  $self->current->{scenario_status} = $status;
+  $class->current->{scenario_status} = $status;
+
+}
+
+sub set_status {
+
+  my $class    = shift;
+  my $status  = shift;
+
+  $class->current->{status} = $status;
 
 }
 

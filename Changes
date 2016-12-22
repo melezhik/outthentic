@@ -1,6 +1,6 @@
 0.2.20 2016-12-19
 
-* Make it compatible with the latest version of Outthentic::DSL
+* Pass a string not filepath to the Outthentic::DSL validate method ( passing as filepath is still available for back compatibility )
 * Requires the latest version of Outthentic::DSL
 * Examples tweaked so that tests passed for the latest version of Outthentic::DSL
 

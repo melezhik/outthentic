@@ -281,7 +281,11 @@ sub generate_asserts {
 
     return unless -s $story_check_file; # don't run check when check file is empty
 
-    eval { dsl()->validate($story_check_file) };
+    eval {
+      open my $fh, $story_check_file or confess $!;
+      my $check_list = join "", <$fh>; close $fh;
+      dsl()->validate($check_list);
+    };
 
     my $err = $@;
 

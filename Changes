@@ -1,5 +1,6 @@
 0.2.20 2016-12-19
 
+* Make it compatible with the latest version of Outthentic::DSL
 * Requires the latest version of Outthentic::DSL
 * Examples tweaked so that tests passed for the latest version of Outthentic::DSL
 

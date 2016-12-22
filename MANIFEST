@@ -40,6 +40,8 @@ examples/custom-reports-failures/hook.pl
 examples/custom-reports-failures/meta.txt
 examples/empty-check-file/story.bash
 examples/empty-check-file/story.check
+examples/generator-one-line/story.bash
+examples/generator-one-line/story.check
 examples/hello/story.check
 examples/hello/story.pl
 examples/hello/world/story.check
@@ -86,6 +88,10 @@ examples/perl-pass-conf-to-scenario/story.check
 examples/perl-pass-conf-to-scenario/story.pl
 examples/perl-pass-story-vars-to-scenario/hook.pl
 examples/perl-pass-story-vars-to-scenario/story.check
+examples/plain-check-trailing-spaces/story.bash
+examples/plain-check-trailing-spaces/story.check
+examples/regexp-check-trailing-spaces/story.bash
+examples/regexp-check-trailing-spaces/story.check
 examples/ruby-captures/common.rb
 examples/ruby-captures/story.check
 examples/ruby-captures/story.rb

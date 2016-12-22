@@ -8,7 +8,7 @@ configure_requires:
   ExtUtils::MakeMaker: 6.36
 distribution_type: module
 dynamic_config: 1
-generated_by: 'Module::Install version 1.17'
+generated_by: 'Module::Install version 1.16'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -27,10 +27,10 @@ requires:
   File::Temp: 0
   Hash::Merge: 0
   JSON: 0
-  Outthentic::DSL: 0.1.4
+  Outthentic::DSL: 0.1.6
   Term::ANSIColor: '4.02'
   YAML: 0
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/outthentic
-version: 0.2.19
+version: 0.2.20

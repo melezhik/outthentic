@@ -12,6 +12,6 @@ for my $s (@{stream()}){                \
         print "# $i\n";                 \
     }                                   \
     print "#---\n\n"                    \
-}
+}                                       \
 
 end:

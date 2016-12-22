@@ -12,7 +12,7 @@ requires    'Config::General';
 requires    'YAML';
 requires    'JSON';
 requires    'File::ShareDir';
-requires    'Outthentic::DSL' => "0.1.4";
+requires    'Outthentic::DSL' => "0.1.6";
 requires    'Term::ANSIColor' => '4.02';
 requires    'Hash::Merge';
 

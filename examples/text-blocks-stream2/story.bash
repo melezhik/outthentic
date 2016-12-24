@@ -1,4 +1,4 @@
-print '
+echo "
 foo
 1
 2
@@ -15,9 +15,4 @@ foo
 A
 B
 C
-bar
-
-';
-
-1;
-
+bar"

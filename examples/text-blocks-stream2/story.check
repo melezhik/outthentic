@@ -9,9 +9,9 @@ code:                                   \
 
 for my $s (@{stream()}){                \
     for my $i (@{$s}){                  \
-        print "# $i\n";                 \
+        print "> $i\n";                 \
     }                                   \
-    print "#---\n\n"                    \
+    print "---\n\n"                    \
 }                                       \
 
 end:

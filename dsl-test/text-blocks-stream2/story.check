@@ -1,0 +1,23 @@
+begin:
+> foo
+> 1
+> 2
+> 3
+> bar
+---
+:blank_line
+> foo
+> a
+> b
+> c
+> bar
+---
+:blank_line
+> foo
+> A
+> B
+> C
+> bar
+---
+end:
+

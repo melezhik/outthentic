@@ -1,0 +1,6 @@
+generator: [ 'hello world' ]
+validator: [ 1, 'this is ever true' ]
+assert: 1 'this is ever true as well'
+generator: [ "assert: 1 'this is ever true two'" ]
+generator: "assert: 1 'this is ever true as well'"
+code: [ print "just a line\n" ]

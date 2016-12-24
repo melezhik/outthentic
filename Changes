@@ -1,3 +1,7 @@
+0.2.22 
+
+* ./dsl-test - contains tests for Outthentic::DSL
+
 0.2.21 2016-12-22
 
 * Requires the latest version of Outthentic::DSL

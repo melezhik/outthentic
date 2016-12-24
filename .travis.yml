@@ -4,4 +4,4 @@ perl:
 
 script: "cpanm --installdeps . && perl Makefile.PL && make test && make install"
 script: "./test.sh"
-script: "./dsl-test.sh"
+#script: "./dsl-test.sh"

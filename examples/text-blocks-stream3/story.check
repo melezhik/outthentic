@@ -19,13 +19,13 @@ begin:
     foo
 
         regexp: (\S+)
-        code: print '#', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
+        code: print '*', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
 
         regexp: (\S+)
-        code: print '#', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
+        code: print '*', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
 
         regexp: (\S+)
-        code: print '#', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
+        code: print '*', ( join ' ', map {$_->[0]} @{captures()} ), "\n"
 
 
     bar

@@ -1,10 +1,10 @@
 code: <<CODE
 !perl
-note 'hello world'
+note 'hello world!!!';
 CODE
 
 
 generator: <<CODE
 !perl
-[ 'OK' ]
+[ 'OK' ];
 CODE

@@ -11,14 +11,13 @@ generator:              \
 
 
 # this one generator is multiline
-generator: [ qw(        \
-        id              \
-        title           \
-        body            \
-        userId          \
-     )                  \
+generator: [         \
+        'regexp: id',              \
+        'regexp: title',           \
+        'regexp: body',            \
+        'regexp: userId',          \
                         
-    ];                  \
+    ];                             \
 
 
 

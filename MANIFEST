@@ -2,7 +2,18 @@
 bash_lib/outthentic.bash
 bin/strun
 Changes
+dsl-test.sh
+dsl-test/comments/story.bash
+dsl-test/comments/story.check
+dsl-test/multiline-expressions/back-slash/story.bash
+dsl-test/multiline-expressions/back-slash/story.check
+dsl-test/one-liners/story.bash
+dsl-test/one-liners/story.check
+dsl-test/text-blocks-stream2/story.bash
+dsl-test/text-blocks-stream2/story.check
 examples/.exists
+examples/asserts/story.bash
+examples/asserts/story.check
 examples/bash-generators/common.bash
 examples/bash-generators/story.bash
 examples/bash-generators/story.check
@@ -28,6 +39,8 @@ examples/between-stream/story.check
 examples/between-stream/story.pl
 examples/between/story.check
 examples/between/story.pl
+examples/comments/story.bash
+examples/comments/story.check
 examples/config-general-interpolate-env/story.bash
 examples/config-general-interpolate-env/story.check
 examples/config-general-interpolate-vars/story.bash
@@ -77,6 +90,8 @@ examples/modules/meta-story/hook.bash
 examples/modules/meta-story/meta.txt
 examples/multiline/story.check
 examples/multiline/story.pl
+examples/one-liners/story.bash
+examples/one-liners/story.check
 examples/os-bash/story.bash
 examples/os-bash/story.check
 examples/os-perl/story.check
@@ -122,8 +137,8 @@ examples/story-stat/hook.pl
 examples/story-stat/story.check
 examples/text-blocks-stream/story.check
 examples/text-blocks-stream/story.pl
+examples/text-blocks-stream2/story.bash
 examples/text-blocks-stream2/story.check
-examples/text-blocks-stream2/story.pl
 examples/text-blocks-stream3/story.check
 examples/text-blocks-stream3/story.pl
 examples/text-blocks/story.check

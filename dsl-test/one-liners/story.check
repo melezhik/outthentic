@@ -5,5 +5,5 @@ regexp: ok\s+this is ever true
 regexp: ok\s+'this is ever true as well'
 regexp: ok\s+'this is ever true two'
 regexp: ok\s+'this is ever true as well'
-begin:
+end:
 

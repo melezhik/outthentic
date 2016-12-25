@@ -27,7 +27,7 @@ requires:
   File::Temp: 0
   Hash::Merge: 0
   JSON: 0
-  Outthentic::DSL: 0.2.2
+  Outthentic::DSL: 0.2.7
   Term::ANSIColor: '4.02'
   YAML: 0
 resources:

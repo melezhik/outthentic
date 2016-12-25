@@ -1,0 +1,6 @@
+begin:
+regexp: ok\s+text match /hello/
+regexp: ok\s+text has 'hello'
+regexp: ok\s+text has 'h'
+end:
+

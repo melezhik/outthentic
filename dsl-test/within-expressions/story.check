@@ -1,0 +1,12 @@
+begin:
+scenario succeeded
+text match /Colors:/
+'Colors: red,green,blue' has 'red'
+text match /Digits:/
+'Digits: one,two,tree,one-1,one-2,one-3,one-11,one-12,one-13' match  /one-/
+'Digits: one,two,tree,one-1,one-2,one-3,one-11,one-12,one-13' match  /\d\d/
+'Digits: one,two,tree,one-1,one-2,one-3,one-11,one-12,one-13' match /1+/
+text match /Colors:/
+'Colors: red,green,blue' has 'blue'
+end:
+

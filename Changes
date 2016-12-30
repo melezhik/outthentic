@@ -1,6 +1,7 @@
 0.2.22 
 
 * ./dsl-test - contains tests for Outthentic::DSL
+* restore ./inc in Git scm to allow `cpanm` install via git url
 
 0.2.21 2016-12-22
 

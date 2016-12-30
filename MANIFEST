@@ -11,6 +11,8 @@ dsl-test/one-liners/story.bash
 dsl-test/one-liners/story.check
 dsl-test/text-blocks-stream2/story.bash
 dsl-test/text-blocks-stream2/story.check
+dsl-test/within-expressions/story.bash
+dsl-test/within-expressions/story.check
 examples/.exists
 examples/asserts/story.bash
 examples/asserts/story.check

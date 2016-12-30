@@ -9,4 +9,4 @@ pm_to_blib
 *.html
 *.tmp
 *.log
-inc/
+#inc/

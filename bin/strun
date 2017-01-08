@@ -15,6 +15,7 @@ my $silent_mod    = 0;
 my $debug_mod     = 0;
 my $dump_config   = 0;
 my $nocolor       = 0;
+my $task_name     = '';
 my $story_path;
 my $match_l = $ENV{'match_l'} || 200;
 my $ini_file_path;
@@ -32,6 +33,7 @@ GetOptions (
         "match_l=i"     => \$match_l,           # numeric
         "root=s"        => \$project_root_dir,  # string
         "story=s"       => \$story_path,        # string
+        "task=s"        => \$task_name,         # string
         "ini=s"         => \$ini_file_path,     # string
         "yaml=s"        => \$yaml_file_path,    # string
         "json=s"        => \$json_file_path,    # string
@@ -113,6 +115,7 @@ sub wanted {
         print F "set_prop( nocolor => $nocolor );\n";
         print F "set_prop( match_l => $match_l );\n";
         print F "set_prop( runtime_params => q{".(join ':::', @runtime_params)."} );\n";
+        print F "set_prop( task_name => '$task_name' );\n";
 
         print F "\nset_story();\n\n";
         print F "\npopulate_config();\n\n";
@@ -174,9 +177,9 @@ system("rm -rf $test_root_dir") if $purge_cache;
 unless ( $dump_config ) { # do not check story status in case we only dump config data
 
   if ($st==0) {
-    print $nocolor ? "\nSTATUS\tSUCCEED\n" : "\n".colored(["green"],"STATUS\tSUCCEED\n");
+    print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n");
   }else{
-    print $nocolor ? "\nSTATUS\tFAILED ($st)\n" :  "\n".colored(["red"],"STATUS\tFAILED ($st)\n");
+    print $nocolor ? "STATUS\tFAILED ($st)\n" :  colored(["red"],"STATUS\tFAILED ($st)\n");
     exit(1);
   }
   

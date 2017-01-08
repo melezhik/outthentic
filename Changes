@@ -1,7 +1,8 @@
-0.2.22 
+0.2.22 2017-01-09
 
 * ./dsl-test - contains tests for Outthentic::DSL
 * restore ./inc in Git scm to allow `cpanm` install via git url
+* task_name parameter ( to print task names when stories get runs from tasks  )
 
 0.2.21 2016-12-22
 

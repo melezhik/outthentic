@@ -343,6 +343,7 @@ sub print_meta {
 
     while (my $i = <META>){
         chomp $i;
+        $i='@ '.$i;
         note( nocolor() ? $i : colored( ['magenta'],  "$i" ));
     }
     close META;

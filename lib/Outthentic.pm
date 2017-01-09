@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.22';
+our $VERSION = '0.2.23';
 
 1;
 
@@ -162,6 +162,7 @@ sub run_story_file {
     my $story_dir = get_prop('story_dir');
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
+
     my $task_name = get_prop('task_name');
 
     note("\n". ( nocolor() ? $task_name.short_story_name() : colored(['yellow'],$task_name.short_story_name()) )." started");
@@ -336,7 +337,9 @@ sub print_meta {
 
     open META, get_prop('story_dir')."/meta.txt" or die $!;
 
-    note( "\n\n". ( nocolor() ? short_story_name() : colored( ['yellow'],  short_story_name() ) )." started\n");
+    my $task_name = get_prop('task_name');
+
+    note( "\n". ( nocolor() ? $task_name.short_story_name() : colored( ['yellow'],  $task_name.short_story_name() ) )." started\n");
 
     while (my $i = <META>){
         chomp $i;

@@ -1,3 +1,9 @@
+0.2.23
+
+* print task name for meta stories
+* remove extra lines from meta stories reports
+
+
 0.2.22 2017-01-09
 
 * ./dsl-test - contains tests for Outthentic::DSL

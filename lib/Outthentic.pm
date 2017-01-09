@@ -165,7 +165,7 @@ sub run_story_file {
 
     my $task_name = get_prop('task_name');
 
-    note("\n". ( nocolor() ? $task_name.short_story_name() : colored(['yellow'],$task_name.short_story_name()) )." started");
+    note("\n". ( nocolor() ? $task_name.'>>'.short_story_name() : colored(['yellow'],$task_name.'>>'.short_story_name()) ));
 
     if ( get_stdout() ){
 
@@ -339,7 +339,7 @@ sub print_meta {
 
     my $task_name = get_prop('task_name');
 
-    note( "\n".( nocolor() ? $task_name.short_story_name() : colored( ['yellow'],  $task_name.short_story_name() ) )." started");
+    note( "\n".( nocolor() ? $task_name.'>>'.short_story_name() : colored( ['yellow'],  $task_name.'>>'.short_story_name() ) ));
 
     while (my $i = <META>){
         chomp $i;

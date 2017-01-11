@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.23';
+our $VERSION = '0.2.24';
 
 1;
 
@@ -165,7 +165,7 @@ sub run_story_file {
 
     my $task_name = get_prop('task_name');
 
-    note("\n". ( nocolor() ? $task_name.'>>'.short_story_name() : colored(['yellow'],$task_name.'>>'.short_story_name()) ));
+    note("\n". ( nocolor() ? $task_name.short_story_name() : colored(['yellow'],$task_name.short_story_name()) ));
 
     if ( get_stdout() ){
 
@@ -339,7 +339,7 @@ sub print_meta {
 
     my $task_name = get_prop('task_name');
 
-    note( "\n".( nocolor() ? $task_name.'>>'.short_story_name() : colored( ['yellow'],  $task_name.'>>'.short_story_name() ) ));
+    note( "\n".( nocolor() ? $task_name.short_story_name() : colored( ['yellow'],  $task_name.short_story_name() ) ));
 
     while (my $i = <META>){
         chomp $i;
@@ -357,12 +357,12 @@ sub short_story_name {
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
 
-    my $short_story_dir = "/";
+    my $short_story_dir = "::";
 
     my $i;
 
     for my $l (split /\//, $story_dir){
-      $short_story_dir.="$l/" unless $i++ < $cwd_size;
+      $short_story_dir.="$l::" unless $i++ < $cwd_size;
 
     }
 

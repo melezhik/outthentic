@@ -362,7 +362,7 @@ sub short_story_name {
     my $i;
 
     for my $l (split /\//, $story_dir){
-      $short_story_dir.="$l::" unless $i++ < $cwd_size;
+      $short_story_dir.=$l."::" unless $i++ < $cwd_size;
 
     }
 

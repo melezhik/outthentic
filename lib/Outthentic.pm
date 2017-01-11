@@ -357,12 +357,12 @@ sub short_story_name {
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
 
-    my $short_story_dir = "::";
+    my $short_story_dir;
 
     my $i;
 
     for my $l (split /\//, $story_dir){
-      $short_story_dir.=$l."::" unless $i++ < $cwd_size;
+      $short_story_dir.=$l."/" unless $i++ < $cwd_size;
 
     }
 

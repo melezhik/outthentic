@@ -369,8 +369,8 @@ sub short_story_name {
 
     my $story_vars = story_vars_pretty();
     return $task_name ? 
-      ( $task_name.' - '.$short_story_dir.( $story_vars  ? " - $story_vars" : "" )) :
-      $short_story_dir.( $story_vars  ? " - $story_vars" : "" );
+      ( $task_name.' '.$short_story_dir.( $story_vars  ? " params: $story_vars" : "" )) :
+      $short_story_dir.( $story_vars  ? " params: $story_vars" : "" );
 }
 
 END {

@@ -165,7 +165,7 @@ sub run_story_file {
 
     my $task_name = get_prop('task_name');
 
-    note("\n". ( nocolor() ? $task_name.short_story_name() : colored(['yellow'],$task_name.short_story_name()) ));
+    note("\n". ( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) ));
 
     if ( get_stdout() ){
 
@@ -339,7 +339,7 @@ sub print_meta {
 
     my $task_name = get_prop('task_name');
 
-    note( "\n".( nocolor() ? $task_name.short_story_name() : colored( ['yellow'],  $task_name.short_story_name() ) ));
+    note( "\n".( nocolor() ? short_story_name($task_name) : colored( ['yellow'], short_story_name($task_name) ) ));
 
     while (my $i = <META>){
         chomp $i;
@@ -353,6 +353,7 @@ sub print_meta {
 sub short_story_name {
 
 
+    my $task_name = shift;
     my $story_dir = get_prop('story_dir');
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
@@ -366,7 +367,10 @@ sub short_story_name {
 
     }
 
-    return $short_story_dir.' '.story_vars_pretty();
+    my $story_vars = story_vars_pretty();
+    return $task_name ? 
+      ( $task_name.' - '.$short_story_dir.( $story_vars  ? " - $story_vars" : "" )) :
+      $short_story_dir.( $story_vars  ? " - $story_vars" : "" );
 }
 
 END {

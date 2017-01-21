@@ -22,6 +22,7 @@ repository  'https://github.com/melezhik/outthentic';
 install_script 'bin/strun';
 
 install_share 'ruby_lib';
+install_share 'python_lib';
 install_share 'bash_lib';
 
 no_index    directory => 'examples';

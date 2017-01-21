@@ -19,6 +19,7 @@ no_index:
     - bash_lib
     - examples
     - inc
+    - python_lib
     - ruby_lib
     - t
 requires:
@@ -33,4 +34,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/outthentic
-version: 0.2.24
+version: 0.2.25

@@ -428,7 +428,7 @@ def cache_dir:
   return '$cache_dir'
 
 def story_dir:
-  '$story_dir'
+  return '$story_dir'
 
 def stdout_file:
   return '$stdout_file' 

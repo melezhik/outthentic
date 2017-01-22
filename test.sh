@@ -9,7 +9,7 @@ find( { wanted => \&wanted, no_chdir => 1 } , $ARGV[0]||'examples/');
 
 sub wanted  {
 
-  return unless /story\.(pl|rb|bash)$/ or /meta\.txt$/;
+  return unless /story\.(pl|rb|bash|py)$/ or /meta\.txt$/;
 
   return if /modules\//;
 

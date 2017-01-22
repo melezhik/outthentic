@@ -207,7 +207,13 @@ sub run_story_file {
               $story_command = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $story_file";
             }
 
-        }elsif(-f "$story_dir/story.bash") {
+        }elsif(-f "$story_dir/story.py") {
+
+            my $python_lib_dir = File::ShareDir::dist_dir('Outthentic');
+            $story_command  = "PYTHONPATH=\$PYTHONPATH:".(story_cache_dir()).
+            ":$python_lib_dir python $story_dir/story.py";
+
+        } elsif(-f "$story_dir/story.bash") {
 
             my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');
             $story_command = "bash -c 'source ".story_cache_dir()."/glue.bash";

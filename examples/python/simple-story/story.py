@@ -1,1 +1,2 @@
+import outthentic
 print "OK"

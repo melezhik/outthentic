@@ -101,6 +101,8 @@ sub set_story {
 
     _mk_ruby_glue_file();
 
+    _mk_python_glue_file();
+
     _mk_bash_glue_file();
 
 }
@@ -415,22 +417,22 @@ sub _mk_python_glue_file {
 
     print PYTHON_GLUE <<"CODE";
 
-def debug_mod12:
-  retrun $debug_mod12
+def debug_mod12():
+  return $debug_mod12
 
-def test_root_dir:
+def test_root_dir():
   return '$test_root_dir' 
 
-def project_root_dir:
+def project_root_dir():
   return '$project_root_dir' 
 
-def cache_dir:
+def cache_dir():
   return '$cache_dir'
 
-def story_dir:
+def story_dir():
   return '$story_dir'
 
-def stdout_file:
+def stdout_file():
   return '$stdout_file' 
 
 CODE

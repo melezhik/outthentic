@@ -1,0 +1,4 @@
+generator: <<GENE
+!python
+print "assert: 1 this is ever true!!!"
+GENE

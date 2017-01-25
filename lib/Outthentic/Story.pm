@@ -86,8 +86,11 @@ sub set_story {
       $ruby_run_cmd = "ruby -I $dist_lib_dir -r outthentic -I ".story_cache_dir();
     }
 
+    my $python_run_cmd  = "export PYTHONPATH=\$PYTHONPATH:".(story_cache_dir()).":$dist_lib_dir";
 
     get_prop('dsl')->{languages}->{ruby} = $ruby_run_cmd; 
+
+    get_prop('dsl')->{languages}->{python} = $python_run_cmd; 
 
     get_prop('dsl')->{cache_dir} = story_cache_dir();
 

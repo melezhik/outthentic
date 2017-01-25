@@ -525,12 +525,13 @@ Here is `set_stdout()` function signatures list for various languages:
     +-----------+-----------------------+
     | Perl      | set_stdout(SCALAR)    |
     | Bash      | set_stdout(STRING)    |
-    | Python    | set_stdout(STRING)    |
+    | Python(*) | set_stdout(STRING)    |
     | Ruby      | set_stdout(STRING)    |
     +-----------+-----------------------+
 
 IMPORTANT: You should only use a set\_stdout inside story hook, not scenario file.
 
+(*) you need to `from outthentic import *` in Python to import set_stdout function.
 
 ## Upstream and downstream stories
 
@@ -639,6 +640,7 @@ Or using Ruby:
 
 Or using Python:
 
+    from outthentic import *
     run_story('greeting', {  'name' : 'Alexey' , 'message' : 'hello' })
 
 Or Bash:
@@ -673,6 +675,7 @@ In Python:
 
     $ cat modules/greeting/story.py
 
+    from outthentic import *
     print story_var('name') + 'say ' + story_var('message')
 
 In Ruby:
@@ -709,11 +712,13 @@ Here is the how you access story variable in all three languages
     | Language         | signature                                   |
     +------------------+---------------------------------------------+
     | Perl             | story_var(SCALAR)                           |
-    | Python           | story_var(STRING)                           | 
+    | Python(*)        | story_var(STRING)                           | 
     | Ruby             | story_var(STRING)                           | 
     | Bash (1-st way)  | $foo $bar ...                               |
     | Bash (2-nd way)  | $(story_var foo.bar)                        |
     +------------------+---------------------------------------------+
+
+(*) you need to `from outthentic import *` in Python to import story_var() function.
 
 ## Story properties
 
@@ -734,9 +739,12 @@ Outthentic provides some helpers and variables:
     +------------------+-----------------------------------------------------+
     | Perl             | function | os() | get a name of OS distribution     |
     | Bash             | variable | os   | get a name of OS distribution     |
-    | Python           | function | os() | get a name of OS distribution     |
+    | Python(*)        | function | os() | get a name of OS distribution     |
     | Ruby             | function | os() | get a name of OS distribution     |
     +------------------+-----------------------------------------------------+
+
+(*) you need to `from outthentic import *` in Python to import os() function.
+
 
 ## Meta stories
 
@@ -987,6 +995,9 @@ Bash:
 Python:
 
     $ cat hook.py
+
+
+    from outthentic import *
 
     foo = config()['main']['foo']
     bar = config()['main']['bar']

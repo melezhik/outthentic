@@ -2,3 +2,12 @@ generator: <<GENE
 !python
 print "assert: 1 this is ever true!!!"
 GENE
+
+
+generator: <<GENE
+!python
+def foo():
+  print "assert: 1 this is ever true!!!"
+
+foo()
+GENE

@@ -1,2 +1,2 @@
 import outthentic
-print "OK"
+print "PYTHON SIMPLE STORY"

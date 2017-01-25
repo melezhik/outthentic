@@ -107,6 +107,8 @@ examples/perl-pass-story-vars-to-scenario/hook.pl
 examples/perl-pass-story-vars-to-scenario/story.check
 examples/plain-check-trailing-spaces/story.bash
 examples/plain-check-trailing-spaces/story.check
+examples/python/hooks-api/hook.py
+examples/python/hooks-api/story.check
 examples/python/simple-story/story.check
 examples/python/simple-story/story.py
 examples/regexp-check-trailing-spaces/story.bash

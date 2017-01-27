@@ -707,7 +707,7 @@ sub story_var {
 
 sub story_vars_pretty {
 
-    join " ", map { "$_:".(story_var($_)) } keys %{get_prop( 'story_vars' ) };
+    join " ", map { "$_:".(story_var($_)) } sort keys %{get_prop( 'story_vars' ) };
 
 }
 

@@ -1,6 +1,7 @@
 0.0.25
 
 * python support
+* story_vars_pretty - print story parameters in sorted order
 
 0.2.24 2017-01-11
 

@@ -30,13 +30,6 @@ Perl scenario example:
     print "I am OK\n";
     print "I am outthentic\n";
 
-Ruby scenario example:
-
-    $ cat story.rb
-
-    puts "I am OK"
-    puts "I am outthentic"
-
 Bash scenario example:
 
     $ cat story.bash
@@ -44,11 +37,27 @@ Bash scenario example:
     echo I am OK
     echo I am outthentic
 
-Outthentic scenarios could be written on one of three languages:
+Python scenario example:
+
+    $ cat story.py
+
+    print "I am OK"
+    print "I am outthentic"
+
+Ruby scenario example:
+
+    $ cat story.rb
+
+    puts "I am OK"
+    puts "I am outthentic"
+
+
+Outthentic scenarios could be written on one of four languages:
 
 * Perl 
-* Ruby
 * Bash
+* Python
+* Ruby
 
 Choose you favorite language ;) !
 
@@ -60,8 +69,9 @@ This is the table to describe language / file name conventions:
     | Language  | File         |
     +-----------+--------------+
     | Perl      | story.pl     |
-    | Ruby      | story.rb     |
     | Bash      | story.bash   |
+    | Python    | story.py     |
+    | Ruby      | story.rb     |
     +-----------+--------------+
   
 
@@ -104,13 +114,18 @@ Just create a new directories with a story data inside:
     $ echo 'print "hello from perl";' > perl-story/story.pl
     $ echo 'hello from perl' > perl-story/story.check
 
+    $ mkdir bash-story
+    $ echo 'echo hello from bash' > bash-story/story.bash
+    $ echo 'hello from bash' > bash-story/story.check
+
+    $ mkdir python-story
+    $ echo 'print "hello from python"' > python-story/story.rb
+    $ echo 'print from python' > python-story/story.check
+
     $ mkdir ruby-story
     $ echo 'puts "hello from ruby"' > ruby-story/story.rb
     $ echo 'hello from ruby' > ruby-story/story.check
 
-    $ mkdir bash-story
-    $ echo 'echo hello from bash' > bash-story/story.bash
-    $ echo 'hello from bash' > bash-story/story.check
 
 Now, let's use `strun` command to run suite stories:
 
@@ -299,6 +314,11 @@ You may inline code from other language to add some extra logic into your check 
     CODE
 
     code: <<CODE
+    !python
+    print 'this is debug message will be shown at console'
+    CODE
+
+    code: <<CODE
     !ruby
     puts 'this is debug message will be shown at console'
     CODE
@@ -344,6 +364,16 @@ Perl:
     [ 
       qw { say hello again } 
     ]
+
+    CODE
+
+Python:
+
+    generator: <<CODE
+    !python
+    print 'say'
+    print 'hello'
+    print 'again'
 
     CODE
 
@@ -437,8 +467,9 @@ You should name your hooks as `hook.*` and place them into story directory
 Hooks could be written on one of three languages:
 
 * Perl 
-* Ruby
 * Bash
+* Python
+* Ruby
 
 Here is naming convention for hook files:
 
@@ -447,8 +478,9 @@ Here is naming convention for hook files:
     | Language  | File         |
     +-----------+--------------+
     | Perl      | hook.pl      |
-    | Ruby      | hook.rb      |
     | Bash      | hook.bash    |
+    | Python    | hook.py      |
+    | Ruby      | hook.rb      |
     +-----------+--------------+
 
 Reasons why you might need a hooks:
@@ -456,7 +488,6 @@ Reasons why you might need a hooks:
 * execute some *initialization code* before running a scenario script
 * redefine scenario stdout
 * call downstream stories
-
 
 # Hooks API
 
@@ -493,12 +524,14 @@ Here is `set_stdout()` function signatures list for various languages:
     | Language  | signature             |
     +-----------+-----------------------+
     | Perl      | set_stdout(SCALAR)    |
-    | Ruby      | set_stdout(STRING)    |
     | Bash      | set_stdout(STRING)    |
+    | Python(*) | set_stdout(STRING)    |
+    | Ruby      | set_stdout(STRING)    |
     +-----------+-----------------------+
 
 IMPORTANT: You should only use a set\_stdout inside story hook, not scenario file.
 
+(*) you need to `from outthentic import *` in Python to import set_stdout function.
 
 ## Upstream and downstream stories
 
@@ -605,6 +638,11 @@ Or using Ruby:
 
     run_story  'greeting', {  'name' => 'Alexey' , 'message' => 'hello' }
 
+Or using Python:
+
+    from outthentic import *
+    run_story('greeting', {  'name' : 'Alexey' , 'message' : 'hello' })
+
 Or Bash:
 
     $ cat hook.bash
@@ -618,30 +656,42 @@ Here is the `run_story` signature list for various languages:
     | Language  | signature                                    |
     +-----------+----------------------------------------------+
     | Perl      | run_story(SCALAR,HASHREF)                    |
-    | Ruby      | run_story(STRING,HASH)                       | 
     | Bash      | run_story(STORY_NAME NAME VAL NAME2 VAL2 ... | 
+    | Python    | run_story(STRING,DICT)                       | 
+    | Ruby      | run_story(STRING,HASH)                       | 
     +-----------+----------------------------------------------+
 
-Story variables are accessible via `story_var()` function. For example:
+Story variables are accessible via `story_var()` function. 
+
+Examples:
+
+In Perl:
+
+    $ cat modules/greeting/story.pl
+
+    print story_var('name'), 'say ', story_var('message');
+
+In Python:
+
+    $ cat modules/greeting/story.py
+
+    from outthentic import *
+    print story_var('name') + 'say ' + story_var('message')
+
+In Ruby:
 
     $ cat modules/greeting/story.rb
 
     puts "#{story_var('name')} say #{story_var('message')}"
 
 
-Or if you use Perl:
-
-    $ cat modules/greeting/story.pl
-
-    print (story_var('name')).'say '.(story_var('message'))
-
-Or finally Bash (1-st way):
+In Bash (1-st way):
 
     $ cat modules/greeting/story.bash
 
     echo $name say $message
 
-Bash (2-nd way):
+In Bash (2-nd way):
 
     $ cat modules/greeting/story.bash
 
@@ -662,10 +712,13 @@ Here is the how you access story variable in all three languages
     | Language         | signature                                   |
     +------------------+---------------------------------------------+
     | Perl             | story_var(SCALAR)                           |
+    | Python(*)        | story_var(STRING)                           | 
     | Ruby             | story_var(STRING)                           | 
     | Bash (1-st way)  | $foo $bar ...                               |
     | Bash (2-nd way)  | $(story_var foo.bar)                        |
     +------------------+---------------------------------------------+
+
+(*) you need to `from outthentic import *` in Python to import story_var() function.
 
 ## Story properties
 
@@ -681,13 +734,17 @@ Some story properties have a proper accessors functions. Here is the list:
 
 Outthentic provides some helpers and variables:
 
-
     +------------------+-----------------------------------------------------+
     | Language         | Type     | Name | Comment                           |
     +------------------+-----------------------------------------------------+
     | Perl             | function | os() | get a name of OS distribution     |
     | Bash             | variable | os   | get a name of OS distribution     |
+    | Python(*)        | function | os() | get a name of OS distribution     |
+    | Ruby             | function | os() | get a name of OS distribution     |
     +------------------+-----------------------------------------------------+
+
+(*) you need to `from outthentic import *` in Python to import os() function.
+
 
 ## Meta stories
 
@@ -780,9 +837,11 @@ Here is the list for library file names for various languages:
     | Language  | file            |
     +-----------+-----------------+
     | Perl      | common.pm       |
-    | Ruby      | common.rb       |
     | Bash      | common.bash     |
+    | Ruby      | common.rb       |
     +-----------+-----------------+
+
+***NOTE!***  Story libraries are not supported for Python
     
 # Language libraries
 
@@ -926,6 +985,23 @@ for example in story hook file:
 
 Examples for other languages:
 
+Bash:
+
+    $ cat hook.bash
+
+    foo=$(config main.foo )
+    bar=$(config main.bar )
+
+Python:
+
+    $ cat hook.py
+
+
+    from outthentic import *
+
+    foo = config()['main']['foo']
+    bar = config()['main']['bar']
+
 
 Ruby:
 
@@ -934,12 +1010,6 @@ Ruby:
     foo = config['main']['foo']
     bar = config['main']['bar']
 
-Bash:
-
-    $ cat hook.bash
-
-    foo=$(config main.foo )
-    bar=$(config main.bar )
 
 
 # Runtime configuration

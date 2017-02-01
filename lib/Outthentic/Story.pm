@@ -28,6 +28,8 @@ our @EXPORT = qw{
 
     do_ruby_hook
 
+    do_python_hook
+
     do_bash_hook
 
     ignore_story_err
@@ -84,8 +86,11 @@ sub set_story {
       $ruby_run_cmd = "ruby -I $dist_lib_dir -r outthentic -I ".story_cache_dir();
     }
 
+    my $python_run_cmd  = "PYTHONPATH=\$PYTHONPATH:".(story_cache_dir()).":$dist_lib_dir python";
 
     get_prop('dsl')->{languages}->{ruby} = $ruby_run_cmd; 
+
+    get_prop('dsl')->{languages}->{python} = $python_run_cmd; 
 
     get_prop('dsl')->{cache_dir} = story_cache_dir();
 
@@ -545,6 +550,67 @@ sub do_ruby_hook {
     return 1;
 }
 
+sub do_python_hook {
+
+    my $file = shift;
+
+    my $python_lib_dir = File::ShareDir::dist_dir('Outthentic');
+
+    my $cmd  = "PYTHONPATH=\$PYTHONPATH:".(story_cache_dir()).":$python_lib_dir python $file";
+  
+    if (debug_mod12()){
+        main::note("do_python_hook: $cmd"); 
+    }
+
+
+    my $rand = int(rand(1000));
+
+    my $st = system("$cmd 2>".story_cache_dir()."/$rand.err 1>".story_cache_dir()."/$rand.out");
+
+    if($st != 0){
+      die "do_python_hook failed. \n see ".story_cache_dir()."/$rand.err for details";
+    }
+
+    my $out_file = story_cache_dir()."/$rand.out";
+
+    open PYTHON_HOOK_OUT, $out_file or die "can't open PYTHON_HOOK_OUT file $out_file to read!";
+
+    my @out = <PYTHON_HOOK_OUT>;
+
+    close PYTHON_HOOK_OUT;
+
+    my $story_vars_json;
+
+    for my $l (@out) {
+
+      next if $l=~/#/;
+
+      ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
+      
+      if ($l=~s/story_var_json_begin.*// .. $l=~s/story_var_json_end.*//){
+        $story_vars_json.=$l;    
+        next;
+      }
+
+
+      if ($l=~/story:\s+(\S+)/){
+
+        my $path = $1;
+
+        if (debug_mod12()){
+            main::note("run downstream story from python hook"); 
+        }
+
+        run_story($path, decode_json($story_vars_json||{}));
+
+        $story_vars_json = undef;
+
+        }
+    }
+
+    return 1;
+}
+
 sub do_bash_hook {
 
     my $file = shift;
@@ -641,7 +707,7 @@ sub story_var {
 
 sub story_vars_pretty {
 
-    join " ", map { "$_:".(story_var($_)) } keys %{get_prop( 'story_vars' ) };
+    join " ", map { "$_:".(story_var($_)) } sort keys %{get_prop( 'story_vars' ) };
 
 }
 

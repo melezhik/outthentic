@@ -142,6 +142,8 @@ sub wanted {
             print F "eval { do_perl_hook('$File::Find::dir/hook.pl') };  our \$STATUS=0, die \"perl hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.rb" ){
             print F "eval { do_ruby_hook('$File::Find::dir/hook.rb') };  our \$STATUS=0, die \"ruby hook error: \$@\" if \$@ ;\n\n";
+        }elsif ( -e "$File::Find::dir/hook.py" ){
+            print F "eval { do_python_hook('$File::Find::dir/hook.py') };  our \$STATUS=0, die \"python hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.bash" ){
             print F "eval { do_bash_hook('$File::Find::dir/hook.bash') }; our \$STATUS=0, die \"bash hook error: \$@\" if \$@ ;\n\n";
         }

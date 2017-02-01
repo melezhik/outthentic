@@ -18,6 +18,7 @@ use File::Temp qw/ tempfile /;
 use Outthentic::Story;
 use Term::ANSIColor;
 use Hash::Merge qw{merge};
+use Time::localtime;
 
 my $config; 
 
@@ -165,7 +166,11 @@ sub run_story_file {
 
     my $task_name = get_prop('task_name');
 
-    note("\n". ( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) ));
+    note(
+      "\n". 
+      ( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) ).
+      ' at '.timestamp()
+    );
 
     if ( get_stdout() ){
 
@@ -374,9 +379,18 @@ sub short_story_name {
     }
 
     my $story_vars = story_vars_pretty();
+
+
     return $task_name ? 
       ( $task_name.' '.$short_story_dir.( $story_vars  ? " params: $story_vars" : "" )) :
       $short_story_dir.( $story_vars  ? " params: $story_vars" : "" );
+}
+
+sub timestamp {
+  sprintf '%02d-%02d-%02d %02d:%02d:%02d', 
+    localtime->year()+1900, 
+    localtime->mon()+1, localtime->mday, 
+    localtime->hour, localtime->min, localtime->sec;
 }
 
 END {
@@ -432,13 +446,6 @@ Perl scenario example:
     print "I am OK\n";
     print "I am outthentic\n";
 
-Ruby scenario example:
-
-    $ cat story.rb
-    
-    puts "I am OK"
-    puts "I am outthentic"
-
 Bash scenario example:
 
     $ cat story.bash
@@ -446,7 +453,21 @@ Bash scenario example:
     echo I am OK
     echo I am outthentic
 
-Outthentic scenarios could be written on one of three languages:
+Python scenario example:
+
+    $ cat story.py
+    
+    print "I am OK"
+    print "I am outthentic"
+
+Ruby scenario example:
+
+    $ cat story.rb
+    
+    puts "I am OK"
+    puts "I am outthentic"
+
+Outthentic scenarios could be written on one of four languages:
 
 =over
 
@@ -457,15 +478,22 @@ Perl
 
 =item *
 
-Ruby
+Bash
 
 
 =item *
 
-Bash
+Python
+
+
+=item *
+
+Ruby
 
 
 =back
+
+B<I<WARNING!>> Python support is uncompleted, do not expect all python examples at this doc will work
 
 Choose you favorite language ;) !
 
@@ -477,8 +505,9 @@ This is the table to describe language / file name conventions:
     | Language  | File         |
     +-----------+--------------+
     | Perl      | story.pl     |
-    | Ruby      | story.rb     |
     | Bash      | story.bash   |
+    | Python    | story.py     |
+    | Ruby      | story.rb     |
     +-----------+--------------+
 
 
@@ -534,13 +563,17 @@ Just create a new directories with a story data inside:
     $ echo 'print "hello from perl";' > perl-story/story.pl
     $ echo 'hello from perl' > perl-story/story.check
     
-    $ mkdir ruby-story
-    $ echo 'puts "hello from ruby"' > ruby-story/story.rb
-    $ echo 'hello from ruby' > ruby-story/story.check
-    
     $ mkdir bash-story
     $ echo 'echo hello from bash' > bash-story/story.bash
     $ echo 'hello from bash' > bash-story/story.check
+    
+    $ mkdir python-story
+    $ echo 'print "hello from python"' > python-story/story.rb
+    $ echo 'print from python' > python-story/story.check
+    
+    $ mkdir ruby-story
+    $ echo 'puts "hello from ruby"' > ruby-story/story.rb
+    $ echo 'hello from ruby' > ruby-story/story.check
 
 Now, let's use C<strun> command to run suite stories:
 
@@ -784,6 +817,11 @@ You may inline code from other language to add some extra logic into your check 
     CODE
     
     code: <<CODE
+    !python
+    print 'this is debug message will be shown at console'
+    CODE
+    
+    code: <<CODE
     !ruby
     puts 'this is debug message will be shown at console'
     CODE
@@ -830,6 +868,16 @@ Perl:
     [ 
       qw { say hello again } 
     ]
+    
+    CODE
+
+Python:
+
+    generator: <<CODE
+    !python
+    print 'say'
+    print 'hello'
+    print 'again'
     
     CODE
 
@@ -929,12 +977,17 @@ Perl
 
 =item *
 
-Ruby
+Bash
 
 
 =item *
 
-Bash
+Python
+
+
+=item *
+
+Ruby
 
 
 =back
@@ -945,8 +998,9 @@ Here is naming convention for hook files:
     | Language  | File         |
     +-----------+--------------+
     | Perl      | hook.pl      |
-    | Ruby      | hook.rb      |
     | Bash      | hook.bash    |
+    | Python    | hook.py      |
+    | Ruby      | hook.rb      |
     +-----------+--------------+
 
 Reasons why you might need a hooks:
@@ -1007,11 +1061,14 @@ Here is C<set_stdout()> function signatures list for various languages:
     | Language  | signature             |
     +-----------+-----------------------+
     | Perl      | set_stdout(SCALAR)    |
-    | Ruby      | set_stdout(STRING)    |
     | Bash      | set_stdout(STRING)    |
+    | Python(*) | set_stdout(STRING)    |
+    | Ruby      | set_stdout(STRING)    |
     +-----------+-----------------------+
 
 IMPORTANT: You should only use a set_stdout inside story hook, not scenario file.
+
+(*) you need to C<from outthentic import *> in Python to import set_stdout function.
 
 
 =head2 Upstream and downstream stories
@@ -1143,6 +1200,11 @@ Or using Ruby:
     
     run_story  'greeting', {  'name' => 'Alexey' , 'message' => 'hello' }
 
+Or using Python:
+
+    from outthentic import *
+    run_story('greeting', {  'name' : 'Alexey' , 'message' : 'hello' })
+
 Or Bash:
 
     $ cat hook.bash
@@ -1155,29 +1217,41 @@ Here is the C<run_story> signature list for various languages:
     | Language  | signature                                    |
     +-----------+----------------------------------------------+
     | Perl      | run_story(SCALAR,HASHREF)                    |
-    | Ruby      | run_story(STRING,HASH)                       | 
     | Bash      | run_story(STORY_NAME NAME VAL NAME2 VAL2 ... | 
+    | Python    | run_story(STRING,DICT)                       | 
+    | Ruby      | run_story(STRING,HASH)                       | 
     +-----------+----------------------------------------------+
 
-Story variables are accessible via C<story_var()> function. For example:
+Story variables are accessible via C<story_var()> function. 
+
+Examples:
+
+In Perl:
+
+    $ cat modules/greeting/story.pl
+    
+    print story_var('name'), 'say ', story_var('message');
+
+In Python:
+
+    $ cat modules/greeting/story.py
+    
+    from outthentic import *
+    print story_var('name') + 'say ' + story_var('message')
+
+In Ruby:
 
     $ cat modules/greeting/story.rb
     
     puts "#{story_var('name')} say #{story_var('message')}"
 
-Or if you use Perl:
-
-    $ cat modules/greeting/story.pl
-    
-    print (story_var('name')).'say '.(story_var('message'))
-
-Or finally Bash (1-st way):
+In Bash (1-st way):
 
     $ cat modules/greeting/story.bash
     
     echo $name say $message
 
-Bash (2-nd way):
+In Bash (2-nd way):
 
     $ cat modules/greeting/story.bash
     
@@ -1209,10 +1283,13 @@ Here is the how you access story variable in all three languages
     | Language         | signature                                   |
     +------------------+---------------------------------------------+
     | Perl             | story_var(SCALAR)                           |
+    | Python(*)        | story_var(STRING)                           | 
     | Ruby             | story_var(STRING)                           | 
     | Bash (1-st way)  | $foo $bar ...                               |
     | Bash (2-nd way)  | $(story_var foo.bar)                        |
     +------------------+---------------------------------------------+
+
+(*) you need to C<from outthentic import *> in Python to import story_var() function.
 
 
 =head2 Story properties
@@ -1251,7 +1328,11 @@ Outthentic provides some helpers and variables:
     +------------------+-----------------------------------------------------+
     | Perl             | function | os() | get a name of OS distribution     |
     | Bash             | variable | os   | get a name of OS distribution     |
+    | Python(*)        | function | os() | get a name of OS distribution     |
+    | Ruby             | function | os() | get a name of OS distribution     |
     +------------------+-----------------------------------------------------+
+
+(*) you need to C<from outthentic import *> in Python to import os() function.
 
 
 =head2 Meta stories
@@ -1342,9 +1423,11 @@ Here is the list for library file names for various languages:
     | Language  | file            |
     +-----------+-----------------+
     | Perl      | common.pm       |
-    | Ruby      | common.rb       |
     | Bash      | common.bash     |
+    | Ruby      | common.rb       |
     +-----------+-----------------+
+
+B<I<NOTE!>>  Story libraries are not supported for Python
 
 
 =head1 Language libraries
@@ -1583,19 +1666,29 @@ for example in story hook file:
 
 Examples for other languages:
 
-Ruby:
-
-    $ cat hook.rb
-    
-    foo = config['main']['foo']
-    bar = config['main']['bar']
-
 Bash:
 
     $ cat hook.bash
     
     foo=$(config main.foo )
     bar=$(config main.bar )
+
+Python:
+
+    $ cat hook.py
+    
+    
+    from outthentic import *
+    
+    foo = config()['main']['foo']
+    bar = config()['main']['bar']
+
+Ruby:
+
+    $ cat hook.rb
+    
+    foo = config['main']['foo']
+    bar = config['main']['bar']
 
 
 =head1 Runtime configuration

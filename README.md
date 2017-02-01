@@ -59,6 +59,8 @@ Outthentic scenarios could be written on one of four languages:
 * Python
 * Ruby
 
+***WARNING!*** Python support is uncompleted, do not expect all python examples at this doc will work
+
 Choose you favorite language ;) !
 
 Outthentic relies on file names to determine scenario language. 

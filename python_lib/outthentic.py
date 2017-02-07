@@ -1,20 +1,25 @@
 from glue import *
 import json
 
-def set_stdout(line):
+STORY_VARIABLES = None
+CONFIG = None
 
+def set_stdout(line):
   with open(stdout_file(), "a") as myfile:
     myfile.write(line)
-
+  
 def config():
 
-  json_file = cache_dir() + "/config.json"
+  global CONFIG
 
-  with open(json_file) as data_file:
-    data = json.load(data_file)
-
-  return data
-
+  if CONFIG:
+    return CONFIG
+  else:
+    json_file = cache_dir() + "/config.json"
+    with open(json_file) as data_file:
+      CONFIG = json.load(data_file)
+    return CONFIG
+  
 
 def run_story( path, params = [] ):
 
@@ -30,4 +35,24 @@ def run_story( path, params = [] ):
 
 def ignore_story_err(val):
   print "ignore_story_err: " + str(val)
+
+
+def story_variables():
+
+  global STORY_VARIABLES
+
+  if STORY_VARIABLES:
+    return STORY_VARIABLES
+  else:
+    json_file = cache_dir() + "/variables.json"
+  
+    with open(json_file) as data_file:
+      STORY_VARIABLES = json.load(data_file)
+  
+    return STORY_VARIABLES
+  
+
+def story_var(name):
+
+  return story_variables()[name]
 

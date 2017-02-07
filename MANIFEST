@@ -83,6 +83,8 @@ examples/modules/bar/story.check
 examples/modules/bar/story.pm
 examples/modules/bash-generator/story.bash
 examples/modules/bash-generator/story.check
+examples/modules/echo-vars-python/story.check
+examples/modules/echo-vars-python/story.py
 examples/modules/echo-vars-ruby/story.check
 examples/modules/echo-vars-ruby/story.rb
 examples/modules/foo/story.check
@@ -126,6 +128,8 @@ examples/python/run-story/hook.py
 examples/python/run-story/meta.txt
 examples/python/simple-story/story.check
 examples/python/simple-story/story.py
+examples/python/story-vars/hook.py
+examples/python/story-vars/meta.txt
 examples/regexp-check-trailing-spaces/story.bash
 examples/regexp-check-trailing-spaces/story.check
 examples/ruby-captures/common.rb

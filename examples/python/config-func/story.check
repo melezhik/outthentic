@@ -1,1 +1,7 @@
 main.foo: 1001
+
+generator: <<CODE
+!python
+from outthentic import *
+print 'main.foo: ' + config()['main']['foo']
+CODE

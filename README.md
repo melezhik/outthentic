@@ -799,9 +799,10 @@ Use `ignore_story_err(int)` function to ignore unsuccessful story code:
 
     # Python
 
-    from outthentic import *
     $ cat hook.py
+    from outthentic import *
     ignore_story_err(1)
+
 
     # Ruby
 

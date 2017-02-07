@@ -119,6 +119,8 @@ examples/python/hooks-api/hook.py
 examples/python/hooks-api/story.check
 examples/python/inline-code/story.check
 examples/python/inline-code/story.py
+examples/python/run-story/hook.py
+examples/python/run-story/meta.txt
 examples/python/simple-story/story.check
 examples/python/simple-story/story.py
 examples/regexp-check-trailing-spaces/story.bash

@@ -16,13 +16,14 @@ def config():
   return data
 
 
-def run_story(path, params):
-
-    if debug_mod12():
-      print "# run downstream story: " + path
+def run_story( path, params = [] ):
 
     print "story_var_json_begin"
-    print json.dumps(params, ensure_ascii=False)
+    if bool(params):
+      print json.dumps(params, ensure_ascii=False)
+    else:
+      print "{}"
+
     print "story_var_json_end"
     print "story: " + path
 

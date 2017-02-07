@@ -27,3 +27,7 @@ def run_story( path, params = [] ):
     print "story_var_json_end"
     print "story: " + path
 
+
+def ignore_story_err(val):
+  print "ignore_story_err: " + str(val)
+

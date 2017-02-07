@@ -117,6 +117,9 @@ examples/python/config-func2/hook.py
 examples/python/config-func2/story.check
 examples/python/hooks-api/hook.py
 examples/python/hooks-api/story.check
+examples/python/ignore-err/hook.py
+examples/python/ignore-err/story.bash
+examples/python/ignore-err/story.check
 examples/python/inline-code/story.check
 examples/python/inline-code/story.py
 examples/python/run-story/hook.py

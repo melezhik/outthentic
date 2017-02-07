@@ -1,5 +1,5 @@
-import json
 from glue import *
+import json
 
 def set_stdout(line):
 
@@ -12,6 +12,7 @@ def config():
 
   with open(json_file) as data_file:
     data = json.load(data_file)
+
   return data
 
 

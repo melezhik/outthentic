@@ -111,6 +111,8 @@ examples/python/asserts/story.check
 examples/python/asserts/story.py
 examples/python/check-rules/story.check
 examples/python/check-rules/story.py
+examples/python/config-func/story.check
+examples/python/config-func/story.py
 examples/python/hooks-api/hook.py
 examples/python/hooks-api/story.check
 examples/python/inline-code/story.check

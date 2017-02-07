@@ -795,10 +795,27 @@ You may also call meta stories as downstream stories:
 Every story is a script gets executed and thus returning an exit code. If exit code is bad (!=0)
 this is treated as story verification failure. 
 
-Use `ignore_story_err()` function to ignore unsuccessful story code:
+Use `ignore_story_err(int)` function to ignore unsuccessful story code:
+
+    # Python
+
+    from outthentic import *
+    $ cat hook.py
+    ignore_story_err(1)
+
+    # Ruby
 
     $ cat hook.rb
+    ignore_story_err 1
 
+    # Perl
+
+    $ cat hook.pl
+    ignore_story_err(1)
+
+    # Bash
+
+    $ cat hook.bash
     ignore_story_err 1
 
 ## Story libraries

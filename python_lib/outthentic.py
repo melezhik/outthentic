@@ -3,6 +3,7 @@ import json
 
 STORY_VARIABLES = None
 CONFIG = None
+CAPTURES = None
 
 def set_stdout(line):
   with open(stdout_file(), "a") as myfile:
@@ -55,4 +56,20 @@ def story_variables():
 def story_var(name):
 
   return story_variables()[name]
+
+
+def captures():
+
+  global CAPTURES
+
+  if CAPTURES:
+    return CAPTURES
+  else:
+    json_file = cache_dir() + "/captures.json"
+    with open(json_file) as data_file:
+      CAPTURES = json.load(data_file)
+    return CAPTURES
+    
+def capture():
+    return captures()[0]
 

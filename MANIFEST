@@ -111,6 +111,8 @@ examples/plain-check-trailing-spaces/story.bash
 examples/plain-check-trailing-spaces/story.check
 examples/python/asserts/story.check
 examples/python/asserts/story.py
+examples/python/captures/story.check
+examples/python/captures/story.py
 examples/python/check-rules/story.check
 examples/python/check-rules/story.py
 examples/python/config-func/story.check

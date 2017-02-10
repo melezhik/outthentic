@@ -492,8 +492,6 @@ Ruby
 
 =back
 
-B<I<WARNING!>> Python support is uncompleted, do not expect all python examples at this doc will work
-
 Choose you favorite language ;) !
 
 Outthentic relies on file names to determine scenario language. 
@@ -1378,10 +1376,28 @@ You may also call meta stories as downstream stories:
 Every story is a script gets executed and thus returning an exit code. If exit code is bad (!=0)
 this is treated as story verification failure. 
 
-Use C<ignore_story_err()> function to ignore unsuccessful story code:
+Use C<ignore_story_err(int)> function to ignore unsuccessful story code:
 
-    $ cat hook.rb
+    # Python
     
+    $ cat hook.py
+    from outthentic import *
+    ignore_story_err(1)
+    
+    
+    # Ruby
+    
+    $ cat hook.rb
+    ignore_story_err 1
+    
+    # Perl
+    
+    $ cat hook.pl
+    ignore_story_err(1)
+    
+    # Bash
+    
+    $ cat hook.bash
     ignore_story_err 1
 
 

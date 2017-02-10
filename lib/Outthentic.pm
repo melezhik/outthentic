@@ -363,7 +363,7 @@ sub print_meta {
 
 sub short_story_name {
 
-    my $task_name = shift||"[s] ";
+    my $task_name = shift||"[s]";
     my $story_dir = get_prop('story_dir');
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
@@ -381,7 +381,7 @@ sub short_story_name {
 
 
     return $task_name ? 
-      ( $task_name.$short_story_dir.( $story_vars  ? " params: $story_vars" : "" )) :
+      ( $task_name.($short_story_dir ? ' '.$short_story_dir : '').( $story_vars  ? " params: $story_vars" : "" )) :
       $short_story_dir.( $story_vars  ? " params: $story_vars" : "" );
 }
 

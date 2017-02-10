@@ -350,7 +350,7 @@ sub print_meta {
 
     my $task_name = get_prop('task_name');
 
-    note( "\n".( nocolor() ? short_story_name($task_name) : colored( ['yellow'], short_story_name($task_name) ) ));
+    note( ( nocolor() ? short_story_name($task_name) : colored( ['yellow'], short_story_name($task_name) ) ));
 
     while (my $i = <META>){
         chomp $i;
@@ -363,8 +363,7 @@ sub print_meta {
 
 sub short_story_name {
 
-
-    my $task_name = shift;
+    my $task_name = shift||"[s] ";
     my $story_dir = get_prop('story_dir');
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
@@ -382,7 +381,7 @@ sub short_story_name {
 
 
     return $task_name ? 
-      ( $task_name.' '.$short_story_dir.( $story_vars  ? " params: $story_vars" : "" )) :
+      ( $task_name.$short_story_dir.( $story_vars  ? " params: $story_vars" : "" )) :
       $short_story_dir.( $story_vars  ? " params: $story_vars" : "" );
 }
 

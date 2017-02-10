@@ -1,5 +1,6 @@
-0.0.25
+0.0.25 2017-02-17
 
+* reports - changed markers for stories
 * add timestamps to reports
 * start python support (uncompleted)
 * story_vars_pretty - print story parameters in sorted order

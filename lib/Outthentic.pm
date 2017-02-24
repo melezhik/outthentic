@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.25';
+our $VERSION = '0.2.26';
 
 1;
 
@@ -19,6 +19,7 @@ use Outthentic::Story;
 use Term::ANSIColor;
 use Hash::Merge qw{merge};
 use Time::localtime;
+use Capture::Tiny;
 
 my $config; 
 
@@ -38,17 +39,22 @@ sub execute_cmd2 {
 
     note("execute scenario: $cmd") if debug_mod2();
 
-    open(OUT, "$cmd 2>&1 |") || die "can't fork: $!";
+    my $stdout; my $stderr; my $exit;
 
-    while (my $l = <OUT>) {
-        $out.=$l;
-        chomp $l;
-        note( nocolor() ? $l : colored(['white'],$l)) if get_prop('verbose');
+    ($stdout, $stderr, $exit) =  Capture::Tiny::capture {
+      system( $cmd );
+    };
+     
+
+    $status = 0 if $exit != 0;
+
+    if (get_prop('verbose')){
+      for my $l (split "\n", $stdout.$stderr){
+        note( nocolor() ? $l : colored(['white'],$l));
+      }
     }
 
-    $status = 0 unless close OUT;
-
-    return ($status,$out);
+    return ($status,$stdout.$stderr);
 }
 
 sub config {

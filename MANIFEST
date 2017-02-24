@@ -2,6 +2,7 @@
 bash_lib/outthentic.bash
 bin/strun
 Changes
+cmd.pl
 dsl-test.sh
 dsl-test/comments/story.bash
 dsl-test/comments/story.check

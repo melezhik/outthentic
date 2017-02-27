@@ -167,22 +167,25 @@ sub wanted {
 }
 
 my $st;
+my $exit_code;
 
 if ($story_path){
-    $st = system("perl $test_root_dir$project_root_dir/$story_path/sparrow.pl");
+    $st = (system("perl $test_root_dir$project_root_dir/$story_path/sparrow.pl")==0);
+    $exit_code = sprintf "%d", $? >> 8;
 }else{
-    $st = system("perl $test_root_dir$project_root_dir/sparrow.pl");
+    $st = ( system("perl $test_root_dir$project_root_dir/sparrow.pl") == 0);
+    $exit_code = sprintf "%d", $? >> 8;
 }
 
 system("rm -rf $test_root_dir") if $purge_cache;
 
 unless ( $dump_config ) { # do not check story status in case we only dump config data
 
-  if ($st==0) {
+  if ($st) {
     print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n");
   }else{
-    print $nocolor ? "STATUS\tFAILED ($st)\n" :  colored(["red"],"STATUS\tFAILED ($st)\n");
-    exit(1);
+    print $nocolor ? "STATUS\tFAILED ($exit_code)\n" :  colored(["red"],"STATUS\tFAILED ($exit_code)\n");
+    exit($exit_code);
   }
   
 }

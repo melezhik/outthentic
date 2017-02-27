@@ -35,7 +35,6 @@ sub execute_cmd2 {
 
     my $cmd = shift;
     my $out;
-    my $status = 1;
 
     note("execute scenario: $cmd") if debug_mod2();
 
@@ -46,15 +45,13 @@ sub execute_cmd2 {
     };
      
 
-    $status = 0 if $exit != 0;
-
     if (get_prop('verbose')){
       for my $l (split "\n", $stdout.$stderr){
         note( nocolor() ? $l : colored(['white'],$l));
       }
     }
 
-    return ($status,$stdout.$stderr);
+    return ($exit >> 8,$stdout.$stderr);
 }
 
 sub config {
@@ -232,9 +229,9 @@ sub run_story_file {
             $story_command.= " && source $story_dir/story.bash'";
         }
 
-        my ($st, $out) = execute_cmd2($story_command);
+        my ($ex_code, $out) = execute_cmd2($story_command);
 
-        if ($st) {
+        if ($ex_code == 0) {
             outh_ok(1, "scenario succeeded" );
             set_prop( scenario_status => 1 );
             Outthentic::Story::Stat->set_scenario_status(1);
@@ -246,7 +243,7 @@ sub run_story_file {
             Outthentic::Story::Stat->set_scenario_status(2);
             Outthentic::Story::Stat->set_stdout($out);
         }else{
-            outh_ok(0, "scenario succeeded");
+            outh_ok(0, "scenario succeeded",$ex_code);
             set_prop( scenario_status => 0 );
             Outthentic::Story::Stat->set_scenario_status(0);
             Outthentic::Story::Stat->set_stdout($out);
@@ -330,16 +327,22 @@ sub generate_asserts {
 
 sub outh_ok {
 
-    my $st      = shift;
-    my $message = shift;
+    my $status    = shift;
+    my $message   = shift;
+    my $exit_code = shift;
 
-    if ($st) {
+    if ($status) {
       print nocolor() ? "ok\t$message\n" : colored(['green'],"ok\t$message")."\n";
     } else {
       print nocolor() ? "not ok\t$message\n" : colored(['red'], "not ok\t$message")."\n";
     };
 
-    $STATUS = 0 unless $st;
+      
+    if ($status == 0 and $STATUS != 0 ){
+      #print "STATUS: $STATUS ... \n";
+      $STATUS = ($exit_code == 1 ) ? -1 : 0;
+      #print "STATUS: $STATUS ... \n";
+    }
 }
 
 sub note {
@@ -400,8 +403,16 @@ sub timestamp {
 
 END {
 
-  exit(1) unless $STATUS;
+  #print "STATUS: $STATUS\n";
+  if ($STATUS == 1){
+    exit(0);
+  } elsif($STATUS == -1){
+    exit(1);
+  } else{
+    exit(2);
+  }
 
+  
 }
 
 1;

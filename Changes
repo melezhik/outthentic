@@ -1,4 +1,4 @@
-0.0.26
+0.0.26 2017-03-02
 
 * Use Capture::Tiny to fix bug with hanging forked process - https://github.com/melezhik/sparrow/issues/11
 * Strun - Calculate statuses to confirm consul requirements: 0,1,2

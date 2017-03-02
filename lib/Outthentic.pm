@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.26';
+our $VERSION = '0.2.27';
 
 1;
 
@@ -243,7 +243,7 @@ sub run_story_file {
             Outthentic::Story::Stat->set_scenario_status(2);
             Outthentic::Story::Stat->set_stdout($out);
         }else{
-            outh_ok(0, "scenario succeeded",2);
+            outh_ok(0, "scenario succeeded", $ex_code);
             set_prop( scenario_status => 0 );
             Outthentic::Story::Stat->set_scenario_status(0);
             Outthentic::Story::Stat->set_stdout($out);

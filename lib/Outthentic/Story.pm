@@ -736,6 +736,7 @@ sub _resolve_os {
         $data=~/Ubuntu/i and $OS = 'ubuntu';
         $data=~/Debian/i and $OS = 'debian';
         $data=~/Arch\s+Linux/i and $OS = 'archlinux';
+        $data=~/Fedora\s+/i and $OS = 'fedora';
   }
 
   return $OS;

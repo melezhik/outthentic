@@ -735,6 +735,7 @@ sub _resolve_os {
         $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1";
         $data=~/Ubuntu/i and $OS = 'ubuntu';
         $data=~/Debian/i and $OS = 'debian';
+        $data=~/Arch\s+Linux/i and $OS = 'archlinux';
   }
 
   return $OS;

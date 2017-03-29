@@ -40,8 +40,6 @@ sub execute_cmd2 {
 
     my $stdout; my $stderr; my $exit;
 
-     
-
     if (get_prop('verbose')){
       ($stdout, $stderr, $exit) =  Capture::Tiny::tee {
         system( $cmd );

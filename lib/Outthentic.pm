@@ -40,14 +40,15 @@ sub execute_cmd2 {
 
     my $stdout; my $stderr; my $exit;
 
-    ($stdout, $stderr, $exit) =  Capture::Tiny::capture {
-      system( $cmd );
-    };
      
 
     if (get_prop('verbose')){
-      for my $l (split "\n", $stdout.$stderr){
-        note( nocolor() ? $l : colored(['white'],$l));
+      ($stdout, $stderr, $exit) =  Capture::Tiny::tee {
+        system( $cmd );
+      }
+    }else{
+      ($stdout, $stderr, $exit) =  Capture::Tiny::capture {
+        system( $cmd );
       }
     }
 

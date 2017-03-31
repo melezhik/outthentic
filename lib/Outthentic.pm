@@ -1510,12 +1510,14 @@ Enable/disable debug mode:
 
 =item *
 
-C<--silent> 
+C<--format> 
 
 
 =back
 
-Run in silent mode. By default strun prints all scenarios output, to disable this choose C<--silent> option.
+Sets report format. Available formats: C<concise|default>. Default value is C<default>.
+
+When concise format is chosen strun does not output scenario status, check lists statues and final status.
 
 =over
 

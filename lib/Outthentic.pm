@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.28';
+our $VERSION = '0.2.29';
 
 1;
 
@@ -171,9 +171,8 @@ sub run_story_file {
     my $task_name = get_prop('task_name');
 
     note(
-      "\n". 
       ( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) ).
-      ' at '.timestamp()
+      ' at '.timestamp()."\n"
     );
 
     if ( get_stdout() ){

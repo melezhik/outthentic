@@ -1,7 +1,9 @@
 0.2.30
 
 * improving reports ( varios, small changes )
-
+* strun - slient option is depricated
+* strun - new option - format 
+ 
 0.2.29 2017-03-29
 
 * execute_cmd2 -  use Capture::Tiny::tee to support realtime STDOUT/STDERR.

@@ -40,15 +40,7 @@ sub execute_cmd2 {
 
     my $stdout; my $stderr; my $exit;
 
-    if (get_prop('verbose')){
-      ($stdout, $stderr, $exit) =  Capture::Tiny::tee {
-        system( $cmd );
-      }
-    }else{
-      ($stdout, $stderr, $exit) =  Capture::Tiny::capture {
-        system( $cmd );
-      }
-    }
+    ( $stdout, $stderr, $exit) =  Capture::Tiny::tee { system( $cmd ) };
 
     return ($exit >> 8,$stdout.$stderr);
 }
@@ -176,11 +168,9 @@ sub run_story_file {
     if ( get_stdout() ){
 
         note("stdout is already set") if debug_mod12;
-        if ( get_prop('verbose') ){
-          for my $l (split /\n/, get_stdout()){
-            note( nocolor() ? $l : colored(['white'],$l));
-          };
-        }
+        for my $l (split /\n/, get_stdout()){
+          note($l);
+        };
         set_prop( stdout => get_stdout() );
         set_prop( scenario_status => 1 );
 
@@ -285,7 +275,7 @@ sub generate_asserts {
 
     eval { dsl()->{output} = run_story_file() };
 
-
+  
     if ($@) {
       $STATUS = 0;
       die "story run error: $@";
@@ -329,17 +319,18 @@ sub outh_ok {
     my $message   = shift;
     my $exit_code = shift;
 
-    if ($status) {
-      print nocolor() ? "ok\t$message\n" : colored(['green'],"ok\t$message")."\n";
-    } else {
-      print nocolor() ? "not ok\t$message\n" : colored(['red'], "not ok\t$message")."\n";
-    };
+    my $format = get_prop('format');
 
-      
+    if ($format ne 'concise'){
+      if ($status) {
+        print nocolor() ? "ok\t$message\n" : colored(['green'],"ok\t$message")."\n";
+      } else {
+        print nocolor() ? "not ok\t$message\n" : colored(['red'], "not ok\t$message")."\n";
+      }
+    }
+
     if ($status == 0 and $STATUS != 0 ){
-      #print "STATUS: $STATUS ... \n";
       $STATUS = ($exit_code == 1 ) ? -1 : 0;
-      #print "STATUS: $STATUS ... \n";
     }
 }
 

@@ -898,9 +898,12 @@ Enable/disable debug mode:
 
     * Possible values: 0,1,2,3
 
-* `--silent` 
+* `--format` 
 
-Run in silent mode. By default strun prints all scenarios output, to disable this choose `--silent` option.
+Sets report format. Available formats: `concise|default`. Default value is `default`.
+
+When concise format is chosen strun does not output scenario status, check lists statues and final status.
+
 
 * `--purge-cache`
 

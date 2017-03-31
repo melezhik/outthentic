@@ -169,9 +169,8 @@ sub run_story_file {
     my $task_name = get_prop('task_name');
 
     note(
-      "\n". 
       ( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) ).
-      ' at '.timestamp()
+      ' at '.timestamp()."\n"
     );
 
     if ( get_stdout() ){

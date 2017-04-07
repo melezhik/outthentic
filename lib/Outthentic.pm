@@ -165,7 +165,7 @@ sub run_story_file {
     unless ( $format eq 'concise'){
       note(
         
-        '>'.($task_name ? $task_name.' at ' : ' at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
+        chr(8226).($task_name ? $task_name.' at ' : ' at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
       );
     }
 
@@ -342,6 +342,7 @@ sub note {
 
     my $message = shift;
 
+    binmode(STDOUT, ":utf8");
     print "$message\n";
 
 }

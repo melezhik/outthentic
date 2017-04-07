@@ -164,8 +164,8 @@ sub run_story_file {
 
     unless ( $format eq 'concise'){
       note(
-        ( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) ).
-        ' at '.timestamp()."\n"
+        
+        '>'.($task_name ? $task_name.' at ' : ' at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
       );
     }
 

@@ -1103,7 +1103,8 @@ C<--format>
 
 Sets report format. Available formats: C<concise|default>. Default value is C<default>.
 
-When concise format is chosen strun does not output scenario status, check lists statues and final status.
+In concise format strun shrink output to only STDOUT/STDERR comes from story scenarios.
+It's useful when you want to parse "raw" script output by external commands.
 
 =over
 

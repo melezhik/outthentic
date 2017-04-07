@@ -902,7 +902,8 @@ Enable/disable debug mode:
 
 Sets report format. Available formats: `concise|default`. Default value is `default`.
 
-When concise format is chosen strun does not output scenario status, check lists statues and final status.
+In concise format strun shrink output to only STDOUT/STDERR comes from story scenarios.
+It's useful when you want to parse "raw" script output by external commands.
 
 
 * `--purge-cache`

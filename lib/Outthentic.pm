@@ -160,10 +160,14 @@ sub run_story_file {
 
     my $task_name = get_prop('task_name');
 
-    note(
-      ( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) ).
-      ' at '.timestamp()."\n"
-    );
+    my $format = get_prop('format');
+
+    unless ( $format eq 'concise'){
+      note(
+        ( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) ).
+        ' at '.timestamp()."\n"
+      );
+    }
 
     if ( get_stdout() ){
 
@@ -341,6 +345,7 @@ sub note {
     print "$message\n";
 
 }
+
 
 sub print_meta {
 
@@ -1517,7 +1522,8 @@ C<--format>
 
 Sets report format. Available formats: C<concise|default>. Default value is C<default>.
 
-When concise format is chosen strun does not output scenario status, check lists statues and final status.
+In concise format strun shrink output to only STDOUT/STDERR comes from story scenarios.
+It's useful when you want to parse "raw" script output by external commands.
 
 =over
 

@@ -128,7 +128,7 @@ sub wanted {
 
         if ($file eq 'meta.txt'){
           print F "set_prop( is_meta => 1 );\n";
-          print F "print_meta();\n\n";
+          print F "print_meta();\n\n" unless $format eq 'concise';
         }else{
           print F "set_prop( is_meta => 0 );\n";
         }
@@ -179,9 +179,11 @@ system("rm -rf $test_root_dir") if $purge_cache;
 unless ( $dump_config ) { # do not check story status in case we only dump config data
 
   if ($st) {
-    print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n");
+    print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n")
+      unless $format eq 'concise';
   }else{
-    print $nocolor ? "STATUS\tFAILED ($exit_code)\n" :  colored(["red"],"STATUS\tFAILED ($exit_code)\n");
+    print $nocolor ? "STATUS\tFAILED ($exit_code)\n" :  colored(["red"],"STATUS\tFAILED ($exit_code)\n")
+      unless $format eq 'concise';
     exit($exit_code);
   }
   

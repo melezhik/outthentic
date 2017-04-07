@@ -384,18 +384,11 @@ sub short_story_name {
 
     my @ret;
 
-    push @ret, $task_name if $task_name;
+    push @ret, $task_name || '[path] /';
 
     push @ret, "[path] $short_story_dir" if $short_story_dir;
     push @ret, "[params] $story_vars" if $story_vars;
 
-    #return $task_name ? 
-    #  ( $task_name.($short_story_dir ? "\n". $short_story_dir : '').( $story_vars  ? " params: $story_vars" : "" )) :
-    #  $short_story_dir.( $story_vars  ? " params: $story_vars" : "" );
-
-    #return $task_name.
-    #($short_story_dir ? "\n". $short_story_dir : '').
-    #( $story_vars  ? " params: $story_vars" : "" )
     join "\n", @ret;
 
 }

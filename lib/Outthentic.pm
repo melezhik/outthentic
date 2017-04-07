@@ -366,7 +366,7 @@ sub print_meta {
 
 sub short_story_name {
 
-    my $task_name = shift||"[s]";
+    my $task_name = shift;
     my $story_dir = get_prop('story_dir');
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
@@ -382,10 +382,22 @@ sub short_story_name {
 
     my $story_vars = story_vars_pretty();
 
+    my @ret;
 
-    return $task_name ? 
-      ( $task_name.($short_story_dir ? ' '.$short_story_dir : '').( $story_vars  ? " params: $story_vars" : "" )) :
-      $short_story_dir.( $story_vars  ? " params: $story_vars" : "" );
+    push @ret, $task_name if $task_name;
+
+    push @ret, "[path] $short_story_dir" if $short_story_dir;
+    push @ret, "[params] $story_vars" if $story_vars;
+
+    #return $task_name ? 
+    #  ( $task_name.($short_story_dir ? "\n". $short_story_dir : '').( $story_vars  ? " params: $story_vars" : "" )) :
+    #  $short_story_dir.( $story_vars  ? " params: $story_vars" : "" );
+
+    #return $task_name.
+    #($short_story_dir ? "\n". $short_story_dir : '').
+    #( $story_vars  ? " params: $story_vars" : "" )
+    join "\n", @ret;
+
 }
 
 sub timestamp {

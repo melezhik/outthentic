@@ -367,6 +367,7 @@ sub print_meta {
 sub short_story_name {
 
     my $task_name = shift;
+
     my $story_dir = get_prop('story_dir');
 
     my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
@@ -384,7 +385,7 @@ sub short_story_name {
 
     my @ret;
 
-    push @ret, $task_name || '[path] /';
+    push @ret, '[path] /' unless $task_name;
 
     push @ret, "[path] $short_story_dir" if $short_story_dir;
     push @ret, "[params] $story_vars" if $story_vars;

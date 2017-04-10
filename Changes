@@ -1,8 +1,8 @@
-0.2.30
+0.2.30 2017-04-10
 
-* improving reports ( varios, small changes )
+* strun - improve reports
 * strun - slient option is depricated
-* strun - new option - format 
+* strun - new option - format, format=concise 
  
 0.2.29 2017-03-29
 

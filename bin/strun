@@ -22,7 +22,7 @@ my $ini_file_path;
 my $yaml_file_path;
 my $json_file_path;
 my @runtime_params;
-
+my $args_file;
 
 GetOptions (
 
@@ -38,6 +38,7 @@ GetOptions (
         "yaml=s"        => \$yaml_file_path,    # string
         "json=s"        => \$json_file_path,    # string
         "param=s"       => \@runtime_params,    # string
+        "args-file=s"   => \$args_file,         # string
         "dump-config"   => \$dump_config,       # boolean
 
 
@@ -112,6 +113,7 @@ sub wanted {
         print F "set_prop( nocolor => $nocolor );\n";
         print F "set_prop( match_l => $match_l );\n";
         print F "set_prop( runtime_params => q{".(join ':::', @runtime_params)."} );\n";
+        print F "set_prop( args_file => q{$args_file} );\n";
         print F "set_prop( task_name => '$task_name' );\n";
 
         print F "\nset_story();\n\n";

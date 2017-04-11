@@ -35,4 +35,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/outthentic
-version: 0.2.30
+version: 0.2.31

@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.30';
+our $VERSION = '0.2.31';
 
 1;
 
@@ -112,7 +112,19 @@ sub populate_config {
       $default_config = {%config};
     }
 
-    my @runtime_params = split /:::/, get_prop('runtime_params');
+    my @runtime_params;
+
+    if (my $args_file = get_prop('args_file') ){
+      open ARGS_FILE, $args_file or die "can't open file $args_file to read: $!";
+      while (my $l = <ARGS_FILE>) {
+        chomp $l;
+        next unless $l=~/\S/;
+        push @runtime_params, $l;
+      }
+      close ARGS_FILE;
+    } else {
+      @runtime_params = split /:::/, get_prop('runtime_params');
+    }
 
     Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
 

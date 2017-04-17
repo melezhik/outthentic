@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.31';
+our $VERSION = '0.2.32';
 
 1;
 
@@ -109,7 +109,7 @@ sub populate_config {
         -InterPolateEnv  => 1 ,
         -ConfigFile => $path 
       )->getall or confess "file $path is not valid config file";
-      $default_config = {%config};
+      $default_config = {%config}; 
     }
 
     my @runtime_params;
@@ -128,7 +128,7 @@ sub populate_config {
 
     Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
 
-    $config = merge( $default_config, $config );
+    my $config_resulted = merge( $default_config, $config );
 
     PARAM: for my $rp (@runtime_params){
 
@@ -143,7 +143,7 @@ sub populate_config {
       my @pathes = split /\./, $rp;
       my $last_path = pop @pathes;
 
-      my $root = $config;
+      my $root = $config_resulted;
       for my $path (@pathes){
         next PARAM unless defined $root->{$path};
         $root = $root->{$path};
@@ -154,12 +154,12 @@ sub populate_config {
     open CONFIG, '>', story_cache_dir().'/config.json' 
       or die "can't open to write file ".story_cache_dir()."/config.json : $!";
     my $json = JSON->new();
-    print CONFIG $json->encode($config);
+    print CONFIG $json->encode($config_resulted);
     close CONFIG;
 
     note("configuration populated and saved to ".story_cache_dir()."/config.json") if debug_mod12;
 
-    return $config;
+    return $config_resulted;
 }
 
 sub run_story_file {

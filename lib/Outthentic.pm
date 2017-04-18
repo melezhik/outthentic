@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.33';
+our $VERSION = '0.2.34';
 
 1;
 
@@ -20,6 +20,27 @@ use Term::ANSIColor;
 use Hash::Merge qw{merge};
 use Time::localtime;
 use Capture::Tiny;
+
+Hash::Merge::specify_behavior(
+    {
+                'SCALAR' => {
+                        'SCALAR' => sub { $_[1] },
+                        'ARRAY'  => sub { [ $_[0], @{$_[1]} ] },
+                        'HASH'   => sub { $_[1] },
+                },
+                'ARRAY' => {
+                        'SCALAR' => sub { $_[1] },
+                        'ARRAY'  => sub { [ @{$_[1]} ] },
+                        'HASH'   => sub { $_[1] }, 
+                },
+                'HASH' => {
+                        'SCALAR' => sub { $_[1] },
+                        'ARRAY'  => sub { [ values %{$_[0]}, @{$_[1]} ] },
+                        'HASH'   => sub { Hash::Merge::_merge_hashes( $_[0], $_[1] ) }, 
+                },
+        }, 
+        'Strun', 
+);
 
 my $config_data; 
 
@@ -128,26 +149,6 @@ sub populate_config {
 
     #Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
 
-    Hash::Merge::specify_behavior(
-        {
-                    'SCALAR' => {
-                            'SCALAR' => sub { $_[1] },
-                            'ARRAY'  => sub { [ $_[0], @{$_[1]} ] },
-                            'HASH'   => sub { $_[1] },
-                    },
-                    'ARRAY' => {
-                            'SCALAR' => sub { $_[1] },
-                            'ARRAY'  => sub { [ @{$_[1]} ] },
-                            'HASH'   => sub { $_[1] }, 
-                    },
-                    'HASH' => {
-                            'SCALAR' => sub { $_[1] },
-                            'ARRAY'  => sub { [ values %{$_[0]}, @{$_[1]} ] },
-                            'HASH'   => sub { Hash::Merge::_merge_hashes( $_[0], $_[1] ) }, 
-                    },
-            }, 
-            'My Behavior', 
-    );
 
     #use Data::Dumper;
     #print Dumper($default_config);

@@ -1,3 +1,7 @@
+0.2.34 2017-04-18
+
+Get rid of warning "Behavior was already defined"
+
 0.2.33 2017-04-18
 
 populate_config : Additional fix for bug crept under 0.2.32 release

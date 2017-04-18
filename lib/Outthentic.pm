@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.32';
+our $VERSION = '0.2.33';
 
 1;
 
@@ -21,7 +21,7 @@ use Hash::Merge qw{merge};
 use Time::localtime;
 use Capture::Tiny;
 
-my $config; 
+my $config_data; 
 
 our $STATUS = 1;
 
@@ -46,7 +46,7 @@ sub execute_cmd2 {
 }
 
 sub config {
-  $config
+  $config_data
 }
 
 sub dump_config {
@@ -60,43 +60,43 @@ sub nocolor {
 
 sub populate_config {
 
-    unless ($config){
+    unless (config()){
         if (get_prop('ini_file_path') and -f get_prop('ini_file_path') ){
           my $path = get_prop('ini_file_path');
-          my %config  = Config::General->new( 
+          my %c  = Config::General->new( 
             -InterPolateVars => 1 ,
             -InterPolateEnv  => 1 ,
             -ConfigFile => $path 
           )->getall or confess "file $path is not valid config file";
-          $config = {%config};
+          $config_data = {%c};
         }elsif(get_prop('yaml_file_path') and -f get_prop('yaml_file_path')){
           my $path = get_prop('yaml_file_path');
-          ($config) = LoadFile($path);
+          ($config_data) = LoadFile($path);
         }elsif ( get_prop('json_file_path') and -f get_prop('json_file_path') ){
           my $path = get_prop('json_file_path');
           open DATA, $path or confess "can't open file $path to read: $!";
           my $json_str = join "", <DATA>;
           close DATA;
-          $config = from_json($json_str);
+          $config_data = from_json($json_str);
         }elsif ( -f 'suite.ini' ){
           my $path = 'suite.ini';
-          my %config  = Config::General->new( 
+          my %c  = Config::General->new( 
             -InterPolateVars => 1 ,
             -InterPolateEnv  => 1 ,
             -ConfigFile => $path 
           )->getall or confess "file $path is not valid config file";
-          $config = {%config};
+          $config_data = {%c};
         }elsif ( -f 'suite.yaml'){
           my $path = 'suite.yaml';
-          ($config) = LoadFile($path);
+          ($config_data) = LoadFile($path);
         }elsif ( -f 'suite.json'){
           my $path = 'suite.json';
           open DATA, $path or confess "can't open file $path to read: $!";
           my $json_str = join "", <DATA>;
           close DATA;
-          $config = from_json($json_str);
+          $config_data = from_json($json_str);
         }else{
-          $config = { };
+          $config_data = { };
         }
     }
 
@@ -104,12 +104,12 @@ sub populate_config {
 
     if ( -f 'suite.ini' ){
       my $path = 'suite.ini';
-      my %config  = Config::General->new( 
+      my %c  = Config::General->new( 
         -InterPolateVars => 1 ,
         -InterPolateEnv  => 1 ,
         -ConfigFile => $path 
       )->getall or confess "file $path is not valid config file";
-      $default_config = {%config}; 
+      $default_config = {%c}; 
     }
 
     my @runtime_params;
@@ -126,9 +126,34 @@ sub populate_config {
       @runtime_params = split /:::/, get_prop('runtime_params');
     }
 
-    Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
+    #Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
 
-    my $config_resulted = merge( $default_config, $config );
+    Hash::Merge::specify_behavior(
+        {
+                    'SCALAR' => {
+                            'SCALAR' => sub { $_[1] },
+                            'ARRAY'  => sub { [ $_[0], @{$_[1]} ] },
+                            'HASH'   => sub { $_[1] },
+                    },
+                    'ARRAY' => {
+                            'SCALAR' => sub { $_[1] },
+                            'ARRAY'  => sub { [ @{$_[1]} ] },
+                            'HASH'   => sub { $_[1] }, 
+                    },
+                    'HASH' => {
+                            'SCALAR' => sub { $_[1] },
+                            'ARRAY'  => sub { [ values %{$_[0]}, @{$_[1]} ] },
+                            'HASH'   => sub { Hash::Merge::_merge_hashes( $_[0], $_[1] ) }, 
+                    },
+            }, 
+            'My Behavior', 
+    );
+
+    #use Data::Dumper;
+    #print Dumper($default_config);
+    #print Dumper($config_data);
+
+    my $config_res = merge( $default_config, $config_data );
 
     PARAM: for my $rp (@runtime_params){
 
@@ -143,7 +168,7 @@ sub populate_config {
       my @pathes = split /\./, $rp;
       my $last_path = pop @pathes;
 
-      my $root = $config_resulted;
+      my $root = $config_res;
       for my $path (@pathes){
         next PARAM unless defined $root->{$path};
         $root = $root->{$path};
@@ -154,12 +179,13 @@ sub populate_config {
     open CONFIG, '>', story_cache_dir().'/config.json' 
       or die "can't open to write file ".story_cache_dir()."/config.json : $!";
     my $json = JSON->new();
-    print CONFIG $json->encode($config_resulted);
+    print CONFIG $json->encode($config_res);
     close CONFIG;
 
     note("configuration populated and saved to ".story_cache_dir()."/config.json") if debug_mod12;
-
-    return $config_resulted;
+    
+    return $config_data = $config_res;
+    return $config_data;
 }
 
 sub run_story_file {

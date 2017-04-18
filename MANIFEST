@@ -53,6 +53,8 @@ examples/custom-reports-all/hook.pl
 examples/custom-reports-all/meta.txt
 examples/custom-reports-failures/hook.pl
 examples/custom-reports-failures/meta.txt
+examples/duplicate-config-issue/hook.pl
+examples/duplicate-config-issue/story.check
 examples/empty-check-file/story.bash
 examples/empty-check-file/story.check
 examples/generator-one-line/story.bash

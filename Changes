@@ -1,3 +1,7 @@
+0.2.33 2017-04-18
+
+populate_config : Additional fix for bug crept under 0.2.32 release
+
 0.2.32 2017-04-17
 
 * Bugfix: merge duplicated config hash keys for some cases 

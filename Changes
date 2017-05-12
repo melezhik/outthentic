@@ -1,3 +1,7 @@
+0.2.35
+
+dump_os - add  support for Amazon Linux
+
 0.2.34 2017-04-18
 
 Get rid of warning "Behavior was already defined"

@@ -1,6 +1,7 @@
 0.2.35
 
-dump_os - add  support for Amazon Linux
+* dump_os - add  support for Amazon Linux
+* bugfix: default suite now could be suite.yaml, suite.json ( not only suite.ini )
 
 0.2.34 2017-04-18
 

@@ -121,7 +121,7 @@ sub populate_config {
         }
     }
 
-    my $default_config = {};
+    my $default_config;
 
     if ( -f 'suite.ini' ){
       my $path = 'suite.ini';
@@ -131,7 +131,19 @@ sub populate_config {
         -ConfigFile => $path 
       )->getall or confess "file $path is not valid config file";
       $default_config = {%c}; 
+    }elsif ( -f 'suite.yaml'){
+      my $path = 'suite.yaml';
+      ($default_config) = LoadFile($path);
+    }elsif ( -f 'suite.json'){
+      my $path = 'suite.json';
+      open DATA, $path or confess "can't open file $path to read: $!";
+      my $json_str = join "", <DATA>;
+      close DATA;
+      $default_config = from_json($json_str);
+    }else{
+      $default_config = { };
     }
+
 
     my @runtime_params;
 

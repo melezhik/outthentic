@@ -924,6 +924,58 @@ Outthentic provides some helpers and variables:
 (*) you need to C<from outthentic import *> in Python to import os() function.
 
 
+=head3 Recognized OS list
+
+=over
+
+=item -
+
+centos5
+
+
+=item -
+
+centos6
+
+
+=item -
+
+centos7
+
+
+=item -
+
+ubuntu
+
+
+=item -
+
+debian
+
+
+=item -
+
+minoca
+
+
+=item -
+
+archlinux
+
+
+=item -
+
+fedora
+
+
+=item -
+
+amazon
+
+
+=back
+
+
 =head2 Meta stories
 
 Meta stories are special type of outthentic stories.

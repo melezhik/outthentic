@@ -745,6 +745,17 @@ Outthentic provides some helpers and variables:
 
 (*) you need to `from outthentic import *` in Python to import os() function.
 
+### Recognized OS list
+
+- centos5
+- centos6
+- centos7
+- ubuntu
+- debian
+- minoca
+- archlinux
+- fedora
+- amazon
 
 ## Meta stories
 

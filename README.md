@@ -756,6 +756,7 @@ Outthentic provides some helpers and variables:
 - archlinux
 - fedora
 - amazon
+- alpine
 
 ## Meta stories
 

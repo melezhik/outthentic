@@ -1,3 +1,7 @@
+0.2.36
+
+* dump_os - Recognize alpine linux
+
 0.2.35 2017-05-25
 
 * dump_os - add support for Amazon Linux

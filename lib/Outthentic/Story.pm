@@ -738,6 +738,7 @@ sub _resolve_os {
         $data=~/Arch\s+Linux/i and $OS = 'archlinux';
         $data=~/Fedora\s+/i and $OS = 'fedora';
         $data=~/Amazon\s+Linux/i and $OS = 'amazon';
+        $data=~/Alpine\s+Linux/i and $OS = 'alpine';
   }
 
   return $OS;

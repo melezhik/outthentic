@@ -194,6 +194,7 @@ lib/Outthentic/Story.pm
 lib/Outthentic/Story/Stat.pm
 Makefile.PL
 MANIFEST			This list of files
+META.yml
 python_lib/outthentic.py
 README.md
 README.pod

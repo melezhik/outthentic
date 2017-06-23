@@ -747,16 +747,16 @@ Outthentic provides some helpers and variables:
 
 ### Recognized OS list
 
-- centos5
-- centos6
-- centos7
-- ubuntu
-- debian
-- minoca
-- archlinux
-- fedora
-- amazon
-- alpine
+* centos5
+* centos6
+* centos7
+* ubuntu
+* debian
+* minoca
+* archlinux
+* fedora
+* amazon
+* alpine
 
 ## Meta stories
 

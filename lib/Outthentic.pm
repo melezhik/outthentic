@@ -1403,49 +1403,54 @@ Outthentic provides some helpers and variables:
 
 =over
 
-=item -
+=item *
 
 centos5
 
 
-=item -
+=item *
 
 centos6
 
 
-=item -
+=item *
 
 centos7
 
 
-=item -
+=item *
 
 ubuntu
 
 
-=item -
+=item *
 
 debian
 
 
-=item -
+=item *
 
 minoca
 
 
-=item -
+=item *
 
 archlinux
 
 
-=item -
+=item *
 
 fedora
 
 
-=item -
+=item *
 
 amazon
+
+
+=item *
+
+alpine
 
 
 =back

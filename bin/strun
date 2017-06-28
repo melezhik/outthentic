@@ -10,6 +10,7 @@ use Term::ANSIColor;
 use Cwd;
 
 my $project_root_dir  = $ENV{'OUTTHENTIC_ROOT'} || getcwd();
+my $cwd;
 my $purge_cache   = 0;
 my $format        = 'default';
 my $debug_mod     = 0;
@@ -26,6 +27,7 @@ my $args_file;
 
 GetOptions (
 
+        "cwd=s"         => \$cwd,               # string
         "format=s"      => \$format,            # string
         "purge-cache"   => \$purge_cache,       # boolean
         "nocolor"       => \$nocolor,           # boolean
@@ -169,10 +171,15 @@ my $st;
 my $exit_code;
 
 if ($story_path){
-    $st = (system("perl $test_root_dir$project_root_dir/$story_path/sparrow.pl")==0);
+
+    my $strun_cmd = "perl $test_root_dir$project_root_dir/$story_path/sparrow.pl";
+    $strun_cmd = "cd $cwd && $strun_cmd" if $cwd;
+    $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }else{
-    $st = ( system("perl $test_root_dir$project_root_dir/sparrow.pl") == 0);
+    my $strun_cmd = "perl $test_root_dir$project_root_dir/sparrow.pl";
+    $strun_cmd = "cd $cwd && $strun_cmd" if $cwd;
+    $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }
 

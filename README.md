@@ -900,6 +900,10 @@ This make it easy to place custom Perl modules under project root directory:
 
 Root directory of outthentic project. If root parameter is not set current working directory is assumed as project root directory.
 
+* `--cwd`  
+
+Sets working directory when strun executes. Default value is unset. Optional.
+
 * `--debug` 
 
 Enable/disable debug mode:

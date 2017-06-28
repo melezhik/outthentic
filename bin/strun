@@ -185,7 +185,8 @@ if ($story_path){
 system("rm -rf $test_root_dir") if $purge_cache;
 
 unless ( $dump_config ) { # do not check story status in case we only dump config data
-
+  #warn "state: $st";
+  #warn "exit code: $exit_code";
   if ($st) {
     print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n")
       unless $format eq 'concise';

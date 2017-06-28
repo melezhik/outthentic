@@ -203,7 +203,10 @@ sub populate_config {
     # only once, when config is really populated
 
     if ( get_prop('cwd') ) {
-      chdir(get_prop('cwd')) or die "can't change working directory to: ".(get_prop('cwd')." : $!");
+      unless (chdir(get_prop('cwd'))){
+        $STATUS = 0;
+        die "can't change working directory to: ".(get_prop('cwd'))." : $!";
+      }
       print "set cwd to ".(get_prop('cwd')),"\n";
     }
     

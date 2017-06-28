@@ -196,6 +196,16 @@ sub populate_config {
     close CONFIG;
 
     note("configuration populated and saved to ".story_cache_dir()."/config.json") if debug_mod12;
+
+    # it should be done once
+    # and it always true
+    # as populate_config() reach this lines
+    # only once, when config is really populated
+
+    if ( get_prop('cwd') ) {
+      chdir(get_prop('cwd'));
+      print "set cwd to ".(get_prop('cwd')),"\n";
+    }
     
     return $config_data = $config_res;
     return $config_data;

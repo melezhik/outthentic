@@ -99,6 +99,7 @@ sub wanted {
     
         print F "new_story();\n\n";
     
+        print F "set_prop( cwd => q{$cwd} );\n";
         print F "set_prop( project_root_dir => q{$project_root_dir} );\n";
         print F "set_prop( test_root_dir    => q{$test_root_dir} );\n";
         print F "set_prop( ini_file_path    => q{$ini_file_path} );\n"    if $ini_file_path;
@@ -173,12 +174,10 @@ my $exit_code;
 if ($story_path){
 
     my $strun_cmd = "perl $test_root_dir$project_root_dir/$story_path/sparrow.pl";
-    $strun_cmd = "cd $cwd && $strun_cmd" if $cwd;
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }else{
     my $strun_cmd = "perl $test_root_dir$project_root_dir/sparrow.pl";
-    $strun_cmd = "cd $cwd && $strun_cmd" if $cwd;
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }

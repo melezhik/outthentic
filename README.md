@@ -1071,6 +1071,8 @@ This way we will override foo.bar to value \`20'.
 
 * `SPARROW_NO_COLOR` - disable color output (see --nocolor option of `strun`)
 
+* `OUTTHENTIC_CWD` - sets working directory for strun, see strun's `--cwd` parameter
+
 Test root directory resolution table:
     
     +---------------------+----------------------+

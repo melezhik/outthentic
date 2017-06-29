@@ -1624,6 +1624,18 @@ Root directory of outthentic project. If root parameter is not set current worki
 
 =item *
 
+C<--cwd>
+
+
+
+=back
+
+Sets working directory when strun executes. Default value is unset. Optional.
+
+=over
+
+=item *
+
 C<--debug> 
 
 
@@ -1879,6 +1891,12 @@ C<SPARROW_ROOT> - if set, used as prefix for test root directory.
 =item *
 
 C<SPARROW_NO_COLOR> - disable color output (see --nocolor option of C<strun>)
+
+
+
+=item *
+
+C<OUTTHENTIC_CWD> - sets working directory for strun, see strun's C<--cwd> parameter
 
 
 

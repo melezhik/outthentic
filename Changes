@@ -1,3 +1,7 @@
+0.2.38
+
+Don't print set cwd
+
 0.2.37  2017-06-29
 
 * `strun` - support new parameter `--cwd` to set working directory during run ( mostly to use in Sparky )

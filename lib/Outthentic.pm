@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.37';
+our $VERSION = '0.2.38';
 
 1;
 
@@ -207,7 +207,7 @@ sub populate_config {
         $STATUS = 0;
         die "can't change working directory to: ".(get_prop('cwd'))." : $!";
       }
-      print "set cwd to ".(get_prop('cwd')),"\n";
+      #print "set cwd to ".(get_prop('cwd')),"\n";
     }
     
     return $config_data = $config_res;

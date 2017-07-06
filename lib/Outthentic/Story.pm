@@ -728,19 +728,20 @@ sub dump_os {
 
 sub _resolve_os {
 
-  if (!$OS){
-        my $data = dump_os();
-        $data=~/Alpine\s+Linux/i and $OS = 'alpine';
-        $data=~/Minoca OS/i and $OS = "minoca";
-        $data=~/CentOS\s+.*release\s+(\d)/i and $OS = "centos$1";
-        $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1";
-        $data=~/Arch\s+Linux/i and $OS = 'archlinux';
-        $data=~/Fedora\s+/i and $OS = 'fedora';
-        $data=~/Amazon\s+Linux/i and $OS = 'amazon';
-        $data=~/Ubuntu/i and $OS = 'ubuntu';
-        $data=~/Debian/i and $OS = 'debian';
+  DONE: while (1) {
+    if (!$OS){
+          my $data = dump_os();
+          $data=~/Alpine\s+Linux/i and $OS = 'alpine' and last DONE;
+          $data=~/Minoca OS/i and $OS = "minoca" and last DONE;
+          $data=~/CentOS\s+.*release\s+(\d)/i and $OS = "centos$1" and last DONE;
+          $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1" and last DONE;
+          $data=~/Arch\s+Linux/i and $OS = 'archlinux' and last DONE;
+          $data=~/Fedora\s+/i and $OS = 'fedora' and last DONE;
+          $data=~/Amazon\s+Linux/i and $OS = 'amazon' and last DONE;
+          $data=~/Ubuntu/i and $OS = 'ubuntu' and last DONE;
+          $data=~/Debian/i and $OS = 'debian' and last DONE;
+    }
   }
-
   return $OS;
 }
 

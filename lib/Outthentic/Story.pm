@@ -728,8 +728,10 @@ sub dump_os {
 
 sub _resolve_os {
 
-  DONE: while (1) {
+  DONE:
     if (!$OS){
+
+       while (1) {
           my $data = dump_os();
           $data=~/Alpine\s+Linux/i and $OS = 'alpine' and last DONE;
           $data=~/Minoca OS/i and $OS = "minoca" and last DONE;
@@ -740,7 +742,8 @@ sub _resolve_os {
           $data=~/Amazon\s+Linux/i and $OS = 'amazon' and last DONE;
           $data=~/Ubuntu/i and $OS = 'ubuntu' and last DONE;
           $data=~/Debian/i and $OS = 'debian' and last DONE;
-    }
+          last DONE;
+      }
   }
   return $OS;
 }

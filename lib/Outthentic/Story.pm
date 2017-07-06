@@ -730,15 +730,15 @@ sub _resolve_os {
 
   if (!$OS){
         my $data = dump_os();
+        $data=~/Alpine\s+Linux/i and $OS = 'alpine';
         $data=~/Minoca OS/i and $OS = "minoca";
         $data=~/CentOS\s+.*release\s+(\d)/i and $OS = "centos$1";
         $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1";
-        $data=~/Ubuntu/i and $OS = 'ubuntu';
-        $data=~/Debian/i and $OS = 'debian';
         $data=~/Arch\s+Linux/i and $OS = 'archlinux';
         $data=~/Fedora\s+/i and $OS = 'fedora';
         $data=~/Amazon\s+Linux/i and $OS = 'amazon';
-        $data=~/Alpine\s+Linux/i and $OS = 'alpine';
+        $data=~/Ubuntu/i and $OS = 'ubuntu';
+        $data=~/Debian/i and $OS = 'debian';
   }
 
   return $OS;

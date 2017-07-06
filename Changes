@@ -1,6 +1,7 @@
 0.2.38
 
-Don't print set cwd
+- Don't print set cwd
+- Resolve_os: Fix ubuntu/alpine bug
 
 0.2.37  2017-06-29
 

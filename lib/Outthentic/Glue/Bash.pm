@@ -24,17 +24,13 @@ sub json_var {
     $conf = $conf->{$n};    
   }
 
-  if ( $conf =~ "ARRAY") {
-    my $array_json = JSON->new;
-    my $array_conf = $array_json->encode($conf);
-    $array_conf =~ tr/[/(/;
-    $array_conf =~ tr/]/)/;
-    $array_conf =~ tr/\,/ /;
-    print $array_conf;
+  if ( ref  $conf eq "ARRAY") { 
+    my $conf =  join ' ', @$conf ;
+    print '(' . $conf . ')';
   } else {
     print $conf;
   }
-}
 
+}
 
 1;

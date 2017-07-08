@@ -1044,14 +1044,16 @@ See [comments-blank-lines-and-text-blocks](https://github.com/melezhik/outthenti
 
 # See also
 
-* [Sparrow](https://github.com/melezhik/sparrow) - outthentic suites manager.
+* [Sparrow](https://github.com/melezhik/sparrow) - Multipurposes scenarios manager.
 
 * [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl) - Outthentic::DSL specification.
 
-* [Swat](https://github.com/melezhik/swat) - web testing framework consuming Outthentic::DSL.
+* [Swat](https://github.com/melezhik/swat) - Web testing framework.
 
 # Thanks
 
-To God as the One Who inspires me to do my job!
+To God as the One Who inspires me in my life!
+
+
 
 

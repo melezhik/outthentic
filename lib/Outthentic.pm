@@ -1839,7 +1839,7 @@ L<https://github.com/melezhik/outthentic|https://github.com/melezhik/outthentic>
 
 =item *
 
-L<Sparrow|https://github.com/melezhik/sparrow> - outthentic suites manager.
+L<Sparrow|https://github.com/melezhik/sparrow> - Multipurposes scenarios manager.
 
 
 
@@ -1851,7 +1851,7 @@ L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl> - Outthentic::DSL 
 
 =item *
 
-L<Swat|https://github.com/melezhik/swat> - web testing framework consuming Outthentic::DSL.
+L<Swat|https://github.com/melezhik/swat> - Web testing framework.
 
 
 
@@ -1860,4 +1860,4 @@ L<Swat|https://github.com/melezhik/swat> - web testing framework consuming Outth
 
 =head1 Thanks
 
-To God as the One Who inspires me to do my job!
+To God as the One Who inspires me in my life!

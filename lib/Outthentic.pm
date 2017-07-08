@@ -538,28 +538,28 @@ Scenario is just a script that you B<run> and that yields something into B<stdou
 
 Perl scenario example:
 
-    $ cat story.pl
+    $ nano story.pl
     
     print "I am OK\n";
     print "I am outthentic\n";
 
 Bash scenario example:
 
-    $ cat story.bash
+    $ nano story.bash
     
     echo I am OK
     echo I am outthentic
 
 Python scenario example:
 
-    $ cat story.py
+    $ nano story.py
     
     print "I am OK"
     print "I am outthentic"
 
 Ruby scenario example:
 
-    $ cat story.rb
+    $ nano story.rb
     
     puts "I am OK"
     puts "I am outthentic"
@@ -612,7 +612,7 @@ Check files contain rules to B<verify> stdout produced by scenarios.
 
 Here we require that scenario should produce  C<I am OK> and C<I am outthentic> lines in stdout:
 
-    $ cat story.check
+    $ nano story.check
     
     I am OK
     I am outthentic
@@ -668,7 +668,7 @@ Here is an example:
     $ mkdir bash-story
     
     $ nano bash-story/story.bash
-      echo echo hello from bash 
+      echo hello from bash 
     
     $ nano bash-story/story.check
       hello from bash 
@@ -707,7 +707,7 @@ at the project root directory.
 
 Here is an example:
 
-    $ cat story.bash
+    $ nano story.bash
     echo 'hello world'
     
     $ strun # will run story.bash 
@@ -758,10 +758,10 @@ Check file should be placed at the same directory as scenario and be named as C<
 
 Here is an example:
 
-    $ cat story.bash
+    $ nano story.bash
     sudo service nginx status
      
-    $ cat story.check
+    $ nano story.check
     running
 
 
@@ -812,7 +812,7 @@ Hooks are are executed I<before> scenarios
 
 Here is an example of hook:
 
-    $ cat perl/hook.pl
+    $ nano perl/hook.pl
     
     print "this is a story hook!";
 
@@ -1024,7 +1024,7 @@ Or in Python:
 
 Or in Bash:
 
-    $ cat hook.bash
+    $ nano hook.bash
     
     run_story  greeting name Alexey message hello 
 
@@ -1211,24 +1211,24 @@ Examples:
 
     # Python
     
-    $ cat hook.py
+    $ nano hook.py
     from outthentic import *
     ignore_story_err(1)
     
     
     # Ruby
     
-    $ cat hook.rb
+    $ nano hook.rb
     ignore_story_err 1
     
     # Perl
     
-    $ cat hook.pl
+    $ nano hook.pl
     ignore_story_err(1)
     
     # Bash
     
-    $ cat hook.bash
+    $ nano hook.bash
     ignore_story_err 1
 
 
@@ -1240,12 +1240,12 @@ Here are some examples:
 
 Perl:
 
-    $ cat common.pm
+    $ nano common.pm
     sub abc_generator {
       print $_, "\n" for a..z;
     } 
     
-    $ cat story.check
+    $ nano story.check
     
     generator: <<CODE;
     !perl
@@ -1254,12 +1254,12 @@ Perl:
 
 Ruby:
 
-    $ cat common.rb
+    $ nano common.rb
     def super_utility arg1, arg2
       # I am cool! But I do nothing!
     end
     
-    $ cat hook.pl
+    $ nano hook.pl
     
     super_utility 'foo', 'bar'
 
@@ -1282,11 +1282,11 @@ $project_root_directory/lib path is added to $PERL5LIB variable.
 
 This make it easy to place custom Perl modules under project root directory:
 
-    $ cat my-app/lib/Foo/Bar/Baz.pm
+    $ nano my-app/lib/Foo/Bar/Baz.pm
     package Foo::Bar::Baz;
     1;
     
-    $ cat common.pm
+    $ nano common.pm
     use Foo::Bar::Baz;
 
 
@@ -1490,7 +1490,7 @@ Config::General style configuration files are passed by C<--ini> parameter:
 
     $ strun --ini /etc/suites/foo.ini
     
-    $ cat /etc/suites/foo.ini
+    $ nano /etc/suites/foo.ini
     
     <main>
     
@@ -1505,7 +1505,7 @@ Or you can choose YAML format for suite configuration by using C<--yaml> paramet
 
     $ strun --yaml /etc/suites/foo.yaml
     
-    $ cat /etc/suites/foo.yaml
+    $ nano /etc/suites/foo.yaml
     
     main :
       foo : 1
@@ -1532,7 +1532,7 @@ Bash:
 
 Python:
 
-    $ cat hook.py
+    $ nano hook.py
     
     
     from outthentic import *
@@ -1542,7 +1542,7 @@ Python:
 
 Ruby:
 
-    $ cat hook.rb
+    $ nano hook.rb
     
     foo = config['main']['foo']
     bar = config['main']['bar']
@@ -1552,7 +1552,7 @@ Ruby:
 
 Runtime configuration parameters override ones in suite configuration. Consider this example:
 
-    $ cat suite.yaml
+    $ nano suite.yaml
     foo :
       bar : 10
       

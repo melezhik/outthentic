@@ -1123,7 +1123,7 @@ C<config()> - returns suite configuration hash object. See also L<suite configur
 
 =item *
 
-os() - return a mnemonic ID of operation system where story is executed
+os() - return a mnemonic ID of operation system where story is executed.
 
 
 
@@ -1133,7 +1133,7 @@ os() - return a mnemonic ID of operation system where story is executed
 (**) in Bash these functions are represented by variables, e.g. $project_root_dir, $os, so on.
 
 
-=head1 Recognized OS list
+=head1 Recognisable OS list
 
 =over
 

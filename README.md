@@ -498,13 +498,13 @@ Here is the list of function one can use _inside hooks_:
 
 * `config()` - returns suite configuration hash object. See also [suite configuration](#suite-configuration).
 
-* os() - return a mnemonic ID of operation system where story is executed
+* os() - return a mnemonic ID of operation system where story is executed.
 
 
 (*) you need to `from outthentic import *` in Python to import os() function.
 (**) in Bash these functions are represented by variables, e.g. $project_root_dir, $os, so on.
 
-# Recognized OS list
+# Recognisable OS list
 
 * centos5
 * centos6

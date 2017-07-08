@@ -165,9 +165,9 @@ sub wanted {
         }
 
         if (-e "$File::Find::dir/story.check"){
-          print F "eval { generate_asserts(q{$File::Find::dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
+          print F "eval { run_and_check(q{$File::Find::dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
         } else {
-          print F "eval { generate_asserts() }; die \"asserts error: \$@\" if \$@ ;\n\n";
+          print F "eval { run_and_check() }; die \"asserts error: \$@\" if \$@ ;\n\n";
         }
 
         print F 'end_of_story();',"\n\n";

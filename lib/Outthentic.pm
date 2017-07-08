@@ -349,7 +349,7 @@ sub header {
 
 }
 
-sub generate_asserts {
+sub run_and_check {
 
     my $story_check_file = shift;
 

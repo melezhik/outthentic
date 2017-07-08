@@ -841,7 +841,7 @@ Where `$story-name` is any top level directory inside examples/.
 
 Here is brief introduction into [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl) which is used to define rules in check files.
 
-# plain strings checks
+# Plain strings checks
 
 Often all you need is to ensure that stdout has some strings in:
 
@@ -864,7 +864,7 @@ Often all you need is to ensure that stdout has some strings in:
     OK - output matches 'HELLO WORLD'
     OK - output matches '123'
 
-# regular expressions
+# Regular expressions
 
 You may use regular expressions as well:
 
@@ -882,7 +882,7 @@ You may use regular expressions as well:
 
 See [check-expressions](https://github.com/melezhik/outthentic-dsl#check-expressions) in Outthentic::DSL documentation pages.
 
-# inline code, generators and asserts
+# Inline code, generators and asserts
 
 You may inline code from other language to add some extra logic into your check file:
 
@@ -910,7 +910,7 @@ You may inline code from other language to add some extra logic into your check 
     print("this is debug message will be shown at console\n");
     CODE
 
-## generators
+## Generators
 
 You may generate new **check entries** on runtime:
 
@@ -970,7 +970,7 @@ Ruby:
     CODE
 
 
-##  asserts
+## Asserts
 
 Asserts are statements returning true of false with some extra text description.
 
@@ -1001,7 +1001,7 @@ Follow [code expressions](https://github.com/melezhik/outthentic-dsl#code-expres
 in Outthentic::DSL documentation pages to learn more about code expressions, generators and asserts.
 
 
-## text blocks
+## Text blocks
 
 Need to validate that some lines goes successively?
     

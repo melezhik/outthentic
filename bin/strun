@@ -77,7 +77,17 @@ sub wanted {
 
     my $story_type = shift;
 
-    if ($file eq 'story.check' or $file eq 'meta.txt' ) {
+    if ($file =~ /^story\.(bash|pl|pm|rb|py)$/ or $file =~ /^hook\.(bash|pl|rb|py)$/ ) {
+
+        return if $file=~/^hook\./ and -e "$File::Find::dir/story.pl";
+        return if $file=~/^hook\./ and -e "$File::Find::dir/story.bash";
+        return if $file=~/^hook\./ and -e "$File::Find::dir/story.rb";
+        return if $file=~/^hook\./ and -e "$File::Find::dir/story.py";
+
+        return if $file eq 'story.pm' and -e "$File::Find::dir/story.pl";
+        return if $file eq 'story.pm' and -e "$File::Find::dir/story.bash";
+        return if $file eq 'story.pm' and -e "$File::Find::dir/story.rb";
+        return if $file eq 'story.pm' and -e "$File::Find::dir/story.py";
 
         return if $seen{$File::Find::name};
 
@@ -108,7 +118,11 @@ sub wanted {
     
         print F "set_prop( story => q{$File::Find::dir} );\n";
         print F "set_prop( story_dir => q{$File::Find::dir} );\n";
-        print F "set_prop( story_check_file => q{$File::Find::dir/story.check} );\n";
+        if (-e "$File::Find::dir/story.check"){
+          print F "set_prop( story_check_file => q{$File::Find::dir/story.check} );\n";
+        } else {
+          print F "set_prop( story_check_file => '' );\n";
+        }
         print F "set_prop( story_type => q{$story_type} );\n";
         print F "set_prop( format => q{$format} );\n";
 
@@ -131,7 +145,7 @@ sub wanted {
             print F "apply_story_vars();\n";
         }
 
-        if ($file eq 'meta.txt'){
+        if (-e "$File::Find::dir/meta.txt"){
           print F "set_prop( is_meta => 1 );\n";
           print F "print_meta();\n\n" unless $format eq 'concise';
         }else{
@@ -150,10 +164,10 @@ sub wanted {
             print F "eval { do_bash_hook('$File::Find::dir/hook.bash') }; our \$STATUS=0, die \"bash hook error: \$@\" if \$@ ;\n\n";
         }
 
-        unless ($file eq 'meta.txt'){
-
+        if (-e "$File::Find::dir/story.check"){
           print F "eval { generate_asserts(q{$File::Find::dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
-
+        } else {
+          print F "eval { generate_asserts() }; die \"asserts error: \$@\" if \$@ ;\n\n";
         }
 
         print F 'end_of_story();',"\n\n";

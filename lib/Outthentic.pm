@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.2.38';
+our $VERSION = '0.3.0';
 
 1;
 
@@ -214,26 +214,30 @@ sub populate_config {
     return $config_data;
 }
 
+sub print_story_header {
+
+    my $task_name = get_prop('task_name');
+
+    my $format = get_prop('format');
+
+    unless ($format eq 'concise'){
+      note(
+        chr(8226).($task_name ? $task_name.' at ' : ' at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
+      );
+    }
+
+}
+
 sub run_story_file {
 
     return get_prop('stdout') if defined get_prop('stdout');
 
     my $story_dir = get_prop('story_dir');
 
-    my $cwd_size = scalar(split /\//, get_prop('project_root_dir'));
-
-    my $task_name = get_prop('task_name');
-
-    my $format = get_prop('format');
-
-    unless ( $format eq 'concise'){
-      note(
-        
-        chr(8226).($task_name ? $task_name.' at ' : ' at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
-      );
-    }
-
     if ( get_stdout() ){
+
+
+        print_story_header();
 
         note("stdout is already set") if debug_mod12;
         for my $l (split /\n/, get_stdout()){
@@ -245,7 +249,7 @@ sub run_story_file {
         Outthentic::Story::Stat->set_scenario_status(1);
         Outthentic::Story::Stat->set_stdout(get_stdout());
 
-    }else{
+    } else {
 
 
         my $story_command;
@@ -259,6 +263,8 @@ sub run_story_file {
             $story_command = "perl -I ".story_cache_dir()." -MOutthentic::Glue::Perl $story_dir/story.pl";
           }
 
+          print_story_header();
+
         }elsif(-f "$story_dir/story.rb") {
 
             my $story_file = "$story_dir/story.rb";
@@ -271,11 +277,15 @@ sub run_story_file {
               $story_command = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $story_file";
             }
 
+          print_story_header();
+
         }elsif(-f "$story_dir/story.py") {
 
             my $python_lib_dir = File::ShareDir::dist_dir('Outthentic');
             $story_command  = "PYTHONPATH=\$PYTHONPATH:".(story_cache_dir()).
             ":$python_lib_dir python $story_dir/story.py";
+
+            print_story_header();
 
         } elsif(-f "$story_dir/story.bash") {
 
@@ -283,6 +293,14 @@ sub run_story_file {
             $story_command = "bash -c 'source ".story_cache_dir()."/glue.bash";
             $story_command.= " && source $bash_lib_dir/outthentic.bash";
             $story_command.= " && source $story_dir/story.bash'";
+
+            print_story_header();
+
+        } else {
+
+          # print "empty story\n";
+
+          return;
         }
 
         my ($ex_code, $out) = execute_cmd2($story_command);
@@ -351,16 +369,16 @@ sub generate_asserts {
 
     return unless get_prop('scenario_status'); # we don't run checks for failed scenarios
 
+    return unless $story_check_file;
     return unless -s $story_check_file; # don't run check when check file is empty
 
     eval {
-      open my $fh, $story_check_file or confess $!;
-      my $check_list = join "", <$fh>; close $fh;
-      dsl()->validate($check_list);
+          open my $fh, $story_check_file or confess $!;
+          my $check_list = join "", <$fh>; close $fh;
+          dsl()->validate($check_list)
     };
 
     my $err = $@;
-
     for my $r ( @{dsl()->results}){
         note($r->{message}) if $r->{type} eq 'debug';
         if ($r->{type} eq 'check_expression' ){

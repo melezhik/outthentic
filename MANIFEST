@@ -56,8 +56,6 @@ examples/custom-reports-failures/meta.txt
 examples/duplicate-config-issue/hook.pl
 examples/duplicate-config-issue/story.bash
 examples/duplicate-config-issue/story.check
-examples/empty-check-file/story.bash
-examples/empty-check-file/story.check
 examples/generator-one-line/story.bash
 examples/generator-one-line/story.check
 examples/hello/story.check
@@ -97,6 +95,8 @@ examples/modules/meta-story/hook.bash
 examples/modules/meta-story/meta.txt
 examples/multiline/story.check
 examples/multiline/story.pl
+examples/no-check-file/story.bash
+examples/no-check-file/story.check
 examples/one-liners/story.bash
 examples/one-liners/story.check
 examples/os-bash/story.bash

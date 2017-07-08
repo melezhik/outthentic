@@ -1,3 +1,9 @@
+0.3.0
+
+- story.check files are not longer mandatory
+- meta stories no longer exist
+
+
 0.2.38 2017-07-07
 
 - Don't print set cwd

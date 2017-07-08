@@ -1,9 +1,0 @@
-File:         02packages.details.txt
-URL:          http://www.perl.com/CPAN/modules/02packages.details.txt
-Description:  Package names found in cpanfile.snapshot
-Columns:      package name, version, path
-Intended-For: Automated fetch routines, namespace documentation.
-Written-By:   Carton v1.0.22
-Line-Count:   0
-Last-Updated: Fri May  6 11:10:32 2016
-

@@ -1630,7 +1630,7 @@ Where C<$story-name> is any top level directory inside examples/.
 Here is brief introduction into L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl> which is used to define rules in check files.
 
 
-=head1 plain strings checks
+=head1 Plain strings checks
 
 Often all you need is to ensure that stdout has some strings in:
 
@@ -1653,7 +1653,7 @@ Often all you need is to ensure that stdout has some strings in:
     OK - output matches '123'
 
 
-=head1 regular expressions
+=head1 Regular expressions
 
 You may use regular expressions as well:
 
@@ -1671,7 +1671,7 @@ You may use regular expressions as well:
 See L<check-expressions|https://github.com/melezhik/outthentic-dsl#check-expressions> in Outthentic::DSL documentation pages.
 
 
-=head1 inline code, generators and asserts
+=head1 Inline code, generators and asserts
 
 You may inline code from other language to add some extra logic into your check file:
 
@@ -1701,7 +1701,7 @@ You may inline code from other language to add some extra logic into your check 
     CODE
 
 
-=head2 generators
+=head2 Generators
 
 You may generate new B<check entries> on runtime:
 
@@ -1761,7 +1761,7 @@ Ruby:
     CODE
 
 
-=head2 asserts
+=head2 Asserts
 
 Asserts are statements returning true of false with some extra text description.
 
@@ -1790,7 +1790,7 @@ Follow L<code expressions|https://github.com/melezhik/outthentic-dsl#code-expres
 in Outthentic::DSL documentation pages to learn more about code expressions, generators and asserts.
 
 
-=head2 text blocks
+=head2 Text blocks
 
 Need to validate that some lines goes successively?
 

@@ -16,6 +16,8 @@ dsl-test/within-expressions/story.check
 examples/.exists
 examples/asserts/story.bash
 examples/asserts/story.check
+examples/bash-arrays/story.bash
+examples/bash-arrays/story.check
 examples/bash-generators/common.bash
 examples/bash-generators/story.bash
 examples/bash-generators/story.check
@@ -97,6 +99,8 @@ examples/multiline/story.check
 examples/multiline/story.pl
 examples/no-check-file/story.bash
 examples/no-scenario/hook.bash
+examples/no-scenario2/hook.bash
+examples/no-scenario2/meta.txt
 examples/one-liners/story.bash
 examples/one-liners/story.check
 examples/os-bash/story.bash

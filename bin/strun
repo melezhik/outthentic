@@ -18,7 +18,7 @@ my $dump_config   = 0;
 my $nocolor       = 0;
 my $task_name     = '';
 my $story_path;
-my $match_l = $ENV{'match_l'} || 200;
+my $match_l = $ENV{'OUTTHENTIC_MATCH'} || 200;
 my $ini_file_path;
 my $yaml_file_path;
 my $json_file_path;

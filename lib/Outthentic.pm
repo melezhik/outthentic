@@ -617,12 +617,9 @@ Here we require that our scenario should produce  `I am OK' and `I am outthentic
     I am OK
     I am outthentic
 
-NOTE: You can leave check file empty, but it's required anyway
-
-    $ touch story.check
-
-Empty check file means you just want to ensure that your story succeed ( exit code 0 ) and don't want
-run any checks for story stdout.
+NOTE: Check file is optional, if don't need any checks just don't create it.
+In this case you just want to ensure that your story succeeds ( exit code 0 ) 
+and don't need any checks for story's stdout.
 
 
 =head2 Story

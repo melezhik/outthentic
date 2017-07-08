@@ -2,7 +2,8 @@
 
 - story.check files are not longer mandatory
 - meta stories no longer exist
-
+- bash arrays support, thanks to @Spigell - https://github.com/melezhik/outthentic/pull/3
+ 
 
 0.2.38 2017-07-07
 

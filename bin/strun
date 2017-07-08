@@ -146,10 +146,7 @@ sub wanted {
         }
 
         if (-e "$File::Find::dir/meta.txt"){
-          print F "set_prop( is_meta => 1 );\n";
           print F "print_meta();\n\n" unless $format eq 'concise';
-        }else{
-          print F "set_prop( is_meta => 0 );\n";
         }
 
         if ( -e "$File::Find::dir/story.pm" ){

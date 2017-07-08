@@ -96,7 +96,7 @@ examples/modules/meta-story/meta.txt
 examples/multiline/story.check
 examples/multiline/story.pl
 examples/no-check-file/story.bash
-examples/no-check-file/story.check
+examples/no-scenario/hook.bash
 examples/one-liners/story.bash
 examples/one-liners/story.check
 examples/os-bash/story.bash

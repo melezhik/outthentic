@@ -24,9 +24,13 @@ sub json_var {
     $conf = $conf->{$n};    
   }
 
-  print $conf;
+  if ( ref  $conf eq "ARRAY") { 
+    my $conf =  join ' ', @$conf ;
+    print '(' . $conf . ')';
+  } else {
+    print $conf;
+  }
 
 }
 
 1;
-

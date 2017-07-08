@@ -214,7 +214,7 @@ Let's create two stories for our calc project. One story for \`addition' operati
 
 ## Check files
 
-Check file contains validation rules to test script output. Every scenario **is always accompanied by** story check file. 
+Check file contains validation rules to test script output. Every scenario **might be accompanied by** story check file. 
 
 Check files should be placed at the same directory as scenario and be named as `story.check`.
 

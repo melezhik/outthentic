@@ -104,7 +104,7 @@ See also [story runner](#story-runner).
 
 Outthentic suites are a bunch of related stories. You may also call suites (outthentic) projects.
 
-Obviously project may contain more than one stories. 
+Obviously project may contain more than one story. 
 
 Stories are mapped into directories inside project root directory.
 
@@ -159,10 +159,9 @@ To execute different stories let's use story runner command called [strun](#stor
 
 # The project root directory resolution and story paths
 
-If `--root` parameter is not set the project root directory is the current working directory:
+If `--root` parameter is not set the project root directory is the current working directory.
 
-By default, if `--story` parameter is not given, strun looks for the file named story.(pl|rb|bash) 
-at the project root directory. 
+By default, if `--story` parameter is not given, strun looks for the file named story.(pl|rb|bash) at the project root directory. 
 
 Here is an example:
 
@@ -177,9 +176,9 @@ It's always possible to pass project root directory explicitly:
 
     $ strun --root /path/to/project/root/
 
-To run a certain story use `--story` parameter:
+To run the certain story use `--story` parameter:
 
-    $ strun --root /path/to/project/root/ --story /path/to/story/directory/inside/project/root
+    $ strun --story story1
 
 `--story` parameter should point a directory _relative_ to the project root directory.
 

@@ -1129,7 +1129,7 @@ Where C<$story-name> is any top level directory inside examples/.
 
 =item *
 
-Brief introduction of check file syntax could be found here - https://github.com/melezhik/outthentic/check-file-syntax.md
+Brief introduction of check file syntax could be found here - https://github.com/melezhik/outthentic/blob/master/check-files-syntax.md
 
 
 

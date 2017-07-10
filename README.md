@@ -837,7 +837,7 @@ Where `$story-name` is any top level directory inside examples/.
 
 # Check files syntax
 
-* Brief introduction of check file syntax could be found here - https://github.com/melezhik/outthentic/check-file-syntax.md
+* Brief introduction of check file syntax could be found here - https://github.com/melezhik/outthentic/blob/master/check-files-syntax.md
 
 * For the full detailed explanation follow Outthentic::DSL doc pages at https://github.com/melezhik/outthentic-dsl
 

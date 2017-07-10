@@ -1128,7 +1128,7 @@ C<project_root_dir()> - the project root directory.
 
 =item *
 
-C<cache_root_dir()> - the cache directory with compiled story files ( see  L<strun|#story-runner> ).
+C<cache_root_dir()> - the cache directory root with compiled story files ( see  L<strun|#story-runner> ).
 
 
 
@@ -1613,7 +1613,7 @@ C<OUTTHENTIC_CWD> - sets working directory for strun, see C<--cwd> parameter of 
 Cache directory resolution:
 
     +---------------------+----------------------+
-    | Cache directory     | SPARROW_ROOT Is Set? |
+    | The Cache Directory | SPARROW_ROOT Is Set? |
     +---------------------+----------------------+
     | ~/.outthentic/tmp/  | No                   |
     | $SPARROW_ROOT/tmp/  | Yes                  |

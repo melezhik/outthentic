@@ -513,7 +513,7 @@ Here is the list of function one can use _inside hooks_:
 
 * `project_root_dir()` - the project root directory.
 
-* `cache_root_dir()` - the cache directory with compiled story files ( see  [strun](#story-runner) ).
+* `cache_root_dir()` - the cache directory root with compiled story files ( see  [strun](#story-runner) ).
 
 * `story_dir()` - the directory containing story data.
 
@@ -819,7 +819,7 @@ Runtime configuration parameters override ones in suite configuration. Consider 
 Cache directory resolution:
     
     +---------------------+----------------------+
-    | Cache directory     | SPARROW_ROOT Is Set? |
+    | The Cache Directory | SPARROW_ROOT Is Set? |
     +---------------------+----------------------+
     | ~/.outthentic/tmp/  | No                   |
     | $SPARROW_ROOT/tmp/  | Yes                  |

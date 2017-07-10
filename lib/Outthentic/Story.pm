@@ -484,6 +484,8 @@ sub _mk_bash_glue_file {
 
     debug_mod=debug_mod12 
 
+    test_root_dir=$cache_root_dir
+
     cache_root_dir=$cache_root_dir
 
     project_root_dir=$project_root_dir

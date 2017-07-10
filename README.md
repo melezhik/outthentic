@@ -451,7 +451,7 @@ In Python:
 
 In Ruby:
 
-    $ nano  modules/greeting/story.rb
+    $ nano modules/greeting/story.rb
 
     puts "#{story_var('name')} say #{story_var('message')}"
 
@@ -491,7 +491,7 @@ Here is the list of function one can use _inside hooks_:
 
 * `project_root_dir()` - the project root directory.
 
-* `test_root_dir()` - path to the cache directory with compiled story files ( see  [strun](#story-runner) ).
+* `cache_root_dir()` - path to the cache directory with compiled story files ( see  [strun](#story-runner) ).
 
 * `story_dir()` - path to the directory containing story data.
 

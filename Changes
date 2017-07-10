@@ -6,6 +6,7 @@
 - huge improvements of documentation
 - a lot of refactoring
 - prettifying story headers in strun's reports ( I've made them more clear and meaningful )
+- test_root_dir is deprecated in favor cache_root_dir
 
 0.2.38 2017-07-07
 

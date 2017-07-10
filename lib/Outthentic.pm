@@ -222,7 +222,7 @@ sub print_story_header {
 
     unless ($format eq 'concise'){
       note(
-        chr(8226).($task_name ? $task_name.' at ' : ' at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
+        'run'.($task_name ? ' '.$task_name.' at ' : ' story at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
       );
     }
 
@@ -1128,7 +1128,13 @@ C<project_root_dir()> - the project root directory.
 
 =item *
 
-C<cache_root_dir()> - the cache directory root with compiled story files ( see  L<strun|#story-runner> ).
+C<cache_root_dir()> - the cache root directory ( see  L<strun|#story-runner> ).
+
+
+
+=item *
+
+C<cache_dir()> - storie's cache directory ( containing story's compiled files )
 
 
 

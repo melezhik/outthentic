@@ -49,10 +49,10 @@ GetOptions (
 
 $nocolor ||= $ENV{SPARROW_NO_COLOR};
 
-my $test_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}/tmp/".$$ : "$ENV{HOME}/.outthentic/tmp/".$$;
+my $cache_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}/tmp/".$$ : "$ENV{HOME}/.outthentic/tmp/".$$;
 
-remove_tree($test_root_dir);
-make_path($test_root_dir);
+remove_tree($cache_root_dir);
+make_path($cache_root_dir);
 
 $project_root_dir =  File::Spec->rel2abs($project_root_dir);
 
@@ -93,9 +93,9 @@ sub wanted {
 
         my $story_dir = $File::Find::dir;
 
-        make_path("$test_root_dir/$story_dir");
+        make_path("$cache_root_dir/$story_dir");
 
-        my $tfile = "$test_root_dir/$story_dir/sparrow.pl";
+        my $tfile = "$cache_root_dir/$story_dir/sparrow.pl";
 
         open F, ">", $tfile or die $!;
     
@@ -111,7 +111,7 @@ sub wanted {
     
         print F "set_prop( cwd => q{$cwd} );\n";
         print F "set_prop( project_root_dir => q{$project_root_dir} );\n";
-        print F "set_prop( test_root_dir    => q{$test_root_dir} );\n";
+        print F "set_prop( cache_root_dir    => q{$cache_root_dir} );\n";
         print F "set_prop( ini_file_path    => q{$ini_file_path} );\n"    if $ini_file_path;
         print F "set_prop( yaml_file_path   => q{$yaml_file_path} );\n"  if $yaml_file_path;
         print F "set_prop( json_file_path   => q{$json_file_path} );\n"  if $json_file_path;
@@ -184,16 +184,16 @@ my $exit_code;
 
 if ($story_path){
 
-    my $strun_cmd = "perl $test_root_dir$project_root_dir/$story_path/sparrow.pl";
+    my $strun_cmd = "perl $cache_root_dir$project_root_dir/$story_path/sparrow.pl";
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }else{
-    my $strun_cmd = "perl $test_root_dir$project_root_dir/sparrow.pl";
+    my $strun_cmd = "perl $cache_root_dir$project_root_dir/sparrow.pl";
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }
 
-system("rm -rf $test_root_dir") if $purge_cache;
+system("rm -rf $cache_root_dir") if $purge_cache;
 
 unless ( $dump_config ) { # do not check story status in case we only dump config data
   #warn "state: $st";

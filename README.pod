@@ -622,7 +622,13 @@ C<project_root_dir()> - the project root directory.
 
 =item *
 
-C<cache_root_dir()> - the cache directory root with compiled story files ( see  L<strun|#story-runner> ).
+C<cache_root_dir()> - the cache root directory ( see  L<strun|#story-runner> ).
+
+
+
+=item *
+
+C<cache_dir()> - storie's cache directory ( containing story's compiled files )
 
 
 

@@ -513,7 +513,9 @@ Here is the list of function one can use _inside hooks_:
 
 * `project_root_dir()` - the project root directory.
 
-* `cache_root_dir()` - the cache directory root with compiled story files ( see  [strun](#story-runner) ).
+* `cache_root_dir()` - the cache root directory ( see  [strun](#story-runner) ).
+
+* `cache_dir()` - storie's cache directory ( containing story's compiled files )
 
 * `story_dir()` - the directory containing story data.
 

@@ -38,6 +38,8 @@ our @EXPORT = qw{
 
     test_root_dir
 
+    cache_root_dir
+
     host
 
     dump_os
@@ -142,8 +144,13 @@ sub project_root_dir {
     get_prop('project_root_dir');
 }
 
-sub test_root_dir {
-    get_prop('test_root_dir');
+
+sub test_root_dir { # this one is deprected and exists for back compatibilty, use cache_root_dir instead
+    get_prop('cache_root_dir');
+}
+
+sub cache_root_dir {
+    get_prop('cache_root_dir');
 }
 
 sub host {
@@ -209,7 +216,7 @@ sub stdout_file {
 
 sub _make_cache_dir {
 
-  my $cache_dir = test_root_dir()."/story-"._story_id();
+  my $cache_dir = cache_root_dir()."/story-"._story_id();
 
   if (debug_mod12()){
     main::note("make cache dir: $cache_dir");
@@ -219,7 +226,7 @@ sub _make_cache_dir {
 }
 
 sub story_cache_dir {
-  test_root_dir()."/story-"._story_id();
+  cache_root_dir()."/story-"._story_id();
 }
 
 sub _perl_glue_file {
@@ -271,11 +278,11 @@ sub run_story {
       path => $path
     });
 
-    my $test_root_dir = get_prop('test_root_dir');
+    my $cache_root_dir = get_prop('cache_root_dir');
 
     my $project_root_dir = get_prop('project_root_dir');
 
-    my $story_module = "$test_root_dir/$project_root_dir/modules/$path/sparrow.pl";
+    my $story_module = "$cache_root_dir/$project_root_dir/modules/$path/sparrow.pl";
 
     die "story module file $story_module does not exist" unless -e $story_module;
 
@@ -317,7 +324,7 @@ sub _mk_perl_glue_file {
 
     open PERL_GLUE, ">", _perl_glue_file() or confess "can't create perl glue file ".(_perl_glue_file())." : $!";
 
-    my $test_root_dir = test_root_dir();
+    my $cache_root_dir = cache_root_dir();
     my $story_dir = get_prop('story_dir');
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
@@ -337,8 +344,12 @@ use strict;
       $debug_mod12
     }
 
+    sub cach_root_dir {
+      '$cache_root_dir'
+    }
+
     sub test_root_dir {
-      '$test_root_dir'
+      '$cache_root_dir'
     }
 
     sub project_root_dir {
@@ -369,7 +380,7 @@ sub _mk_ruby_glue_file {
     open RUBY_GLUE, ">", _ruby_glue_file() or die $!;
 
     my $stdout_file = stdout_file();
-    my $test_root_dir = test_root_dir();
+    my $cache_root_dir = cache_root_dir();
     my $story_dir = get_prop('story_dir');
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
@@ -382,8 +393,12 @@ sub _mk_ruby_glue_file {
       '$debug_mod12'
     end
 
+    def cache_root_dir
+      '$cache_root_dir' 
+    end
+
     def test_root_dir
-      '$test_root_dir' 
+      '$cache_root_dir' 
     end
 
     def project_root_dir
@@ -413,7 +428,7 @@ sub _mk_python_glue_file {
     open PYTHON_GLUE, ">", _python_glue_file() or die $!;
 
     my $stdout_file = stdout_file();
-    my $test_root_dir = test_root_dir();
+    my $cache_root_dir = cache_root_dir();
     my $story_dir = get_prop('story_dir');
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
@@ -425,8 +440,11 @@ sub _mk_python_glue_file {
 def debug_mod12():
   return $debug_mod12
 
+def cache_root_dir():
+  return '$cache_root_dir' 
+
 def test_root_dir():
-  return '$test_root_dir' 
+  return '$cache_root_dir' 
 
 def project_root_dir():
   return '$project_root_dir' 
@@ -454,7 +472,7 @@ sub _mk_bash_glue_file {
     open BASH_GLUE, ">", _bash_glue_file() or die $!;
 
     my $stdout_file = stdout_file();
-    my $test_root_dir = test_root_dir();
+    my $cache_root_dir = cache_root_dir();
     my $project_root_dir = project_root_dir();
     my $debug_mod12 = debug_mod12();
 
@@ -466,7 +484,7 @@ sub _mk_bash_glue_file {
 
     debug_mod=debug_mod12 
 
-    test_root_dir=$test_root_dir
+    cache_root_dir=$cache_root_dir
 
     project_root_dir=$project_root_dir
 

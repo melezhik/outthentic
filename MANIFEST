@@ -13,7 +13,6 @@ dsl-test/text-blocks-stream2/story.bash
 dsl-test/text-blocks-stream2/story.check
 dsl-test/within-expressions/story.bash
 dsl-test/within-expressions/story.check
-examples/.exists
 examples/asserts/story.bash
 examples/asserts/story.check
 examples/bash-arrays/story.bash
@@ -49,8 +48,6 @@ examples/config-general-interpolate-env/story.bash
 examples/config-general-interpolate-env/story.check
 examples/config-general-interpolate-vars/story.bash
 examples/config-general-interpolate-vars/story.check
-examples/cpanfile
-examples/cpanfile.snapshot
 examples/custom-reports-all/hook.pl
 examples/custom-reports-all/meta.txt
 examples/custom-reports-failures/hook.pl
@@ -71,7 +68,6 @@ examples/ignore-story-err/story.pl
 examples/ignore-story-err/story.pm
 examples/ini-file/story.check
 examples/ini-file/story.pm
-examples/local/cache/modules/02packages.details.txt
 examples/meta-story-as-downstream/hook.bash
 examples/meta-story-as-downstream/meta.txt
 examples/meta-story/hook.bash
@@ -107,7 +103,6 @@ examples/os-bash/story.bash
 examples/os-bash/story.check
 examples/os-perl/story.check
 examples/os-perl/story.pl
-examples/outthentic.rb
 examples/perl-inline/story.check
 examples/perl-inline/story.pl
 examples/perl-pass-conf-to-scenario/story.check

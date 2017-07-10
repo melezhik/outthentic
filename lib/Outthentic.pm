@@ -564,7 +564,7 @@ Ruby scenario example:
     puts "I am OK"
     puts "I am outthentic"
 
-Outthentic scenarios could be written on one of four languages:
+Outthentic scenarios could be written in one of the four languages:
 
 =over
 
@@ -594,7 +594,7 @@ Choose you favorite language ;) !
 
 Outthentic relies on file names convention to determine scenario language. 
 
-This table describes file name -> language mapping for scenarios:
+This table describes C<<< file name -> language >>> mapping for scenarios:
 
     +-----------+--------------+
     | Language  | File         |
@@ -618,6 +618,7 @@ Here we require that scenario should produce  C<I am OK> and C<I am outthentic> 
     I am outthentic
 
 NOTE: Check files are optional, if one doesn't need any checks, then don't create check files.
+
 In this case it's only ensured that a scenario succeeds ( exit code 0 ).
 
 
@@ -648,9 +649,9 @@ See also L<story runner|#story-runner>.
 
 Outthentic suites are a bunch of related stories. You may also call suites (outthentic) projects.
 
-Obviously project may contain more than one stories. 
+Obviously project may contain more than one story. 
 
-Stories are mapped into directories inside project root directory.
+Stories are mapped into directories inside the project root directory.
 
 Here is an example:
 
@@ -691,7 +692,7 @@ Here is an example:
     $ nano ruby-story/story.check
       hello from ruby 
 
-To execute different stories let's use story runner command called L<strun|#story-runner>
+To execute different stories launch story runner command called L<strun|#story-runner>:
 
     $ strun --story perl-story
     $ strun --story bash-story 
@@ -700,10 +701,10 @@ To execute different stories let's use story runner command called L<strun|#stor
 
 =head1 The project root directory resolution and story paths
 
-If C<--root> parameter is not set the project root directory is the current working directory:
+If C<--root> parameter is not set the project root directory is the current working directory.
 
-By default, if C<--story> parameter is not given, strun looks for the file named story.(pl|rb|bash) 
-at the project root directory. 
+By default, if C<--story> parameter is not given, strun looks for the file named story.(pl|rb|bash) at the project root directory
+and run it.
 
 Here is an example:
 
@@ -712,13 +713,13 @@ Here is an example:
     
     $ strun # will run story.bash 
 
-It's always possible to pass project root directory explicitly:
+It's always possible to pass the project root directory explicitly:
 
     $ strun --root /path/to/project/root/
 
-To run a certain story use C<--story> parameter:
+To run the certain story use C<--story> parameter:
 
-    $ strun --root /path/to/project/root/ --story /path/to/story/directory/inside/project/root
+    $ strun --story story1
 
 C<--story> parameter should point a directory I<relative> to the project root directory.
 
@@ -767,7 +768,7 @@ Here is an example:
 
 =head1 Story runner
 
-Story runner - is a console tool to run stories. It is called C<strun>.
+Story runner is a console tool to run stories. It is called C<strun>.
 
 When executing stories strun consequentially goes through several phases:
 
@@ -792,13 +793,13 @@ Hook features:
 
 =item *
 
-Hooks like scenario are scripts written on different languages (Perl,Bash,Ruby,Python)
+Hooks like scenarios are scripts written on different languages (Perl,Bash,Ruby,Python)
 
 
 
 =item *
 
-Hooks always I<binds to some story> - to create a hook you should place hook's script into story directory.
+Hooks always I<binds to some story>, to create a hook you should place hook's script into story directory.
 
 
 
@@ -827,7 +828,7 @@ This table describes file name -> language mapping for scenarios:
     | Ruby      | hook.rb      |
     +-----------+--------------+
 
-Reasons why you might need a hooks:
+Reasons why you might need hooks:
 
 =over
 
@@ -838,7 +839,7 @@ Execute some I<initialization code> before running a scenario
 
 =item *
 
-Override scenario output
+Simulate scenario's output
 
 
 =item *
@@ -849,32 +850,33 @@ Call another stories
 =back
 
 
-=head1 Override scenario output
+=head1 Simulate scenario output
 
 Sometimes you want to override story output at hook level. 
 
-This is for example might be useful if you want to 
-test check files. In QA methodology it's called Mock objects:
+This is for example might be useful if you want to I<test> the rules in check files without running real script.
+
+In QA methodology it's called Mock objects:
 
     $ nano hook.bash
-    set_stdout 'running'
+      set_stdout 'running'
     $ nano story.check
-    running
+      running
 
-It's important that if overriding happens story executor never try to run scenario if it present:
+It's important to say that if overriding happens story executor never try to run scenario even if it presents:
 
     $ nano hook.bash
-    set_stdout 'running'
+      set_stdout 'running'
     $ nano story.bash
-    sudo service nginx status # this command won't be executed
+      sudo service nginx status # this command won't be executed
 
-You may call C<set_stdout> function more then once
+You may call C<set_stdout> function more then once:
 
     $ nano hook.pl
-    set_stdout("HELLO WORLD");
-    set_stdout("HELLO WORLD2");
+      set_stdout("HELLO WORLD");
+      set_stdout("HELLO WORLD2");
 
-It will "produce" two line of story output:
+It will "produce" two line of a story output:
 
     HELLO WORLD
     HELLO WORLD2
@@ -890,61 +892,62 @@ This table describes how C<set_stdout()> function is called in various languages
     | Ruby      | set_stdout(STRING)    |
     +-----------+-----------------------+
 
-(*) you need to C<from outthentic import *> in Python to import set_stdout function.
+(*) You need to C<from outthentic import *> in Python to import set_stdout function.
 
 
 =head1 Run stories from other stories
 
-Hooks allow you to call one story from another. Here is an example:
+Hooks allow you to call one story from other one. Here is an example:
 
     $ nano modules/knock-the-door/story.rb
     
-    # this is a downstream story
-    # to make story downstream
-    # simply create story files 
-    # in modules/ directory
+      # this is a downstream story
+      # to make story downstream
+      # simply create story files 
+      # in modules/ directory
     
-    puts 'knock-knock!'
+      puts 'knock-knock!'" 
      
     $ nano modules/knock-the-door/story.check
-    knock-knock!
+      knock-knock!
     
      
     $ nano open-the-door/hook.rb
     
-    # this is a upstream story
-    # to run downstream story
-    # call run_story function
-    # inside hook
+      # this is a upstream story
+      # to run downstream story
+      # call run_story function
+      # inside hook
     
-    # run_story accepts parameter - story path,
-    # notice that you have to omit 'modules/' part
+      # run_story accepts parameter - story path,
+      # notice that you have to omit 'modules/' part
     
-    run_story( 'knock-the-door' );
+      run_story( 'knock-the-door' );
     
     $ nano open-the-door/story.rb
-    puts 'opening ...' 
+      puts 'opening ...' 
     
     $ nano open-the-door/story.check
-    opening
+      opening
     
     $ strun --story open-the-door/
      
-    /modules/knock-the-door/ started
+      /modules/knock-the-door/ started
     
-    knock-knock!
-    OK  scenario succeeded
-    OK  output match 'knock-knock!'
+      knock-knock!
+      OK  scenario succeeded
+      OK  output match 'knock-knock!'
     
-    /open-the-door/ started
+      /open-the-door/ started
     
-    opening ...
-    OK  scenario succeeded
-    OK  output match 'opening'
-    ---
-    STATUS  SUCCEED
+      opening ...
+      OK  scenario succeeded
+      OK  output match 'opening'
+      ---
+      STATUS  SUCCEED
 
 Stories that run other stories are called I<upstream stories>.
+
 Stories being called from other ones are I<downstream story>.
 
 Summary:
@@ -953,13 +956,13 @@ Summary:
 
 =item *
 
-To create downstream story place a story in C<modules/> directory inside the project root directory
+To create downstream story place a story data in C<modules/> directory inside the project root directory.
 
 
 
 =item *
 
-To run downstream story call C<run_story(story_path)> function inside upstream story's hook.
+To run downstream story call C<run_story(story_path)> function inside the upstream story's hook.
 
 
 
@@ -992,7 +995,6 @@ Here is more sophisticated examples of downstream stories:
       print "DOWN!"
     
     $ nano two-jumps/hook.pl
-    
       run_story( 'up' );
       run_story( 'down' );
       run_story( 'up' );
@@ -1001,45 +1003,49 @@ Here is more sophisticated examples of downstream stories:
 
 =head1 Story variables 
 
-Variables might be passed to downstream story by second argument of C<run_story()> function. 
+Variables might be passed to downstream story by the second argument of C<run_story()> function. 
 
 For example, in Perl:
 
     $ nano hook.pl
     
-    run_story( 
-      'greeting', {  name => 'Alexey' , message => 'hello' }  
-    );
+      run_story( 
+        'greeting', {  name => 'Alexey' , message => 'hello' }  
+      );
 
 Or in Ruby:
 
     $ nano hook.rb
     
-    run_story  'greeting', {  'name' => 'Alexey' , 'message' => 'hello' }
+      run_story  'greeting', {  'name' => 'Alexey' , 'message' => 'hello' }
 
 Or in Python:
 
-    from outthentic import *
-    run_story('greeting', {  'name' : 'Alexey' , 'message' : 'hello' })
+    $ nano hook.rb
+    
+      from outthentic import *
+      run_story('greeting', {  'name' : 'Alexey' , 'message' : 'hello' })
 
 Or in Bash:
 
     $ nano hook.bash
     
-    run_story  greeting name Alexey message hello 
+      run_story  greeting name Alexey message hello 
 
 This table describes how C<run_story()> function is called in various languages:
 
-    +-----------+----------------------------------------------+
-    | Language  | signature                                    |
-    +-----------+----------------------------------------------+
-    | Perl      | run_story(SCALAR,HASHREF)                    |
-    | Bash      | run_story STORY_NAME NAME VAL NAME2 VAL2 ... | 
-    | Python    | run_story(STRING,DICT)                       | 
-    | Ruby      | run_story(STRING,HASH)                       | 
-    +-----------+----------------------------------------------+
+    +------------+----------------------------------------------+
+    | Language   | signature                                    |
+    +------------+----------------------------------------------+
+    | Perl       | run_story(SCALAR,HASHREF)                    |
+    | Bash       | run_story STORY_NAME NAME VAL NAME2 VAL2 ... | 
+    | Python(**) | run_story(STRING,DICT)                       | 
+    | Ruby       | run_story(STRING,HASH)                       | 
+    +------------+----------------------------------------------+
 
-Story variables are accessible in downstream story by C<story_var()> function. 
+(I<) Story variables are accessible(>) in downstream story by C<story_var()> function. 
+
+(**) You need to C<from outthentic import *> in Python to import set_stdout function.
 
 Examples:
 
@@ -1047,34 +1053,34 @@ In Perl:
 
     $ nano modules/greeting/story.pl
     
-    print story_var('name'), 'say ', story_var('message');
+      print story_var('name'), 'say ', story_var('message');
 
 In Python:
 
     $ nano modules/greeting/story.py
     
-    from outthentic import *
-    print story_var('name') + 'say ' + story_var('message')
+      from outthentic import *
+      print story_var('name') + 'say ' + story_var('message')
 
 In Ruby:
 
-    $ nano  modules/greeting/story.rb
+    $ nano modules/greeting/story.rb
     
-    puts "#{story_var('name')} say #{story_var('message')}"
+      puts "#{story_var('name')} say #{story_var('message')}"
 
 In Bash:
 
     $ nano modules/greeting/story.bash
     
-    echo $name say $message
+      echo $name say $message
 
 In Bash (alternative way):
 
     $ nano modules/greeting/story.bash
     
-    echo $(story_var name) say $(story_var message)
+      echo $(story_var name) say $(story_var message)
 
-Story variables are accessible inside story hooks and check files as well.
+(*) Story variables are accessible inside check files as well.
 
 This table describes how C<story_story()> function is called in various languages:
 
@@ -1088,7 +1094,24 @@ This table describes how C<story_story()> function is called in various language
     | Bash (2-nd way)  | $(story_var foo.bar)                        |
     +------------------+---------------------------------------------+
 
-(*) you need to C<from outthentic import *> in Python to import story_var() function.
+(*) You need to C<from outthentic import *> in Python to import story_var() function.
+
+
+=head1 Stories without scenarios
+
+The minimal set of files should be present in outthentic story is either scenario file or hook script,
+the last option is story without scenario.
+
+Examples:
+
+    # Story with scenario only
+    
+    $ nano story.pl
+    
+    
+    # Story with hook only
+    
+    $ nano hook.pl
 
 
 =head1 Story helper functions
@@ -1105,13 +1128,13 @@ C<project_root_dir()> - the project root directory.
 
 =item *
 
-C<test_root_dir()> - path to the cache directory with compiled story files ( see  L<strun|#story-runner> ).
+C<cache_root_dir()> - the cache directory with compiled story files ( see  L<strun|#story-runner> ).
 
 
 
 =item *
 
-C<story_dir()> - path to the directory containing story data.
+C<story_dir()> - the directory containing story data.
 
 
 
@@ -1129,13 +1152,28 @@ os() - return a mnemonic ID of operation system where story is executed.
 
 =back
 
-(*) you need to C<from outthentic import *> in Python to import os() function.
+(*) You need to C<from outthentic import *> in Python to import os() function.
 (**) in Bash these functions are represented by variables, e.g. $project_root_dir, $os, so on.
 
 
-=head1 Recognisable OS list
+=head1 Recognizable OS list
 
 =over
+
+=item *
+
+alpine
+
+
+=item *
+
+amazon
+
+
+=item *
+
+archlinux
+
 
 =item *
 
@@ -1154,22 +1192,7 @@ centos7
 
 =item *
 
-ubuntu
-
-
-=item *
-
 debian
-
-
-=item *
-
-minoca
-
-
-=item *
-
-archlinux
 
 
 =item *
@@ -1179,12 +1202,12 @@ fedora
 
 =item *
 
-amazon
+minoca
 
 
 =item *
 
-alpine
+ubuntu
 
 
 =back
@@ -1193,77 +1216,76 @@ alpine
 =head1 Story meta headers
 
 Story meta headers are just plain text files with some useful description.
+
 The content of the meta headers will be shown when story is executed.
 
 Example:
 
     $ nano meta.txt
     
-    This is pretty cool stuff ...
+      The beginning of the story ...
 
 
 =head1 Ignore scenario failures
 
-If scenario is failed ( exit code not equal to zero ), story executor mark such a story as unsuccessful and this
-results in overall failure. To suppress story errors use C<ignore_story_err()> function.
+If scenario fails ( the exit code is not equal to zero ), the story executor marks such a story as unsuccessful and this
+results in overall failure. To suppress any story errors use C<ignore_story_err()> function.
 
 Examples:
 
     # Python
     
     $ nano hook.py
-    from outthentic import *
-    ignore_story_err(1)
+      from outthentic import *
+      ignore_story_err(1)
     
     
     # Ruby
     
     $ nano hook.rb
-    ignore_story_err 1
+      ignore_story_err 1
     
     # Perl
     
     $ nano hook.pl
-    ignore_story_err(1)
+      ignore_story_err(1)
     
     # Bash
     
     $ nano hook.bash
-    ignore_story_err 1
+      ignore_story_err 1
 
 
 =head1 Story libraries
 
-Story libraries are files to keep your libraries code to I<automatically required> into story hooks and check files context:
+Story libraries are files to make your libraries' code I<automatically required> into the story hooks and check files context:
 
 Here are some examples:
 
 Perl:
 
     $ nano common.pm
-    sub abc_generator {
-      print $_, "\n" for a..z;
-    } 
+      sub abc_generator {
+        print $_, "\n" for a..z;
+      } 
     
     $ nano story.check
-    
-    generator: <<CODE;
-    !perl
-      abc_generator()
-    CODE
+      generator: <<CODE;
+      !perl
+        abc_generator()
+      CODE
 
 Ruby:
 
     $ nano common.rb
-    def super_utility arg1, arg2
-      # I am cool! But I do nothing!
-    end
-    
+      def super_utility arg1, arg2
+        # I am cool! But I do nothing!
+      end
+      
     $ nano hook.pl
-    
-    super_utility 'foo', 'bar'
+      super_utility 'foo', 'bar'
 
-This table describes file name -> language mapping for story libraries:
+This table describes C<<< file name -> language >>> mapping for story libraries:
 
     +-----------+-----------------+
     | Language  | file            |
@@ -1283,11 +1305,11 @@ $project_root_directory/lib path is added to $PERL5LIB variable.
 This make it easy to place custom Perl modules under project root directory:
 
     $ nano my-app/lib/Foo/Bar/Baz.pm
-    package Foo::Bar::Baz;
-    1;
+      package Foo::Bar::Baz;
+      1;
     
     $ nano common.pm
-    use Foo::Bar::Baz;
+      use Foo::Bar::Baz;
 
 
 =head1 Story runner console tool
@@ -1307,7 +1329,7 @@ C<--root>
 
 =back
 
-Project root directory. Default value current working directory is assumed.
+The project root directory. Default value is the current working directory.
 
 =over
 
@@ -1332,11 +1354,11 @@ C<--debug>
 
 Enable/disable debug mode:
 
-    * Increasing debug value results in more low level information appeared at output
+    * Increasing debug value results in more low level information appeared at output.
     
-    * Default value is 0, which means no debugging 
+    * Default value is 0, which means no debugging. 
     
-    * Possible values: 0,1,2,3
+    * Possible values: 0,1,2,3.
 
 =over
 
@@ -1347,9 +1369,9 @@ C<--format>
 
 =back
 
-Sets reports format. Available formats: C<concise|default>. Default value is C<default>.
+Sets reports format. Available formats are: C<concise|default>. Default value is C<default>.
 
-In concise format strun shrink output to only STDOUT/STDERR comes from scenarios.
+In concise format strun shrinks output to only STDOUT/STDERR comes from scenarios.
 
 It's useful when you want to parse stories output by external commands.
 
@@ -1518,8 +1540,8 @@ If configuration file is passed and read, the configuration data is accessible i
 
     $ nano hook.pl
     
-    my $foo = config()->{main}->{foo};
-    my $bar = config()->{main}->{bar};
+      my $foo = config()->{main}->{foo};
+      my $bar = config()->{main}->{bar};
 
 Examples for other languages:
 
@@ -1527,25 +1549,24 @@ Bash:
 
     $ nano hook.bash
     
-    foo=$(config main.foo )
-    bar=$(config main.bar )
+      foo=$(config main.foo )
+      bar=$(config main.bar )
 
 Python:
 
     $ nano hook.py
     
-    
     from outthentic import *
     
-    foo = config()['main']['foo']
-    bar = config()['main']['bar']
+      foo = config()['main']['foo']
+      bar = config()['main']['bar']
 
 Ruby:
 
     $ nano hook.rb
     
-    foo = config['main']['foo']
-    bar = config['main']['bar']
+      foo = config['main']['foo']
+      bar = config['main']['bar']
 
 
 =head1 Runtime configuration
@@ -1557,23 +1578,6 @@ Runtime configuration parameters override ones in suite configuration. Consider 
       bar : 10
       
     $ strun --param foo.bar=20 # will override foo.bar parameter to 20
-
-
-=head1 Stories without scenarios
-
-The minimal set of files should be present in outthentic story is either scenario file or hook script,
-the last option is story without scenario.
-
-Examples:
-
-    # Story with scenario only
-    
-    $ nano story.pl
-    
-    
-    # Story with hook only
-    
-    $ nano hook.pl
 
 
 =head1 Environment variables

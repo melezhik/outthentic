@@ -1,4 +1,4 @@
-0.3.0
+0.3.0 2017-07-10
 
 - story check files are no longer mandatory ( yes, you can leave them! )
 - meta stories no longer exist - instead we can talk just about story meta headers

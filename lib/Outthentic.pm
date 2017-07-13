@@ -200,7 +200,7 @@ sub populate_config {
             push @cli_args, $item;
           } elsif(ref $item eq 'HASH'){
             for my $k ( keys %{$item}){
-              push @cli_args, $k, $item->{$k};
+              push @cli_args, '-'.$k, $item->{$k};
             }
           } elsif(ref $item eq 'ARRAY'){
             push @cli_args, map {'-'.$_ } @{$item};

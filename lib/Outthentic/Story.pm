@@ -134,7 +134,6 @@ sub set_prop {
 
     my $name = shift;
     my $value = shift;
-
     _story()->{props}->{$name} =  $value;
     
 }
@@ -480,8 +479,6 @@ sub _mk_bash_glue_file {
 
     my $os = _resolve_os();
 
-    my $cli_args = get_prop('cli_args');
-
     print BASH_GLUE <<"CODE";
 
     debug_mod=debug_mod12 
@@ -499,8 +496,6 @@ sub _mk_bash_glue_file {
     stdout_file=$stdout_file 
 
     os=$os
-
-    cli_args='$cli_args'
 
 CODE
 

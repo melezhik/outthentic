@@ -10,6 +10,10 @@ function set_stdout {
   echo $* 1>>"${stdout_file}"
 }
 
+function cli_args {
+  cat "${cache_dir}/cli_args"
+}
+
 function ignore_story_err {
   echo ignore_story_err: $1
 }

@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.3.1';
+our $VERSION = '0.3.2';
 
 1;
 
@@ -159,13 +159,6 @@ sub populate_config {
       @runtime_params = split /:::/, get_prop('runtime_params');
     }
 
-    #Hash::Merge::set_behavior( 'RIGHT_PRECEDENT' );
-
-
-    #use Data::Dumper;
-    #print Dumper($default_config);
-    #print Dumper($config_data);
-
     my $config_res = merge( $default_config, $config_data );
 
     PARAM: for my $rp (@runtime_params){
@@ -197,6 +190,34 @@ sub populate_config {
 
     note("configuration populated and saved to ".story_cache_dir()."/config.json") if debug_mod12;
 
+    # populating cli_args from config_data{args}
+    unless (get_prop('cli_args')){
+      if ($config_res->{'args'} and ref($config_res->{'args'}) eq 'ARRAY'){
+        note("populating cli args from args in configuration data") if debug_mod12;
+        my @cli_args;
+        for my $item (@{$config_res->{'args'}}){
+          if (! ref $item){
+            push @cli_args, $item;
+          } elsif(ref $item eq 'HASH'){
+            for my $k ( keys %{$item}){
+              push @cli_args, $k, $item->{$k};
+            }
+          } elsif(ref $item eq 'ARRAY'){
+            push @cli_args, map {'-'.$_ } @{$item};
+          };
+        }
+        note("cli args set to: ".(join ' ', @cli_args)) if debug_mod12;
+        set_prop('cli_args', join ' ', @cli_args );
+      }
+   }
+
+    open CLI_ARGS, '>', story_cache_dir().'/cli_args' 
+      or die "can't open to write file ".story_cache_dir()."/cli_args : $!";
+    print CLI_ARGS get_prop('cli_args');
+    close CLI_ARGS;
+
+    note("cli args populated and saved to ".story_cache_dir()."/cli_args") if debug_mod12;
+
     # it should be done once
     # and it always true
     # as populate_config() reach this lines
@@ -207,7 +228,7 @@ sub populate_config {
         $STATUS = 0;
         die "can't change working directory to: ".(get_prop('cwd'))." : $!";
       }
-      #print "set cwd to ".(get_prop('cwd')),"\n";
+
     }
     
     return $config_data = $config_res;

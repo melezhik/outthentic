@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.3.2';
+our $VERSION = '0.3.3';
 
 1;
 
@@ -200,10 +200,10 @@ sub populate_config {
             push @cli_args, $item;
           } elsif(ref $item eq 'HASH'){
             for my $k ( keys %{$item}){
-              push @cli_args, '-'.$k, $item->{$k};
+              push @cli_args, '--'.$k, $item->{$k};
             }
           } elsif(ref $item eq 'ARRAY'){
-            push @cli_args, map {'-'.$_ } @{$item};
+            push @cli_args, map {'--'.$_ } @{$item};
           };
         }
         note("cli args set to: ".(join ' ', @cli_args)) if debug_mod12;

@@ -210,7 +210,7 @@ sub populate_config {
           } elsif(ref $item eq 'ARRAY'){
             push @cli_args, map {
               my $v = $_;
-              $v=~s//^~/ ? '-'.$v : '--'.$v;
+              $v=~s/^~// ? '-'.$v : '--'.$v;
             } @{$item};
           };
         }
@@ -1713,7 +1713,7 @@ converted. If you need single dashes, prepend parameters in configuration file w
       ---
     
       args:
-        - ~foo: foo-value
+        - '~foo': foo-value
         -
           - ~debug 
           - ~verbose 
@@ -1780,7 +1780,7 @@ Brief introduction of check file syntax could be found here - L<https://github.c
 
 =item *
 
-For the full detailed explanation follow Outthentic::DSL doc pages at L<https://github.com/melezhik/outthentic-dsl|t>
+For the full detailed explanation follow Outthentic::DSL doc pages at L<https://github.com/melezhik/outthentic-dsl|https://github.com/melezhik/outthentic-dsl>
 
 
 

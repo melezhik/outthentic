@@ -886,7 +886,7 @@ converted. If you need single dashes, prepend parameters in configuration file w
       ---
     
       args:
-        - ~foo: foo-value
+        - '~foo': foo-value
         -
           - ~debug 
           - ~verbose 

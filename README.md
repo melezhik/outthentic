@@ -808,6 +808,90 @@ Runtime configuration parameters override ones in suite configuration. Consider 
     $ strun --param foo.bar=20 # will override foo.bar parameter to 20
   
 
+# Free style command line parameters
+
+Alternative way to pass input parameters into outthentic scripts is a _free style_ command line arguments:
+
+    $ strun -- <arguments>
+
+Consider a simple example. We want to create a wrapper for some external script which accepts the following 
+command line arguments:
+
+    script {flags} {named parameters} {value} 
+
+Where flags are:
+
+    --verbose
+    --debug
+
+Named parameters are:
+
+    --foo foo-value
+    --var bar-value
+
+And value is just a string:
+
+    foo-value
+
+It's quite demanding to map external script parameters into Outthentic configuration. More over 
+some parameters of external scripts are optional. 
+
+Here is free style command line arguments to the rescue:
+
+
+    $ nano story.bash
+    script $(args_cli)        
+
+That's all. Now we are safe to run our story-wrapper with command line arguments _in terms of_ external script:
+
+    $ strun -- --foo foo-value --debug the-value
+
+
+# Auto coercion of configuration data into free style command line parameters
+
+Moreover it's possible declare external script parameters in suite configuration:
+
+    $ nano suite.yaml
+
+      ---
+    
+      args:
+        - foo: foo-value
+        -
+          - debug 
+          - verbose 
+        - the-value
+
+    $ strun
+
+This is end up in running story with following command line arguments for external script:
+
+    --foo foo-value --debug --verbose the-value
+
+# Auto coercion rules
+
+* Args should be array which elements are processed in order, for every elements rules are applied depending on element's type
+* Scalars are turned into scalars: `the-value -> the-value`
+* Arrays are turned into scalars with double dashes perpended: `(debug, verbose) -> --debug --verbose`. This is useful for declaring
+boolean flags 
+* Hashes are turned into named parameters: `foo: foo-value -> --foo value`
+
+# Auto coercion, using single dashes instead of double dashes
+
+Double dashes are default behavior of how named parameters and flags 
+converted. If you need single dashes, prepend parameters in configuration file with `~` :
+
+    $ nano suite.yaml
+
+      ---
+    
+      args:
+        - ~foo: foo-value
+        -
+          - ~debug 
+          - ~verbose 
+
+
 # Environment variables
 
 * `OUTTHENTIC_MATCH` - overrides default value for `--match_l` parameter of story runner.

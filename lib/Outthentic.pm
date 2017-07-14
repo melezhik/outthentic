@@ -1686,18 +1686,18 @@ Args should be array which elements are processed in order, for every elements r
 
 =item *
 
-Scalars are turned into scalars: C<<< the-value -> the-value >>>
+Scalars are turned into scalars: C<<< the-value ---> the-value >>>
 
 
 =item *
 
-Arrays are turned into scalars with double dashes perpended: C<<< (debug, verbose) -> --debug --verbose >>>. This is useful for declaring
+Arrays are turned into scalars with double dashes perpended: C<<< (debug, verbose) ---> --debug --verbose >>>. This is useful for declaring
 boolean flags 
 
 
 =item *
 
-Hashes are turned into named parameters: C<<< foo: foo-value -> --foo value >>>
+Hashes are turned into named parameters: C<<< foo: foo-value ---> --foo foo-value >>>
 
 
 =back
@@ -1774,13 +1774,13 @@ Where C<$story-name> is any top level directory inside examples/.
 
 =item *
 
-Brief introduction of check file syntax could be found here - https://github.com/melezhik/outthentic/blob/master/check-files-syntax.md
+Brief introduction of check file syntax could be found here - L<https://github.com/melezhik/outthentic/blob/master/check-files-syntax.md|https://github.com/melezhik/outthentic/blob/master/check-files-syntax.md>
 
 
 
 =item *
 
-For the full detailed explanation follow Outthentic::DSL doc pages at https://github.com/melezhik/outthentic-dsl
+For the full detailed explanation follow Outthentic::DSL doc pages at L<https://github.com/melezhik/outthentic-dsl|t>
 
 
 

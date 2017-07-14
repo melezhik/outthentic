@@ -871,10 +871,10 @@ This is end up in running story with following command line arguments for extern
 # Auto coercion rules
 
 * Args should be array which elements are processed in order, for every elements rules are applied depending on element's type
-* Scalars are turned into scalars: `the-value -> the-value`
-* Arrays are turned into scalars with double dashes perpended: `(debug, verbose) -> --debug --verbose`. This is useful for declaring
+* Scalars are turned into scalars: `the-value ---> the-value`
+* Arrays are turned into scalars with double dashes perpended: `(debug, verbose) ---> --debug --verbose`. This is useful for declaring
 boolean flags 
-* Hashes are turned into named parameters: `foo: foo-value -> --foo value`
+* Hashes are turned into named parameters: `foo: foo-value ---> --foo foo-value`
 
 # Auto coercion, using single dashes instead of double dashes
 
@@ -923,9 +923,9 @@ Where `$story-name` is any top level directory inside examples/.
 
 # Check files syntax
 
-* Brief introduction of check file syntax could be found here - https://github.com/melezhik/outthentic/blob/master/check-files-syntax.md
+* Brief introduction of check file syntax could be found here - [https://github.com/melezhik/outthentic/blob/master/check-files-syntax.md](https://github.com/melezhik/outthentic/blob/master/check-files-syntax.md)
 
-* For the full detailed explanation follow Outthentic::DSL doc pages at https://github.com/melezhik/outthentic-dsl
+* For the full detailed explanation follow Outthentic::DSL doc pages at [https://github.com/melezhik/outthentic-dsl](t https://github.com/melezhik/outthentic-dsl)
 
 # AUTHOR
 

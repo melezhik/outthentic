@@ -1,2 +1,1 @@
-run_story("helper-A");
-run_story("helper-B");
+run_story("echo", { message => 'What is you name?' });

@@ -1,0 +1,8 @@
+---
+args:
+  - dump-header: '-'
+  - output: /dev/null
+  - http://sparrowhub.org
+  -
+    - silent
+    - fail

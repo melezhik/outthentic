@@ -10,7 +10,7 @@ use Term::ANSIColor;
 use Cwd;
 
 my $project_root_dir  = $ENV{'OUTTHENTIC_ROOT'} || getcwd();
-my $cwd = $ENV{'OUTTHENTIC_CWD'};
+my $cwd = $ENV{'OUTTHENTIC_CWD'} || getcwd();
 my $purge_cache   = 0;
 my $format        = 'default';
 my $debug_mod     = 0;

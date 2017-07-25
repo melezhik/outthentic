@@ -1,6 +1,7 @@
-0.3.5 
+0.3.5 2017-07-25
 
 - Fix bug when PERL5LIB does not include `$project_root_dir/lib` for Perl stories
+- Strun now changes to CWD by default ( unless --cwd is set )
 
 0.3.4 2017-07-14
 

@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.3.5';
+our $VERSION = '0.3.6';
 
 1;
 
@@ -465,7 +465,7 @@ sub print_meta {
 
     my $task_name = get_prop('task_name');
 
-    note( ( nocolor() ? short_story_name($task_name) : colored( ['yellow'], short_story_name($task_name) ) ));
+    #note( ( nocolor() ? short_story_name($task_name) : colored( ['yellow'], short_story_name($task_name) ) ));
 
     while (my $i = <META>){
         chomp $i;

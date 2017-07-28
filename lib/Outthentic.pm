@@ -495,6 +495,8 @@ sub short_story_name {
 
     my $story_vars = story_vars_pretty();
 
+    $short_story_dir ||= "[path] /";
+
     my @ret;
 
     push @ret, "[path] $short_story_dir" if $short_story_dir;

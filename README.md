@@ -902,6 +902,8 @@ converted. If you need single dashes, prepend parameters in configuration file w
 
 * `OUTTHENTIC_CWD` - sets working directory for strun, see `--cwd` parameter of story runner
 
+* `OUTTHENTIC_FORMAT` - overrides default value for `--format` parameter of story runner.
+
 Cache directory resolution:
     
     +---------------------+----------------------+

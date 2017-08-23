@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.3.6';
+our $VERSION = '0.3.7';
 
 1;
 
@@ -1746,6 +1746,12 @@ C<SPARROW_NO_COLOR> - disable color output, see C<--nocolor> option of story run
 =item *
 
 C<OUTTHENTIC_CWD> - sets working directory for strun, see C<--cwd> parameter of story runner
+
+
+
+=item *
+
+C<OUTTHENTIC_FORMAT> - overrides default value for C<--format> parameter of story runner.
 
 
 

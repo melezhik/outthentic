@@ -12,7 +12,7 @@ use Cwd;
 my $project_root_dir  = $ENV{'OUTTHENTIC_ROOT'} || getcwd();
 my $cwd = $ENV{'OUTTHENTIC_CWD'} || getcwd();
 my $purge_cache   = 0;
-my $format        = 'default';
+my $format        = $ENV{'OUTTHENTIC_FORMAT'} || 'default';
 my $debug_mod     = 0;
 my $dump_config   = 0;
 my $nocolor       = 0;

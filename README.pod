@@ -1212,6 +1212,12 @@ C<OUTTHENTIC_CWD> - sets working directory for strun, see C<--cwd> parameter of 
 
 
 
+=item *
+
+C<OUTTHENTIC_FORMAT> - overrides default value for C<--format> parameter of story runner.
+
+
+
 =back
 
 Cache directory resolution:

@@ -57,11 +57,17 @@ sub execute_cmd2 {
     my $cmd = shift;
     my $out;
 
+    my $format = get_prop('format');
+
     note("execute scenario: $cmd") if debug_mod2();
 
     my $stdout; my $stderr; my $exit;
 
-    ( $stdout, $stderr, $exit) =  Capture::Tiny::tee { system( $cmd ) };
+    if ($format eq 'sparrowdo'){
+      ( $stdout, $stderr, $exit) =  Capture::Tiny::capture { system( $cmd ) };
+    } else{
+      ( $stdout, $stderr, $exit) =  Capture::Tiny::tee { system( $cmd ) };
+    }
 
     return ($exit >> 8,$stdout.$stderr);
 }
@@ -382,6 +388,8 @@ sub run_and_check {
 
     my $story_check_file = shift;
 
+    my $format = get_prop('format');
+
     header() if debug_mod2();
 
     dsl()->{debug_mod} = get_prop('debug');
@@ -412,7 +420,11 @@ sub run_and_check {
         note($r->{message}) if $r->{type} eq 'debug';
         if ($r->{type} eq 'check_expression' ){
           Outthentic::Story::Stat->add_check_stat($r);
-          outh_ok($r->{status}, $r->{message}); 
+          if ($format eq 'sparrowdo'){
+            outh_ok($r->{status}, $r->{message}) unless $r->{status}; 
+          } else {
+            outh_ok($r->{status}, $r->{message}); 
+          }
           Outthentic::Story::Stat->set_status(0) unless $r->{status};
         };
 

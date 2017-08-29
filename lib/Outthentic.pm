@@ -63,7 +63,7 @@ sub execute_cmd2 {
 
     my $stdout; my $stderr; my $exit;
 
-    if ($format eq 'sparrowdo'){
+    if ($format eq 'production'){
       ( $stdout, $stderr, $exit) =  Capture::Tiny::capture { system( $cmd ) };
     } else{
       ( $stdout, $stderr, $exit) =  Capture::Tiny::tee { system( $cmd ) };
@@ -267,6 +267,8 @@ sub run_story_file {
 
     return get_prop('stdout') if defined get_prop('stdout');
 
+    my $format = get_prop('format');
+
     my $story_dir = get_prop('story_dir');
 
     if ( get_stdout() ){
@@ -341,7 +343,7 @@ sub run_story_file {
         my ($ex_code, $out) = execute_cmd2($story_command);
 
         if ($ex_code == 0) {
-            outh_ok(1, "scenario succeeded" );
+            outh_ok(1, "scenario succeeded" ) unless $format eq 'production';
             set_prop( scenario_status => 1 );
             Outthentic::Story::Stat->set_scenario_status(1);
             Outthentic::Story::Stat->set_stdout($out);
@@ -420,7 +422,7 @@ sub run_and_check {
         note($r->{message}) if $r->{type} eq 'debug';
         if ($r->{type} eq 'check_expression' ){
           Outthentic::Story::Stat->add_check_stat($r);
-          if ($format eq 'sparrowdo'){
+          if ($format eq 'production'){
             outh_ok($r->{status}, $r->{message}) unless $r->{status}; 
           } else {
             outh_ok($r->{status}, $r->{message}); 

@@ -216,7 +216,7 @@ unless ( $dump_config ) { # do not check story status in case we only dump confi
   #warn "exit code: $exit_code";
   if ($st) {
     print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n")
-      unless $format eq 'concise';
+      unless $format eq 'concise' or $format eq 'production';
   }else{
     print $nocolor ? "STATUS\tFAILED ($exit_code)\n" :  colored(["red"],"STATUS\tFAILED ($exit_code)\n")
       unless $format eq 'concise';

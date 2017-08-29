@@ -162,7 +162,7 @@ sub wanted {
         }
 
         if (-e "$File::Find::dir/meta.txt"){
-          print F "print_meta();\n\n" unless $format eq 'concise';
+          print F "print_meta();\n\n" unless $format eq 'concise' or $format eq 'production';
         }
 
         if ( -e "$File::Find::dir/story.pm" ){

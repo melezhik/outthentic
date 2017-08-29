@@ -255,7 +255,11 @@ sub print_story_header {
 
     my $format = get_prop('format');
 
-    unless ($format eq 'concise'){
+    if ($format eq 'production') {
+      note(
+        'run'.($task_name ? ' '.$task_name.' at ' : ' story at ').timestamp()."\n"
+      );
+    } elsif ($format ne 'concise') {
       note(
         'run'.($task_name ? ' '.$task_name.' at ' : ' story at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
       );

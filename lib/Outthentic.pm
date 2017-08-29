@@ -257,7 +257,7 @@ sub print_story_header {
 
     if ($format eq 'production') {
       note(
-        'run'.($task_name ? ' '.$task_name.' at ' : ' story at ').timestamp()
+        timestamp().' : '.($task_name ? ' '.$task_name.' at ' : ' story at ')
       );
     } elsif ($format ne 'concise') {
       note(

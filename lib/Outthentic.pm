@@ -281,9 +281,13 @@ sub run_story_file {
         print_story_header();
 
         note("stdout is already set") if debug_mod12;
-        for my $l (split /\n/, get_stdout()){
-          note($l);
-        };
+
+        unless ($format eq 'production') {
+          for my $l (split /\n/, get_stdout()){
+            note($l);
+          }
+        }
+
         set_prop( stdout => get_stdout() );
         set_prop( scenario_status => 1 );
 
@@ -1424,7 +1428,9 @@ C<--format>
 
 =back
 
-Sets reports format. Available formats are: C<concise|default>. Default value is C<default>.
+Sets reports format. Available formats are: C<concise|production|default>. 
+
+Default value is C<default>.
 
 In concise format strun shrinks output to only STDOUT/STDERR comes from scenarios.
 

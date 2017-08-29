@@ -666,7 +666,9 @@ Enable/disable debug mode:
 
 * `--format` 
 
-Sets reports format. Available formats are: `concise|default`. Default value is `default`.
+Sets reports format. Available formats are: `concise|production|default`. 
+
+Default value is `default`.
 
 In concise format strun shrinks output to only STDOUT/STDERR comes from scenarios.
 

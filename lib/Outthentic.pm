@@ -257,7 +257,7 @@ sub print_story_header {
 
     if ($format eq 'production') {
       note(
-        timestamp().' : '.($task_name || ' ')
+        timestamp().' : '.($task_name || ' ').story_short_name($task_name);
       );
     } elsif ($format ne 'concise') {
       note(

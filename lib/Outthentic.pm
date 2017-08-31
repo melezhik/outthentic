@@ -524,7 +524,7 @@ sub short_story_name {
     push @ret, "[path] $short_story_dir" if $short_story_dir;
     push @ret, "[params] $story_vars" if $story_vars;
 
-    join "\n", @ret;
+    join " ", @ret;
 
 }
 

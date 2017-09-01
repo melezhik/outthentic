@@ -1,7 +1,7 @@
-0.3.7
+0.3.7 2017-09-01
 
+- support for production format
 - sets format by using OUTTHENTIC_FORMAT variable
-
 - merged PR from @lancew - https://github.com/melezhik/outthentic/pull/6 
   Misc small commits - Mainly Kritika.io violations #6 
 

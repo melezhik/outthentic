@@ -1428,13 +1428,11 @@ C<--format>
 
 =back
 
-Sets reports format. Available formats are: C<concise|production|default>. 
+Sets reports format. Available formats are: C<concise|production|default>. Default value is C<default>.
 
-Default value is C<default>.
+In concise format strun shrinks output to only STDOUT/STDERR comes from scenarios. It's useful when you want to parse stories output by external commands.
 
-In concise format strun shrinks output to only STDOUT/STDERR comes from scenarios.
-
-It's useful when you want to parse stories output by external commands.
+Production format omits debug information.
 
 =over
 

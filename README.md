@@ -666,13 +666,11 @@ Enable/disable debug mode:
 
 * `--format` 
 
-Sets reports format. Available formats are: `concise|production|default`. 
+Sets reports format. Available formats are: `concise|production|default`. Default value is `default`.
 
-Default value is `default`.
+In concise format strun shrinks output to only STDOUT/STDERR comes from scenarios. It's useful when you want to parse stories output by external commands.
 
-In concise format strun shrinks output to only STDOUT/STDERR comes from scenarios.
-
-It's useful when you want to parse stories output by external commands.
+Production format omits debug information.
 
 * `--purge-cache`
 

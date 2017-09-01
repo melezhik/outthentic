@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.3.7';
+our $VERSION = '0.3.8';
 
 1;
 
@@ -362,7 +362,12 @@ sub run_story_file {
             Outthentic::Story::Stat->set_scenario_status(2);
             Outthentic::Story::Stat->set_stdout($out);
         }else{
-            outh_ok(0, "scenario succeeded", $ex_code);
+            if ( $format eq 'production'){
+              print "$out";
+              outh_ok(0, "scenario succeeded", $ex_code);
+            } else {
+              outh_ok(0, "scenario succeeded", $ex_code);
+            }
             set_prop( scenario_status => 0 );
             Outthentic::Story::Stat->set_scenario_status(0);
             Outthentic::Story::Stat->set_stdout($out);
@@ -426,10 +431,12 @@ sub run_and_check {
     };
 
     my $err = $@;
+    my $check_fail=0;
     for my $r ( @{dsl()->results}){
         note($r->{message}) if $r->{type} eq 'debug';
         if ($r->{type} eq 'check_expression' ){
           Outthentic::Story::Stat->add_check_stat($r);
+          $check_fail=1 unless $r->{status};
           if ($format eq 'production'){
             outh_ok($r->{status}, $r->{message}) unless $r->{status}; 
           } else {
@@ -446,6 +453,9 @@ sub run_and_check {
       die "validator error: $err";
     }
 
+    if ($format eq 'production' and $check_fail) {
+      print get_prop("stdout");
+    }
 }
 
       
@@ -538,6 +548,7 @@ sub timestamp {
 END {
 
   #print "STATUS: $STATUS\n";
+
   if ($STATUS == 1){
     exit(0);
   } elsif($STATUS == -1){

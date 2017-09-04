@@ -271,6 +271,8 @@ sub run_story_file {
 
     return get_prop('stdout') if defined get_prop('stdout');
 
+    set_prop('has_scenario',1);
+
     my $format = get_prop('format');
 
     my $story_dir = get_prop('story_dir');

@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.3.8';
+our $VERSION = '0.3.9';
 
 1;
 
@@ -257,11 +257,11 @@ sub print_story_header {
 
     if ($format eq 'production') {
       note(
-        timestamp().' : '.( $task_name || '').' '.(short_story_name($task_name))
+        timestamp().' : '.($task_name || '').' '.(short_story_name($task_name))
       );
     } elsif ($format ne 'concise') {
       note(
-        'run'.($task_name ? ' '.$task_name.' at ' : ' story at ').timestamp()."\n".( nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)) )
+        timestamp().' : '.($task_name ||  '' ).' '.(nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)))
       );
     }
 

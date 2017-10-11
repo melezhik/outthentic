@@ -539,6 +539,7 @@ Here is the list of function one can use _inside hooks_:
 * fedora
 * minoca
 * ubuntu
+* funtoo
 
 # Story meta headers
 

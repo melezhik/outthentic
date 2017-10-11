@@ -1,3 +1,7 @@
+0.3.10 2017-10-12
+
+Funtoo OS support
+
 0.3.10 2017-10-11
 
 `Dump_os` function - call `uname -o`

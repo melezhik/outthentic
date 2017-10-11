@@ -734,7 +734,7 @@ sub dump_os {
 
     my $data;
 
-    open(my $fh, '-|', 'lsb_release -d 2>/dev/null; uname -a; cat /etc/issue; cat /etc/*-release 2>&1') or die $!;
+    open(my $fh, '-|', 'lsb_release -d 2>/dev/null; uname -o; cat /etc/issue; cat /etc/*-release 2>&1') or die $!;
 
     while (my $line = <$fh>) {
       $data.=$line;

@@ -759,7 +759,7 @@ elif [ -s /etc/SuSe-release ]; then
   printf "TODO\n"
 elif [ -s /etc/redhat-release ]; then
   # Older Red Hat, CentOS, etc.
-  printf "TODO\n"
+  OS=$(cat /etc/redhat-release| head -n 1)
 else
   RELEASE_INFO=$(cat /etc/*-release 2>/dev/null | head -n 1)
 

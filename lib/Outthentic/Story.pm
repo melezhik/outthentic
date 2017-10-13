@@ -735,8 +735,6 @@ sub dump_os {
 my $cmd = <<'HERE';
 #! /usr/bin/env sh
 
-set -e
-
 # Find out the target OS
 if [ -s /etc/os-release ]; then
   # freedesktop.org and systemd
@@ -763,7 +761,7 @@ elif [ -s /etc/redhat-release ]; then
   # Older Red Hat, CentOS, etc.
   printf "TODO\n"
 else
-  RELEASE_INFO=$(cat /etc/*-release | head -n 1)
+  RELEASE_INFO=$(cat /etc/*-release 2>/dev/null | head -n 1)
 
   if [ ! -z "$RELEASE_INFO" ]; then
     OS=$(printf -- "$RELEASE_INFO" | awk '{ print $1 }')

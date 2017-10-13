@@ -792,7 +792,7 @@ sub _resolve_os {
           my $data = dump_os();
           $data=~/alpine/i and $OS = 'alpine' and last DONE;
           $data=~/minoca/i and $OS = "minoca" and last DONE;
-          $data=~/centos(\d+)/i and $OS = "centos$1" and last DONE;
+          $data=~/centos linux(\d+)/i and $OS = "centos$1" and last DONE;
           $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1" and last DONE;
           $data=~/arch/i and $OS = 'archlinux' and last DONE;
           $data=~/funtoo/i and $OS = 'funtoo' and last DONE;

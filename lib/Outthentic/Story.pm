@@ -732,17 +732,55 @@ sub story_vars_pretty {
 
 sub dump_os {
 
-    my $data;
+my $cmd = <<'HERE';
+#! /usr/bin/env sh
 
-    open(my $fh, '-|', 'lsb_release -d 2>/dev/null; uname -o; cat /etc/issue 2>/dev/null; cat /etc/*-release 2>/dev/null') or die $!;
+set -e
 
-    while (my $line = <$fh>) {
-      $data.=$line;
-    }
+# Find out the target OS
+if [ -s /etc/os-release ]; then
+  # freedesktop.org and systemd
+  . /etc/os-release
+  OS=$NAME
+  VER=$VERSION_ID
+elif type lsb_release >/dev/null 2>&1; then
+  # linuxbase.org
+  OS=$(lsb_release -si)
+  VER=$(lsb_release -sr)
+elif [ -s /etc/lsb-release ]; then
+  # For some versions of Debian/Ubuntu without lsb_release command
+  . /etc/lsb-release
+  OS=$DISTRIB_ID
+  VER=$DISTRIB_RELEASE
+elif [ -s /etc/debian_version ]; then
+  # Older Debian/Ubuntu/etc.
+  OS=Debian
+  VER=$(cat /etc/debian_version)
+elif [ -s /etc/SuSe-release ]; then
+  # Older SuSE/etc.
+  printf "TODO\n"
+elif [ -s /etc/redhat-release ]; then
+  # Older Red Hat, CentOS, etc.
+  printf "TODO\n"
+else
+  RELEASE_INFO=$(cat /etc/*-release | head -n 1)
 
-    close $fh;
+  if [ ! -z "$RELEASE_INFO" ]; then
+    OS=$(printf -- "$RELEASE_INFO" | awk '{ print $1 }')
+    VER=$(printf -- "$RELEASE_INFO" | awk '{ print $NF }')
+  else
+    # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
+    OS=$(uname -s)
+    VER=$(uname -r)
+  fi
+fi
 
-    $data;
+  echo $OS
+
+HERE
+
+  `$cmd`
+
 }
 
 sub _resolve_os {

@@ -1,5 +1,10 @@
-OK
+regexp: OS - \S+
+
 generator: <<CODE
 !bash
-echo $os
+if test -z $os; then
+  echo assert: 0 os is not empty 
+else
+  echo assert: 1 os: $os is not empty 
+fi
 CODE

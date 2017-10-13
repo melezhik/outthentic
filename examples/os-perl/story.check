@@ -1,3 +1,10 @@
-OK
-generator: [ os() ]
+regexp: OS - \S+
+
+generator: <<CODE
+if ( os() ) { 
+  [ "assert: 1 os: ".(os())." is not empty" ];
+} else {
+  [ "assert: 0 os is not empty" ];
+}
+CODE
 

@@ -1,2 +1,1 @@
-echo $os
-echo OK
+echo OS - $os

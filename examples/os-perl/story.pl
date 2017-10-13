@@ -1,2 +1,1 @@
-print os(), "\n";
-print "OK\n";
+print "OS - ", os(), "\n";

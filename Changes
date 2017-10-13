@@ -1,3 +1,8 @@
+0.3.13 
+
+Replace `dump_os` by the code @Tyil introduced in https://github.com/melezhik/sparrowdo/pull/14
+as result it should be POSIX compliant and cover more cases (OS)
+
 0.3.12 2017-10-12
 
 `Dump_os` - hide stderr

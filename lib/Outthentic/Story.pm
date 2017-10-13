@@ -775,7 +775,7 @@ else
   fi
 fi
 
-  echo $OS
+  echo $OS$VER
 
 HERE
 
@@ -790,16 +790,16 @@ sub _resolve_os {
 
        DONE: while (1) {
           my $data = dump_os();
-          $data=~/Alpine\s+Linux/i and $OS = 'alpine' and last DONE;
-          $data=~/Minoca OS/i and $OS = "minoca" and last DONE;
-          $data=~/CentOS\s+.*release\s+(\d)/i and $OS = "centos$1" and last DONE;
+          $data=~/alpine/i and $OS = 'alpine' and last DONE;
+          $data=~/minoca/i and $OS = "minoca" and last DONE;
+          $data=~/centos(\d+)/i and $OS = "centos$1" and last DONE;
           $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1" and last DONE;
-          $data=~/Arch\s+Linux/i and $OS = 'archlinux' and last DONE;
-          $data=~/Funtoo\s+Linux/i and $OS = 'funtoo' and last DONE;
-          $data=~/Fedora\s+/i and $OS = 'fedora' and last DONE;
-          $data=~/Amazon\s+Linux/i and $OS = 'amazon' and last DONE;
-          $data=~/Ubuntu/i and $OS = 'ubuntu' and last DONE;
-          $data=~/Debian/i and $OS = 'debian' and last DONE;
+          $data=~/arch/i and $OS = 'archlinux' and last DONE;
+          $data=~/funtoo/i and $OS = 'funtoo' and last DONE;
+          $data=~/fedora\s+/i and $OS = 'fedora' and last DONE;
+          $data=~/amazon/i and $OS = 'amazon' and last DONE;
+          $data=~/ubuntu/i and $OS = 'ubuntu' and last DONE;
+          $data=~/debian/i and $OS = 'debian' and last DONE;
           last DONE;
       }
   }

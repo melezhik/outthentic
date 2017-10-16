@@ -1,4 +1,4 @@
-0.3.13 
+0.3.13 2017-10-16
 
 Replace `dump_os` by the code @Tyil introduced in https://github.com/melezhik/sparrowdo/pull/14
 as result it should be POSIX compliant and cover more cases (OS)

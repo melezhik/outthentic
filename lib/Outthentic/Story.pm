@@ -794,7 +794,7 @@ sub _resolve_os {
           $data=~/Red Hat.*release\s+(\d)/i and $OS = "centos$1" and last DONE;
           $data=~/arch/i and $OS = 'archlinux' and last DONE;
           $data=~/funtoo/i and $OS = 'funtoo' and last DONE;
-          $data=~/fedora\s+/i and $OS = 'fedora' and last DONE;
+          $data=~/fedora/i and $OS = 'fedora' and last DONE;
           $data=~/amazon/i and $OS = 'amazon' and last DONE;
           $data=~/ubuntu/i and $OS = 'ubuntu' and last DONE;
           $data=~/debian/i and $OS = 'debian' and last DONE;

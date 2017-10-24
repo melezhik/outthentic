@@ -8,6 +8,12 @@ if File.exist? "#{story_dir}/common.rb"
 
 end
 
+if File.exist? "#{project_root_dir}/common.rb"
+
+  require "#{project_root_dir}/common.rb"
+
+end
+
 def set_stdout line
   open(stdout_file(), 'a') do |f|
     f.puts "#{line}\n"

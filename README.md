@@ -626,6 +626,8 @@ This table describes `file name -> language` mapping for story libraries:
     | Ruby      | common.rb       |
     +-----------+-----------------+
 
+***Hint:*** If you put this file into root directory of a plugin it will be required by all downstories. 
+
 ***NOTE!***  Story libraries are not supported for Python
     
 # PERL5LIB

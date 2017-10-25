@@ -1,0 +1,5 @@
+bash rocks!
+generator: <<CODE
+!bash
+bash_rocks
+CODE

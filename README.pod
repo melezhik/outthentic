@@ -763,44 +763,63 @@ Examples:
 
 =head1 Story libraries
 
-Story libraries are files to make your libraries' code I<automatically required> into the story hooks and check files context:
+Story libraries are files to make your libraries' code I<automatically required> into the story scenarios, hooks and check files context:
 
 Here are some examples:
 
-Perl:
+Bash:
 
-    $ nano common.pm
-      sub abc_generator {
-        print $_, "\n" for a..z;
+    $ nano my-story/common.bash
+      function hello_bash {
+        echo 'hello bash'
       } 
     
-    $ nano story.check
+    $ nano my-story/story.bash
+        echo hello_bash
+    
+    $ nano my-story/story.check
       generator: <<CODE;
-      !perl
-        abc_generator()
+      !bash
+        echo hello_bash
       CODE
 
 Ruby:
 
-    $ nano common.rb
-      def super_utility arg1, arg2
-        # I am cool! But I do nothing!
+    $ nano modules/my-story/common.rb
+      def hello_ruby
+        'hello ruby'
       end
-      
-    $ nano hook.pl
-      super_utility 'foo', 'bar'
+    
+    $ nano modules/my-story/hook.rb
+      set_stdout(hello_ruby())
+    
+    $ nano modules/my-story/story.check
+      generator: <<CODE;
+      !ruby
+        pust hello_ruby()
+      CODE
 
 This table describes C<<< file name -> language >>> mapping for story libraries:
 
-    +-----------+-----------------+
-    | Language  | file            |
-    +-----------+-----------------+
-    | Perl      | common.pm       |
-    | Bash      | common.bash     |
-    | Ruby      | common.rb       |
-    +-----------+-----------------+
+    +-----------+-----------------+--------------------------------+
+    | Language  | file            | locations                      |
+    +-----------+-----------------+--------------------------------+
+    | Bash      | common.bash     | $project_root_dir/common.bash  |
+    |           |                 | $story_dir/common.bash         |
+    +-----------+-----------------+--------------------------------+
+    | Ruby      | common.rb       | $project_root_dir/common.rb    |
+    |           |                 | $story_dir/common.bash         |
+    +-----------+-----------------+--------------------------------+
 
-B<I<NOTE!>>  Story libraries are not supported for Python
+If you put story library file into project root directory it will be required by I<any> story:
+
+    $ nano common.bash
+    
+      function hello_bash {
+        echo 'hello bash'
+      }
+
+B<I<NOTE!>>  Story libraries are not supported for Python and Perl
 
 
 =head1 PERL5LIB

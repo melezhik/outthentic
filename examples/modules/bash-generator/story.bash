@@ -1,1 +1,1 @@
-echo foo: hello-world
+bash_generator $foo

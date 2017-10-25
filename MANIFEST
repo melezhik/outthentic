@@ -33,6 +33,8 @@ examples/bash-run-story/hook.bash
 examples/bash-run-story/story.check
 examples/bash-set-stdout/hook.bash
 examples/bash-set-stdout/story.check
+examples/bash-story-library/hook.bash
+examples/bash-story-library/story.check
 examples/between-keep-order/story.check
 examples/between-keep-order/story.pl
 examples/between-multiple-expressions/story.check
@@ -45,6 +47,8 @@ examples/between/story.check
 examples/between/story.pl
 examples/comments/story.bash
 examples/comments/story.check
+examples/common.bash
+examples/common.rb
 examples/config-general-interpolate-env/story.bash
 examples/config-general-interpolate-env/story.check
 examples/config-general-interpolate-vars/story.bash
@@ -157,6 +161,8 @@ examples/ruby-pass-config-to-scenario/story.check
 examples/ruby-pass-config-to-scenario/story.rb
 examples/ruby-scenario/story.check
 examples/ruby-scenario/story.rb
+examples/ruby-story-library/hook.rb
+examples/ruby-story-library/story.check
 examples/run-story/story.check
 examples/run-story/story.pl
 examples/run-story/story.pm

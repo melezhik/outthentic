@@ -2,6 +2,10 @@ if test -f "${story_dir}/common.bash"; then
   source "${story_dir}/common.bash"
 fi
 
+if test -f "${project_root_dir}/common.bash"; then
+  source "${project_root_dir}/common.bash"
+fi
+
 if test -f "${cache_dir}/variables.bash"; then
   source "${cache_dir}/variables.bash"
 fi

@@ -1,3 +1,7 @@
+0.3.15
+
+Story libraries patch - https://github.com/melezhik/outthentic/pull/7 https://github.com/melezhik/outthentic/issues/5
+
 0.3.14 2017-10-17
 
 Hot fix for fedora OS resolution bug (`_resolve_os` function )

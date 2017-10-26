@@ -85,8 +85,9 @@ examples/modules/02/story.bash
 examples/modules/02/story.check
 examples/modules/bar/story.check
 examples/modules/bar/story.pm
-examples/modules/bash-generator/story.bash
-examples/modules/bash-generator/story.check
+examples/modules/bash/common.bash
+examples/modules/bash/story.bash
+examples/modules/bash/story.check
 examples/modules/echo-vars-python/story.check
 examples/modules/echo-vars-python/story.py
 examples/modules/echo-vars-ruby/story.check

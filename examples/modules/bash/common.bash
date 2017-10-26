@@ -1,3 +1,3 @@
 function bash_generator {
-  echo foo: $1
+  echo hello: $1
 }

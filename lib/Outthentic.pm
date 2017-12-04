@@ -575,7 +575,7 @@ __END__
 
 =head1 Name
 
-Outthentic
+Outthentic - Multipurpose scenarios framework.
 
 
 =head1 Synopsis

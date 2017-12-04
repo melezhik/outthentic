@@ -1,6 +1,6 @@
 # Name
 
-Outthentic
+Outthentic - Multipurpose scenarios framework.
 
 # Synopsis
 

@@ -257,11 +257,11 @@ sub print_story_header {
 
     if ($format eq 'production') {
       note(
-        timestamp().' : '.($task_name || '').' '.(short_story_name($task_name)), 1
+        timestamp().' : '.($task_name || '').' '.(short_story_name($task_name))
       );
     } elsif ($format ne 'concise') {
       note(
-        timestamp().' : '.($task_name ||  '' ).' '.(nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name))),1 
+        timestamp().' : '.($task_name ||  '' ).' '.(nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)))
       );
     }
 
@@ -352,11 +352,7 @@ sub run_story_file {
 
         my ($ex_code, $out) = execute_cmd2($story_command);
 
-        if ( $out =~ s/outthentic_message:\s+(.*)//) {
-          print " [status] $1\n";
-        } else {
-          print "\n";
-        }
+        print_story_messages($out) if $format eq 'production';
 
         if ($ex_code == 0) {
             outh_ok(1, "scenario succeeded" ) unless $format eq 'production';
@@ -467,6 +463,12 @@ sub run_and_check {
 }
 
       
+sub print_story_messages {
+  my $out = shift;
+  for ($out=~/outthentic_message:\s+(.*)/g) {
+    print "...$_\n";
+  }
+}
 
 sub outh_ok {
 
@@ -492,14 +494,9 @@ sub outh_ok {
 sub note {
 
     my $message = shift;
-    my $no_new_line = shift;
     
     binmode(STDOUT, ":utf8");
-    if ($no_new_line){
-      print "$message";
-    } else {
-      print "$message\n";
-    }
+    print "$message\n";
 
 }
 

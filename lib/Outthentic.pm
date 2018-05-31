@@ -354,7 +354,7 @@ sub run_story_file {
 
         my $story_message="";
 
-        if ( $out =~ s/outthentic_message:(.*?)//) {
+        if ( $out =~ s/outthentic_message:(.*)//) {
             $story_message=" [$1]";
         }
 

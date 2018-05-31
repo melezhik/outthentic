@@ -352,23 +352,29 @@ sub run_story_file {
 
         my ($ex_code, $out) = execute_cmd2($story_command);
 
+        my $story_message="";
+
+        if ( $out =~ s/outthentic_message:(.*?)//) {
+            $story_message=" [$1]";
+        }
+
         if ($ex_code == 0) {
-            outh_ok(1, "scenario succeeded" ) unless $format eq 'production';
+            outh_ok(1, "scenario succeeded.$story_message" ) unless $format eq 'production';
             set_prop( scenario_status => 1 );
             Outthentic::Story::Stat->set_scenario_status(1);
             Outthentic::Story::Stat->set_stdout($out);
 
         }elsif(ignore_story_err()){
-            outh_ok(1, "scenario failed, still continue due to `ignore_story_err' is set");
+            outh_ok(1, "scenario failed.$story_message, still continue due to `ignore_story_err' is set");
             set_prop( scenario_status => 2 );
             Outthentic::Story::Stat->set_scenario_status(2);
             Outthentic::Story::Stat->set_stdout($out);
         }else{
             if ( $format eq 'production'){
               print "$out";
-              outh_ok(0, "scenario succeeded", $ex_code);
+              outh_ok(0, "scenario succeeded.$story_message", $ex_code);
             } else {
-              outh_ok(0, "scenario succeeded", $ex_code);
+              outh_ok(0, "scenario succeeded.$story_message", $ex_code);
             }
             set_prop( scenario_status => 0 );
             Outthentic::Story::Stat->set_scenario_status(0);

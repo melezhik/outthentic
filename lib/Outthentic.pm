@@ -254,17 +254,17 @@ sub print_story_header {
     my $task_name = get_prop('task_name');
 
     my $format = get_prop('format');
-
+    my $data;
     if ($format eq 'production') {
-      note(
-        timestamp().' : '.($task_name || '').' '.(short_story_name($task_name))
-      );
+        $data = timestamp().' : '.($task_name || '').' '.(short_story_name($task_name))
     } elsif ($format ne 'concise') {
-      note(
-        timestamp().' : '.($task_name ||  '' ).' '.(nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)))
-      );
+        $data = timestamp().' : '.($task_name ||  '' ).' '.(nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)))
     }
-
+    if ($format eq 'production'){
+      note($data,1)
+    } else {
+      note($data)
+    }
 }
 
 sub run_story_file {
@@ -465,9 +465,10 @@ sub run_and_check {
       
 sub print_story_messages {
   my $out = shift;
-  for ($out=~/outthentic_message:\s+(.*)/g) {
-    print "...$_\n";
-  }
+  print " [msg] " if $out=~/outthentic_message/;
+  my @m = ($out=~/outthentic_message:\s+(.*)/g);
+  print join " ", @m;
+  print "\n";
 }
 
 sub outh_ok {
@@ -494,9 +495,11 @@ sub outh_ok {
 sub note {
 
     my $message = shift;
-    
+    my $no_new_line = shift;
+
     binmode(STDOUT, ":utf8");
-    print "$message\n";
+    print $message;
+    print "\n" unless $no_new_line;
 
 }
 

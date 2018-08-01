@@ -773,7 +773,7 @@ else
   fi
 fi
 
-  echo $OS$VER
+  echo "$OS$VER"
 
 HERE
 
@@ -798,6 +798,8 @@ sub _resolve_os {
           $data=~/amazon/i and $OS = 'amazon' and last DONE;
           $data=~/ubuntu/i and $OS = 'ubuntu' and last DONE;
           $data=~/debian/i and $OS = 'debian' and last DONE;
+          $data=~/darwin/i and $OS = 'darwin' and last DONE;
+          warn "unknown os: $data";
           last DONE;
       }
   }

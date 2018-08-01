@@ -540,6 +540,7 @@ Here is the list of function one can use _inside hooks_:
 * minoca
 * ubuntu
 * funtoo
+* darwin
 
 # Story meta headers
 

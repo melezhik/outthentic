@@ -1,3 +1,7 @@
+0.3.16 2017-08-14
+
+OS darwin is recognized by strun now.
+
 0.3.15 2017-12-4
 
 Fix for `allow use helpers in libraries` issue, for some reasons changes have not uploaded to CPAN

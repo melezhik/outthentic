@@ -170,8 +170,11 @@ examples/run-story/story.pm
 examples/story-data-share/story.check
 examples/story-data-share/story.pl
 examples/story-data-share/story.pm
+examples/story-message/story.bash
 examples/story-stat/hook.pl
 examples/story-stat/story.check
+examples/suite.ini
+examples/suite.yaml
 examples/text-blocks-stream/story.check
 examples/text-blocks-stream/story.pl
 examples/text-blocks-stream2/story.bash
@@ -233,14 +236,15 @@ lib/Outthentic/Glue/Bash.pm
 lib/Outthentic/Glue/Perl.pm
 lib/Outthentic/Story.pm
 lib/Outthentic/Story/Stat.pm
+make-dist.sh
+make.sh
 Makefile.PL
 MANIFEST			This list of files
 META.yml
 python_lib/outthentic.py
 README.md
-README.pod
 ruby_lib/outthentic.rb
-suite.ini
-suite.yaml
 t/outthentic.t
 test.sh
+utils/make-dist.pl6
+utils/make.pl6

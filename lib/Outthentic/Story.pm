@@ -732,7 +732,7 @@ sub story_vars_pretty {
 
 sub dump_os {
 
-return "windows" if $^O  =~ 'MSWin';
+return $^O if $^O  =~ 'MSWin';
 
 my $cmd = <<'HERE';
 #! /usr/bin/env sh
@@ -801,6 +801,7 @@ sub _resolve_os {
           $data=~/ubuntu/i and $OS = 'ubuntu' and last DONE;
           $data=~/debian/i and $OS = 'debian' and last DONE;
           $data=~/darwin/i and $OS = 'darwin' and last DONE;
+          $data=~/MSWin/i and $OS = 'windows' and last DONE;
           warn "unknown os: $data";
           last DONE;
       }

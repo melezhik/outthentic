@@ -541,6 +541,7 @@ Here is the list of function one can use _inside hooks_:
 * ubuntu
 * funtoo
 * darwin
+* windows
 
 # Story meta headers
 

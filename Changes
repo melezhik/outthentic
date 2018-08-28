@@ -1,4 +1,8 @@
-0.3.16 2017-08-14
+0.3.18
+
+Windows support
+
+0.3.17 2017-08-14
 
 OS darwin is recognized by strun now.
 

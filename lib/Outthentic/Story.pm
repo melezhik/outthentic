@@ -732,6 +732,8 @@ sub story_vars_pretty {
 
 sub dump_os {
 
+return "windows" if $^O  =~ 'MSWin';
+
 my $cmd = <<'HERE';
 #! /usr/bin/env sh
 

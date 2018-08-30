@@ -1,6 +1,6 @@
 0.3.18
 
-Windows support
+Rewrite platform dependable code to pure Perl
 
 0.3.17 2017-08-14
 

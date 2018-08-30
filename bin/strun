@@ -110,6 +110,8 @@ sub wanted {
 
         $story_dir =~ s/^\S+:\S// if $^O  =~ 'MSWin';
 
+        print "$story_dir added ok ...\n" if $debug_mod;
+
         make_path("$cache_root_dir/$story_dir");
   
         my $tfile = "$cache_root_dir/$story_dir/sparrow.pl";

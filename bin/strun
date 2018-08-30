@@ -202,6 +202,8 @@ sub wanted {
 my $st;
 my $exit_code;
 
+$project_root_dir =~ s/^\S+:\S// if $^O  =~ 'MSWin';
+
 if ($story_path){
 
     my $strun_cmd = "perl $cache_root_dir$project_root_dir/$story_path/sparrow.pl";
@@ -213,7 +215,7 @@ if ($story_path){
     $exit_code = sprintf "%d", $? >> 8;
 }
 
-system("rm -rf $cache_root_dir") if $purge_cache;
+remove_tree($cache_root_dir) if $purge_cache;
 
 unless ( $dump_config ) { # do not check story status in case we only dump config data
   #warn "state: $st";

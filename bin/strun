@@ -202,7 +202,7 @@ sub wanted {
 my $st;
 my $exit_code;
 
-$project_root_dir =~ s/^\S+:\S// if $^O  =~ 'MSWin';
+$project_root_dir =~ s/^\S+:\S/ if $^O  =~ 'MSWin';
 
 if ($story_path){
 

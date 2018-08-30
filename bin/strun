@@ -108,8 +108,6 @@ sub wanted {
 
         my $story_dir = $File::Find::dir;
 
-        $story_dir =~ s/^\S+:\S// if $^O  =~ 'MSWin';
-
         print "$story_dir added ok ...\n" if $debug_mod;
 
         make_path("$cache_root_dir/$story_dir");
@@ -201,8 +199,6 @@ sub wanted {
 
 my $st;
 my $exit_code;
-
-$project_root_dir =~ s/^\S+:// if $^O  =~ 'MSWin';
 
 if ($story_path){
 

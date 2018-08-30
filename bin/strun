@@ -108,14 +108,10 @@ sub wanted {
 
         my $story_dir = $File::Find::dir;
 
-        if ($^O  =~ 'MSWin'){
-          my $safe_dir = $story_dir;
-          $safe_dir =~ s/^\S+://;
-          make_path("$cache_root_dir/$safe_dir");
-        } else {
-          make_path("$cache_root_dir/$story_dir");
-        }
+        $story_dir =~ s/^\S+://;
 
+        make_path("$cache_root_dir/$story_dir");
+  
         my $tfile = "$cache_root_dir/$story_dir/sparrow.pl";
 
         open F, ">", $tfile or die $!;

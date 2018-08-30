@@ -108,7 +108,7 @@ sub wanted {
 
         my $story_dir = $File::Find::dir;
 
-        $story_dir =~ s/^\S+://;
+        $story_dir =~ s/^\S+:\S// if $^O  =~ 'MSWin';
 
         make_path("$cache_root_dir/$story_dir");
   

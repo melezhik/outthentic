@@ -9,6 +9,7 @@ use File::ShareDir;
 use JSON;
 use Carp;
 
+use File::Path::Tiny;
 
 our @EXPORT = qw{ 
 
@@ -220,8 +221,8 @@ sub _make_cache_dir {
   if (debug_mod12()){
     main::note("make cache dir: $cache_dir");
   }
-  system("rm -rf $cache_dir");
-  system("mkdir -p $cache_dir");
+  File::Path::Tiny::mk($cache_dir) or die "can't create $cache_dir, error: $!";
+  File::Path::Tiny::empty_dir($cache_dir) or die "can't empty $cache_dir, error: $!";
 }
 
 sub story_cache_dir {

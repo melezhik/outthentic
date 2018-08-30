@@ -16,6 +16,7 @@ requires    'Outthentic::DSL' => "0.2.8";
 requires    'Term::ANSIColor' => '4.02';
 requires    'Hash::Merge';
 requires    'Capture::Tiny' => '0.30';
+requires    'File::Path::Tiny';
 
 license     'perl';
 repository  'https://github.com/melezhik/outthentic';

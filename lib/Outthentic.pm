@@ -304,8 +304,13 @@ sub run_story_file {
         if ( -f "$story_dir/story.pl" ){
 
           if (-f project_root_dir()."/cpanfile" ){
-            $story_command  = "PATH=\$PATH:".project_root_dir()."/local/bin/ perl -I ".story_cache_dir().
-            " -I ".project_root_dir()."/local/lib/perl5 -I".project_root_dir()."/lib " ."-MOutthentic::Glue::Perl $story_dir/story.pl";
+			if ( $^O  =~ 'MSWin'  ){
+				$story_command  = "set PATH=%PATH%;".project_root_dir()."/local/bin/ && perl -I ".story_cache_dir().
+		        " -I ".project_root_dir()."/local/lib/perl5 -I".project_root_dir()."/lib " ."-MOutthentic::Glue::Perl $story_dir/story.pl";						
+			} else {
+	            $story_command  = "PATH=\$PATH:".project_root_dir()."/local/bin/ perl -I ".story_cache_dir().
+		        " -I ".project_root_dir()."/local/lib/perl5 -I".project_root_dir()."/lib " ."-MOutthentic::Glue::Perl $story_dir/story.pl";	
+			}
           } else {
             $story_command = "perl -I ".story_cache_dir()." -I ".project_root_dir()."/lib"." -MOutthentic::Glue::Perl $story_dir/story.pl";
           }

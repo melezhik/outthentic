@@ -13,7 +13,8 @@ sub wanted  {
 
   return if /modules\//;
 
-  return if $^O  =~ 'MSWin' and ! -e $File::Find::dir."\\windows.test";
+  return if $^O  =~ 'MSWin' and ! ( -e $File::Find::dir."\\windows.test" or $File::Find::dir =~/windows/ );
+  return if $^O  !~ 'MSWin' and $File::Find::dir =~/windows/;
 
   (my $dir = $File::Find::dir)=~s{examples/}{};
   

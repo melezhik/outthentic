@@ -27,6 +27,9 @@ my $args_file;
 
 our $cli_args;
 
+my $sparrow_root = safe_env($ENV{SPARROW_ROOT});
+
+
 BEGIN { 
   my $i=0;  
   for my $a (@ARGV) {
@@ -67,9 +70,9 @@ $nocolor ||= $ENV{SPARROW_NO_COLOR};
 my $cache_root_dir;
 
 if ( $^O  =~ 'MSWin' ) {
-	$cache_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}\\tmp\\".$$ : "$ENV{HOME}\\.outthentic\\tmp\\".$$;
+	$cache_root_dir = $sparrow_root ? "$sparrow_root\\tmp\\".$$ : "$ENV{HOME}\\.outthentic\\tmp\\".$$;
 } else {
-	$cache_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}/tmp/".$$ : "$ENV{HOME}/.outthentic/tmp/".$$;
+	$cache_root_dir = $sparrow_root ? "$sparrow_root/tmp/".$$ : "$ENV{HOME}/.outthentic/tmp/".$$;
 }
 
 remove_tree($cache_root_dir);
@@ -83,6 +86,11 @@ finddepth(\&wanted_downstreams, $project_root_dir."/modules" );
 
 finddepth(\&wanted_upstreams, $project_root_dir );
 
+sub safe_env {
+	my $v = shift;
+	$v=~s/\s//g if $^O  =~ 'MSWin'; 
+	$v;
+}
 
 sub wanted_upstreams {
     wanted($_,'upstream');

@@ -13,9 +13,11 @@ sub wanted  {
 
   return if /modules\//;
 
-  (my $dir = $File::Find::dir)=~s{examples/}{};
+  return if $^O  =~ 'MSWin' and ! -e $File::Find::dir."\\windows.test";
 
-  my $cmd = "cd examples && strun --purge-cache --story $dir --format production";
+  (my $dir = $File::Find::dir)=~s{examples/}{};
+  
+  my $cmd = $^O  =~ 'MSWin' ? "cd examples && strun --purge-cache --story $dir --nocolor --format default" : "cd examples && strun --purge-cache --story $dir --format production";
   (system($cmd) == 0)  or die "$cmd failed";
 
 }

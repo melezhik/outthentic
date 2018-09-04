@@ -64,7 +64,7 @@ GetOptions (
 
 $nocolor ||= $ENV{SPARROW_NO_COLOR};
 
-my $cache_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}/tmp/".$$ : "$ENV{HOME}/.outthentic/tmp/".$$;
+my $cache_root_dir = $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}\\tmp\\".$$ : "$ENV{HOME}\\.outthentic\\tmp\\".$$;
 
 remove_tree($cache_root_dir);
 make_path($cache_root_dir);
@@ -107,6 +107,8 @@ sub wanted {
         return if $seen{$File::Find::name};
 
         my $story_dir = $File::Find::dir;
+
+		$story_dir=~s/^.*?\\// if  $^O if $^O  =~ 'MSWin';	
 
         print "$story_dir added ok ...\n" if $debug_mod;
 
@@ -200,13 +202,15 @@ sub wanted {
 my $st;
 my $exit_code;
 
+$project_root_dir=~s/^.*?\\// if  $^O if $^O  =~ 'MSWin';	
+
 if ($story_path){
 
-    my $strun_cmd = "perl $cache_root_dir$project_root_dir/$story_path/sparrow.pl";
+    my $strun_cmd = "perl $cache_root_dir\\$project_root_dir\\$story_path\\sparrow.pl";
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }else{
-    my $strun_cmd = "perl $cache_root_dir$project_root_dir/sparrow.pl";
+    my $strun_cmd = "perl $cache_root_dir\\$project_root_dir\\sparrow.pl";
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }

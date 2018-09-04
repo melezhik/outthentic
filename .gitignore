@@ -14,3 +14,4 @@ examples/local/
 examples/cpanfile
 examples/cpanfile.snapshot
 
+/.vs

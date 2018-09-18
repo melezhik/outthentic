@@ -45,6 +45,7 @@ examples/between-stream/story.check
 examples/between-stream/story.pl
 examples/between/story.check
 examples/between/story.pl
+examples/between/windows.test
 examples/comments/story.bash
 examples/comments/story.check
 examples/common.bash
@@ -64,6 +65,7 @@ examples/generator-one-line/story.bash
 examples/generator-one-line/story.check
 examples/hello/story.check
 examples/hello/story.pl
+examples/hello/windows.test
 examples/hello/world/story.check
 examples/hello/world/story.pl
 examples/host-param/story.check
@@ -113,8 +115,10 @@ examples/perl-inline/story.check
 examples/perl-inline/story.pl
 examples/perl-pass-conf-to-scenario/story.check
 examples/perl-pass-conf-to-scenario/story.pl
+examples/perl-pass-conf-to-scenario/windows.test
 examples/perl-pass-story-vars-to-scenario/hook.pl
 examples/perl-pass-story-vars-to-scenario/story.check
+examples/perl-pass-story-vars-to-scenario/windows.test
 examples/plain-check-trailing-spaces/story.bash
 examples/plain-check-trailing-spaces/story.check
 examples/python/asserts/story.check
@@ -185,6 +189,9 @@ examples/text-blocks/story.check
 examples/text-blocks/story.pl
 examples/validators/captures/story.check
 examples/validators/captures/story.pl
+examples/windows/powershell/cmd.ps1
+examples/windows/powershell/story.check
+examples/windows/powershell/story.pl
 examples/within/story.check
 examples/within/story.pl
 external/story.bash

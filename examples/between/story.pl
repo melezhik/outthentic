@@ -1,6 +1,4 @@
 print "
-
-
 start 100 end
 
 start

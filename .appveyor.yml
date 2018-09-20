@@ -1,3 +1,6 @@
+environment:
+  PERL_USE_UNSAFE_INC: 1
+
 cache:
   - C:\strawberry
 

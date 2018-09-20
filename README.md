@@ -6,9 +6,11 @@ Outthentic - Multipurpose scenarios framework.
 
 Multipurpose scenarios framework.
 
-# Build status
+# Build statuses
 
 [![Build Status](https://travis-ci.org/melezhik/outthentic.svg)](https://travis-ci.org/melezhik/outthentic)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/pkn4rerw4g27mqfx?svg=true)](https://ci.appveyor.com/project/melezhik/outthentic)
 
 
 # Install

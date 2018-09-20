@@ -2,7 +2,7 @@ between: foo bar
 regexp: \d+
 code:                                   \
     for my $s (@{stream()}) {           \
-        print "# ";                     \
+        print ">>> ";                   \
         for my $i (@{$s}){              \
             print $i;                   \
         }                               \

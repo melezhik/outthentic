@@ -14,3 +14,4 @@ build_script:
 test_script:
   - gmake test
   - perl run-test.pl
+  - perl dsl-test.pl

@@ -10,4 +10,4 @@ perl:
   - "5.12"
   - "5.10"
 
-script: "cpanm --installdeps . && perl Makefile.PL && make test && make install && ./test.sh && ./dsl-test.sh"
+script: "cpanm --installdeps . && perl Makefile.PL && make test && make install && perl run-test.pl && perl dsl-test.pl"

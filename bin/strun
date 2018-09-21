@@ -125,15 +125,14 @@ sub wanted {
 
         my $story_local_dir;
 
-        if ($^O  =~ 'MSWin' ){
-          File::Spec->rel2abs($story_dir);
+        #if ($^O  =~ 'MSWin' ){
           my $l = length($project_root_dir);
           $story_local_dir = substr(File::Spec->rel2abs($story_dir),$l);
-        } else {
-          $story_local_dir  = $story_dir;
-        }
+        #} else {
+          #$story_local_dir  = $story_dir;
+        #}
 
-        print "$story_dir added ok ...\n" if $debug_mod;
+        print "$story_local_dir added ok ...\n" if $debug_mod;
 
         make_path("$cache_root_dir/$story_local_dir");
   
@@ -158,8 +157,8 @@ sub wanted {
         print F "set_prop( yaml_file_path   => q{$yaml_file_path} );\n"  if $yaml_file_path;
         print F "set_prop( json_file_path   => q{$json_file_path} );\n"  if $json_file_path;
     
-        print F "set_prop( story => q{$story_local_dir} );\n";
-        print F "set_prop( story_dir => q{$story_local_dir} );\n";
+        print F "set_prop( story => q{$project_root_dir/$story_local_dir} );\n";
+        print F "set_prop( story_dir => q{$project_root_dir/$story_local_dir} );\n";
         if (-e "$story_dir/story.check"){
           print F "set_prop( story_check_file => q{$story_dir/story.check} );\n";
         } else {
@@ -230,8 +229,8 @@ $project_root_dir=~s/^.*?\\// if  $^O  =~ 'MSWin';
 if ($story_path){
 
     my $strun_cmd = $^O  =~ 'MSWin' ? 
-      "perl $cache_root_dir\\$project_root_dir\\$story_path\\sparrow.pl" : 
-      "perl $cache_root_dir$project_root_dir/$story_path/sparrow.pl";
+      "perl $cache_root_dir\\$story_path\\sparrow.pl" : 
+      "perl $cache_root_dir/$story_path/sparrow.pl";
 
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
@@ -239,14 +238,14 @@ if ($story_path){
 }else{
 
     my $strun_cmd = $^O  =~ 'MSWin' ?  
-      "perl $cache_root_dir\\$project_root_dir\\sparrow.pl" :
-      "perl $cache_root_dir$project_root_dir/sparrow.pl";
+      "perl $cache_root_dir\\sparrow.pl" :
+      "perl $cache_root_dir/sparrow.pl";
 
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 }
 
-remove_tree($cache_root_dir) if $purge_cache;
+#remove_tree($cache_root_dir) if $purge_cache;
 
 unless ( $dump_config ) { # do not check story status in case we only dump config data
   #warn "state: $st";

@@ -70,7 +70,7 @@ $nocolor ||= $ENV{SPARROW_NO_COLOR};
 my $cache_root_dir;
 
 if ( $^O  =~ 'MSWin' ) {
-	$cache_root_dir = $sparrow_root ? "$sparrow_root\\tmp\\".$$ : $ENV{HOME}. '.outthentic\tmp\'.$$;
+	$cache_root_dir = $sparrow_root ? "$sparrow_root\\tmp\\".$$ : $ENV{HOME}.".outthentic\\tmp\\".$$;
 } else {
 	$cache_root_dir = $sparrow_root ? "$sparrow_root/tmp/".$$ : "$ENV{HOME}/.outthentic/tmp/".$$;
 }

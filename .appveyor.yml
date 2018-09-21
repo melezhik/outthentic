@@ -2,7 +2,6 @@ environment:
   PERL_USE_UNSAFE_INC: 1
   HOME: C:/Users/appveyor
   USER: appveyor
-  OUTTHENTIC_CWD: C:/Users/appveyor
 
 cache:
   - C:\strawberry
@@ -21,6 +20,4 @@ build_script:
 
 test_script:
   - gmake test
-  #- cd examples && strun --purge-cache --story hello --format default --nocolor --debug 1
   - perl run-test.pl
-  - perl dsl-test.pl

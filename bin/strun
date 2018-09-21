@@ -132,7 +132,7 @@ sub wanted {
 
         make_path("$cache_root_dir/$story_local_dir");
 
-        $project_root_dir=~s/\\/\//g if  $^O  =~ 'MSWin';	
+        #$project_root_dir=~s/\\/\//g if  $^O  =~ 'MSWin';	
   
         my $tfile = "$cache_root_dir/$story_local_dir/sparrow.pl";
 
@@ -227,18 +227,14 @@ my $exit_code;
 
 if ($story_path){
 
-    my $strun_cmd = $^O  =~ 'MSWin' ? 
-      "perl $cache_root_dir\\$story_path\\sparrow.pl" : 
-      "perl $cache_root_dir/$story_path/sparrow.pl";
+    my $strun_cmd = "perl $cache_root_dir/$story_path/sparrow.pl";
 
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;
 
 }else{
 
-    my $strun_cmd = $^O  =~ 'MSWin' ?  
-      "perl $cache_root_dir\\sparrow.pl" :
-      "perl $cache_root_dir/sparrow.pl";
+    my $strun_cmd = "perl $cache_root_dir/sparrow.pl";
 
     $st = (system($strun_cmd)==0);
     $exit_code = sprintf "%d", $? >> 8;

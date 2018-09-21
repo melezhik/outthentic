@@ -21,6 +21,6 @@ build_script:
 
 test_script:
   - gmake test
-  - cd examples && strun --purge-cache --story hello --format default --nocolor --debug 1
-  #- perl run-test.pl
+  #- cd examples && strun --purge-cache --story hello --format default --nocolor --debug 1
+  - perl run-test.pl
   - perl dsl-test.pl

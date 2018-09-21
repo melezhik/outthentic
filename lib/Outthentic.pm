@@ -342,11 +342,8 @@ sub run_story_file {
         } elsif(-f "$story_dir/story.bash") {
 
             my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');
-            $bash_lib_dir=~s/\\/\//g if $^O  =~ 'MSWin';
             $story_command = "bash -c 'source ".story_cache_dir()."/glue.bash";
-            #print "[[[ bash_lib_dir : $bash_lib_dir ]]] \n";
             $story_command.= " && source ".$bash_lib_dir."/outthentic.bash";
-            $story_dir=~s/\\/\//g if $^O  =~ 'MSWin';
             $story_command.= " && source $story_dir/story.bash'";
 
             print_story_header();

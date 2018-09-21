@@ -282,8 +282,6 @@ sub run_story {
 
     my $project_root_dir = get_prop('project_root_dir');
 
-	  $project_root_dir=~s/^.*?\\// if  $^O  =~ 'MSWin';	
-
     my $story_module = "$cache_root_dir/modules/$path/sparrow.pl";
 
     die "story module file $story_module does not exist" unless -e $story_module;
@@ -638,7 +636,6 @@ sub do_bash_hook {
     my $file = shift;
 
     my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');
-    $bash_lib_dir=~s/\\/\//g if $^O  =~ 'MSWin';
 
     my $cmd = "source "._bash_glue_file()." && source $bash_lib_dir/outthentic.bash";
 

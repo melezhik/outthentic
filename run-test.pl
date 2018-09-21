@@ -18,7 +18,7 @@ sub wanted  {
 
   (my $dir = $File::Find::dir)=~s{examples/}{};
   
-  my $cmd = $^O  =~ 'MSWin' ? "cd examples && strun --purge-cache --story $dir --nocolor --format default" : "cd examples && strun --purge-cache --story $dir --format default";
+  my $cmd = $^O  =~ 'MSWin' ? "cd examples && strun --purge-cache --story $dir --nocolor --format default --debug 1" : "cd examples && strun --purge-cache --story $dir --format default";
   (system($cmd) == 0)  or die "$cmd failed";
 
 }

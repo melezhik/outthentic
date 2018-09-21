@@ -357,6 +357,8 @@ sub run_story_file {
           return;
         }
 
+        print "run story: $story_command ...\n" if debug_mod12;
+
         my ($ex_code, $out) = execute_cmd2($story_command);
 
         print_story_messages($out) if $format eq 'production';

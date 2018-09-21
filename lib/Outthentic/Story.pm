@@ -282,7 +282,7 @@ sub run_story {
 
     my $project_root_dir = get_prop('project_root_dir');
 
-	$project_root_dir=~s/^.*?\\// if  $^O  =~ 'MSWin';	
+	  $project_root_dir=~s/^.*?\\// if  $^O  =~ 'MSWin';	
 
     my $story_module = "$cache_root_dir/$project_root_dir/modules/$path/sparrow.pl";
 

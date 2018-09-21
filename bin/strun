@@ -136,6 +136,7 @@ sub wanted {
   
         my $tfile = "$cache_root_dir/$story_local_dir/sparrow.pl";
 
+        print "generate story file: $tfile ... \n" if $debug_mod > 0;
         
         open F, ">", $tfile or die $!;
     

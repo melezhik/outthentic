@@ -638,6 +638,7 @@ sub do_bash_hook {
     my $file = shift;
 
     my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');
+    $bash_lib_dir=~s/\\/\//g if $^O  =~ 'MSWin';
 
     my $cmd = "source "._bash_glue_file()." && source $bash_lib_dir/outthentic.bash";
 

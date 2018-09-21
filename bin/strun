@@ -123,6 +123,7 @@ sub wanted {
         my $story_dir = $File::Find::dir;
 
 		    $story_dir=~s/^.*?\\// if $^O  =~ 'MSWin';	
+        $story_dir=~s/\\/\//g if $^O  =~ 'MSWin';	
 
         print "$story_dir added ok ...\n" if $debug_mod;
 

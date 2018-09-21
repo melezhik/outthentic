@@ -125,12 +125,8 @@ sub wanted {
 
         my $story_local_dir;
 
-        #if ($^O  =~ 'MSWin' ){
-          my $l = length($project_root_dir);
-          $story_local_dir = substr(File::Spec->rel2abs($story_dir),$l);
-        #} else {
-          #$story_local_dir  = $story_dir;
-        #}
+        my $l = length($project_root_dir);
+        $story_local_dir = substr(File::Spec->rel2abs($story_dir),$l);
 
         print "$story_local_dir added ok ...\n" if $debug_mod;
 

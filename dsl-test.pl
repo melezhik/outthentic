@@ -15,7 +15,7 @@ sub wanted  {
 
   (my $dir = $File::Find::dir)=~s{dsl-test/}{};
 
-  my $cmd = "strun --purge-cache --root ./dsl-test --story $dir --format default --debug 1 --cwd C:/Users/appveyor/tmp";
+  my $cmd = "strun --purge-cache --root ./dsl-test --story $dir --format default --debug 1";
   (system($cmd) == 0)  or die "$cmd failed";
 
 }

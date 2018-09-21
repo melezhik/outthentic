@@ -329,7 +329,7 @@ sub run_story_file {
               $story_command = "ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $story_file";
             }
 
-          print_story_header();
+            print_story_header();
 
         }elsif(-f "$story_dir/story.py") {
 
@@ -343,7 +343,8 @@ sub run_story_file {
 
             my $bash_lib_dir = File::ShareDir::dist_dir('Outthentic');
             $story_command = "bash -c 'source ".story_cache_dir()."/glue.bash";
-            $story_command.= " && source $bash_lib_dir/outthentic.bash";
+            print "[[[ bash_lib_dir : $bash_lib_dir ]]] \n";
+            $story_command.= " && source ".$bash_lib_dir."/outthentic.bash";
             $story_command.= " && source $story_dir/story.bash'";
 
             print_story_header();

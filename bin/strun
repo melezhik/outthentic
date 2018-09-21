@@ -131,9 +131,12 @@ sub wanted {
         print "$story_local_dir added ok ...\n" if $debug_mod;
 
         make_path("$cache_root_dir/$story_local_dir");
+
+        $project_root_dir=~s/\\/\//g if  $^O  =~ 'MSWin';	
   
         my $tfile = "$cache_root_dir/$story_local_dir/sparrow.pl";
 
+        
         open F, ">", $tfile or die $!;
     
         print F "package main;\n\n";
@@ -220,7 +223,6 @@ sub wanted {
 my $st;
 my $exit_code;
 
-$project_root_dir=~s/^.*?\\// if  $^O  =~ 'MSWin';	
 
 if ($story_path){
 
@@ -241,11 +243,10 @@ if ($story_path){
     $exit_code = sprintf "%d", $? >> 8;
 }
 
-#remove_tree($cache_root_dir) if $purge_cache;
+remove_tree($cache_root_dir) if $purge_cache;
 
 unless ( $dump_config ) { # do not check story status in case we only dump config data
-  #warn "state: $st";
-  #warn "exit code: $exit_code";
+
   if ($st) {
     print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n")
       unless $format eq 'concise' or $format eq 'production';

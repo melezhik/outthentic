@@ -1,6 +1,8 @@
 environment:
   PERL_USE_UNSAFE_INC: 1
-  HOME: C:\
+  HOME: C:\Users\appveyor
+  USER: appveyor
+
 cache:
   - C:\strawberry
 

@@ -346,6 +346,7 @@ sub run_story_file {
             $story_command = "bash -c 'source ".story_cache_dir()."/glue.bash";
             #print "[[[ bash_lib_dir : $bash_lib_dir ]]] \n";
             $story_command.= " && source ".$bash_lib_dir."/outthentic.bash";
+            $story_dir=~s/\\/\//g if $^O  =~ 'MSWin';
             $story_command.= " && source $story_dir/story.bash'";
 
             print_story_header();

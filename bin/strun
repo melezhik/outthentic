@@ -122,8 +122,8 @@ sub wanted {
 
         my $story_dir = $File::Find::dir;
 
-		    $story_dir=~s/^.*?\\// if $^O  =~ 'MSWin';	
-        $story_dir=~s/\\/\//g if $^O  =~ 'MSWin';	
+		    #$story_dir=~s/^.*?\\// if $^O  =~ 'MSWin';	
+        #$story_dir=~s/\\/\//g if $^O  =~ 'MSWin';	
 
         print "$story_dir added ok ...\n" if $debug_mod;
 
@@ -145,15 +145,15 @@ sub wanted {
     
         print F "set_prop( cwd => q{$cwd} );\n";
         print F "set_prop( project_root_dir => q{$project_root_dir} );\n";
-        print F "set_prop( cache_root_dir    => q{$cache_root_dir} );\n";
+        print F "set_prop( cache_root_dir   => q{$cache_root_dir} );\n";
         print F "set_prop( ini_file_path    => q{$ini_file_path} );\n"    if $ini_file_path;
         print F "set_prop( yaml_file_path   => q{$yaml_file_path} );\n"  if $yaml_file_path;
         print F "set_prop( json_file_path   => q{$json_file_path} );\n"  if $json_file_path;
     
-        print F "set_prop( story => q{$File::Find::dir} );\n";
-        print F "set_prop( story_dir => '$story_dir' );\n";
+        print F "set_prop( story => q{$story_dir} );\n";
+        print F "set_prop( story_dir => q{$story_dir} );\n";
         if (-e "$File::Find::dir/story.check"){
-          print F "set_prop( story_check_file => q{$File::Find::dir/story.check} );\n";
+          print F "set_prop( story_check_file => q{$story_dir/story.check} );\n";
         } else {
           print F "set_prop( story_check_file => '' );\n";
         }
@@ -185,19 +185,19 @@ sub wanted {
         }
 
         if ( -e "$File::Find::dir/story.pm" ){
-            print F "eval { do_perl_hook('$File::Find::dir/story.pm') }; our \$STATUS=0, die \"perl hook error: \$@\" if \$@ ;\n\n";
+            print F "eval { do_perl_hook('$story_dir/story.pm') }; our \$STATUS=0, die \"perl hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.pl" ){
-            print F "eval { do_perl_hook('$File::Find::dir/hook.pl') };  our \$STATUS=0, die \"perl hook error: \$@\" if \$@ ;\n\n";
+            print F "eval { do_perl_hook('$story_dir/hook.pl') };  our \$STATUS=0, die \"perl hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.rb" ){
-            print F "eval { do_ruby_hook('$File::Find::dir/hook.rb') };  our \$STATUS=0, die \"ruby hook error: \$@\" if \$@ ;\n\n";
+            print F "eval { do_ruby_hook('$story_dir/hook.rb') };  our \$STATUS=0, die \"ruby hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.py" ){
-            print F "eval { do_python_hook('$File::Find::dir/hook.py') };  our \$STATUS=0, die \"python hook error: \$@\" if \$@ ;\n\n";
+            print F "eval { do_python_hook('$story_dir/hook.py') };  our \$STATUS=0, die \"python hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$File::Find::dir/hook.bash" ){
-            print F "eval { do_bash_hook('$File::Find::dir/hook.bash') }; our \$STATUS=0, die \"bash hook error: \$@\" if \$@ ;\n\n";
+            print F "eval { do_bash_hook('$story_dir/hook.bash') }; our \$STATUS=0, die \"bash hook error: \$@\" if \$@ ;\n\n";
         }
 
         if (-e "$File::Find::dir/story.check"){
-          print F "eval { run_and_check(q{$File::Find::dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
+          print F "eval { run_and_check(q{$story_dir/story.check}) }; die \"asserts error: \$@\" if \$@ ;\n\n";
         } else {
           print F "eval { run_and_check() }; die \"asserts error: \$@\" if \$@ ;\n\n";
         }

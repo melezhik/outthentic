@@ -9,9 +9,6 @@ find( { wanted => \&wanted, no_chdir => 1 } , $ARGV[0]||'examples/');
 
 sub wanted  {
 
-  print $File::Find::dir, "\n";
-  return;
-
   return unless /story\.(pl|rb|bash|py)$/ or /meta\.txt$/;
 
   return if /modules\//;

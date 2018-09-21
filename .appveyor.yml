@@ -2,7 +2,7 @@ environment:
   PERL_USE_UNSAFE_INC: 1
   HOME: C:/Users/appveyor
   USER: appveyor
-  OUTTHENTIC_ROOT: C:/Users/appveyor
+  OUTTHENTIC_CWD: C:/Users/appveyor
 
 cache:
   - C:\strawberry

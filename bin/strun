@@ -24,7 +24,7 @@ my $yaml_file_path;
 my $json_file_path;
 my @runtime_params;
 my $args_file;
-my $recourse_mod = 0;
+my $recurse_mod = 0;
 my @stories;
 
 our $cli_args;
@@ -62,7 +62,7 @@ GetOptions (
         "param=s"         => \@runtime_params,    # string
         "args-file=s"     => \$args_file,         # string
         "dump-config"     => \$dump_config,       # boolean
-        "recourse-mode"   => \$recourse_mod,      # boolean
+        "recurse"         => \$recurse_mod,      # boolean
 
 
 ) or die("Error in command line arguments\n");
@@ -217,7 +217,7 @@ sub wanted {
 
         close F;
 
-        if ($recourse_mod and $story_type eq 'upstream'){
+        if ($recurse_mod and $story_type eq 'upstream'){
           push @stories , {
             story_dir => $story_local_dir
           }
@@ -241,7 +241,7 @@ if ($story_path){
 
     $exit_code = sprintf "%d", $? >> 8;
 
-}elsif ($recourse_mod) {
+}elsif ($recurse_mod) {
     $st = 1;
     for my $s ( sort { $a->{story_dir} <=> $b->{story_dir} } @stories) {
           my $strun_cmd = "perl $cache_root_dir/$s->{story_dir}/sparrow.pl";
@@ -279,7 +279,7 @@ unless ( $dump_config ) { # do not check story status in case we only dump confi
   }else{
     unless ($format eq 'concise'){
         print $nocolor ? "STATUS\tFAILED ($exit_code)\n" :  colored(["red"],"STATUS\tFAILED ($exit_code)\n");
-        if ($recourse_mod){
+        if ($recurse_mod){
           my $sf = join ",", map {$_->{story_dir}} grep { ! $_->{st}} @stories;
           print $nocolor ? "stories failed:\t$sf\n" :  colored(["red"],"stories failed:\t$sf\n");
         }

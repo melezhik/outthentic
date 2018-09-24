@@ -230,6 +230,7 @@ if ($story_path){
     my $strun_cmd = "perl $cache_root_dir/$story_path/sparrow.pl";
 
     $st = (system($strun_cmd)==0);
+
     $exit_code = sprintf "%d", $? >> 8;
 
 }else{
@@ -237,10 +238,11 @@ if ($story_path){
     my $strun_cmd = "perl $cache_root_dir/sparrow.pl";
 
     $st = (system($strun_cmd)==0);
+
     $exit_code = sprintf "%d", $? >> 8;
 }
 
-remove_tree($cache_root_dir) if $purge_cache;
+remove_tree($cache_root_dir) if $purge_cache and $st;
 
 unless ( $dump_config ) { # do not check story status in case we only dump config data
 

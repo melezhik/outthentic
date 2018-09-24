@@ -519,7 +519,7 @@ Here is the list of function one can use _inside hooks_:
 
 * `cache_dir()` - storie's cache directory ( containing story's compiled files )
 
-* `story_dir()` - the directory containing story data.
+* `story_dir()` - relate path to the directory containing story data, so the full path to the story is `project_root_dir()/story_dir()`
 
 * `config()` - returns suite configuration hash object. See also [suite configuration](#suite-configuration).
 

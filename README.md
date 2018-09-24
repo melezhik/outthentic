@@ -723,7 +723,7 @@ Examples:
 
 * `--recourse` 
 
-Runs all the stories found recoursivly
+Runs all the stories recoursevly.
 
 * `--ini`  
 

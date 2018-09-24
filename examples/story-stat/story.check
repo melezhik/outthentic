@@ -2,4 +2,4 @@ story status: 1
 story path: 01
 story vars: hello world
 check0 status: 1
-check0 message: output match 'foo: hello world'
+check0 message: text has 'foo: hello world'

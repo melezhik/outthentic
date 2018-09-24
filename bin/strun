@@ -24,6 +24,8 @@ my $yaml_file_path;
 my $json_file_path;
 my @runtime_params;
 my $args_file;
+my $recourse_mod = 0;
+my @stories;
 
 our $cli_args;
 
@@ -45,21 +47,22 @@ BEGIN {
 
 GetOptions (
 
-        "cwd=s"         => \$cwd,               # string
-        "format=s"      => \$format,            # string
-        "purge-cache"   => \$purge_cache,       # boolean
-        "nocolor"       => \$nocolor,           # boolean
-        "debug=i"       => \$debug_mod,         # numeric
-        "match_l=i"     => \$match_l,           # numeric
-        "root=s"        => \$project_root_dir,  # string
-        "story=s"       => \$story_path,        # string
-        "task=s"        => \$task_name,         # string
-        "ini=s"         => \$ini_file_path,     # string
-        "yaml=s"        => \$yaml_file_path,    # string
-        "json=s"        => \$json_file_path,    # string
-        "param=s"       => \@runtime_params,    # string
-        "args-file=s"   => \$args_file,         # string
-        "dump-config"   => \$dump_config,       # boolean
+        "cwd=s"           => \$cwd,               # string
+        "format=s"        => \$format,            # string
+        "purge-cache"     => \$purge_cache,       # boolean
+        "nocolor"         => \$nocolor,           # boolean
+        "debug=i"         => \$debug_mod,         # numeric
+        "match_l=i"       => \$match_l,           # numeric
+        "root=s"          => \$project_root_dir,  # string
+        "story=s"         => \$story_path,        # string
+        "task=s"          => \$task_name,         # string
+        "ini=s"           => \$ini_file_path,     # string
+        "yaml=s"          => \$yaml_file_path,    # string
+        "json=s"          => \$json_file_path,    # string
+        "param=s"         => \@runtime_params,    # string
+        "args-file=s"     => \$args_file,         # string
+        "dump-config"     => \$dump_config,       # boolean
+        "recourse-mode"   => \$recourse_mod,      # boolean
 
 
 ) or die("Error in command line arguments\n");
@@ -126,14 +129,13 @@ sub wanted {
         my $story_local_dir;
 
         my $l = length($project_root_dir);
+
         $story_local_dir = substr(File::Spec->rel2abs($story_dir),$l);
 
         print "$story_local_dir added ok ...\n" if $debug_mod;
 
         make_path("$cache_root_dir/$story_local_dir");
 
-        #$project_root_dir=~s/\\/\//g if  $^O  =~ 'MSWin';	
-  
         my $tfile = "$cache_root_dir/$story_local_dir/sparrow.pl";
 
         print "generate story file: $tfile ... \n" if $debug_mod > 0;
@@ -215,6 +217,12 @@ sub wanted {
 
         close F;
 
+        if ($recourse_mod and $story_type eq 'upstream'){
+          push @stories , {
+            story_dir => $story_local_dir
+          }
+        }
+
         $seen{$File::Find::name}=1;
 
    }
@@ -222,8 +230,8 @@ sub wanted {
 }
 
 my $st;
-my $exit_code;
 
+my $exit_code;
 
 if ($story_path){
 
@@ -233,7 +241,26 @@ if ($story_path){
 
     $exit_code = sprintf "%d", $? >> 8;
 
-}else{
+}elsif ($recourse_mod) {
+    $st = 1;
+    for my $s ( sort { $a->{story_dir} <=> $b->{story_dir} } @stories) {
+          my $strun_cmd = "perl $cache_root_dir/$s->{story_dir}/sparrow.pl";
+          my $st_i = (system($strun_cmd)==0);
+          my $exit_code_i = sprintf "%d", $? >> 8;
+          $s->{st} = $st_i;
+          $s->{exit_code} = $exit_code_i;
+          $st = 0 unless $st_i;
+          $exit_code = 254;
+          if ($st_i) {
+            print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n")
+              unless $format eq 'concise' or $format eq 'production';
+          }else{
+            print $nocolor ? "STATUS\tFAILED ($exit_code)\n" :  colored(["red"],"STATUS\tFAILED ($exit_code_i)\n")
+              unless $format eq 'concise';
+          }
+    }
+    
+} else {
 
     my $strun_cmd = "perl $cache_root_dir/sparrow.pl";
 
@@ -245,14 +272,19 @@ if ($story_path){
 remove_tree($cache_root_dir) if $purge_cache and $st;
 
 unless ( $dump_config ) { # do not check story status in case we only dump config data
-
   if ($st) {
-    print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n")
-      unless $format eq 'concise' or $format eq 'production';
+    unless ($format eq 'concise' or $format eq 'production'){
+      print $nocolor ? "STATUS\tSUCCEED\n" : colored(["green"],"STATUS\tSUCCEED\n");
+    }
   }else{
-    print $nocolor ? "STATUS\tFAILED ($exit_code)\n" :  colored(["red"],"STATUS\tFAILED ($exit_code)\n")
-      unless $format eq 'concise';
+    unless ($format eq 'concise'){
+        print $nocolor ? "STATUS\tFAILED ($exit_code)\n" :  colored(["red"],"STATUS\tFAILED ($exit_code)\n");
+        if ($recourse_mod){
+          my $sf = join ",", map {$_->{story_dir}} grep { ! $_->{st}} @stories;
+          print $nocolor ? "stories failed:\t$sf\n" :  colored(["red"],"stories failed:\t$sf\n");
+        }
+    }
     exit($exit_code);
   }
-  
 }
+

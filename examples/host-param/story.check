@@ -1,2 +1,2 @@
 regexp: host:(.*)
-code: [diag(capture()->[0])]
+code: [print(capture()->[0])]

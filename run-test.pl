@@ -5,21 +5,24 @@ use Cwd;
 
 my $root = getcwd();
 
-find( { wanted => \&wanted, no_chdir => 1 } , $ARGV[0]||'examples/');
+if ($^O  =~ 'MSWin'){
+  find( { wanted => \&wanted, no_chdir => 1 } , 'examples/');
+} else {
+  my $cmd = "cd examples && strun --recourse --purge-cache  --format production";
+  (system($cmd) == 0)  or die "$cmd failed";
+}
 
 sub wanted  {
 
-  return unless /story\.(pl|rb|bash|py)$/ or /meta\.txt$/;
+  return unless /story\.(pl|rb|bash|py|pm)$/ or /meta\.txt$/;
 
   return if /modules\//;
 
-  return if $^O  =~ 'MSWin' and ! ( -e $File::Find::dir."\\windows.test" or $File::Find::dir =~/windows/ );
-
-  return if $^O  !~ 'MSWin' and $File::Find::dir =~/windows/;
+  return unless ( -e $File::Find::dir."\\windows.test" or $File::Find::dir =~/windows/ );
 
   (my $dir = $File::Find::dir)=~s{examples/}{};
   
-  my $cmd = "cd examples && strun --purge-cache --story $dir --format default";
+  my $cmd = "cd examples && strun --purge-cache --story $dir --format production";
 
   (system($cmd) == 0)  or die "$cmd failed";
 

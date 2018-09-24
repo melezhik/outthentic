@@ -1,2 +1,2 @@
-run_story 'echo-vars', { 'foo' => 'FOO_value' , 'bar' => 'BAR_value' }
-set_stdout 'done'
+run_story 'echo-vars-ruby', { 'foo' => 'FOO_value' , 'bar' => 'BAR_value' }
+set_stdout "done\n"

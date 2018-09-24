@@ -721,6 +721,9 @@ Examples:
     --story foo/story # runs foo/story.pl
     --story foo/bar/ # runs foo/bar/ stories
 
+* `--recourse` 
+
+Runs all the stories found recoursivly
 
 * `--ini`  
 

@@ -14,6 +14,10 @@ function ignore_story_err {
   echo ignore_story_err: $1
 }
 
+function outthentic_exit {
+  echo outthentic_exit: $1
+}
+
 function run_story {
 
   story_to_run=$1

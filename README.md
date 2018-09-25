@@ -590,6 +590,40 @@ Examples:
     $ nano hook.bash
       ignore_story_err 1
 
+# Immediate exit
+
+
+You can cause strun exit immediate using `outthentic_exit()` function.
+
+Examples:
+
+
+    # Python
+
+    $ nano hook.py
+      from outthentic import *
+      outthentic_exit("this script is temporaru disabled")
+
+
+    # Ruby
+
+    $ nano hook.rb
+      if os != "windows"
+        outthentic_exit("windows system is not supported")
+      end
+
+    # Perl
+
+    $ nano hook.pl
+      unless (os() eq "ubuntu"){
+        outthentic_exit("runs on ubuntu system only")
+      }
+
+    # Bash
+
+    $ nano hook.bash
+      which /bin/curl || outthentic_exit "curl not found, skip"
+
 # Story libraries
 
 Story libraries are files to make your libraries' code _automatically required_ into the story scenarios, hooks and check files context:

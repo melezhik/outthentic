@@ -35,6 +35,8 @@ our @EXPORT = qw{
 
     ignore_story_err
 
+    outthentic_exit
+
     project_root_dir
 
     test_root_dir
@@ -319,6 +321,13 @@ sub do_perl_hook {
     return 1;
 }
 
+sub outthentic_exit {
+  my $msg = shift;
+  chomp($msg);
+  main::print_story_header();
+  main::note("! forcefully exit: $msg"); 
+  exit(0);
+}
 
 sub _mk_perl_glue_file {
 
@@ -545,6 +554,8 @@ sub do_ruby_hook {
 
       next if $l=~/#/;
 
+      outthentic_exit($1) if $l=~/outthentic_exit:(\d+)/;
+
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       
       if ($l=~s/story_var_json_begin.*// .. $l=~s/story_var_json_end.*//){
@@ -604,6 +615,8 @@ sub do_python_hook {
     for my $l (@out) {
 
       next if $l=~/#/;
+
+      outthentic_exit($1) if $l=~/outthentic_exit:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       
@@ -669,6 +682,8 @@ sub do_bash_hook {
     for my $l (@out) {
 
       next if $l=~/#/;
+      
+      outthentic_exit($1) if $l=~/outthentic_exit:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       

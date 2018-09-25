@@ -592,8 +592,7 @@ Examples:
 
 # Immediate exit
 
-
-You can cause strun exit immediate using `outthentic_exit()` function.
+You can cause strun exits immediate with code 0, using `outthentic_exit()` function.
 
 Examples:
 
@@ -602,7 +601,7 @@ Examples:
 
     $ nano hook.py
       from outthentic import *
-      outthentic_exit("this script is temporaru disabled")
+      outthentic_exit("this script is temporarily disabled")
 
 
     # Ruby

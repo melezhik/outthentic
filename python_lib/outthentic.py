@@ -40,6 +40,9 @@ def ignore_story_err(val):
 def outthentic_exit(msg):
   print "outthentic_exit: " + str(msg)
 
+def outthentic_die(msg):
+  print "outthentic_die: " + str(msg)
+
 
 def story_variables():
 

@@ -43,6 +43,10 @@ def outthentic_exit msg
   puts "outthentic_exit: #{msg}"
 end
 
+def outthentic_die msg
+  puts "outthentic_die: #{msg}"
+end
+
 def captures
    @captures ||= JSON.parse(File.read("#{cache_dir}/captures.json"))  
 end

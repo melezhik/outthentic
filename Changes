@@ -4,6 +4,7 @@
 - Windows support
 - Recourse mode support (strun)
 - Outthentic_exit function to allow immediate exit through hook
+- Outthentic_die function to allow immediate die through hook
 
 0.3.17 2017-08-14
 

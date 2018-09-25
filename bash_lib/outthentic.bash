@@ -18,6 +18,10 @@ function outthentic_exit {
   echo outthentic_exit: $1
 }
 
+function outthentic_die {
+  echo outthentic_die: $1
+}
+
 function run_story {
 
   story_to_run=$1

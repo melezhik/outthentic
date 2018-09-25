@@ -523,7 +523,7 @@ Here is the list of function one can use _inside hooks_:
 
 * `config()` - returns suite configuration hash object. See also [suite configuration](#suite-configuration).
 
-* os() - return a mnemonic ID of operation system where story is executed.
+* `os()` - return a mnemonic ID of operation system where story is executed.
 
 
 (*) You need to `from outthentic import *` in Python to import os() function.
@@ -590,7 +590,7 @@ Examples:
     $ nano hook.bash
       ignore_story_err 1
 
-# Immediate exit
+# Immediate exit/die
 
 You can cause strun exits immediate with code 0, using `outthentic_exit()` function.
 
@@ -622,6 +622,15 @@ Examples:
 
     $ nano hook.bash
       which /bin/curl || outthentic_exit "curl not found, skip"
+
+Alternately you can ask strun to abort straight away ( with none zero exit code ), using `outthentic_die()` function.
+
+Examples:
+
+    $ nano hook.bash
+    if [ "$EUID" -ne 0 ]
+      then outthentic_die "Please run as root"
+    fi
 
 # Story libraries
 

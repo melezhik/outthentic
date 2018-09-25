@@ -37,6 +37,8 @@ our @EXPORT = qw{
 
     outthentic_exit
 
+    outthentic_die
+
     project_root_dir
 
     test_root_dir
@@ -325,8 +327,17 @@ sub outthentic_exit {
   my $msg = shift;
   chomp($msg);
   main::print_story_header();
-  main::note("! forcefully exit: $msg"); 
+  main::note("? forcefully exit: $msg"); 
   exit(0);
+}
+
+sub outthentic_die {
+  my $msg = shift;
+  chomp($msg);
+  main::print_story_header();
+  main::note("!! forcefully die: $msg");
+  $main::STATUS = 0;
+  exit(1);
 }
 
 sub _mk_perl_glue_file {
@@ -554,7 +565,8 @@ sub do_ruby_hook {
 
       next if $l=~/#/;
 
-      outthentic_exit($1) if $l=~/outthentic_exit:(\d+)/;
+      outthentic_exit($1) if $l=~/outthentic_exit:(.*)/;
+      outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       
@@ -617,6 +629,7 @@ sub do_python_hook {
       next if $l=~/#/;
 
       outthentic_exit($1) if $l=~/outthentic_exit:(.*)/;
+      outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       
@@ -684,6 +697,7 @@ sub do_bash_hook {
       next if $l=~/#/;
       
       outthentic_exit($1) if $l=~/outthentic_exit:(.*)/;
+      outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       

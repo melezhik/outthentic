@@ -41,10 +41,12 @@ end
 
 def outthentic_exit msg
   puts "outthentic_exit: #{msg}"
+  exit
 end
 
 def outthentic_die msg
   puts "outthentic_die: #{msg}"
+  exit
 end
 
 def captures

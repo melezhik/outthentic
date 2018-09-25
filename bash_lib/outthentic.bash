@@ -16,10 +16,12 @@ function ignore_story_err {
 
 function outthentic_exit {
   echo outthentic_exit: $1
+  exit;
 }
 
 function outthentic_die {
   echo outthentic_die: $1
+  exit;
 }
 
 function run_story {

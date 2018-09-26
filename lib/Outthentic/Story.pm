@@ -35,7 +35,7 @@ our @EXPORT = qw{
 
     ignore_story_err
 
-    outthentic_exit
+    quit
 
     outthentic_die
 
@@ -323,7 +323,7 @@ sub do_perl_hook {
     return 1;
 }
 
-sub outthentic_exit {
+sub quit {
   my $msg = shift;
   chomp($msg);
   main::print_story_header();
@@ -565,7 +565,7 @@ sub do_ruby_hook {
 
       next if $l=~/#/;
 
-      outthentic_exit($1) if $l=~/outthentic_exit:(.*)/;
+      quit($1) if $l=~/quit:(.*)/;
       outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
@@ -628,7 +628,7 @@ sub do_python_hook {
 
       next if $l=~/#/;
 
-      outthentic_exit($1) if $l=~/outthentic_exit:(.*)/;
+      quit($1) if $l=~/quit:(.*)/;
       outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
@@ -696,7 +696,7 @@ sub do_bash_hook {
 
       next if $l=~/#/;
       
-      outthentic_exit($1) if $l=~/outthentic_exit:(.*)/;
+      quit($1) if $l=~/quit:(.*)/;
       outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;

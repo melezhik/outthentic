@@ -1,3 +1,3 @@
 #!perl
 
-outthentic_exit("windows not supported") unless os() eq "windows";
+quit("windows not supported") unless os() eq "windows";

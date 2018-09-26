@@ -592,7 +592,7 @@ Examples:
 
 # Immediate exit/die
 
-You can cause strun exits immediate with code 0, using `outthentic_exit()` function.
+You can cause strun exits immediate with code 0, using `quit()` function.
 
 Examples:
 
@@ -601,27 +601,27 @@ Examples:
 
     $ nano hook.py
       from outthentic import *
-      outthentic_exit("this script is temporarily disabled")
+      quit("this script is temporarily disabled")
 
 
     # Ruby
 
     $ nano hook.rb
       if os != "windows"
-        outthentic_exit("windows system is not supported")
+        quit("windows system is not supported")
       end
 
     # Perl
 
     $ nano hook.pl
       unless (os() eq "ubuntu"){
-        outthentic_exit("runs on ubuntu system only")
+        quit("runs on ubuntu system only")
       }
 
     # Bash
 
     $ nano hook.bash
-      which /bin/curl || outthentic_exit "curl not found, skip"
+      which /bin/curl || quit "curl not found, skip"
 
 Alternately you can ask strun to abort straight away ( with none zero exit code ), using `outthentic_die()` function.
 

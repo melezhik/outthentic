@@ -39,8 +39,8 @@ def ignore_story_err val
   puts "ignore_story_err: #{val}"
 end
 
-def outthentic_exit msg
-  puts "outthentic_exit: #{msg}"
+def quit msg
+  puts "quit: #{msg}"
   exit
 end
 

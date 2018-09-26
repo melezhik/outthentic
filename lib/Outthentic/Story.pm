@@ -1,4 +1,3 @@
-
 package Outthentic::Story;
 
 use strict;
@@ -286,7 +285,7 @@ sub run_story {
 
     my $project_root_dir = get_prop('project_root_dir');
 
-    my $story_module = "$cache_root_dir/modules/$path/sparrow.pl";
+    my $story_module = "$cache_root_dir/modules/$path/story.outth";
 
     die "story module file $story_module does not exist" unless -e $story_module;
 

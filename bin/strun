@@ -136,7 +136,7 @@ sub wanted {
 
         make_path("$cache_root_dir/$story_local_dir");
 
-        my $tfile = "$cache_root_dir/$story_local_dir/sparrow.pl";
+        my $tfile = "$cache_root_dir/$story_local_dir/story.outth";
 
         print "generate story file: $tfile ... \n" if $debug_mod > 0;
         
@@ -235,7 +235,7 @@ my $exit_code;
 
 if ($story_path){
 
-    my $strun_cmd = "perl $cache_root_dir/$story_path/sparrow.pl";
+    my $strun_cmd = "perl $cache_root_dir/$story_path/story.outth";
 
     $st = (system($strun_cmd)==0);
 
@@ -244,7 +244,7 @@ if ($story_path){
 }elsif ($recurse_mod) {
     $st = 1;
     for my $s ( sort { $a->{story_dir} <=> $b->{story_dir} } @stories) {
-          my $strun_cmd = "perl $cache_root_dir/$s->{story_dir}/sparrow.pl";
+          my $strun_cmd = "perl $cache_root_dir/$s->{story_dir}/story.outth";
           my $st_i = (system($strun_cmd)==0);
           my $exit_code_i = sprintf "%d", $? >> 8;
           $s->{st} = $st_i;
@@ -262,7 +262,7 @@ if ($story_path){
     
 } else {
 
-    my $strun_cmd = "perl $cache_root_dir/sparrow.pl";
+    my $strun_cmd = "perl $cache_root_dir/story.outth";
 
     $st = (system($strun_cmd)==0);
 

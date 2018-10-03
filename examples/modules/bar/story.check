@@ -1,7 +1,7 @@
 bar done
 hello bar!
 
-code: <<<CODE
+code: <<CODE
 our @foo;
 $foo[1]="12345678";
 CODE

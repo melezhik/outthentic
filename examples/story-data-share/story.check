@@ -1,6 +1,6 @@
 OK
 
-generator: our @foo; [ "assert: ".($foo[1] eq  'foo was here'). ' foo was here'];
+generator: our @foo; [ "assert: ".($foo[1] eq  '12345678' ). ' foo was here'];
 generator: our @foo; [ "assert: ".($foo[2] eq  'bar was here'). ' bar was here'];
 
 

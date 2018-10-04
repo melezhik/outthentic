@@ -3,5 +3,5 @@ hello bar!
 
 code: <<CODE
 our @foo;
-$foo[1]="foo was here";
+$foo[2]="bar was here";
 CODE

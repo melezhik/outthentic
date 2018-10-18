@@ -1,11 +1,12 @@
+.appveyor.yml
 .travis.yml
 bash_lib/outthentic.bash
 bin/strun
 Changes
 check-files-syntax.md
-dsl-test.sh
-dsl-test/comments/story.bash
+dsl-test.pl
 dsl-test/comments/story.check
+dsl-test/comments/story.pl
 dsl-test/multiline-expressions/back-slash/story.bash
 dsl-test/multiline-expressions/back-slash/story.check
 dsl-test/one-liners/story.bash
@@ -46,8 +47,9 @@ examples/between-stream/story.pl
 examples/between/story.check
 examples/between/story.pl
 examples/between/windows.test
-examples/comments/story.bash
 examples/comments/story.check
+examples/comments/story.pl
+examples/comments/windows.test
 examples/common.bash
 examples/common.rb
 examples/config-general-interpolate-env/story.bash
@@ -68,8 +70,8 @@ examples/hello/story.pl
 examples/hello/windows.test
 examples/hello/world/story.check
 examples/hello/world/story.pl
+examples/host-param/hook.pl
 examples/host-param/story.check
-examples/host-param/story.pm
 examples/ignore-story-err/story.check
 examples/ignore-story-err/story.pl
 examples/ignore-story-err/story.pm
@@ -190,6 +192,7 @@ examples/text-blocks/story.pl
 examples/validators/captures/story.check
 examples/validators/captures/story.pl
 examples/windows/powershell/cmd.ps1
+examples/windows/powershell/hook.pl
 examples/windows/powershell/story.check
 examples/windows/powershell/story.pl
 examples/within/story.check
@@ -251,7 +254,7 @@ META.yml
 python_lib/outthentic.py
 README.md
 ruby_lib/outthentic.rb
+run-test.pl
 t/outthentic.t
-test.sh
+utils/install.pl6
 utils/make-dist.pl6
-utils/make.pl6

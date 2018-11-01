@@ -1,5 +1,6 @@
 0.4.1
 
+- Restore pod doc
 - Fix for "Can't build after perl version 5.26 or higher" - #11
 
 0.4.0 2018-10-18

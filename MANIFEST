@@ -258,3 +258,4 @@ run-test.pl
 t/outthentic.t
 utils/install.pl6
 utils/make-dist.pl6
+utils/make-doc.pl6

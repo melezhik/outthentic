@@ -1,3 +1,7 @@
+0.4.1
+
+- Fix for "Can't build after perl version 5.26 or higher" - #11
+
 0.4.0 2018-10-18
 
 - Rewrite platform dependable code to pure Perl

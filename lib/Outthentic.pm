@@ -348,6 +348,11 @@ sub run_story_file {
 
             print_story_header();
 
+        } elsif(-f "$story_dir/story.ps1") {
+
+            $story_command = "pwsh $story_dir/story.ps1";
+            print_story_header();
+
         } else {
 
           # print "empty story\n";

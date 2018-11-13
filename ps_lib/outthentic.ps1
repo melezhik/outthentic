@@ -19,6 +19,24 @@ function story_var {
 
 }
 
+function captures {
+
+  $cache_dir = cache_dir
+
+  $file = "$cache_dir/captures.json"
+
+  $json = Get-Content -Raw -Path $file | ConvertFrom-Json
+
+  return $json
+
+}
+
+function capture {
+   $captures = captures
+   return $captures[0]
+}
+
+
 function config {
 
   Param($Name)  

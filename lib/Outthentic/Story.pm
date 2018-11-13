@@ -621,6 +621,7 @@ sub do_ruby_hook {
       next if $l=~/#/;
 
       quit($1) if $l=~/quit:(.*)/;
+
       outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
@@ -642,7 +643,7 @@ sub do_ruby_hook {
         run_story($path, decode_json($story_vars_json||{}));
         $story_vars_json = undef;
 
-        }
+      }
     }
 
     return 1;
@@ -684,6 +685,7 @@ sub do_python_hook {
       next if $l=~/#/;
 
       quit($1) if $l=~/quit:(.*)/;
+
       outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
@@ -706,7 +708,7 @@ sub do_python_hook {
 
         $story_vars_json = undef;
 
-        }
+      }
     }
 
     return 1;
@@ -752,6 +754,7 @@ sub do_bash_hook {
       next if $l=~/#/;
       
       quit($1) if $l=~/quit:(.*)/;
+
       outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
@@ -806,31 +809,37 @@ sub do_ps_hook {
 
     close HOOK_OUT;
 
-    my %story_vars_bash = ();
+    my $story_vars_json;
 
     for my $l (@out) {
 
       next if $l=~/#/;
       
       quit($1) if $l=~/quit:(.*)/;
+
       outthentic_die($1) if $l=~/outthentic_die:(.*)/;
 
       ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
       
-      if ($l=~/story_var_bash:\s+(\S+)\s+(.*)/){
-        $story_vars_bash{$1}=$2;
-        #warn %story_vars_bash;
-        next;    
+      if ($l=~s/story_var_json_begin.*// .. $l=~s/story_var_json_end.*//){
+        $story_vars_json.=$l;    
+        next;
       }
 
       if ($l=~/story:\s+(\S+)/){
+
         my $path = $1;
+
         if (debug_mod12()){
             main::note("run downstream story from powershell hook"); 
         }
-        run_story($path, {%story_vars_bash});
-        %story_vars_bash = ();
+
+        run_story($path, decode_json($story_vars_json||{}));
+
+        $story_vars_json = undef;
+
       }
+
     }
 
     return 1;

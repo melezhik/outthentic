@@ -55,7 +55,7 @@ function run_story {
         Write-Host "# run downstream story: $path"
     }
 
-    my $params_json = $params | ConvertTo-Json -Depth 10
+    $params_json = $params | ConvertTo-Json -Depth 10
 
     Write-Host "story_var_json_begin"
 

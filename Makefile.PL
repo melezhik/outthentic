@@ -27,6 +27,7 @@ install_script 'bin/strun';
 install_share 'ruby_lib';
 install_share 'python_lib';
 install_share 'bash_lib';
+install_share 'ps_lib';
 
 no_index    directory => 'examples';
 

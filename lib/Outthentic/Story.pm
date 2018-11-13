@@ -32,6 +32,8 @@ our @EXPORT = qw{
 
     do_bash_hook
 
+    do_ps_hook
+
     ignore_story_err
 
     quit
@@ -764,6 +766,67 @@ sub do_bash_hook {
         my $path = $1;
         if (debug_mod12()){
             main::note("run downstream story from bash hook"); 
+        }
+        run_story($path, {%story_vars_bash});
+        %story_vars_bash = ();
+      }
+    }
+
+    return 1;
+
+}
+
+
+sub do_ps_hook {
+
+    my $file = shift;
+
+    my $ps_lib_dir = File::ShareDir::dist_dir('Outthentic');
+
+    my $cmd = "pwsh -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $file; \"";
+
+    if (debug_mod12()){
+        main::note("do_ps_hook: $cmd"); 
+    }
+
+
+    my $rand = int(rand(1000));
+
+    my $st = system("$cmd 2>".story_cache_dir()."/$rand.err 1>".story_cache_dir()."/$rand.out");
+
+    if($st != 0){
+      die "do_ps_hook failed. \n see ".story_cache_dir()."/$rand.err for details";
+    }
+
+    my $out_file = story_cache_dir()."/$rand.out";
+
+    open HOOK_OUT, $out_file or die "can't open HOOK_OUT file $out_file to read!";
+
+    my @out = <HOOK_OUT>;
+
+    close HOOK_OUT;
+
+    my %story_vars_bash = ();
+
+    for my $l (@out) {
+
+      next if $l=~/#/;
+      
+      quit($1) if $l=~/quit:(.*)/;
+      outthentic_die($1) if $l=~/outthentic_die:(.*)/;
+
+      ignore_story_err($1) if $l=~/ignore_story_err:\s+(\d)/;
+      
+      if ($l=~/story_var_bash:\s+(\S+)\s+(.*)/){
+        $story_vars_bash{$1}=$2;
+        #warn %story_vars_bash;
+        next;    
+      }
+
+      if ($l=~/story:\s+(\S+)/){
+        my $path = $1;
+        if (debug_mod12()){
+            main::note("run downstream story from powershell hook"); 
         }
         run_story($path, {%story_vars_bash});
         %story_vars_bash = ();

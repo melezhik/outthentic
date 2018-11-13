@@ -205,7 +205,7 @@ sub wanted {
         }elsif ( -e "$story_dir/hook.bash" ){
             print F "eval { do_bash_hook('$story_dir/hook.bash') }; our \$STATUS=0, die \"bash hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$story_dir/hook.ps1" ){
-            print F "eval { do_pshell_hook('$story_dir/hook.ps1') }; our \$STATUS=0, die \"powershell hook error: \$@\" if \$@ ;\n\n";
+            print F "eval { do_ps_hook('$story_dir/hook.ps1') }; our \$STATUS=0, die \"powershell hook error: \$@\" if \$@ ;\n\n";
         }
 
         if (-e "$story_dir/story.check"){

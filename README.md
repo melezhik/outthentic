@@ -275,17 +275,21 @@ This is for example might be useful if you want to _test_ the rules in check fil
 In QA methodology it's called Mock objects:
 
     $ nano hook.bash
+
       set_stdout 'running'
 
     $ nano story.check
+
       running
 
 It's important to say that if overriding happens story executor never try to run scenario even if it presents:
 
     $ nano hook.bash
+
       set_stdout 'running'
 
     $ nano story.bash
+
       sudo service nginx status # this command won't be executed
 
 
@@ -428,6 +432,7 @@ Or in Python:
     $ nano hook.rb
 
       from outthentic import *
+
       run_story('greeting', {  'name' : 'Alexey' , 'message' : 'hello' })
 
 Or in Bash:
@@ -473,6 +478,7 @@ In Python:
     $ nano modules/greeting/story.py
 
       from outthentic import *
+
       print story_var('name') + 'say ' + story_var('message')
 
 In Ruby:
@@ -598,6 +604,7 @@ Examples:
     $ nano hook.py
 
       from outthentic import *
+
       ignore_story_err(1)
 
 

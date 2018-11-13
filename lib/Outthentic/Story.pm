@@ -116,6 +116,8 @@ sub set_story {
 
     _mk_bash_glue_file();
 
+    _mk_ps_glue_file();
+
 }
 
 sub _story {
@@ -246,6 +248,10 @@ sub _python_glue_file {
 
 sub _bash_glue_file {
   story_cache_dir()."/glue.bash";
+}
+
+sub _ps_glue_file {
+  story_cache_dir()."/glue.ps1";
 }
 
 sub dsl {
@@ -520,6 +526,54 @@ sub _mk_bash_glue_file {
 CODE
 
     close BASH_GLUE;
+
+}
+
+sub _mk_ps_glue_file {
+
+    open PS_GLUE, ">", _ps_glue_file() or die $!;
+
+    my $stdout_file = stdout_file();
+    my $cache_root_dir = cache_root_dir();
+    my $story_dir = get_prop('story_dir');
+    my $project_root_dir = project_root_dir();
+    my $debug_mod12 = debug_mod12();
+
+    my $cache_dir = story_cache_dir;
+
+    print PS_GLUE <<"CODE";
+
+    function debug_mod12 {
+      '$debug_mod12'
+    }
+
+    function cache_root_dir {
+      '$cache_root_dir'
+    }
+
+    function test_root_dir {
+      '$cache_root_dir'
+    }
+
+    function project_root_dir {
+      '$project_root_dir'
+    }
+
+    function cache_dir {
+      '$cache_dir'
+    }
+
+    function story_dir {
+      '$story_dir'
+    }
+
+    function stdout_file {
+      '$stdout_file'
+    }
+
+CODE
+
+    close PS_GLUE;
 
 }
 

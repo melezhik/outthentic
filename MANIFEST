@@ -191,11 +191,12 @@ examples/text-blocks/story.check
 examples/text-blocks/story.pl
 examples/validators/captures/story.check
 examples/validators/captures/story.pl
-examples/windows/powershell/cmd.ps1
-examples/windows/powershell/hook.pl
-examples/windows/powershell/story.check
-examples/windows/powershell/story.pl
-examples/windows/powershell/story.ps1
+examples/windows/powershell/config/hook.pl
+examples/windows/powershell/config/story.check
+examples/windows/powershell/config/story.ps1
+examples/windows/powershell/hello-world/hook.pl
+examples/windows/powershell/hello-world/story.check
+examples/windows/powershell/hello-world/story.ps1
 examples/within/story.check
 examples/within/story.pl
 external/story.bash

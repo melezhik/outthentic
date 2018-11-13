@@ -1,0 +1,1 @@
+generator: [ "value={".( config()->{main}->{foo} )."}" ]

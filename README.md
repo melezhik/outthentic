@@ -54,12 +54,13 @@ Ruby scenario example:
     puts "I am outthentic"
 
 
-Outthentic scenarios could be written in one of the four languages:
+Outthentic scenarios could be written in one of the five languages:
 
 * Perl 
 * Bash
 * Python
 * Ruby
+* Powershell
 
 Choose you favorite language ;) !
 
@@ -67,14 +68,15 @@ Outthentic relies on file names convention to determine scenario language.
 
 This table describes `file name -> language` mapping for scenarios:
 
-    +-----------+--------------+
-    | Language  | File         |
-    +-----------+--------------+
-    | Perl      | story.pl     |
-    | Bash      | story.bash   |
-    | Python    | story.py     |
-    | Ruby      | story.rb     |
-    +-----------+--------------+
+    +------------+--------------+
+    | Language   | File         |
+    +------------+--------------+
+    | Perl       | story.pl     |
+    | Bash       | story.bash   |
+    | Python     | story.py     |
+    | Ruby       | story.rb     |
+    | Powershell | story.ps1    |
+    +------------+--------------+
   
 
 # Check files
@@ -248,14 +250,15 @@ Here is an example of hook:
 
 This table describes file name -> language mapping for scenarios:
 
-    +-----------+--------------+
-    | Language  | File         |
-    +-----------+--------------+
-    | Perl      | hook.pl      |
-    | Bash      | hook.bash    |
-    | Python    | hook.py      |
-    | Ruby      | hook.rb      |
-    +-----------+--------------+
+    +------------+--------------+
+    | Language   | File         |
+    +------------+--------------+
+    | Perl       | hook.pl      |
+    | Bash       | hook.bash    |
+    | Python     | hook.py      |
+    | Ruby       | hook.rb      |
+    | Powershell | hook.ps1     |
+    +------------+--------------+
 
 Reasons why you might need hooks:
 
@@ -273,6 +276,7 @@ In QA methodology it's called Mock objects:
 
     $ nano hook.bash
       set_stdout 'running'
+
     $ nano story.check
       running
 
@@ -280,14 +284,15 @@ It's important to say that if overriding happens story executor never try to run
 
     $ nano hook.bash
       set_stdout 'running'
+
     $ nano story.bash
       sudo service nginx status # this command won't be executed
-
 
 
 You may call `set_stdout` function more then once:
 
     $ nano hook.pl
+
       set_stdout("HELLO WORLD");
       set_stdout("HELLO WORLD2");
 
@@ -298,20 +303,23 @@ It will "produce" two line of a story output:
 
 This table describes how `set_stdout()` function is called in various languages:
 
-    +-----------+-----------------------+
-    | Language  | signature             |
-    +-----------+-----------------------+
-    | Perl      | set_stdout(SCALAR)    |
-    | Bash      | set_stdout(STRING)    |
-    | Python(*) | set_stdout(STRING)    |
-    | Ruby      | set_stdout(STRING)    |
-    +-----------+-----------------------+
+    +-------------+-----------------------+
+    | Language    | signature             |
+    +-------------+-----------------------+
+    | Perl        | set_stdout(SCALAR)    |
+    | Bash        | set_stdout(STRING)    |
+    | Python(*)   | set_stdout(STRING)    |
+    | Ruby        | set_stdout(STRING)    |
+    | Powershell  | set_stdout(STRING)    |
+    +-------------+-----------------------+
 
 (*) You need to `from outthentic import *` in Python to import set_stdout function.
 
 # Run stories from other stories
 
-Hooks allow you to call one story from other one. Here is an example:
+Hooks allow you to call one story from other one. 
+
+Here are examples:
 
     $ nano modules/knock-the-door/story.rb
 
@@ -382,12 +390,15 @@ Here is more sophisticated examples of downstream stories:
 
 
     $ nano modules/up/story.pl 
+
       print "UP!"
 
     $ nano modules/down/story.pl 
+
       print "DOWN!"
 
     $ nano two-jumps/hook.pl
+
       run_story( 'up' );
       run_story( 'down' );
       run_story( 'up' );
@@ -425,6 +436,13 @@ Or in Bash:
 
       run_story  greeting name Alexey message hello 
 
+Or in Powershell:
+
+
+    $ nano hook.ps1
+
+      $params = @{name="Alexey";message="hello"}  
+      run_story('greeting', -hash $params)
 
 This table describes how `run_story()` function is called in various languages:
 
@@ -433,13 +451,14 @@ This table describes how `run_story()` function is called in various languages:
     +------------+----------------------------------------------+
     | Perl       | run_story(SCALAR,HASHREF)                    |
     | Bash       | run_story STORY_NAME NAME VAL NAME2 VAL2 ... | 
-    | Python(**) | run_story(STRING,DICT)                       | 
+    | Python(*)  | run_story(STRING,DICT)                       | 
     | Ruby       | run_story(STRING,HASH)                       | 
+    | Powershell | run_story(STRING,HASH)                       | 
     +------------+----------------------------------------------+
 
-(*) Story variables are accessible(*) in downstream story by `story_var()` function. 
+Story variables are accessible in downstream story by `story_var()` function, see below.
 
-(**) You need to `from outthentic import *` in Python to import set_stdout function.
+(*) You need to `from outthentic import *` in Python to import set_stdout function.
 
 Examples:
 
@@ -475,8 +494,14 @@ In Bash (alternative way):
 
       echo $(story_var name) say $(story_var message)
 
+In Powershell:
 
-(*) Story variables are accessible inside check files as well.
+    $ nano modules/greeting/story.ps1
+
+      Write-Host story_var('name') + ' say ' + story_var('message')
+
+
+Story variables are accessible inside check files as well.
 
 This table describes how `story_story()` function is called in various languages:
 
@@ -488,6 +513,7 @@ This table describes how `story_story()` function is called in various languages
     | Ruby             | story_var(STRING)                           | 
     | Bash (1-st way)  | $foo $bar ...                               |
     | Bash (2-nd way)  | $(story_var foo.bar)                        |
+    | Powershell       | story_var(STRING)                           | 
     +------------------+---------------------------------------------+
 
 (*) You need to `from outthentic import *` in Python to import story_var() function.
@@ -503,7 +529,6 @@ Examples:
     # Story with scenario only
 
     $ nano story.pl
-
 
     # Story with hook only
 
@@ -525,9 +550,9 @@ Here is the list of function one can use _inside hooks_:
 
 * `os()` - return a mnemonic ID of operation system where story is executed.
 
+- You need to `from outthentic import *` in Python to import os() function.
 
-(*) You need to `from outthentic import *` in Python to import os() function.
-(**) in Bash these functions are represented by variables, e.g. $project_root_dir, $os, so on.
+- in Bash these functions are represented by variables, e.g. $project_root_dir, $os, so on.
 
 # Recognizable OS list
 
@@ -571,6 +596,7 @@ Examples:
     # Python
 
     $ nano hook.py
+
       from outthentic import *
       ignore_story_err(1)
 
@@ -578,17 +604,26 @@ Examples:
     # Ruby
 
     $ nano hook.rb
+
       ignore_story_err 1
 
     # Perl
 
     $ nano hook.pl
+
       ignore_story_err(1)
 
     # Bash
 
     $ nano hook.bash
+
       ignore_story_err 1
+
+    # Powershell
+
+    $ nano hook.ps1
+
+      ignore_story_err(1)
 
 # Immediate exit/die
 
@@ -600,13 +635,16 @@ Examples:
     # Python
 
     $ nano hook.py
+
       from outthentic import *
+
       quit("this script is temporarily disabled")
 
 
     # Ruby
 
     $ nano hook.rb
+
       if os != "windows"
         quit("windows system is not supported")
       end
@@ -614,6 +652,7 @@ Examples:
     # Perl
 
     $ nano hook.pl
+
       unless (os() eq "ubuntu"){
         quit("runs on ubuntu system only")
       }
@@ -621,7 +660,17 @@ Examples:
     # Bash
 
     $ nano hook.bash
+
       which /bin/curl || quit "curl not found, skip"
+
+
+    # Powershell
+
+    $ nano hook.ps1
+
+      if -NOT  (os() -eq 'windows') {
+        quit("only windows system is supported")
+      }
 
 Alternately you can ask strun to abort straight away ( with none zero exit code ), using `outthentic_die()` function.
 
@@ -641,14 +690,17 @@ Here are some examples:
 Bash:
 
     $ nano my-story/common.bash
+
       function hello_bash {
         echo 'hello bash'
       } 
 
     $ nano my-story/story.bash
+
         echo hello_bash
 
     $ nano my-story/story.check
+
       generator: <<CODE;
       !bash
         echo hello_bash
@@ -658,14 +710,17 @@ Bash:
 Ruby:
 
     $ nano modules/my-story/common.rb
+
       def hello_ruby
         'hello ruby'
       end
 
     $ nano modules/my-story/hook.rb
+
       set_stdout(hello_ruby())
 
     $ nano modules/my-story/story.check
+
       generator: <<CODE;
       !ruby
         pust hello_ruby()

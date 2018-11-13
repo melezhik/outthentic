@@ -111,12 +111,13 @@ sub wanted {
 
     my $story_dir = $File::Find::dir;
 
-    if ($file =~ /^story\.(bash|pl|pm|rb|py)$/ or $file =~ /^hook\.(bash|pl|rb|py)$/ ) {
+    if ($file =~ /^story\.(bash|pl|pm|rb|py|ps1)$/ or $file =~ /^hook\.(bash|pl|rb|py|ps1)$/ ) {
 
         return if $file=~/^hook\./ and -e "$story_dir/story.pl";
         return if $file=~/^hook\./ and -e "$story_dir/story.bash";
         return if $file=~/^hook\./ and -e "$story_dir/story.rb";
         return if $file=~/^hook\./ and -e "$story_dir/story.py";
+        return if $file=~/^hook\./ and -e "$story_dir/story.ps1";
 
         return if $file eq 'story.pm' and -e "$story_dir/story.pl";
         return if $file eq 'story.pm' and -e "$story_dir/story.bash";
@@ -203,6 +204,8 @@ sub wanted {
             print F "eval { do_python_hook('$story_dir/hook.py') };  our \$STATUS=0, die \"python hook error: \$@\" if \$@ ;\n\n";
         }elsif ( -e "$story_dir/hook.bash" ){
             print F "eval { do_bash_hook('$story_dir/hook.bash') }; our \$STATUS=0, die \"bash hook error: \$@\" if \$@ ;\n\n";
+        }elsif ( -e "$story_dir/hook.ps1" ){
+            print F "eval { do_pshell_hook('$story_dir/hook.ps1') }; our \$STATUS=0, die \"powershell hook error: \$@\" if \$@ ;\n\n";
         }
 
         if (-e "$story_dir/story.check"){

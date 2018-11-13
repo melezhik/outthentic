@@ -14,7 +14,7 @@ if ($^O  =~ 'MSWin'){
 
 sub wanted  {
 
-  return unless /story\.(pl|rb|bash|py|pm)$/ or /meta\.txt$/;
+  return unless /story\.(pl|rb|bash|py|pm|ps1)$/ or /meta\.txt$/;
 
   return if /modules\//;
 

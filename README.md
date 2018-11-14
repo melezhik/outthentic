@@ -122,37 +122,59 @@ Here is an example:
     $ mkdir perl-story
 
     $ nano  perl-story/story.pl
+
       print "hello from perl"
 
     $ nano perl-story/story.check
+
       hello from perl
 
     # Bash
+
     $ mkdir bash-story
 
     $ nano bash-story/story.bash
+
       echo hello from bash 
 
     $ nano bash-story/story.check
+
       hello from bash 
 
     # Python
+
     $ mkdir python-story
 
     $ nano python-story/story.py
+
       print "hello from python" 
 
     $ nano python-story/story.check
+
       hello from python 
 
     # Ruby
     $ mkdir ruby-story
 
     $ nano ruby-story/story.rb
+
       puts "hello from ruby"
 
     $ nano ruby-story/story.check
+
       hello from ruby 
+
+    # Powershell
+
+    $ mkdir powershell-story
+
+    $ nano ruby-story/story.ps
+
+      Write-Host "hello from powershell"
+
+    $ nano ruby-story/story.check
+
+      hello from powershell
 
 
 
@@ -210,9 +232,11 @@ Check file should be placed at the same directory as scenario and be named as `s
 Here is an example:
 
     $ nano story.bash
+
     sudo service nginx status
  
     $ nano story.check
+
     running
 
 # Story runner
@@ -675,7 +699,7 @@ Examples:
 
     $ nano hook.ps1
 
-      if -NOT  (os() -eq 'windows') {
+      if ( -NOT  (os() -eq 'windows') ) {
         quit("only windows system is supported")
       }
 
@@ -763,10 +787,13 @@ $project\_root\_directory/lib path is added to $PERL5LIB variable.
 This make it easy to place custom Perl modules under project root directory:
 
     $ nano my-app/lib/Foo/Bar/Baz.pm
+
       package Foo::Bar::Baz;
+
       1;
 
     $ nano common.pm
+
       use Foo::Bar::Baz;
 
 # Story runner console tool
@@ -816,11 +843,13 @@ Run only a single story. This should be path _relative_ to the project root dire
 Examples:
 
     # Project with 3 stories
+
     foo/story.pl
     foo/bar/story.rb
     bar/story.pl
 
     # Run various stories
+
     --story foo # runs foo/ stories
     --story foo/story # runs foo/story.pl
     --story foo/bar/ # runs foo/bar/ stories
@@ -914,7 +943,7 @@ Python:
 
     $ nano hook.py
 
-    from outthentic import *
+      from outthentic import *
 
       foo = config()['main']['foo']
       bar = config()['main']['bar']
@@ -927,6 +956,14 @@ Ruby:
       foo = config['main']['foo']
       bar = config['main']['bar']
 
+Powershell:
+
+    $ nano hook.ps1
+
+      $config = config 'main'
+      $foo = $config.foo
+      $bar = $config.bar
+
 
 
 # Runtime configuration
@@ -934,8 +971,9 @@ Ruby:
 Runtime configuration parameters override ones in suite configuration. Consider this example:
 
     $ nano suite.yaml
-    foo :
-      bar : 10
+
+    foo:
+      bar: 10
   
     $ strun --param foo.bar=20 # will override foo.bar parameter to 20
   
@@ -1080,7 +1118,3 @@ Where `$story-name` is any top level directory inside examples/.
 # Thanks
 
 To God as the One Who inspires me in my life!
-
-
-
-

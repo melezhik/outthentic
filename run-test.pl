@@ -8,7 +8,7 @@ my $root = getcwd();
 if ($^O  =~ 'MSWin'){
   find( { wanted => \&wanted, no_chdir => 1 } , 'examples/');
 } else {
-  my $cmd = "cd examples && strun --recurse --purge-cache  --format default";
+  my $cmd = "cd examples && strun --recurse --purge-cache  --format production";
   (system($cmd) == 0)  or die "$cmd failed";
 }
 

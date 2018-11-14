@@ -471,7 +471,7 @@ Or in Powershell:
     $ nano hook.ps1
 
       $params = @{name="Alexey";message="hello"}  
-      run_story('greeting', -hash $params)
+      run_story 'greeting', -hash $params
 
 This table describes how `run_story()` function is called in various languages:
 
@@ -528,7 +528,10 @@ In Powershell:
 
     $ nano modules/greeting/story.ps1
 
-      Write-Host story_var('name') + ' say ' + story_var('message')
+      $name     =  story_var 'name'
+      $message  =  story_var 'message'
+
+      Write-Host "$name say $message"
 
 
 Story variables are accessible inside check files as well.

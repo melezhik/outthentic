@@ -29,29 +29,36 @@ Perl scenario example:
 
     $ nano story.pl
 
-    print "I am OK\n";
-    print "I am outthentic\n";
+      print "I am OK\n";
+      print "I am outthentic\n";
 
 Bash scenario example:
 
     $ nano story.bash
 
-    echo I am OK
-    echo I am outthentic
+      echo I am OK
+      echo I am outthentic
 
 Python scenario example:
 
     $ nano story.py
 
-    print "I am OK"
-    print "I am outthentic"
+      print "I am OK"
+      print "I am outthentic"
 
 Ruby scenario example:
 
     $ nano story.rb
 
-    puts "I am OK"
-    puts "I am outthentic"
+      puts "I am OK"
+      puts "I am outthentic"
+
+Powershell scenario example:
+
+    $ nano story.ps1
+
+      Write-Host "I am OK"
+      Write-Host "I am outthentic"
 
 
 Outthentic scenarios could be written in one of the five languages:
@@ -87,8 +94,8 @@ Here we require that scenario should produce  `I am OK` and `I am outthentic` li
 
     $ nano story.check
 
-    I am OK
-    I am outthentic
+      I am OK
+      I am outthentic
 
 NOTE: Check files are optional, if one doesn't need any checks, then don't create check files.
 
@@ -114,10 +121,9 @@ Obviously project may contain more than one story.
 
 Stories are mapped into directories inside the project root directory.
 
-Here is an example:
+Here are examples:
 
-
-    # Perl
+Perl:
 
     $ mkdir perl-story
 
@@ -129,7 +135,7 @@ Here is an example:
 
       hello from perl
 
-    # Bash
+Bash:
 
     $ mkdir bash-story
 
@@ -141,7 +147,7 @@ Here is an example:
 
       hello from bash 
 
-    # Python
+Python:
 
     $ mkdir python-story
 
@@ -153,7 +159,8 @@ Here is an example:
 
       hello from python 
 
-    # Ruby
+Ruby:
+
     $ mkdir ruby-story
 
     $ nano ruby-story/story.rb
@@ -164,7 +171,7 @@ Here is an example:
 
       hello from ruby 
 
-    # Powershell
+Powershell:
 
     $ mkdir powershell-story
 
@@ -177,11 +184,11 @@ Here is an example:
       hello from powershell
 
 
-
 To execute different stories launch story runner command called [strun](#story-runner):
 
     $ strun --story perl-story
     $ strun --story bash-story 
+
     # so on ...
     
 
@@ -196,7 +203,8 @@ Here is an example:
 
 
     $ nano story.bash
-    echo 'hello world'
+
+      echo 'hello world'
 
     $ strun # will run story.bash 
 
@@ -233,11 +241,11 @@ Here is an example:
 
     $ nano story.bash
 
-    sudo service nginx status
+      sudo service nginx status
  
     $ nano story.check
 
-    running
+      running
 
 # Story runner
 
@@ -269,7 +277,7 @@ Here is an example of hook:
 
     $ nano perl/hook.pl
     
-    print "this is a story hook!";
+      print "this is a story hook!";
 
 
 This table describes file name -> language mapping for scenarios:
@@ -359,9 +367,9 @@ Here are examples:
       puts 'knock-knock!'" 
  
     $ nano modules/knock-the-door/story.check
+
       knock-knock!
 
- 
     $ nano open-the-door/hook.rb
 
       # this is a upstream story
@@ -375,9 +383,11 @@ Here are examples:
       run_story( 'knock-the-door' );
 
     $ nano open-the-door/story.rb
+
       puts 'opening ...' 
 
     $ nano open-the-door/story.check
+
       opening
 
     $ strun --story open-the-door/
@@ -666,7 +676,7 @@ You can cause strun exits immediate with code 0, using `quit()` function.
 Examples:
 
 
-    # Python
+Python:
 
     $ nano hook.py
 
@@ -675,7 +685,7 @@ Examples:
       quit("this script is temporarily disabled")
 
 
-    # Ruby
+Ruby:
 
     $ nano hook.rb
 
@@ -683,7 +693,7 @@ Examples:
         quit("windows system is not supported")
       end
 
-    # Perl
+Perl:
 
     $ nano hook.pl
 
@@ -691,14 +701,14 @@ Examples:
         quit("runs on ubuntu system only")
       }
 
-    # Bash
+Bash:
 
     $ nano hook.bash
 
       which /bin/curl || quit "curl not found, skip"
 
 
-    # Powershell
+Powershell:
 
     $ nano hook.ps1
 
@@ -711,8 +721,9 @@ Alternately you can ask strun to abort straight away ( with none zero exit code 
 Examples:
 
     $ nano hook.bash
+
     if [ "$EUID" -ne 0 ]
-      then outthentic_die "Please run as root"
+        then outthentic_die "Please run as root"
     fi
 
 # Story libraries

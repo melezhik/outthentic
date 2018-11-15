@@ -351,7 +351,13 @@ sub run_story_file {
         } elsif(-f "$story_dir/story.ps1") {
 
             my $ps_lib_dir = File::ShareDir::dist_dir('Outthentic');
-            $story_command = "pwsh -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $story_dir/story.ps1\"";
+
+	        if ( $^O  =~ 'MSWin'  ){
+	            $story_command = "powershell.exe -NoProfile -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $story_dir/story.ps1\""
+			} else {
+	            $story_command = "pwsh -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $story_dir/story.ps1\"";
+			}
+
             print_story_header();
 
         } else {

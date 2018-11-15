@@ -1,4 +1,4 @@
 generator:<<CODE
-!bash
-echo $(story_var name) say $(story_var message)
+!perl
+[ (story_var("name"))." say ".(story_var("message")) ]
 CODE

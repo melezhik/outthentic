@@ -786,7 +786,13 @@ sub do_ps_hook {
 
     my $ps_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
-    my $cmd = "pwsh -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $file; \"";
+    my $cmd;
+
+    if ( $^O  =~ 'MSWin'  ){
+      $cmd = "powershell.exe -NoProfile -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $file; \"";
+    } else {
+      $cmd = "pwsh -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $file; \"";
+    }
 
     if (debug_mod12()){
         main::note("do_ps_hook: $cmd"); 

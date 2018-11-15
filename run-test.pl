@@ -16,7 +16,6 @@ my %seen;
 
 sub wanted  {
 
-
   return unless $File::Find::name=~/(story|hook)\.(pl|rb|bash|py|pm|ps1)$/ or /meta\.txt$/;
 
   return unless -e $File::Find::dir."/windows.test";
@@ -30,9 +29,6 @@ sub wanted  {
   my $cmd = "cd examples && strun --purge-cache --story $dir --format production";
 
   (system($cmd) == 0)  or die "$cmd failed";
-
-  #print "$cmd ...\n";
-  #print "\n";
 
   $seen{$dir}++;
 

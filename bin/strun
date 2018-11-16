@@ -250,7 +250,6 @@ if ($story_path){
 }elsif ($recurse_mod) {
     $st = 1;
     use Data::Dumper;
-    print Dumper(\@stories);
     for my $s ( sort { $a->{story_dir} <=> $b->{story_dir} } @stories) {
           my $strun_cmd = "perl $cache_root_dir/$s->{story_dir}/story.outth";
           my $st_i = (system($strun_cmd)==0);

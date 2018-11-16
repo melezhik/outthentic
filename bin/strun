@@ -113,12 +113,6 @@ sub wanted {
 
     if ($file =~ /^story\.(bash|pl|pm|rb|py|ps1)$/ or $file =~ /^hook\.(bash|pl|rb|py|ps1)$/ ) {
 
-        return if $file=~/^hook\./ and -e "$story_dir/story.pl";
-        return if $file=~/^hook\./ and -e "$story_dir/story.bash";
-        return if $file=~/^hook\./ and -e "$story_dir/story.rb";
-        return if $file=~/^hook\./ and -e "$story_dir/story.py";
-        return if $file=~/^hook\./ and -e "$story_dir/story.ps1";
-
         my $story_exist = ( 
           -e "$story_dir/story.pl"    or 
           -e "$story_dir/story.rb"    or 
@@ -255,6 +249,8 @@ if ($story_path){
 
 }elsif ($recurse_mod) {
     $st = 1;
+    use Data::Dumper;
+    print Dumper(\@stories);
     for my $s ( sort { $a->{story_dir} <=> $b->{story_dir} } @stories) {
           my $strun_cmd = "perl $cache_root_dir/$s->{story_dir}/story.outth";
           my $st_i = (system($strun_cmd)==0);

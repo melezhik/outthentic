@@ -119,14 +119,22 @@ sub wanted {
         return if $file=~/^hook\./ and -e "$story_dir/story.py";
         return if $file=~/^hook\./ and -e "$story_dir/story.ps1";
 
-        return if $file eq 'story.pm' and -e "$story_dir/story.pl";
-        return if $file eq 'story.pm' and -e "$story_dir/story.bash";
-        return if $file eq 'story.pm' and -e "$story_dir/story.rb";
-        return if $file eq 'story.pm' and -e "$story_dir/story.py";
-        return if $file eq 'story.pm' and -e "$story_dir/story.ps1";
+        my $story_exist = ( 
+          -e "$story_dir/story.pl"    or 
+          -e "$story_dir/story.rb"    or 
+          -e "$story_dir/story.py"    or 
+          -e "$story_dir/story.bash"  or 
+          -e "$story_dir/story.ps1"
+        );
+
+        return if $file eq 'story.pm'  and $story_exist;
+        return if $file eq 'hook.pm'   and $story_exist;
+        return if $file eq 'hook.rb'   and $story_exist;
+        return if $file eq 'hook.py'   and $story_exist;
+        return if $file eq 'hook.bash' and $story_exist;
+        return if $file eq 'hook.ps1'  and $story_exist;
 
         return if $seen{$File::Find::name};
-
 
         my $story_local_dir;
 

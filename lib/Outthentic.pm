@@ -1,6 +1,6 @@
 package Outthentic;
 
-our $VERSION = '0.4.2';
+our $VERSION = '0.4.3';
 
 1;
 
@@ -638,31 +638,38 @@ Perl scenario example:
 
     $ nano story.pl
     
-    print "I am OK\n";
-    print "I am outthentic\n";
+      print "I am OK\n";
+      print "I am outthentic\n";
 
 Bash scenario example:
 
     $ nano story.bash
     
-    echo I am OK
-    echo I am outthentic
+      echo I am OK
+      echo I am outthentic
 
 Python scenario example:
 
     $ nano story.py
     
-    print "I am OK"
-    print "I am outthentic"
+      print "I am OK"
+      print "I am outthentic"
 
 Ruby scenario example:
 
     $ nano story.rb
     
-    puts "I am OK"
-    puts "I am outthentic"
+      puts "I am OK"
+      puts "I am outthentic"
 
-Outthentic scenarios could be written in one of the four languages:
+Powershell scenario example:
+
+    $ nano story.ps1
+    
+      Write-Host "I am OK"
+      Write-Host "I am outthentic"
+
+Outthentic scenarios could be written in one of the five languages:
 
 =over
 
@@ -686,6 +693,11 @@ Python
 Ruby
 
 
+=item *
+
+Powershell
+
+
 =back
 
 Choose you favorite language ;) !
@@ -694,14 +706,15 @@ Outthentic relies on file names convention to determine scenario language.
 
 This table describes C<<< file name -> language >>> mapping for scenarios:
 
-    +-----------+--------------+
-    | Language  | File         |
-    +-----------+--------------+
-    | Perl      | story.pl     |
-    | Bash      | story.bash   |
-    | Python    | story.py     |
-    | Ruby      | story.rb     |
-    +-----------+--------------+
+    +------------+--------------+
+    | Language   | File         |
+    +------------+--------------+
+    | Perl       | story.pl     |
+    | Bash       | story.bash   |
+    | Python     | story.py     |
+    | Ruby       | story.rb     |
+    | Powershell | story.ps1    |
+    +------------+--------------+
 
 
 =head1 Check files
@@ -712,8 +725,8 @@ Here we require that scenario should produce  C<I am OK> and C<I am outthentic> 
 
     $ nano story.check
     
-    I am OK
-    I am outthentic
+      I am OK
+      I am outthentic
 
 NOTE: Check files are optional, if one doesn't need any checks, then don't create check files.
 
@@ -751,49 +764,73 @@ Obviously project may contain more than one story.
 
 Stories are mapped into directories inside the project root directory.
 
-Here is an example:
+Here are examples:
 
-    # Perl
-    
+Perl:
+
     $ mkdir perl-story
     
     $ nano  perl-story/story.pl
+    
       print "hello from perl"
     
     $ nano perl-story/story.check
-      hello from perl
     
-    # Bash
+      hello from perl
+
+Bash:
+
     $ mkdir bash-story
     
     $ nano bash-story/story.bash
+    
       echo hello from bash 
     
     $ nano bash-story/story.check
-      hello from bash 
     
-    # Python
+      hello from bash 
+
+Python:
+
     $ mkdir python-story
     
     $ nano python-story/story.py
+    
       print "hello from python" 
     
     $ nano python-story/story.check
-      hello from python 
     
-    # Ruby
+      hello from python 
+
+Ruby:
+
     $ mkdir ruby-story
     
     $ nano ruby-story/story.rb
+    
       puts "hello from ruby"
     
     $ nano ruby-story/story.check
+    
       hello from ruby 
+
+Powershell:
+
+    $ mkdir powershell-story
+    
+    $ nano ruby-story/story.ps
+    
+      Write-Host "hello from powershell"
+    
+    $ nano ruby-story/story.check
+    
+      hello from powershell
 
 To execute different stories launch story runner command called L<strun|#story-runner>:
 
     $ strun --story perl-story
     $ strun --story bash-story 
+    
     # so on ...
 
 
@@ -807,7 +844,8 @@ and run it.
 Here is an example:
 
     $ nano story.bash
-    echo 'hello world'
+    
+      echo 'hello world'
     
     $ strun # will run story.bash 
 
@@ -858,10 +896,12 @@ Check file should be placed at the same directory as scenario and be named as C<
 Here is an example:
 
     $ nano story.bash
-    sudo service nginx status
+    
+      sudo service nginx status
      
     $ nano story.check
-    running
+    
+      running
 
 
 =head1 Story runner
@@ -913,18 +953,19 @@ Here is an example of hook:
 
     $ nano perl/hook.pl
     
-    print "this is a story hook!";
+      print "this is a story hook!";
 
 This table describes file name -> language mapping for scenarios:
 
-    +-----------+--------------+
-    | Language  | File         |
-    +-----------+--------------+
-    | Perl      | hook.pl      |
-    | Bash      | hook.bash    |
-    | Python    | hook.py      |
-    | Ruby      | hook.rb      |
-    +-----------+--------------+
+    +------------+--------------+
+    | Language   | File         |
+    +------------+--------------+
+    | Perl       | hook.pl      |
+    | Bash       | hook.bash    |
+    | Python     | hook.py      |
+    | Ruby       | hook.rb      |
+    | Powershell | hook.ps1     |
+    +------------+--------------+
 
 Reasons why you might need hooks:
 
@@ -957,20 +998,27 @@ This is for example might be useful if you want to I<test> the rules in check fi
 In QA methodology it's called Mock objects:
 
     $ nano hook.bash
+    
       set_stdout 'running'
+    
     $ nano story.check
+    
       running
 
 It's important to say that if overriding happens story executor never try to run scenario even if it presents:
 
     $ nano hook.bash
+    
       set_stdout 'running'
+    
     $ nano story.bash
+    
       sudo service nginx status # this command won't be executed
 
 You may call C<set_stdout> function more then once:
 
     $ nano hook.pl
+    
       set_stdout("HELLO WORLD");
       set_stdout("HELLO WORLD2");
 
@@ -981,21 +1029,24 @@ It will "produce" two line of a story output:
 
 This table describes how C<set_stdout()> function is called in various languages:
 
-    +-----------+-----------------------+
-    | Language  | signature             |
-    +-----------+-----------------------+
-    | Perl      | set_stdout(SCALAR)    |
-    | Bash      | set_stdout(STRING)    |
-    | Python(*) | set_stdout(STRING)    |
-    | Ruby      | set_stdout(STRING)    |
-    +-----------+-----------------------+
+    +-------------+-----------------------+
+    | Language    | signature             |
+    +-------------+-----------------------+
+    | Perl        | set_stdout(SCALAR)    |
+    | Bash        | set_stdout(STRING)    |
+    | Python(*)   | set_stdout(STRING)    |
+    | Ruby        | set_stdout(STRING)    |
+    | Powershell  | set_stdout(STRING)    |
+    +-------------+-----------------------+
 
 (*) You need to C<from outthentic import *> in Python to import set_stdout function.
 
 
 =head1 Run stories from other stories
 
-Hooks allow you to call one story from other one. Here is an example:
+Hooks allow you to call one story from other one. 
+
+Here are examples:
 
     $ nano modules/knock-the-door/story.rb
     
@@ -1007,9 +1058,9 @@ Hooks allow you to call one story from other one. Here is an example:
       puts 'knock-knock!'" 
      
     $ nano modules/knock-the-door/story.check
+    
       knock-knock!
     
-     
     $ nano open-the-door/hook.rb
     
       # this is a upstream story
@@ -1023,9 +1074,11 @@ Hooks allow you to call one story from other one. Here is an example:
       run_story( 'knock-the-door' );
     
     $ nano open-the-door/story.rb
+    
       puts 'opening ...' 
     
     $ nano open-the-door/story.check
+    
       opening
     
     $ strun --story open-the-door/
@@ -1087,12 +1140,15 @@ Downstream stories may call other downstream stories.
 Here is more sophisticated examples of downstream stories:
 
     $ nano modules/up/story.pl 
+    
       print "UP!"
     
     $ nano modules/down/story.pl 
+    
       print "DOWN!"
     
     $ nano two-jumps/hook.pl
+    
       run_story( 'up' );
       run_story( 'down' );
       run_story( 'up' );
@@ -1122,6 +1178,7 @@ Or in Python:
     $ nano hook.rb
     
       from outthentic import *
+    
       run_story('greeting', {  'name' : 'Alexey' , 'message' : 'hello' })
 
 Or in Bash:
@@ -1130,6 +1187,13 @@ Or in Bash:
     
       run_story  greeting name Alexey message hello 
 
+Or in Powershell:
+
+    $ nano hook.ps1
+    
+      $params = @{name="Alexey";message="hello"}  
+      run_story 'greeting', -hash $params
+
 This table describes how C<run_story()> function is called in various languages:
 
     +------------+----------------------------------------------+
@@ -1137,13 +1201,14 @@ This table describes how C<run_story()> function is called in various languages:
     +------------+----------------------------------------------+
     | Perl       | run_story(SCALAR,HASHREF)                    |
     | Bash       | run_story STORY_NAME NAME VAL NAME2 VAL2 ... | 
-    | Python(**) | run_story(STRING,DICT)                       | 
+    | Python(*)  | run_story(STRING,DICT)                       | 
     | Ruby       | run_story(STRING,HASH)                       | 
+    | Powershell | run_story(STRING,HASH)                       | 
     +------------+----------------------------------------------+
 
-(I<) Story variables are accessible(>) in downstream story by C<story_var()> function. 
+Story variables are accessible in downstream story by C<story_var()> function, see below.
 
-(**) You need to C<from outthentic import *> in Python to import set_stdout function.
+(*) You need to C<from outthentic import *> in Python to import set_stdout function.
 
 Examples:
 
@@ -1158,6 +1223,7 @@ In Python:
     $ nano modules/greeting/story.py
     
       from outthentic import *
+    
       print story_var('name') + 'say ' + story_var('message')
 
 In Ruby:
@@ -1178,7 +1244,16 @@ In Bash (alternative way):
     
       echo $(story_var name) say $(story_var message)
 
-(*) Story variables are accessible inside check files as well.
+In Powershell:
+
+    $ nano modules/greeting/story.ps1
+    
+      $name     =  story_var 'name'
+      $message  =  story_var 'message'
+    
+      Write-Host "$name say $message"
+
+Story variables are accessible inside check files as well.
 
 This table describes how C<story_story()> function is called in various languages:
 
@@ -1190,6 +1265,7 @@ This table describes how C<story_story()> function is called in various language
     | Ruby             | story_var(STRING)                           | 
     | Bash (1-st way)  | $foo $bar ...                               |
     | Bash (2-nd way)  | $(story_var foo.bar)                        |
+    | Powershell       | story_var(STRING)                           | 
     +------------------+---------------------------------------------+
 
 (*) You need to C<from outthentic import *> in Python to import story_var() function.
@@ -1205,7 +1281,6 @@ Examples:
     # Story with scenario only
     
     $ nano story.pl
-    
     
     # Story with hook only
     
@@ -1254,10 +1329,19 @@ C<os()> - return a mnemonic ID of operation system where story is executed.
 
 
 
-=back
+=item -
 
-(*) You need to C<from outthentic import *> in Python to import os() function.
-(**) in Bash these functions are represented by variables, e.g. $project_root_dir, $os, so on.
+You need to C<from outthentic import *> in Python to import os() function.
+
+
+
+=item -
+
+in Bash these functions are represented by variables, e.g. $projectI<root>dir, $os, so on.
+
+
+
+=back
 
 
 =head1 Recognizable OS list
@@ -1355,24 +1439,35 @@ Examples:
     # Python
     
     $ nano hook.py
+    
       from outthentic import *
+    
       ignore_story_err(1)
     
     
     # Ruby
     
     $ nano hook.rb
+    
       ignore_story_err 1
     
     # Perl
     
     $ nano hook.pl
+    
       ignore_story_err(1)
     
     # Bash
     
     $ nano hook.bash
+    
       ignore_story_err 1
+    
+    # Powershell
+    
+    $ nano hook.ps1
+    
+      ignore_story_err(1)
 
 
 =head1 Immediate exit/die
@@ -1381,39 +1476,52 @@ You can cause strun exits immediate with code 0, using C<quit()> function.
 
 Examples:
 
-    # Python
-    
+Python:
+
     $ nano hook.py
+    
       from outthentic import *
+    
       quit("this script is temporarily disabled")
-    
-    
-    # Ruby
-    
+
+Ruby:
+
     $ nano hook.rb
+    
       if os != "windows"
         quit("windows system is not supported")
       end
-    
-    # Perl
-    
+
+Perl:
+
     $ nano hook.pl
+    
       unless (os() eq "ubuntu"){
         quit("runs on ubuntu system only")
       }
-    
-    # Bash
-    
+
+Bash:
+
     $ nano hook.bash
+    
       which /bin/curl || quit "curl not found, skip"
+
+Powershell:
+
+    $ nano hook.ps1
+    
+      if ( -NOT  (os() -eq 'windows') ) {
+        quit("only windows system is supported")
+      }
 
 Alternately you can ask strun to abort straight away ( with none zero exit code ), using C<outthentic_die()> function.
 
 Examples:
 
     $ nano hook.bash
+    
     if [ "$EUID" -ne 0 ]
-      then outthentic_die "Please run as root"
+        then outthentic_die "Please run as root"
     fi
 
 
@@ -1426,14 +1534,17 @@ Here are some examples:
 Bash:
 
     $ nano my-story/common.bash
+    
       function hello_bash {
         echo 'hello bash'
       } 
     
     $ nano my-story/story.bash
+    
         echo hello_bash
     
     $ nano my-story/story.check
+    
       generator: <<CODE;
       !bash
         echo hello_bash
@@ -1442,14 +1553,17 @@ Bash:
 Ruby:
 
     $ nano modules/my-story/common.rb
+    
       def hello_ruby
         'hello ruby'
       end
     
     $ nano modules/my-story/hook.rb
+    
       set_stdout(hello_ruby())
     
     $ nano modules/my-story/story.check
+    
       generator: <<CODE;
       !ruby
         pust hello_ruby()
@@ -1485,10 +1599,13 @@ $project_root_directory/lib path is added to $PERL5LIB variable.
 This make it easy to place custom Perl modules under project root directory:
 
     $ nano my-app/lib/Foo/Bar/Baz.pm
+    
       package Foo::Bar::Baz;
+    
       1;
     
     $ nano common.pm
+    
       use Foo::Bar::Baz;
 
 
@@ -1591,11 +1708,13 @@ Run only a single story. This should be path I<relative> to the project root dir
 Examples:
 
     # Project with 3 stories
+    
     foo/story.pl
     foo/bar/story.rb
     bar/story.pl
     
     # Run various stories
+    
     --story foo # runs foo/ stories
     --story foo/story # runs foo/story.pl
     --story foo/bar/ # runs foo/bar/ stories
@@ -1747,7 +1866,7 @@ Python:
 
     $ nano hook.py
     
-    from outthentic import *
+      from outthentic import *
     
       foo = config()['main']['foo']
       bar = config()['main']['bar']
@@ -1759,14 +1878,23 @@ Ruby:
       foo = config['main']['foo']
       bar = config['main']['bar']
 
+Powershell:
+
+    $ nano hook.ps1
+    
+      $config = config 'main'
+      $foo = $config.foo
+      $bar = $config.bar
+
 
 =head1 Runtime configuration
 
 Runtime configuration parameters override ones in suite configuration. Consider this example:
 
     $ nano suite.yaml
-    foo :
-      bar : 10
+    
+    foo:
+      bar: 10
       
     $ strun --param foo.bar=20 # will override foo.bar parameter to 20
 

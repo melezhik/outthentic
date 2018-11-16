@@ -7,8 +7,10 @@ use Outthentic::Story::Stat;
 use File::ShareDir;
 use JSON;
 use Carp;
+use Time::localtime;
 
 use File::Path::Tiny;
+use Term::ANSIColor;
 
 our @EXPORT = qw{ 
 
@@ -320,6 +322,8 @@ sub do_perl_hook {
 
     my $hook_file = shift;
 
+    print_hook_header();
+
     {
       package main;
       unless (do $hook_file) {
@@ -587,6 +591,8 @@ sub do_ruby_hook {
 
     my $cmd;
 
+    print_hook_header();
+
     if (-f project_root_dir()."/Gemfile" ){
       $cmd = "cd ".project_root_dir()." && bundle exec ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $file"
     } else {
@@ -657,6 +663,8 @@ sub do_python_hook {
 
     my $cmd  = "PYTHONPATH=\$PYTHONPATH:".(story_cache_dir()).":$python_lib_dir python $file";
   
+    print_hook_header();
+
     if (debug_mod12()){
         main::note("do_python_hook: $cmd"); 
     }
@@ -726,6 +734,8 @@ sub do_bash_hook {
 
     $cmd="bash -c '$cmd'";
 
+    print_hook_header();
+
     if (debug_mod12()){
         main::note("do_bash_hook: $cmd"); 
     }
@@ -787,6 +797,8 @@ sub do_ps_hook {
     my $ps_lib_dir = File::ShareDir::dist_dir('Outthentic');
 
     my $cmd;
+
+    print_hook_header();
 
     if ( $^O  =~ 'MSWin'  ){
       $cmd = "powershell.exe -NoProfile -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $file; \"";
@@ -888,6 +900,47 @@ sub story_var {
 sub story_vars_pretty {
 
     join " ", map { "$_:".(story_var($_)) } sort keys %{get_prop( 'story_vars' ) };
+
+}
+
+sub print_hook_header {
+
+    my $task_name = get_prop('task_name');
+
+    my $format = get_prop('format');
+
+    my $data;
+
+    if ($format eq 'production') {
+        $data = timestamp().' : '.($task_name || '').' '.'[hook]'
+    } elsif ($format ne 'concise') {
+        $data = timestamp().' : '.($task_name ||  '' ).' '.(nocolor() ? ' hook' : colored(['yellow'],'[hook]'))
+    }
+
+    note($data) if $format ne 'concise';
+}
+
+sub note {
+
+    my $message = shift;
+    my $no_new_line = shift;
+
+    binmode(STDOUT, ":utf8");
+    print $message;
+    print "\n" unless $no_new_line;
+
+}
+
+sub nocolor {
+  get_prop('nocolor')
+}
+
+sub timestamp {
+
+    sprintf '%02d-%02d-%02d %02d:%02d:%02d',
+    localtime->year()+1900,
+    localtime->mon()+1, localtime->mday,
+    localtime->hour, localtime->min, localtime->sec;
 
 }
 

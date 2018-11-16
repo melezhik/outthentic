@@ -261,7 +261,7 @@ sub print_story_header {
         $data = timestamp().' : '.($task_name ||  '' ).' '.(nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)))
     }
     if ($format eq 'production'){
-      note($data,1)
+      note($data)
     } else {
       note($data)
     }
@@ -278,7 +278,6 @@ sub run_story_file {
     my $story_dir = get_prop('story_dir');
 
     if ( get_stdout() ){
-
 
         print_story_header();
 
@@ -484,10 +483,11 @@ sub run_and_check {
       
 sub print_story_messages {
   my $out = shift;
-  print " [msg] " if $out=~/outthentic_message/;
   my @m = ($out=~/outthentic_message:\s+(.*)/g);
-  print join " ", @m;
-  print "\n";
+  for my $m (@m) {
+    chomp $m;
+    print "[msg] $m\n";
+  }
 }
 
 sub outh_ok {
@@ -571,10 +571,12 @@ sub short_story_name {
 }
 
 sub timestamp {
-  sprintf '%02d-%02d-%02d %02d:%02d:%02d', 
+
+    sprintf '%02d-%02d-%02d %02d:%02d:%02d', 
     localtime->year()+1900, 
     localtime->mon()+1, localtime->mday, 
     localtime->hour, localtime->min, localtime->sec;
+
 }
 
 END {

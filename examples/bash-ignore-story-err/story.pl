@@ -1,2 +1,2 @@
-print "OK!";
+print "OK!\n";
 die "upsss";

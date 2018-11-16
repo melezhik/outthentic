@@ -123,6 +123,7 @@ sub wanted {
         return if $file eq 'story.pm' and -e "$story_dir/story.bash";
         return if $file eq 'story.pm' and -e "$story_dir/story.rb";
         return if $file eq 'story.pm' and -e "$story_dir/story.py";
+        return if $file eq 'story.pm' and -e "$story_dir/story.ps1";
 
         return if $seen{$File::Find::name};
 

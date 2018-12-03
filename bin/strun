@@ -121,7 +121,7 @@ sub wanted {
           -e "$story_dir/story.ps1"
         );
 
-        return if $file eq 'story.pm'  and $story_exist;
+        return if $file eq 'hook.pl'   and $story_exist;
         return if $file eq 'hook.pm'   and $story_exist;
         return if $file eq 'hook.rb'   and $story_exist;
         return if $file eq 'hook.py'   and $story_exist;

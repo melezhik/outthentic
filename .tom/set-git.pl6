@@ -1,3 +1,5 @@
+#!perl6
+
 task-run "set git", "git-base", %(
   email => 'melezhik@gmail.com',
   name  => 'Alexey Melezhik',

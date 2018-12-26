@@ -1,4 +1,3 @@
 #!perl6
 
-bash "git push";
-bash "git push bb master";
+task-run "git push", "git-push";

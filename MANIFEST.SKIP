@@ -11,3 +11,4 @@ outthentic\.my
 ^MYMETA\.
 ^Makefile$
 outthentic-
+.cache

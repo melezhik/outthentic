@@ -256,9 +256,9 @@ sub print_story_header {
     my $format = get_prop('format');
     my $data;
     if ($format eq 'production') {
-        $data = timestamp().' : '.($task_name || '').' '.(short_story_name($task_name))
+        $data = timestamp().':'.($task_name || '').''.(short_story_name($task_name))
     } elsif ($format ne 'concise') {
-        $data = timestamp().' : '.($task_name ||  '' ).' '.(nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)))
+        $data = timestamp().':'.($task_name ||  '' ).''.(nocolor() ? short_story_name($task_name) : colored(['yellow'],short_story_name($task_name)))
     }
     if ($format eq 'production'){
       note($data)
@@ -563,10 +563,10 @@ sub short_story_name {
 
     my @ret;
 
-    push @ret, "[path] $short_story_dir" if $short_story_dir;
-    push @ret, "[params] $story_vars" if $story_vars;
+    push @ret, "$short_story_dir" if $short_story_dir;
+    push @ret, "{$story_vars}" if $story_vars;
 
-    join " ", @ret;
+    join "", @ret;
 
 }
 

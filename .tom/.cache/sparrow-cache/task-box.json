@@ -1,1 +1,1 @@
-[ { "data" : { "message" : "experimental task/story headers" }, "task" : "commit my changes [plg] git-commit", "plugin" : "git-commit" } ]
+[ { "data" : { "message" : "update clog" }, "task" : "commit my changes [plg] git-commit", "plugin" : "git-commit" } ]

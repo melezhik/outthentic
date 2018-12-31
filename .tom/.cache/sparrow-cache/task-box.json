@@ -1,1 +1,1 @@
-[ { "data" : { "message" : "print hook headers only in debug mode" }, "plugin" : "git-commit", "task" : "commit my changes [plg] git-commit" } ]
+[ { "task" : "commit my changes [plg] git-commit", "data" : { "message" : "no longer use utils" }, "plugin" : "git-commit" } ]

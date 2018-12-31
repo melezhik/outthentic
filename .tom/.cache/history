@@ -1,2 +1,6 @@
 status
 commit
+set-git
+test
+install
+commit

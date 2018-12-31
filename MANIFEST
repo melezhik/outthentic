@@ -1,4 +1,14 @@
 .appveyor.yml
+.tom/commit.pl6
+.tom/dsl-test.pl6
+.tom/install.pl6
+.tom/make-dist.pl6
+.tom/make-doc.pl6
+.tom/pull.pl6
+.tom/push.pl6
+.tom/release.pl6
+.tom/set-pause.pl6
+.tom/test.pl6
 .travis.yml
 bash_lib/outthentic.bash
 bin/strun
@@ -257,8 +267,6 @@ lib/Outthentic/Glue/Bash.pm
 lib/Outthentic/Glue/Perl.pm
 lib/Outthentic/Story.pm
 lib/Outthentic/Story/Stat.pm
-make-dist.sh
-make.sh
 Makefile.PL
 MANIFEST			This list of files
 META.yml
@@ -268,6 +276,3 @@ README.md
 ruby_lib/outthentic.rb
 run-test.pl
 t/outthentic.t
-utils/install.pl6
-utils/make-dist.pl6
-utils/make-doc.pl6

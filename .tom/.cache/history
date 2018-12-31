@@ -4,3 +4,5 @@ set-git
 test
 install
 commit
+pull
+commit

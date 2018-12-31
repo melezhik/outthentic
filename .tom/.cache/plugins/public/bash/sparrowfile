@@ -1,0 +1,10 @@
+task_run %(
+  task    => "server uptime",
+  plugin  => "bash",
+  parameters => %(
+    command   => 'uptime',
+    debug     => 0,
+    expect_stdout => '\d\d:\d\d:\d\d'
+  )
+);
+

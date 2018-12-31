@@ -1,0 +1,6 @@
+{
+  "name" : "bash",
+  "description" : "Execute bash commands",
+  "version" : "0.1.8",
+  "url" : "https://github.com/melezhik/bash.git"
+}

@@ -322,7 +322,7 @@ sub do_perl_hook {
 
     my $hook_file = shift;
 
-    print_hook_header();
+    print_hook_header() if debug_mod1;
 
     {
       package main;
@@ -591,7 +591,7 @@ sub do_ruby_hook {
 
     my $cmd;
 
-    print_hook_header();
+    print_hook_header() if debug_mod1;
 
     if (-f project_root_dir()."/Gemfile" ){
       $cmd = "cd ".project_root_dir()." && bundle exec ruby -I $ruby_lib_dir -r outthentic -I ".story_cache_dir()." $file"
@@ -663,7 +663,7 @@ sub do_python_hook {
 
     my $cmd  = "PYTHONPATH=\$PYTHONPATH:".(story_cache_dir()).":$python_lib_dir python $file";
   
-    print_hook_header();
+    print_hook_header() if debug_mod1;
 
     if (debug_mod12()){
         main::note("do_python_hook: $cmd"); 
@@ -734,7 +734,7 @@ sub do_bash_hook {
 
     $cmd="bash -c '$cmd'";
 
-    print_hook_header();
+    print_hook_header() if debug_mod1;
 
     if (debug_mod12()){
         main::note("do_bash_hook: $cmd"); 
@@ -798,7 +798,7 @@ sub do_ps_hook {
 
     my $cmd;
 
-    print_hook_header();
+    print_hook_header() if debug_mod1;
 
     if ( $^O  =~ 'MSWin'  ){
       $cmd = "powershell.exe -NoProfile -c \". ".story_cache_dir()."/glue.ps1; . $ps_lib_dir/outthentic.ps1; . $file; \"";

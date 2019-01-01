@@ -1,1 +1,1 @@
-[ { "task" : "commit my changes [plg] git-commit", "data" : { "message" : "use back slash as delimeter in story header for windows" }, "plugin" : "git-commit" } ]
+[ { "plugin" : "git-commit", "task" : "commit my changes [plg] git-commit", "data" : { "message" : "fix error" } } ]

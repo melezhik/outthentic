@@ -16,3 +16,5 @@ examples/cpanfile.snapshot
 
 /.vs
 .cache
+.tom/.cache
+

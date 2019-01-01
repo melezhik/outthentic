@@ -1,6 +1,7 @@
 0.4.7
 
 - Change story reports ( task / story headers )
+- Don't print hook's headers
 
 0.4.6 2018-12-26
 

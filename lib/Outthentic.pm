@@ -559,7 +559,8 @@ sub short_story_name {
 
     my $story_vars = story_vars_pretty();
 
-    $short_story_dir ||= "/";
+
+    $short_story_dir ||=  if $^O  =~ 'MSWin' ? '\' : '/';
 
     my @ret;
 

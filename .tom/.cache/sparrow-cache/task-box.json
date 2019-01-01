@@ -1,1 +1,1 @@
-[ { "plugin" : "git-commit", "task" : "commit my changes [plg] git-commit", "data" : { "message" : "prepare for release" } } ]
+[ { "data" : { "message" : "clean cache" }, "plugin" : "git-commit", "task" : "commit my changes [plg] git-commit" } ]

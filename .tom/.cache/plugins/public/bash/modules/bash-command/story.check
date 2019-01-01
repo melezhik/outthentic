@@ -1,3 +1,0 @@
-generator: <<CODE 
-  config()->{'expect_stdout'} ? [ 'regexp: '. ( config()->{'expect_stdout'} )  ] : [] 
-CODE

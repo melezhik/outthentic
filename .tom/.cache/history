@@ -34,3 +34,7 @@ push
 commit
 push
 commit
+push
+make-dist
+make-dist
+commit

@@ -1,1 +1,1 @@
-[ { "data" : { "message" : "set proper delimeter for windows" }, "task" : "commit my changes [plg] git-commit", "plugin" : "git-commit" } ]
+[ { "plugin" : "git-commit", "task" : "commit my changes [plg] git-commit", "data" : { "message" : "prepare for release" } } ]
